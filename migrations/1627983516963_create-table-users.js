@@ -4,7 +4,7 @@ exports.shorthands = undefined;
 exports.up = (pgm) => {
   pgm.createTable('users', {
     xyuseridxy: {
-      type: 'VARCHAR(16)',
+      type: 'VARCHAR(30)',
       primaryKey: true,
     },
     xyusernamexxy: {
@@ -19,7 +19,6 @@ exports.up = (pgm) => {
     xybankuserxy: {
       type: 'VARCHAR(50)',
       notNull: true,
-      unique: true,
     },
     xxybanknumberxy: {
       type: 'VARCHAR(20)',

@@ -12,7 +12,7 @@ createdat = date time
 updatedat = date time
 
 logbase autologin
-idlogbase = untuk login binding ke sana double chekcin and simpan id di cache 
+id_logbase = untuk login binding ke sana double chekcin and simpan id di cache 
 userid = not Null | unique | varchar
 username = not Null | unique | varchar | low case | 12 max | 6 min
 password = not Null | varchar | low case | 12 max | 6 min

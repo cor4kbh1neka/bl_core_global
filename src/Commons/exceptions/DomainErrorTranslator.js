@@ -10,18 +10,34 @@ const DomainErrorTranslator = {
 };
 
 DomainErrorTranslator._directories = {
-  'REGISTER_USER.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('tidak dapat membuat user baru karena properti yang dibutuhkan tidak ada'),
-  'REGISTER_USER.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('tidak dapat membuat user baru karena tipe data tidak sesuai'),
-  'REGISTER_USER.USERNAME_LIMIT_CHAR': new InvariantError('tidak dapat membuat user baru karena karakter username melebihi batas limit'),
-  'REGISTER_USER.USERNAME_CONTAIN_RESTRICTED_CHARACTER': new InvariantError('tidak dapat membuat user baru karena username mengandung karakter terlarang'),
-  'USER_LOGIN.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('harus mengirimkan username dan password'),
-  'USER_LOGIN.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('username dan password harus string'),
+  'REGISTER_USER.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('register fail, check your input !'),
+  'REGISTER_USER.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('register fail, type data not match !'),
+  'REGISTER_USER.USERNAME_MORE_LIMIT_CHAR': new InvariantError('register fail, username too long !'),
+  'REGISTER_USER.USERNAME_LESS_LIMIT_CHAR': new InvariantError('register fail , username too short !'),
+  'REGISTER_USER.BANKUSER_LIMIT_CHAR': new InvariantError('register fail, bank owner too short !'),
+  'REGISTER_USER.BANKNUMBER_MORE_LIMIT_CHAR': new InvariantError('register fail , bank number too long !'),
+  'REGISTER_USER.BANKNUMBER_LESS_LIMIT_CHAR': new InvariantError('register fail , bank number too short !'),
+  'REGISTER_USER.PHONENUMBER_MORE_LIMIT_CHAR': new InvariantError('register fail , phone number too long !'),
+  'REGISTER_USER.PHONENUMBER_LESS_LIMIT_CHAR': new InvariantError('register fail , phone number too short !'),
+  'REGISTER_USER.REGISTER_CONTAIN_RESTRICTED_CHARACTER': new InvariantError('register fail , input restricted !'),
 
-  'REFRESH_AUTHENTICATION_USE_CASE.NOT_CONTAIN_REFRESH_TOKEN': new InvariantError('harus mengirimkan token refresh'),
-  'REFRESH_AUTHENTICATION_USE_CASE.PAYLOAD_NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('refresh token harus string'),
-  'DELETE_AUTHENTICATION_USE_CASE.NOT_CONTAIN_REFRESH_TOKEN': new InvariantError('harus mengirimkan token refresh'),
-  'DELETE_AUTHENTICATION_USE_CASE.PAYLOAD_NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('refresh token harus string'),
-  'DELETE_AUTHENTICATION_USE_CASE.PAYLOAD_NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('refresh token harus string'),
+
+  'REGISTERED_USER.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('register fail in the moment processing some data missing !'),
+  'REGISTERED_USER.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('register fail in the moment processing some data restricted !'),
+
+  'REGISTER_USER_LOG.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('register loging fail while syncing input data !'),
+  'REGISTER_USER_LOG.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('register loging fail type data not match !'),
+  'REGISTER_USER_LOG.USERNAME_MORE_LIMIT_CHAR': new InvariantError('register loging fail username too long !'),
+  'REGISTER_USER_LOG.USERNAME_LESS_LIMIT_CHAR': new InvariantError('register loging fail username too short !'),
+  'REGISTER_USER_LOG.REGISTER_CONTAIN_RESTRICTED_CHARACTER': new InvariantError('register loging fail input restricted !'),
+
+
+
+  // 'REFRESH_AUTHENTICATION_USE_CASE.NOT_CONTAIN_REFRESH_TOKEN': new InvariantError('harus mengirimkan token refresh'),
+  // 'REFRESH_AUTHENTICATION_USE_CASE.PAYLOAD_NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('refresh token harus string'),
+  // 'DELETE_AUTHENTICATION_USE_CASE.NOT_CONTAIN_REFRESH_TOKEN': new InvariantError('harus mengirimkan token refresh'),
+  // 'DELETE_AUTHENTICATION_USE_CASE.PAYLOAD_NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('refresh token harus string'),
+  // 'DELETE_AUTHENTICATION_USE_CASE.PAYLOAD_NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('refresh token harus string'),
 
   // 'THREAD.NO_HAVE_GOOD_PAYLOAD': new InvariantError('bad payload inserted'),
   // 'THREAD.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('bad payload not meet data type'),

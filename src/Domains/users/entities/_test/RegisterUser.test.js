@@ -160,7 +160,6 @@ describe('entities for Register Users', () => {
         };
         // Action and Assert
         expect(() => new RegisterUser(payload)).toThrowError('REGISTER_USER.REGISTER_CONTAIN_RESTRICTED_CHARACTER');
-
     });
     it('should register objectc correctly', () => {
         //arrange

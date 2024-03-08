@@ -1,6 +1,10 @@
 const UsersTableTestHelper = require('../../../../tests/UsersTableTestHelper');
+const UsersLogTableTestHelper = require('../../../../tests/UsersLogTableTestHelper');
+const UsersEventTableTestHelper = require('../../../../tests/UsersEventTableTestHelper');
+const UsersReffsTableTestHelper = require('../../../../tests/UsersReffsTableTestHelper');
 const InvariantError = require('../../../Commons/exceptions/InvariantError');
 const RegisterUser = require('../../../Domains/users/entities/RegisterUser');
+const RegisterUserLog = require('../../../Domains/users/entities/RegisterUserLog');
 const RegisteredUser = require('../../../Domains/users/entities/RegisteredUser');
 const pool = require('../../database/postgres/pool');
 const UserRepositoryPostgres = require('../UserRepositoryPostgres');
@@ -8,6 +12,9 @@ const UserRepositoryPostgres = require('../UserRepositoryPostgres');
 describe('UserRepositoryPostgres', () => {
     afterEach(async () => {
         await UsersTableTestHelper.cleanTable();
+        await UsersLogTableTestHelper.cleanTable();
+        await UsersEventTableTestHelper.cleanTable();
+        await UsersReffsTableTestHelper.cleanTable();
     });
 
     afterAll(async () => {
@@ -17,7 +24,7 @@ describe('UserRepositoryPostgres', () => {
     describe('verifyAvailableUsername function', () => {
         it('should throw InvariantError when username not available', async () => {
             // Arrange
-            await UsersTableTestHelper.addUser({ username: 'usertest1' }); // memasukan user baru dengan username dicoding
+            await UsersTableTestHelper.addUser({ xyusernamexxy: 'usertest1' }); // memasukan user baru dengan username dicoding
             const userRepositoryPostgres = new UserRepositoryPostgres(pool, {});
 
             // Action & Assert
@@ -75,10 +82,69 @@ describe('UserRepositoryPostgres', () => {
 
             // Assert
             expect(registeredUser).toStrictEqual(new RegisteredUser({
-                id_logbase: 'baseid123',
                 xyuseridxy: 'user123',
                 xyusernamexxy: 'fakeuser',
             }));
+        });
+
+        describe('add userevent ', () => {
+            it('should persist userevent user and return registered user correctly', async () => {
+                const registerUserLog = {
+                    xyuseridxy: 'user123',
+                };
+                const fakeIdGenerator = () => '123'; // stub!
+                const userRepositoryPostgres = new UserRepositoryPostgres(pool, fakeIdGenerator);
+
+                // Action
+                await userRepositoryPostgres.addEventUser(registerUserLog);
+
+                // Assert
+                const users = await UsersEventTableTestHelper.findUsersByIdevent('user123');
+                expect(users).toHaveLength(1);
+            });
+
+        });
+
+
+
+        describe('add userreffs ', () => {
+            it('should persist userreffs user and return registered user correctly', async () => {
+                const registerUserLog = {
+                    xyuseridxy: 'user123',
+                };
+                const fakeIdGenerator = () => '123'; // stub!
+                const userRepositoryPostgres = new UserRepositoryPostgres(pool, fakeIdGenerator);
+
+                // Action
+                await userRepositoryPostgres.addReffUser(registerUserLog);
+
+                // Assert
+                const users = await UsersReffsTableTestHelper.findUsersByIdreffs('user123');
+                expect(users).toHaveLength(1);
+            });
+
+        });
+
+
+
+        describe('add userlogbase ', () => {
+            it('should persist logbase user and return registered user correctly', async () => {
+                const registerUserLog = new RegisterUserLog({
+                    xyuseridxy: 'user123',
+                    xyusernamexxy: 'fakeuser',
+                    password: 'secret',
+                });
+                const fakeIdGenerator = () => '123'; // stub!
+                const userRepositoryPostgres = new UserRepositoryPostgres(pool, fakeIdGenerator);
+
+                // Action
+                await userRepositoryPostgres.addLogBase(registerUserLog);
+
+                // Assert
+                const users = await UsersLogTableTestHelper.findUsersByIdlogbase('user123');
+                expect(users).toHaveLength(1);
+            });
+
         });
     });
 
@@ -129,5 +195,5 @@ describe('UserRepositoryPostgres', () => {
     //       // Assert
     //       expect(userId).toEqual('user-321');
     //     });
-});
+    // });
 });

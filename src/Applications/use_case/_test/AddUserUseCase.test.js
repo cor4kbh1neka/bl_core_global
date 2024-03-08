@@ -1,5 +1,7 @@
 const RegisterUser = require('../../../Domains/users/entities/RegisterUser');
+const RegisterUserLog = require('../../../Domains/users/entities/RegisterUserLog');
 const RegisteredUser = require('../../../Domains/users/entities/RegisteredUser');
+const RegisteredUserLog = require('../../../Domains/users/entities/RegisteredUserLog');
 const UserRepository = require('../../../Domains/users/UserRepository');
 const PasswordHash = require('../../security/PasswordHash');
 const AddUserUseCase = require('../AddUserUseCase');
@@ -12,7 +14,6 @@ describe('UserRepository', () => {
     it('should orchestracing the add user action correctly', async () => {
 
         const useCasePayload = {
-
             xyusernamexxy: 'fakeuser',
             password: 'secret',
             xybanknamexyy: 'abc',
@@ -21,10 +22,15 @@ describe('UserRepository', () => {
             xyx11xuser_mailxxyy: 'user@gmail.com',
             xynumbphonexyyy: '58469874451',
         };
+
+
         const mockRegisteredUser = new RegisteredUser({
-            id_logbase: 'baseid123',
             xyuseridxy: 'user123',
             xyusernamexxy: useCasePayload.xyusernamexxy,
+        });
+        const mockRegisteredLogbase = new RegisteredUserLog({
+            xyuseridxy: mockRegisteredUser.xyuseridxy,
+            username: useCasePayload.xyusernamexxy,
         });
 
 
@@ -37,8 +43,16 @@ describe('UserRepository', () => {
             .mockImplementation(() => Promise.resolve());
         mockPasswordHash.hash = jest.fn()
             .mockImplementation(() => Promise.resolve('secret'));
+
         mockUserRepository.addUser = jest.fn()
             .mockImplementation(() => Promise.resolve(mockRegisteredUser));
+        mockUserRepository.addEventUser = jest.fn()
+            .mockImplementation(() => Promise.resolve());
+        mockUserRepository.addReffUser = jest.fn()
+            .mockImplementation(() => Promise.resolve());
+        mockUserRepository.addLogBase = jest.fn()
+            .mockImplementation(() => Promise.resolve(mockRegisteredLogbase));
+
 
         const getUserUseCase = new AddUserUseCase({
             userRepository: mockUserRepository,
@@ -47,14 +61,14 @@ describe('UserRepository', () => {
 
 
         // Action
-        const registeredUser = await getUserUseCase.execute(useCasePayload);
+        const registeredUserLog = await getUserUseCase.execute(useCasePayload);
 
-        expect(registeredUser).toStrictEqual(new RegisteredUser({
-            id_logbase: 'baseid123',
+        expect(registeredUserLog).toStrictEqual(new RegisteredUserLog({
             xyuseridxy: 'user123',
-            xyusernamexxy: useCasePayload.xyusernamexxy,
+            username: useCasePayload.xyusernamexxy,
         }));
-        expect(mockUserRepository.verifyAvailableUsername).toBeCalledWith(useCasePayload.username);
+        expect(mockUserRepository.verifyAvailableUsername).toBeCalledWith(useCasePayload);
+
         expect(mockPasswordHash.hash).toBeCalledWith(useCasePayload.password);
         expect(mockUserRepository.addUser).toBeCalledWith(new RegisterUser({
             xyusernamexxy: useCasePayload.xyusernamexxy,
@@ -64,6 +78,19 @@ describe('UserRepository', () => {
             xxybanknumberxy: '12345678',
             xyx11xuser_mailxxyy: 'user@gmail.com',
             xynumbphonexyyy: '58469874451',
+        }));
+
+        expect(mockUserRepository.addEventUser).toBeCalledWith('user123'
+        );
+
+
+        expect(mockUserRepository.addReffUser).toBeCalledWith('user123');
+
+
+        expect(mockUserRepository.addLogBase).toBeCalledWith(new RegisterUserLog({
+            xyuseridxy: 'user123',
+            xyusernamexxy: 'fakeuser',
+            password: 'secret',
         }));
     });
 

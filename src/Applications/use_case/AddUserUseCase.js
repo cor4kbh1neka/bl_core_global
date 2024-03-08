@@ -9,9 +9,12 @@ class AddUserUseCase {
 
     async execute(useCasePayload) {
         const registerUser = new RegisterUser(useCasePayload);
-        await this._userRepository.verifyAvailableUsername(registerUser.username);
-        registerUser.password = await this._passwordHash.hash(registerUser.password);
-        return this._userRepository.addUser(registerUser);
+        await this._userRepository.verifyAvailableUsername(registerUser);
+        const userlogbase = await this._userRepository.addUser(registerUser);
+        this._userRepository.addEventUser(userlogbase.xyuseridxy);
+        this._userRepository.addReffUser(userlogbase.xyuseridxy);
+        userlogbase.password = await this._passwordHash.hash(registerUser.password);
+        return this._userRepository.addLogBase(userlogbase);
     }
 }
 
