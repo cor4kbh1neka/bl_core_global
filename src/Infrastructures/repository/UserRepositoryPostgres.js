@@ -12,10 +12,6 @@ class UserRepositoryPostgres extends UserRepository {
 
     async verifyAvailableUsername(registerUser) {
         const { xyusernamexxy, xxybanknumberxy, xyx11xuser_mailxxyy } = registerUser;
-        // const query = {
-        //     text: 'SELECT xyusernamexxy FROM users WHERE xyusernamexxy = $1',
-        //     values: [username],
-        // };
 
         const query = {
             text: 'SELECT xyusernamexxy, xxybanknumberxy, xyx11xuser_mailxxyy FROM users WHERE xyusernamexxy = $1 OR xxybanknumberxy = $2 OR xyx11xuser_mailxxyy = $3',

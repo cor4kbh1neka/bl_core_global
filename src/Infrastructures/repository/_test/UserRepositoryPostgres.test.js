@@ -23,12 +23,18 @@ describe('UserRepositoryPostgres', () => {
 
     describe('verifyAvailableUsername function', () => {
         it('should throw InvariantError when username not available', async () => {
+            const registerUser = {
+                xyusernamexxy: 'fakeuser',
+                xxybanknumberxy: '12345678',
+                xyx11xuser_mailxxyy: 'user@gmail.com',
+            };
+
             // Arrange
-            await UsersTableTestHelper.addUser({ xyusernamexxy: 'usertest1' }); // memasukan user baru dengan username dicoding
+            await UsersTableTestHelper.addUser({ xyusernamexxy: 'fakeuser' }); // memasukan user baru dengan username dicoding
             const userRepositoryPostgres = new UserRepositoryPostgres(pool, {});
 
             // Action & Assert
-            await expect(userRepositoryPostgres.verifyAvailableUsername('usertest1')).rejects.toThrowError(InvariantError);
+            await expect(userRepositoryPostgres.verifyAvailableUsername(registerUser)).rejects.toThrowError(InvariantError);
         });
 
         it('should not throw InvariantError when username available', async () => {
@@ -89,9 +95,7 @@ describe('UserRepositoryPostgres', () => {
 
         describe('add userevent ', () => {
             it('should persist userevent user and return registered user correctly', async () => {
-                const registerUserLog = {
-                    xyuseridxy: 'user123',
-                };
+                const registerUserLog = 'user123';
                 const fakeIdGenerator = () => '123'; // stub!
                 const userRepositoryPostgres = new UserRepositoryPostgres(pool, fakeIdGenerator);
 
@@ -109,9 +113,7 @@ describe('UserRepositoryPostgres', () => {
 
         describe('add userreffs ', () => {
             it('should persist userreffs user and return registered user correctly', async () => {
-                const registerUserLog = {
-                    xyuseridxy: 'user123',
-                };
+                const registerUserLog = 'user123';
                 const fakeIdGenerator = () => '123'; // stub!
                 const userRepositoryPostgres = new UserRepositoryPostgres(pool, fakeIdGenerator);
 
