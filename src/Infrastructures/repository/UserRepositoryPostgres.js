@@ -25,39 +25,39 @@ class UserRepositoryPostgres extends UserRepository {
     }
 
     async addUser(registerUser) {
-        try {
-            const { xyusernamexxy, xybanknamexyy, xybankuserxy, xxybanknumberxy, xyx11xuser_mailxxyy, xynumbphonexyyy } = registerUser;
-            const xyuseridxy = `user${this._idGenerator()}`;
-            const created_at = new Date().toISOString();
-            const query = {
-                text: 'INSERT INTO users VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING xyuseridxy, xyusernamexxy',
-                values: [xyuseridxy, xyusernamexxy, xybanknamexyy, xybankuserxy, xxybanknumberxy, xyx11xuser_mailxxyy, xynumbphonexyyy, created_at],
-            };
+        // try {
+        const { xyusernamexxy, xybanknamexyy, xybankuserxy, xxybanknumberxy, xyx11xuser_mailxxyy, xynumbphonexyyy } = registerUser;
+        const xyuseridxy = `user${this._idGenerator()}`;
+        const created_at = new Date().toISOString();
+        const query = {
+            text: 'INSERT INTO users VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING xyuseridxy, xyusernamexxy',
+            values: [xyuseridxy, xyusernamexxy, xybanknamexyy, xybankuserxy, xxybanknumberxy, xyx11xuser_mailxxyy, xynumbphonexyyy, created_at],
+        };
 
-            const result = await this._pool.query(query);
-            return new RegisteredUser({ ...result.rows[0] });
-        } catch (err) {
-            console.error(err.message);
+        const result = await this._pool.query(query);
+        return new RegisteredUser({ ...result.rows[0] });
+        // } catch (err) {
+        //     console.error(err.message);
 
-        }
+        // }
     }
 
     async addLogBase(registerUser) {
-        try {
-            const { xyuseridxy, password, xyusernamexxy } = registerUser;
-            const username = xyusernamexxy;
-            const id_logbase = `idlog${this._idGenerator()}`;
-            const query = {
-                text: 'INSERT INTO logbasxxyte VALUES($1, $2, $3, $4) RETURNING xyuseridxy, username',
-                values: [id_logbase, xyuseridxy, username, password],
-            };
+        // try {
+        const { xyuseridxy, password, xyusernamexxy } = registerUser;
+        const username = xyusernamexxy;
+        const id_logbase = `idlog${this._idGenerator()}`;
+        const query = {
+            text: 'INSERT INTO logbasxxyte VALUES($1, $2, $3, $4) RETURNING xyuseridxy, username',
+            values: [id_logbase, xyuseridxy, username, password],
+        };
 
-            const result = await this._pool.query(query);
-            return new RegisteredUserLog({ ...result.rows[0] });
-        } catch (err) {
-            console.error(err.message);
+        const result = await this._pool.query(query);
+        return new RegisteredUserLog({ ...result.rows[0] });
+        // } catch (err) {
+        //     console.error(err.message);
 
-        }
+        // }
     }
 
     async addEventUser(registerUser) {
