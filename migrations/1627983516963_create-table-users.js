@@ -1,53 +1,41 @@
 /* eslint-disable camelcase */
+exports.shorthands = undefined;
+
 exports.up = (pgm) => {
   pgm.createTable('users', {
-    id: {
-      type: 'VARCHAR(50)',
+    xyuseridxy: {
+      type: 'VARCHAR(16)',
       primaryKey: true,
     },
-    username: {
+    xyusernamexxy: {
+      type: 'VARCHAR(16)',
+      notNull: true,
+      unique: true,
+    },
+    xybanknamexyy: {
+      type: 'VARCHAR(20)',
+      notNull: true,
+    },
+    xybankuserxy: {
       type: 'VARCHAR(50)',
       notNull: true,
       unique: true,
     },
-    Buser: {
-      type: 'VARCHAR(50)',
-      notNull: true,
-    },
-    Bnumber: {
-      type: 'VARCHAR(50)',
-      notNull: true,
+    xxybanknumberxy: {
+      type: 'VARCHAR(20)',
       unique: true,
-    },
-    BnumberUser: {
-      type: 'VARCHAR(50)',
       notNull: true,
     },
-    Umail: {
+    xyx11xuser_mailxxyy: {
       type: 'VARCHAR(50)',
     },
-    Nhp: {
-      type: 'VARCHAR(50)',
+    xynumbphonexyyy: {
+      type: 'VARCHAR(15)',
       notNull: true,
-      unique: true,
-    },
-    password: {
-      type: 'TEXT',
-      notNull: true,
-    },
-    is_verified: {
-      type: 'Boolean',
-      notNull: true,
-    },
-    is_favorite: {
-      type: 'VARCHAR(50)[]',
     },
     created_at: {
       type: 'TEXT',
       notNull: true,
-    },
-    last_login: {
-      type: 'TEXT',
     },
     updated_at: {
       type: 'TEXT',

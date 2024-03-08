@@ -4,13 +4,13 @@ exports.shorthands = undefined;
 
 exports.up = pgm => {
     pgm.createTable('events', {
-        id: {
-            type: 'VARCHAR(50)',
+        eventid: {
+            type: 'VARCHAR(18)',
             primaryKey: true,
         },
-        userid: {
-            type: 'VARCHAR(50)',
-            refrences: 'users(id)',  // Menunjukkan foreign key ke tabel threads
+        xyuseridxy: {
+            type: 'VARCHAR(18)',
+            refrences: 'users(xyuseridxy)',  // Menunjukkan foreign key ke tabel threads
             notnull: true,
             onDelete: 'CASCADE',// Tambahkan opsi ON DELETE CASCADE di sini
         },
