@@ -142,11 +142,9 @@ describe('entities for Register Users', () => {
             xynumbphonexyyy: '1234',
         };
 
-        // Action and Assert
+        // Action andAssert
         expect(() => new RegisterUser(payload)).toThrowError('REGISTER_USER.PHONENUMBER_LESS_LIMIT_CHAR');
     });
-
-
     it('should throw error when xyusernamexxy, pasword, bank name bank number numphone password contains restricted character', () => {
         //arrange
         const payload = {
