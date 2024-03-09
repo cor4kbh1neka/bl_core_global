@@ -19,6 +19,32 @@ describe('/adduserendpoints', () => {
     });
 
     describe('WHEN POST /users', () => {
+
+        it('should  throw an error 400 when payload is not valid', async () => {
+            const requestPayload = {
+                xyusernamexxy: 'fake user',
+                password: 'secret',
+                xybanknamexyy: 'abc',
+                xybankuserxy: 'fake name',
+                xxybanknumberxy: '12345678',
+                xyx11xuser_mailxxyy: 'user@gmail.com',
+                xynumbphonexyyy: '58469874451',
+            };
+            const server = await createServer(container);
+
+            // Action
+            const response = await server.inject({
+                method: 'POST',
+                url: '/users',
+                payload: requestPayload,
+            });
+            // Assert
+            const responseJson = JSON.parse(response.payload);
+            expect(response.statusCode).toEqual(400);
+            expect(responseJson.status).toEqual('fail');
+            expect(responseJson.message).toEqual('register fail , input restricted !');
+        });
+
         it('should response 201 and persisted user data', async () => {
             // Arrange
             const requestPayload = {
