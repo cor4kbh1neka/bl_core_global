@@ -21,7 +21,7 @@ jobs:
           git config --global --add safe.directory ~/APISTORE
           cd ~/APISTORE
           ls -a
-          sudo git pull origin main https://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@github.com/cor4kbh1neka/APISTORE.git
+          sudo git pull https://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@github.com/cor4kbh1neka/APISTORE.git
           npm install
           npm run migrate up
           sudo pm2 restart api_sepak
