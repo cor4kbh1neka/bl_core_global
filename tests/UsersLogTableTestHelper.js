@@ -3,11 +3,11 @@ const pool = require('../src/Infrastructures/database/postgres/pool');
 
 const UsersLogTableTestHelper = {
   async addLogBase({
-    id_logbase = 'idlog123', xyuseridxy = 'user123', xyusernamexxy = 'fakeuser', password = 'secret'
+    id_logbase = 'idlog123', xyuseridxy = 'user123', username = 'fakeuser', password = 'secret'
   }) {
     const query = {
       text: 'INSERT INTO logbasxxyte VALUES($1, $2, $3, $4)',
-      values: [id_logbase, xyuseridxy, xyusernamexxy, password],
+      values: [id_logbase, xyuseridxy, username, password],
     };
 
     await pool.query(query);

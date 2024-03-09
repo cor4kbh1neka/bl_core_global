@@ -4,8 +4,8 @@ const Jwt = require('@hapi/jwt');
 const ClientError = require('../../Commons/exceptions/ClientError');
 const DomainErrorTranslator = require('../../Commons/exceptions/DomainErrorTranslator');
 const users = require('../../Interfaces/http/api/users');
-// const authentications = require('../../Interfaces/http/api/authentications');
-// const AuthenticationTokenManager = require('../security/JwtTokenManager');
+const authentications = require('../../Interfaces/http/api/authentications');
+const AuthenticationTokenManager = require('../security/JwtTokenManager');
 
 
 const createServer = async (container) => {
@@ -44,10 +44,10 @@ const createServer = async (container) => {
       plugin: users,
       options: { container },
     },
-    // {
-    //   plugin: authentications,
-    //   options: { container },
-    // },
+    {
+      plugin: authentications,
+      options: { container },
+    },
     // {
     //   plugin: threads,
     //   options: { container },

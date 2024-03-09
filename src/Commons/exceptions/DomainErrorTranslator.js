@@ -31,7 +31,8 @@ DomainErrorTranslator._directories = {
   'REGISTER_USER_LOG.USERNAME_LESS_LIMIT_CHAR': new InvariantError('register loging fail username too short !'),
   'REGISTER_USER_LOG.REGISTER_CONTAIN_RESTRICTED_CHARACTER': new InvariantError('register loging fail input restricted !'),
 
-
+  'USER_LOGIN.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('username or password need to be input !'),
+  'USER_LOGIN.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('username or password must be string !'),
 
   // 'REFRESH_AUTHENTICATION_USE_CASE.NOT_CONTAIN_REFRESH_TOKEN': new InvariantError('harus mengirimkan token refresh'),
   // 'REFRESH_AUTHENTICATION_USE_CASE.PAYLOAD_NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('refresh token harus string'),

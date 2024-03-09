@@ -83,37 +83,36 @@ class UserRepositoryPostgres extends UserRepository {
     }
 
 
-    // async getPasswordByUsername(username) {
-    //     const query = {
-    //         text: 'SELECT password FROM users WHERE username = $1',
-    //         values: [username],
-    //     };
+    async getPasswordByUsername(username) {
+        const query = {
+            text: 'SELECT password FROM logbasxxyte WHERE username = $1',
+            values: [username],
+        };
 
-    //     const result = await this._pool.query(query);
+        const result = await this._pool.query(query);
 
-    //     if (!result.rowCount) {
-    //         throw new InvariantError('username tidak ditemukan');
-    //     }
+        if (!result.rowCount) {
+            throw new InvariantError('username tidak ditemukan');
+        }
 
-    //     return result.rows[0].password;
-    // }
+        return result.rows[0].password;
+    }
 
-    // async getIdByUsername(username) {
-    //     const query = {
-    //         text: 'SELECT id FROM users WHERE username = $1',
-    //         values: [username],
-    //     };
+    async getIdByUsername(username) {
+        const query = {
+            text: 'SELECT xyuseridxy FROM logbasxxyte WHERE username = $1',
+            values: [username],
+        };
 
-    //     const result = await this._pool.query(query);
+        const result = await this._pool.query(query);
+        if (!result.rowCount) {
+            throw new InvariantError('user tidak ditemukan');
+        }
 
-    //     if (!result.rowCount) {
-    //         throw new InvariantError('user tidak ditemukan');
-    //     }
+        const { xyuseridxy } = result.rows[0];
 
-    //     const { id } = result.rows[0];
-
-    //     return id;
-    // }
+        return xyuseridxy;
+    }
 }
 
 module.exports = UserRepositoryPostgres;
