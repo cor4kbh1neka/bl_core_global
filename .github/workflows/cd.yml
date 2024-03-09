@@ -20,6 +20,7 @@ jobs:
         script: |
           git config --global --add safe.directory ~/APISTORE
           cd ~/APISTORE
+          ls
           git stash
           sudo git pull https://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@github.com/cor4kbh1neka/APISTORE.git
           npm install
