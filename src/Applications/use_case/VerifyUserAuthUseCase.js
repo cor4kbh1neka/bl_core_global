@@ -6,9 +6,8 @@ class VerifyUserAuthUseCase {
   }
 
   async execute(refreshToken) {
-
     this._verifyPayload(refreshToken);
-    const { username } = await this._authenticationTokenManager.decodePayload(refreshToken);
+    const username = await this._authenticationTokenManager.decodePayload(refreshToken);
     return username;
   }
 

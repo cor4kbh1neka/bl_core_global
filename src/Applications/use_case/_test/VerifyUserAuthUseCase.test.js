@@ -23,7 +23,7 @@ describe('RefreshAuthenticationUseCase', () => {
     // Mocking
 
     mockAuthenticationTokenManager.decodePayload = jest.fn()
-      .mockImplementation(() => Promise.resolve({ username: 'dicoding', id: 'user-123' }));
+      .mockImplementation(() => Promise.resolve({ username: 'dicoding', id: 'user-123', iat: '1710139445' }));
 
     // Create the use case instace
     const refreshAuthenticationUseCase = new VerifyUserAuthUseCase({
@@ -32,12 +32,11 @@ describe('RefreshAuthenticationUseCase', () => {
 
     // Action
     const payload = await refreshAuthenticationUseCase.execute(useCasePayload);
-
     // Assert
 
     expect(mockAuthenticationTokenManager.decodePayload)
       .toBeCalledWith(useCasePayload);
 
-    expect(payload).toEqual('dicoding');
+    expect(payload).toEqual({ username: 'dicoding', id: 'user-123', iat: '1710139445' });
   });
 });

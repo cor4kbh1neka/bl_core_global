@@ -10,6 +10,16 @@ const routes = (handler) => ([
     },
   },
   {
+    method: 'POST',
+    path: '/authentications/datauser',
+    handler: handler.postAuthenticationdataHandler,
+    options: {
+      cors: {
+        origin: ['*'],
+      },
+    },
+  },
+  {
     method: 'PUT',
     path: '/authentications',
     handler: handler.putAuthenticationHandler,

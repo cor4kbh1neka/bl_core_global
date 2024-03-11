@@ -1,12 +1,14 @@
 const LoginUserUseCase = require('../../../../Applications/use_case/LoginUserUseCase');
 const RefreshAuthenticationUseCase = require('../../../../Applications/use_case/RefreshAuthenticationUseCase');
 const LogoutUserUseCase = require('../../../../Applications/use_case/LogoutUserUseCase');
+const VerifyUserAuthUseCase = require('../../../../Applications/use_case/VerifyUserAuthUseCase');
 
 class AuthenticationsHandler {
   constructor(container) {
     this._container = container;
 
     this.postAuthenticationHandler = this.postAuthenticationHandler.bind(this);
+    this.postAuthenticationdataHandler = this.postAuthenticationdataHandler.bind(this);
     this.putAuthenticationHandler = this.putAuthenticationHandler.bind(this);
     this.deleteAuthenticationHandler = this.deleteAuthenticationHandler.bind(this);
   }
@@ -24,6 +26,20 @@ class AuthenticationsHandler {
       },
     });
     response.code(201);
+    return response;
+
+  }
+  async postAuthenticationdataHandler(request, h) {
+    const verifyUserAuthUseCase = this._container.getInstance(VerifyUserAuthUseCase.name);
+    const { username, iat } = await verifyUserAuthUseCase.execute(request.payload.refreshToken);
+    const response = h.response({
+      status: 'success',
+      data: {
+        username,
+        iat,
+      },
+    });
+    response.code(200);
     return response;
 
   }

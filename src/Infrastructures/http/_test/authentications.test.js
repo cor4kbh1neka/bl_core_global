@@ -355,4 +355,47 @@ describe('/authentications endpoint', () => {
       expect(responseJson.message).toEqual('refresh token harus string');
     });
   });
+
+  describe(' when get data decode response', () => {
+    it('should response 200 if get data success send data username and IAT', async () => {
+
+      // Arrange
+      const server = await createServer(container);
+      // add user
+      await server.inject({
+        method: 'POST',
+        url: '/users',
+        payload: {
+          xyusernamexxy: 'fakeuser2',
+          password: 'secret',
+          xybanknamexyy: 'abc',
+          xybankuserxy: 'fake name',
+          xxybanknumberxy: '12345641',
+          xyx11xuser_mailxxyy: 'user22@gmail.com',
+          xynumbphonexyyy: '58469874451',
+        },
+      });
+      // login user
+      const loginResponse = await server.inject({
+        method: 'POST',
+        url: '/authentications',
+        payload: {
+          username: 'fakeuser2',
+          password: 'secret',
+        },
+      });
+      const { data: { refreshToken } } = JSON.parse(loginResponse.payload);
+      // Action
+      const response = await server.inject({
+        method: 'POST',
+        url: '/authentications/datauser',
+        payload: { refreshToken }
+      });
+      const responseJson = JSON.parse(response.payload);
+      expect(response.statusCode).toEqual(200);
+      expect(responseJson.status).toEqual('success');
+      expect(responseJson.data.username).toBeDefined();
+      expect(responseJson.data.iat).toBeDefined();
+    });
+  });
 });
