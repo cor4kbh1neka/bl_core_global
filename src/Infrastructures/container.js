@@ -24,7 +24,7 @@ const JwtTokenManager = require('./security/JwtTokenManager');
 const LoginUserUseCase = require('../Applications/use_case/LoginUserUseCase');
 const AuthenticationRepository = require('../Domains/authentications/AuthenticationRepository');
 const AuthenticationRepositoryPostgres = require('./repository/AuthenticationRepositoryPostgres');
-// const LogoutUserUseCase = require('../Applications/use_case/LogoutUserUseCase');
+const LogoutUserUseCase = require('../Applications/use_case/LogoutUserUseCase');
 const RefreshAuthenticationUseCase = require('../Applications/use_case/RefreshAuthenticationUseCase');
 
 
@@ -129,19 +129,19 @@ container.register([
             ],
         },
     },
-    // {
-    //     key: LogoutUserUseCase.name,
-    //     Class: LogoutUserUseCase,
-    //     parameter: {
-    //         injectType: 'destructuring',
-    //         dependencies: [
-    //             {
-    //                 name: 'authenticationRepository',
-    //                 internal: AuthenticationRepository.name,
-    //             },
-    //         ],
-    //     },
-    // },
+    {
+        key: LogoutUserUseCase.name,
+        Class: LogoutUserUseCase,
+        parameter: {
+            injectType: 'destructuring',
+            dependencies: [
+                {
+                    name: 'authenticationRepository',
+                    internal: AuthenticationRepository.name,
+                },
+            ],
+        },
+    },
     {
         key: RefreshAuthenticationUseCase.name,
         Class: RefreshAuthenticationUseCase,

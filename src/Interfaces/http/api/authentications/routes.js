@@ -19,11 +19,11 @@ const routes = (handler) => ([
       },
     },
   },
-  // {
-  //   method: 'DELETE',
-  //   path: '/authentications',
-  //   handler: handler.deleteAuthenticationHandler,
-  // },
+  {
+    method: 'DELETE',
+    path: '/authentications',
+    handler: handler.deleteAuthenticationHandler,
+  },
 ]);
 
 module.exports = routes;
