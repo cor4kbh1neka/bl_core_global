@@ -8,17 +8,22 @@ const routes = (handler) => ([
         origin: ['*'],
       },
     },
-    // },
-    // {
-    //   method: 'PUT',
-    //   path: '/authentications',
-    //   handler: handler.putAuthenticationHandler,
-    // },
-    // {
-    //   method: 'DELETE',
-    //   path: '/authentications',
-    //   handler: handler.deleteAuthenticationHandler,
   },
+  {
+    method: 'PUT',
+    path: '/authentications',
+    handler: handler.putAuthenticationHandler,
+    options: {
+      cors: {
+        origin: ['*'],
+      },
+    },
+  },
+  // {
+  //   method: 'DELETE',
+  //   path: '/authentications',
+  //   handler: handler.deleteAuthenticationHandler,
+  // },
 ]);
 
 module.exports = routes;
