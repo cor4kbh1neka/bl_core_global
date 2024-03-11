@@ -41,6 +41,8 @@ describe('UserRepository', () => {
         /** mocking needed function */
         mockUserRepository.verifyAvailableUsername = jest.fn()
             .mockImplementation(() => Promise.resolve());
+        mockUserRepository.verifybankuser = jest.fn()
+            .mockImplementation(() => Promise.resolve());
         mockPasswordHash.hash = jest.fn()
             .mockImplementation(() => Promise.resolve('secret'));
 
@@ -68,6 +70,7 @@ describe('UserRepository', () => {
             username: useCasePayload.xyusernamexxy,
         }));
         expect(mockUserRepository.verifyAvailableUsername).toBeCalledWith(useCasePayload);
+        expect(mockUserRepository.verifybankuser).toBeCalledWith(useCasePayload);
 
         expect(mockPasswordHash.hash).toBeCalledWith(useCasePayload.password);
         expect(mockUserRepository.addUser).toBeCalledWith(new RegisterUser({
@@ -82,11 +85,7 @@ describe('UserRepository', () => {
 
         expect(mockUserRepository.addEventUser).toBeCalledWith('user123'
         );
-
-
         expect(mockUserRepository.addReffUser).toBeCalledWith('user123');
-
-
         expect(mockUserRepository.addLogBase).toBeCalledWith(new RegisterUserLog({
             xyuseridxy: 'user123',
             xyusernamexxy: 'fakeuser',

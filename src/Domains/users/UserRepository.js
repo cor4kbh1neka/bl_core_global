@@ -14,7 +14,10 @@ class UserRepository {
         throw new Error('USER_REPOSITORY.METHOD_NOT_IMPLEMENTED');
     }
 
-    async verifyAvailableUsername(username) {
+    async verifyAvailableUsername(registerUser) {
+        throw new Error('USER_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+    }
+    async verifybankuser(registerUser) {
         throw new Error('USER_REPOSITORY.METHOD_NOT_IMPLEMENTED');
     }
 

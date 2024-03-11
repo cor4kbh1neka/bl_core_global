@@ -10,6 +10,7 @@ class AddUserUseCase {
     async execute(useCasePayload) {
         const registerUser = new RegisterUser(useCasePayload);
         await this._userRepository.verifyAvailableUsername(registerUser);
+        await this._userRepository.verifybankuser(registerUser);
         const userlogbase = await this._userRepository.addUser(registerUser);
         this._userRepository.addEventUser(userlogbase.xyuseridxy);
         this._userRepository.addReffUser(userlogbase.xyuseridxy);

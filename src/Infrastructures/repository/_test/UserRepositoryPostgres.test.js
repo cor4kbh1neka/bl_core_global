@@ -25,8 +25,6 @@ describe('UserRepositoryPostgres', () => {
         it('should throw InvariantError when username not available', async () => {
             const registerUser = {
                 xyusernamexxy: 'fakeuser',
-                xxybanknumberxy: '12345678',
-                xyx11xuser_mailxxyy: 'user@gmail.com',
             };
 
             // Arrange
@@ -37,12 +35,18 @@ describe('UserRepositoryPostgres', () => {
             await expect(userRepositoryPostgres.verifyAvailableUsername(registerUser)).rejects.toThrowError(InvariantError);
         });
 
-        it('should not throw InvariantError when username available', async () => {
+        it('should throw InvariantError when bank number already in ourdatabase', async () => {
+            const registerUser = {
+                xybanknamexyy: 'abc',
+                xxybanknumberxy: '12345678',
+            };
+
             // Arrange
+            await UsersTableTestHelper.addUser({ xybanknamexyy: 'abc', xxybanknumberxy: '12345678' }); // memasukan user baru dengan username dicoding
             const userRepositoryPostgres = new UserRepositoryPostgres(pool, {});
 
             // Action & Assert
-            await expect(userRepositoryPostgres.verifyAvailableUsername('usertest2')).resolves.not.toThrowError(InvariantError);
+            await expect(userRepositoryPostgres.verifybankuser(registerUser)).rejects.toThrowError(InvariantError);
         });
     });
 

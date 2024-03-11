@@ -11,16 +11,34 @@ class UserRepositoryPostgres extends UserRepository {
     }
 
     async verifyAvailableUsername(registerUser) {
-        const { xyusernamexxy, xxybanknumberxy, xyx11xuser_mailxxyy } = registerUser;
+        const { xyusernamexxy } = registerUser;
 
+        // const query = {
+        //     text: 'SELECT xyusernamexxy, xxybanknumberxy, xyx11xuser_mailxxyy FROM users WHERE xyusernamexxy = $1 OR xxybanknumberxy = $2 OR xyx11xuser_mailxxyy = $3',
+        //     values: [xyusernamexxy, xxybanknumberxy, xyx11xuser_mailxxyy],
+        // };
         const query = {
-            text: 'SELECT xyusernamexxy, xxybanknumberxy, xyx11xuser_mailxxyy FROM users WHERE xyusernamexxy = $1 OR xxybanknumberxy = $2 OR xyx11xuser_mailxxyy = $3',
-            values: [xyusernamexxy, xxybanknumberxy, xyx11xuser_mailxxyy],
+            text: 'SELECT xyusernamexxy FROM users WHERE xyusernamexxy = $1 ',
+            values: [xyusernamexxy],
         };
 
         const result = await this._pool.query(query);
         if (result.rowCount != 0) {
-            throw new InvariantError('Register fail, your data already in our database !');
+            throw new InvariantError('Register fail, username already in our database !');
+        }
+    }
+
+    async verifybankuser(registerUser) {
+        const { xxybanknumberxy, xybanknamexyy } = registerUser;
+
+        const query = {
+            text: 'SELECT  xxybanknumberxy, xybanknamexyy FROM users WHERE xxybanknumberxy = $1 AND  xybanknamexyy = $2',
+            values: [xxybanknumberxy, xybanknamexyy],
+        };
+
+        const result = await this._pool.query(query);
+        if (result.rowCount != 0) {
+            throw new InvariantError('Register fail, rekening number already in our database !');
         }
     }
 
