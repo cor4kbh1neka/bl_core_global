@@ -33,6 +33,11 @@ const routes = (handler) => ([
     method: 'DELETE',
     path: '/authentications',
     handler: handler.deleteAuthenticationHandler,
+    options: {
+      cors: {
+        origin: ['*'],
+      },
+    },
   },
 ]);
 
