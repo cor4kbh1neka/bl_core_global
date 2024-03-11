@@ -30,20 +30,22 @@ class UserRepositoryPostgres extends UserRepository {
 
     async verifybankuser(registerUser) {
         const { xxybanknumberxy, xybanknamexyy } = registerUser;
-
         const query = {
-            text: 'SELECT  xxybanknumberxy, xybanknamexyy FROM users WHERE xxybanknumberxy = $1 AND  xybanknamexyy = $2',
+            text: 'SELECT  xxybanknumberxy , xybanknamexyy FROM users WHERE xxybanknumberxy = $1 AND xybanknamexyy = $2',
             values: [xxybanknumberxy, xybanknamexyy],
         };
 
         const result = await this._pool.query(query);
-        if (result.rowCount != 0) {
+        if (result.rowCount == 0) {
+            // if (result.rows[0].xxybanknumberxy == xxybanknumberxy && result.rows[0].xybanknamexyy == xybanknamexyy) {
+            // }
+            return;
+        } else {
             throw new InvariantError('Register fail, rekening number already in our database !');
         }
     }
 
     async addUser(registerUser) {
-        // try {
         const { xyusernamexxy, xybanknamexyy, xybankuserxy, xxybanknumberxy, xyx11xuser_mailxxyy, xynumbphonexyyy } = registerUser;
         const xyuseridxy = `user${this._idGenerator()}`;
         const created_at = new Date().toISOString();
@@ -54,14 +56,10 @@ class UserRepositoryPostgres extends UserRepository {
 
         const result = await this._pool.query(query);
         return new RegisteredUser({ ...result.rows[0] });
-        // } catch (err) {
-        //     console.error(err.message);
 
-        // }
     }
 
     async addLogBase(registerUser) {
-        // try {
         const { xyuseridxy, password, xyusernamexxy } = registerUser;
         const username = xyusernamexxy;
         const id_logbase = `idlog${this._idGenerator()}`;
@@ -72,10 +70,6 @@ class UserRepositoryPostgres extends UserRepository {
 
         const result = await this._pool.query(query);
         return new RegisteredUserLog({ ...result.rows[0] });
-        // } catch (err) {
-        //     console.error(err.message);
-
-        // }
     }
 
     async addEventUser(registerUser) {
@@ -90,14 +84,15 @@ class UserRepositoryPostgres extends UserRepository {
     }
 
     async addReffUser(registerUser) {
+
         const xyuseridxy = registerUser;
         const reffs_id = `idev${this._idGenerator()}`;
         const query = {
             text: 'INSERT INTO reffs VALUES($1, $2)',
             values: [reffs_id, xyuseridxy],
         };
-
         await this._pool.query(query);
+
     }
 
 

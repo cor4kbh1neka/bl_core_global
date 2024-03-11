@@ -48,6 +48,14 @@ describe('UserRepositoryPostgres', () => {
             // Action & Assert
             await expect(userRepositoryPostgres.verifybankuser(registerUser)).rejects.toThrowError(InvariantError);
         });
+
+        // it('should not throw InvariantError when bank and user bank in different available', async () => {
+        //     // Arrange
+        //     const userRepositoryPostgres = new UserRepositoryPostgres(pool, {});
+
+        //     // Action & Assert
+        //     await expect(userRepositoryPostgres.verifyAvailableUsername('dicoding')).resolves.not.toThrowError(InvariantError);
+        // });
     });
 
     describe('addUser function', () => {

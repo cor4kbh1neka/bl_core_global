@@ -22,7 +22,6 @@ exports.up = (pgm) => {
     },
     xxybanknumberxy: {
       type: 'VARCHAR(20)',
-      unique: true,
       notNull: true,
     },
     xyx11xuser_mailxxyy: {
