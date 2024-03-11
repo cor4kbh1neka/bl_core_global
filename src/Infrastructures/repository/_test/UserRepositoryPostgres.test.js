@@ -49,6 +49,20 @@ describe('UserRepositoryPostgres', () => {
             await expect(userRepositoryPostgres.verifybankuser(registerUser)).rejects.toThrowError(InvariantError);
         });
 
+        it('should throw InvariantError when bank number already in ourdatabase', async () => {
+            const registerUser = {
+                xyusernamexxy: 'fakeuser',
+                xxybanknumberxy: '12345678'
+            };
+
+            // Arrange
+            await UsersTableTestHelper.addUser({ xyusernamexxy: 'fakeuser', xxybanknumberxy: '12345678' }); // memasukan user baru dengan username dicoding
+            const userRepositoryPostgres = new UserRepositoryPostgres(pool, {});
+
+            // Action & Assert
+            await expect(userRepositoryPostgres.verifydoublebankuser(registerUser)).rejects.toThrowError(InvariantError);
+        });
+
         // it('should not throw InvariantError when bank and user bank in different available', async () => {
         //     // Arrange
         //     const userRepositoryPostgres = new UserRepositoryPostgres(pool, {});

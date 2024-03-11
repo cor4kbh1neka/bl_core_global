@@ -20,6 +20,9 @@ class UserRepository {
     async verifybankuser(registerUser) {
         throw new Error('USER_REPOSITORY.METHOD_NOT_IMPLEMENTED');
     }
+    async verifydoublebankuser(registerUser) {
+        throw new Error('USER_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+    }
 
     async getPasswordByUsername(username) {
         throw new Error('USER_REPOSITORY.METHOD_NOT_IMPLEMENTED');

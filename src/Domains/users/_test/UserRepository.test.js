@@ -13,6 +13,7 @@ describe('UserRepository interface', () => {
 
         await expect(userRepository.verifyAvailableUsername('')).rejects.toThrowError('USER_REPOSITORY.METHOD_NOT_IMPLEMENTED');
         await expect(userRepository.verifybankuser('')).rejects.toThrowError('USER_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+        await expect(userRepository.verifydoublebankuser('')).rejects.toThrowError('USER_REPOSITORY.METHOD_NOT_IMPLEMENTED');
         await expect(userRepository.getPasswordByUsername('')).rejects.toThrowError('USER_REPOSITORY.METHOD_NOT_IMPLEMENTED');
         await expect(userRepository.getIdByUsername('')).rejects.toThrowError('USER_REPOSITORY.METHOD_NOT_IMPLEMENTED');
     });

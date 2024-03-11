@@ -39,6 +39,8 @@ describe('UserRepository', () => {
         const mockPasswordHash = new PasswordHash();
 
         /** mocking needed function */
+        mockUserRepository.verifydoublebankuser = jest.fn()
+            .mockImplementation(() => Promise.resolve());
         mockUserRepository.verifyAvailableUsername = jest.fn()
             .mockImplementation(() => Promise.resolve());
         mockUserRepository.verifybankuser = jest.fn()
@@ -69,6 +71,7 @@ describe('UserRepository', () => {
             xyuseridxy: 'user123',
             username: useCasePayload.xyusernamexxy,
         }));
+        expect(mockUserRepository.verifydoublebankuser).toBeCalledWith(useCasePayload);
         expect(mockUserRepository.verifyAvailableUsername).toBeCalledWith(useCasePayload);
         expect(mockUserRepository.verifybankuser).toBeCalledWith(useCasePayload);
 

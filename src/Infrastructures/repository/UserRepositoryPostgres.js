@@ -10,6 +10,25 @@ class UserRepositoryPostgres extends UserRepository {
         this._idGenerator = idGenerator;
     }
 
+
+    async verifydoublebankuser(registerUser) {
+        const { xyusernamexxy, xxybanknumberxy } = registerUser;
+        const query = {
+            text: 'SELECT  xyusernamexxy , xxybanknumberxy FROM users WHERE xyusernamexxy = $1 AND xxybanknumberxy = $2',
+            values: [xyusernamexxy, xxybanknumberxy],
+        };
+
+        const result = await this._pool.query(query);
+        if (result.rowCount == 0) {
+            // if (result.rows[0].xxybanknumberxy == xxybanknumberxy && result.rows[0].xybanknamexyy == xybanknamexyy) {
+            // }
+            return;
+        } else {
+            throw new InvariantError('Register fail, username and rekening already registered !');
+        }
+    }
+
+
     async verifyAvailableUsername(registerUser) {
         const { xyusernamexxy } = registerUser;
 
@@ -18,7 +37,7 @@ class UserRepositoryPostgres extends UserRepository {
         //     values: [xyusernamexxy, xxybanknumberxy, xyx11xuser_mailxxyy],
         // };
         const query = {
-            text: 'SELECT xyusernamexxy FROM users WHERE xyusernamexxy = $1 ',
+            text: 'SELECT xyusernamexxy   FROM users WHERE xyusernamexxy = $1',
             values: [xyusernamexxy],
         };
 
