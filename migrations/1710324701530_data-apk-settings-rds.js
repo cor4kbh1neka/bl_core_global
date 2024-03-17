@@ -7,6 +7,10 @@ exports.up = (pgm) => {
             type: 'SERIAL',
             primaryKey: true,
         },
+        apkid: {
+            type: 'VARCHAR(30)',
+            notNull: true,
+        },
         version: {
             type: 'VARCHAR(18)',
             notNull: true,

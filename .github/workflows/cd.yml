@@ -24,4 +24,5 @@ jobs:
           sudo git pull https://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@github.com/cor4kbh1neka/APISTORE.git
           npm install
           npm run migrate up
+          npm run migrate:test up
           sudo pm2 restart api_sepak

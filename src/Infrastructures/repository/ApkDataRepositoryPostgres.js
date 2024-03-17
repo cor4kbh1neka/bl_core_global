@@ -4,43 +4,50 @@ const ApkRepository = require('../../Domains/apks/ApkRepository');
 
 
 class ApkDataRepositoryPostgres extends ApkRepository {
-    constructor(pool) {
+    constructor(pool, idGenerator) {
         super();
         this._pool = pool;
+        this._idGenerator = idGenerator;
+
     }
 
     async datasettings(dataapks) {
         const { version, home, deposit, server1, server2, server3, update, peraturan, klasemen, promosi, livescore, livechat, whatsapp1, whatsapp2, facebook, telegram, instagram, prediksi } = dataapks;
+        const apkid = `apk${this._idGenerator()}`;
+
 
         const created_at = new Date().toISOString();
         const query = {
-            text: 'INSERT INTO dataapksettings (version, home, deposit, server1, server2, server3, update, peraturan, klasemen, promosi, livescore, livechat, whatsapp1, whatsapp2, facebook, telegram, instagram, prediksi, created_at) VALUES($1, $2, $3, $4, $5, $6, $7, $8 , $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19 )',
-            values: [version, home, deposit, server1, server2, server3, update, peraturan, klasemen, promosi, livescore, livechat, whatsapp1, whatsapp2, facebook, telegram, instagram, prediksi, created_at],
+            text: 'INSERT INTO dataapksettings (apkid ,version, home, deposit, server1, server2, server3, update, peraturan, klasemen, promosi, livescore, livechat, whatsapp1, whatsapp2, facebook, telegram, instagram, prediksi, created_at) VALUES($1, $2, $3, $4, $5, $6, $7, $8 , $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19 , $20) RETURNING apkid',
+            values: [apkid, version, home, deposit, server1, server2, server3, update, peraturan, klasemen, promosi, livescore, livechat, whatsapp1, whatsapp2, facebook, telegram, instagram, prediksi, created_at],
         };
-        await this._pool.query(query);
+        const data = await this._pool.query(query);
+        return data.rows[0].apkid;
     }
 
-    async events(dataapks) {
+    async events(dataapks, apkid) {
         const { icongif, posisi, switchs, bannerurl, linkevent } = dataapks;
         const created_at = new Date().toISOString();
         const query = {
-            text: 'INSERT INTO dataapkevent (icongif, posisi, switchs, bannerurl, linkevent, created_at) VALUES($1, $2, $3, $4, $5, $6) RETURNING idevent',
-            values: [icongif, posisi, switchs, bannerurl, linkevent, created_at],
+            text: 'INSERT INTO dataapkevent (apkid,icongif, posisi, switchs, bannerurl, linkevent, created_at) VALUES($1, $2, $3, $4, $5, $6,$7) RETURNING idevent',
+            values: [apkid, icongif, posisi, switchs, bannerurl, linkevent, created_at],
         };
 
-        const dataid = await this._pool.query(query);
-        return dataid.rows[0];
+        const data = await this._pool.query(query);
+        return data.rows[0].idevent;
+
     }
 
-    async pemberitahuans(dataapks) {
+    async pemberitahuans(dataapks, apkid) {
         const { title, content } = dataapks;
         const created_at = new Date().toISOString();
         const query = {
-            text: 'INSERT INTO dataapknotice (title, content, created_at) VALUES($1, $2, $3) RETURNING idnotice',
-            values: [title, content, created_at],
+            text: 'INSERT INTO dataapknotice (apkid,title, content, created_at) VALUES($1, $2, $3,$4) RETURNING idnotice',
+            values: [apkid, title, content, created_at],
         };
-        const idnotice = await this._pool.query(query);
-        return idnotice.rows[0];
+        const data = await this._pool.query(query);
+        return data.rows[0].idnotice;
+
 
     }
 }

@@ -43,7 +43,9 @@ describe('ApkRepositoryPostgres', () => {
         instagram: 'http://instagram.home',
         prediksi: 'http://prediksi.home',
       });
-      const apkDataRepositoryPostgres = new ApkDataRepositoryPostgres(pool);
+      const fakeIdGenerator = () => '123'; // stub!
+
+      const apkDataRepositoryPostgres = new ApkDataRepositoryPostgres(pool, fakeIdGenerator);
 
       // Action
       await apkDataRepositoryPostgres.datasettings(addApk);
@@ -51,6 +53,40 @@ describe('ApkRepositoryPostgres', () => {
       const datasettings = await AddDataApkTableTestHelper.findVersion('1.0.1');
       expect(datasettings).toHaveLength(1);
     });
+
+    it('should return 201 add apk correctly', async () => {
+      //arrange
+      const addApk = new AddApk({
+        version: '1.0.1',
+        home: 'http://home.home',
+        deposit: 'http://deposit.home',
+        server1: 'http://server1.home',
+        server2: 'http://server2.home',
+        server3: 'http://server3.home',
+        update: 'http://update.home',
+        peraturan: 'http://peraturan.home',
+        klasemen: 'http://klasemen.home',
+        promosi: 'http://promosi.home',
+        livescore: 'http://livescore.home',
+        livechat: 'http://livechat.home',
+        whatsapp1: 'http://whatsapp1.home',
+        whatsapp2: 'http://whatsapp2.home',
+        facebook: 'http://facebook.home',
+        telegram: 'http://telegram.home',
+        instagram: 'http://instagram.home',
+        prediksi: 'http://prediksi.home',
+      });
+      const fakeIdGenerator = () => '123'; // stub!
+
+      const apkDataRepositoryPostgres = new ApkDataRepositoryPostgres(pool, fakeIdGenerator);
+
+      // Action
+      const data = await apkDataRepositoryPostgres.datasettings(addApk);
+      // Assert
+      expect(data).toStrictEqual('apk123');
+    });
+
+
 
     it('should persist add event apk data and success', async () => {
       const addeventApk = new AddeventApk({
@@ -63,7 +99,7 @@ describe('ApkRepositoryPostgres', () => {
       const apkDataRepositoryPostgres = new ApkDataRepositoryPostgres(pool);
 
       // Action
-      const { idevent } = await apkDataRepositoryPostgres.events(addeventApk);
+      const idevent = await apkDataRepositoryPostgres.events(addeventApk);
       // Assert
       const dataevent = await AddApkEventTableTestHelper.findeventbyid(idevent);
       expect(dataevent).toHaveLength(1);
@@ -77,7 +113,7 @@ describe('ApkRepositoryPostgres', () => {
       const apkDataRepositoryPostgres = new ApkDataRepositoryPostgres(pool);
 
       // Action
-      const { idnotice } = await apkDataRepositoryPostgres.pemberitahuans(addPemberitahuanApk);
+      const idnotice = await apkDataRepositoryPostgres.pemberitahuans(addPemberitahuanApk);
       // Assert
       const dataevent = await AddApkPemberitahuanTableTestHelper.findnoticebyid(idnotice);
       expect(dataevent).toHaveLength(1);

@@ -95,7 +95,10 @@ container.register([
             dependencies: [
                 {
                     concrete: pool,
-                }
+                },
+                {
+                    concrete: nanoid,
+                },
             ],
         },
     },

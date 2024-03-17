@@ -12,9 +12,9 @@ class AdddataApkUseCase {
         const dataapks = new AddApk(useCasePayload);
         const dataevent = new AddeventApk(useCasePayload);
         const dataPemberitahuans = new AddPemberitahuanApk(useCasePayload);
-        await this._apkRepository.datasettings(dataapks);
-        await this._apkRepository.events(dataevent);
-        await this._apkRepository.pemberitahuans(dataPemberitahuans);
+        const apkid = await this._apkRepository.datasettings(dataapks);
+        this._apkRepository.events(dataevent, apkid);
+        this._apkRepository.pemberitahuans(dataPemberitahuans, apkid);
         return 'success';
     }
 }

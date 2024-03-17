@@ -42,6 +42,8 @@ describe('APK DATA RESERVER API POST GET DATA', () => {
             content: 'ini ada content pemberitahuanontent',
         };
 
+        const apkid = 'apk123';
+
         const mockAddDataSettings = new AddApk({
             version: useCasePayload.version,
             home: useCasePayload.home,
@@ -81,7 +83,7 @@ describe('APK DATA RESERVER API POST GET DATA', () => {
 
         /** mocking needed function */
         mockapkRepository.datasettings = jest.fn()
-            .mockImplementation(() => Promise.resolve());
+            .mockImplementation(() => Promise.resolve(apkid));
         mockapkRepository.events = jest.fn()
             .mockImplementation(() => Promise.resolve());
         mockapkRepository.pemberitahuans = jest.fn()
@@ -96,8 +98,8 @@ describe('APK DATA RESERVER API POST GET DATA', () => {
 
         expect(dataapkusecase).toStrictEqual('success');
         expect(mockapkRepository.datasettings).toBeCalledWith(mockAddDataSettings);
-        expect(mockapkRepository.events).toBeCalledWith(mockAddDataevent);
-        expect(mockapkRepository.pemberitahuans).toBeCalledWith(mockAddDatapemberitahuans);
+        expect(mockapkRepository.events).toBeCalledWith(mockAddDataevent, apkid);
+        expect(mockapkRepository.pemberitahuans).toBeCalledWith(mockAddDatapemberitahuans, apkid);
     });
 
 });

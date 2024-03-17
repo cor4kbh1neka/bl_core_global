@@ -7,6 +7,12 @@ exports.up = (pgm) => {
             type: 'SERIAL',
             primaryKey: true,
         },
+        apkid: {
+            type: 'VARCHAR(30)',
+            refrences: 'dataapksettings(apkid)',  // Menunjukkan foreign key ke tabel threads
+            notnull: true,
+            onDelete: 'CASCADE',// Tambahkan opsi ON DELETE CASCADE di sini
+        },
         title: {
             type: 'VARCHAR(75)',
             notNull: true,
