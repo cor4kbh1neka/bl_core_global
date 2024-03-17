@@ -5,6 +5,7 @@ const ClientError = require('../../Commons/exceptions/ClientError');
 const DomainErrorTranslator = require('../../Commons/exceptions/DomainErrorTranslator');
 const users = require('../../Interfaces/http/api/users');
 const authentications = require('../../Interfaces/http/api/authentications');
+const apks = require('../../Interfaces/http/api/apks');
 const AuthenticationTokenManager = require('../security/JwtTokenManager');
 
 
@@ -48,10 +49,10 @@ const createServer = async (container) => {
       plugin: authentications,
       options: { container },
     },
-    // {
-    //   plugin: threads,
-    //   options: { container },
-    // },
+    {
+      plugin: apks,
+      options: { container },
+    },
     // {
     //   plugin: comments,
     //   options: { container },

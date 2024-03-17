@@ -60,8 +60,6 @@ describe('/adduserendpoints', () => {
             // eslint-disable-next-line no-undef
             const server = await createServer(container);
 
-
-
             // Action
             const response = await server.inject({
                 method: 'POST',

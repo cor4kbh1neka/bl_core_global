@@ -13,6 +13,8 @@ const PasswordHash = require('../Applications/security/PasswordHash');
 const BcryptPasswordHash = require('./security/BcryptPasswordHash');
 const UserRepository = require('../Domains/users/UserRepository');
 const UserRepositoryPostgres = require('./repository/UserRepositoryPostgres');
+const ApkRepository = require('../Domains/apks/ApkRepository');
+const ApkDataRepositoryPostgres = require('./repository/ApkDataRepositoryPostgres');
 
 
 
@@ -27,6 +29,7 @@ const AuthenticationRepositoryPostgres = require('./repository/AuthenticationRep
 const LogoutUserUseCase = require('../Applications/use_case/LogoutUserUseCase');
 const RefreshAuthenticationUseCase = require('../Applications/use_case/RefreshAuthenticationUseCase');
 const VerifyUserAuthUseCase = require('../Applications/use_case/VerifyUserAuthUseCase');
+const AdddataApkUseCase = require('../Applications/use_case/AdddataApkUseCase');
 
 
 
@@ -50,6 +53,7 @@ container.register([
             ],
         },
     },
+
     {
         key: PasswordHash.name,
         Class: BcryptPasswordHash,
@@ -83,7 +87,18 @@ container.register([
                 },
             ],
         },
-    }
+    },
+    {
+        key: ApkRepository.name,
+        Class: ApkDataRepositoryPostgres,
+        parameter: {
+            dependencies: [
+                {
+                    concrete: pool,
+                }
+            ],
+        },
+    },
 ]);
 
 // registering use cases
@@ -169,6 +184,19 @@ container.register([
                 {
                     name: 'authenticationTokenManager',
                     internal: AuthenticationTokenManager.name,
+                },
+            ],
+        },
+    },
+    {
+        key: AdddataApkUseCase.name,
+        Class: AdddataApkUseCase,
+        parameter: {
+            injectType: 'destructuring',
+            dependencies: [
+                {
+                    name: 'apkRepository',
+                    internal: ApkRepository.name,
                 },
             ],
         },

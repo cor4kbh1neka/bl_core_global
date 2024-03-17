@@ -40,7 +40,20 @@ DomainErrorTranslator._directories = {
   'DELETE_AUTHENTICATION_USE_CASE.PAYLOAD_NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('refresh token harus string'),
   'DELETE_AUTHENTICATION_USE_CASE.PAYLOAD_NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('refresh token harus string'),
 
-  // 'THREAD.NO_HAVE_GOOD_PAYLOAD': new InvariantError('bad payload inserted'),
+  'ADD_APK.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('field settings must be fill , fail !'),
+  'ADD_APK.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('type data apk settings not match'),
+  'ADD_APK.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('restricted input apk settings , watch your input !'),
+  'ADD_EVENT_APK.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('event field must be fill , fail'),
+  'ADD_EVENT_APK.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('event type data not match'),
+  'ADD_EVENT_APK.REGISTER_CONTAIN_RESTRICTED_CHARACTER': new InvariantError('event restricted input watch your input !'),
+
+  'ADD_PEMBERITAHUAN_APK.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('field notice must be fill , fail !'),
+  'ADD_PEMBERITAHUAN_APK.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('notice type data not match'),
+  'ADD_PEMBERITAHUAN_APK.PEMBERITAHUAN_TITLE_LIMIT_CHAR': new InvariantError('title notice too short'),
+  'ADD_PEMBERITAHUAN_APK.PEMBERITAHUAN_CONTENT_LIMIT_CHAR': new InvariantError('content notice too long'),
+
+
+
   // 'THREAD.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('bad payload not meet data type'),
   // 'ADDEDTHREAD.NOT_HAVE_NEEDED_PROPERTY_ID_ADDEDTHREAD': new InvariantError('title not found in addedthread'),
   // 'ADDEDTHREAD.NOT_HAVE_NEEDED_PROPERTY_TITLE_ADDEDTHREAD': new AuthenticationError('body not found in addedthread'),
