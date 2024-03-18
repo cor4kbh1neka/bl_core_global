@@ -51,7 +51,7 @@ describe('entities for APK get data', () => {
             content: 'ini ada content pemberitahuan',
         };
 
-        const { title, content, created_at } = new AddPemberitahuanApk(payload);
+        const { title, content } = new AddPemberitahuanApk(payload);
 
         // Assert
         expect(title).toEqual(payload.title);

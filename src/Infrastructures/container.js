@@ -30,6 +30,7 @@ const LogoutUserUseCase = require('../Applications/use_case/LogoutUserUseCase');
 const RefreshAuthenticationUseCase = require('../Applications/use_case/RefreshAuthenticationUseCase');
 const VerifyUserAuthUseCase = require('../Applications/use_case/VerifyUserAuthUseCase');
 const AdddataApkUseCase = require('../Applications/use_case/AdddataApkUseCase');
+const GetDataApkUseCase = require('../Applications/use_case/GetDataApkUseCase');
 
 
 
@@ -194,6 +195,20 @@ container.register([
     {
         key: AdddataApkUseCase.name,
         Class: AdddataApkUseCase,
+        parameter: {
+            injectType: 'destructuring',
+            dependencies: [
+                {
+                    name: 'apkRepository',
+                    internal: ApkRepository.name,
+                },
+            ],
+        },
+    }
+    ,
+    {
+        key: GetDataApkUseCase.name,
+        Class: GetDataApkUseCase,
         parameter: {
             injectType: 'destructuring',
             dependencies: [

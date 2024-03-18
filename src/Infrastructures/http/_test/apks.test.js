@@ -89,7 +89,29 @@ describe('/adduserendpoints', () => {
 
         });
 
+    });
+    describe('WHEN get /apks/settings/{apkid}', () => {
+        it('should response 201 and persisted comment', async () => {
 
+            const server = await createServer(container);
+            const apkid = 'apk12345';
+
+            await AddDataApkTableTestHelper.addapk({ apkid: 'apk12345', created_at: '2024-02-24T15:25:51.326Z' });
+            await AddApkEventTableTestHelper.addevent({ apkid: 'apk12345', created_at: '2024-02-24T15:25:51.326Z' });
+            await AddApkPemberitahuanTableTestHelper.addnotice({ apkid: 'apk12345', created_at: '2024-02-24T15:25:51.326Z' });
+
+            const response = await server.inject({
+                method: 'GET',
+                url: `/apks/settings/${apkid}`,
+
+            })
+
+            // Assert
+            const responseJson = JSON.parse(response.payload);
+            expect(response.statusCode).toEqual(200);
+            expect(responseJson.status).toEqual('success');
+            expect(responseJson.data.dataapk).toBeDefined();
+        });
 
     });
 

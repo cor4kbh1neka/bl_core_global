@@ -52,6 +52,8 @@ DomainErrorTranslator._directories = {
   'ADD_PEMBERITAHUAN_APK.PEMBERITAHUAN_TITLE_LIMIT_CHAR': new InvariantError('title notice too short'),
   'ADD_PEMBERITAHUAN_APK.PEMBERITAHUAN_CONTENT_LIMIT_CHAR': new InvariantError('content notice too long'),
 
+  'GET_DATA.NOT_CONTAIN_NEEDED_PROPERTY': new NotFoundError('data not found'),
+
 
 
   // 'THREAD.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('bad payload not meet data type'),

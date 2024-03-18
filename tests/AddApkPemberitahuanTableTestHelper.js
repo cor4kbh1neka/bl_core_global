@@ -2,13 +2,13 @@
 const pool = require('../src/Infrastructures/database/postgres/pool');
 
 const AddApkPemberitahuanTableTestHelper = {
-  async addnotice({
+  async addnotice({ apkid = 'apk123',
     title = 'fake title',
     content = 'ini ada content pemberitahuan', created_at = '2024-02-24T15:25:51.326Z'
   }) {
     const query = {
-      text: 'INSERT INTO dataapknotice VALUES($1, $2, $3)',
-      values: [title, content, created_at],
+      text: 'INSERT INTO dataapknotice  (apkid, title, content, created_at) VALUES($1, $2, $3,$4)',
+      values: [apkid, title, content, created_at],
     };
 
     await pool.query(query);

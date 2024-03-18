@@ -9,6 +9,16 @@ const routes = (handler) => ([
       },
     },
   },
+  {
+    method: 'GET',
+    path: '/apks/settings/{apkid}',
+    handler: handler.getApkHandler,
+    options: {
+      cors: {
+        origin: ['*'],
+      },
+    },
+  },
 ]);
 
 module.exports = routes;

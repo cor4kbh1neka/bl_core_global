@@ -96,7 +96,7 @@ describe('APK DATA RESERVER API POST GET DATA', () => {
 
         const dataapkusecase = await getDataUseCase.execute(useCasePayload);
 
-        expect(dataapkusecase).toStrictEqual('success');
+        expect(dataapkusecase).toStrictEqual(apkid);
         expect(mockapkRepository.datasettings).toBeCalledWith(mockAddDataSettings);
         expect(mockapkRepository.events).toBeCalledWith(mockAddDataevent, apkid);
         expect(mockapkRepository.pemberitahuans).toBeCalledWith(mockAddDatapemberitahuans, apkid);

@@ -15,7 +15,7 @@ class AdddataApkUseCase {
         const apkid = await this._apkRepository.datasettings(dataapks);
         this._apkRepository.events(dataevent, apkid);
         this._apkRepository.pemberitahuans(dataPemberitahuans, apkid);
-        return 'success';
+        return apkid;
     }
 }
 

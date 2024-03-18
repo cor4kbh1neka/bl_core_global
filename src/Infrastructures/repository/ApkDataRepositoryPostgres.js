@@ -50,6 +50,40 @@ class ApkDataRepositoryPostgres extends ApkRepository {
 
 
     }
+
+    async getapkdata(apkid) {
+        // Kueri untuk mencari dataapknotice
+        const noticeQuery = {
+            text: 'SELECT * FROM dataapksettings WHERE apkid = $1',
+            values: [apkid],
+        };
+        const noticeData = await this._pool.query(noticeQuery);
+        return noticeData.rows[0];
+    }
+
+
+    async getapkevent(apkid) {
+        // Kueri untuk mencari dataapknotice
+        const eventQuery = {
+            text: 'SELECT * FROM dataapkevent WHERE apkid = $1',
+            values: [apkid],
+        };
+        const eventData = await this._pool.query(eventQuery);
+        return eventData.rows[0];
+
+    }
+
+    async getapknotice(apkid) {
+        // Kueri untuk mencari dataapknotice
+        const settingsQuery = {
+            text: 'SELECT title, content FROM dataapknotice WHERE apkid = $1',
+            values: [apkid],
+        };
+        const settingsData = await this._pool.query(settingsQuery);
+        return settingsData.rows[0];
+
+    }
+
 }
 
 module.exports = ApkDataRepositoryPostgres;
