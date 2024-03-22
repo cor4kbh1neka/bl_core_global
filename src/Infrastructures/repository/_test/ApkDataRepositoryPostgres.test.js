@@ -7,9 +7,22 @@ const AddeventApk = require('../../../Domains/apks/entities/AddeventApk');
 const AddPemberitahuanApk = require('../../../Domains/apks/entities/AddPemberitahuanApk');
 const pool = require('../../database/postgres/pool');
 const ApkDataRepositoryPostgres = require('../ApkDataRepositoryPostgres');
+// const CacheServices = require('../../caching/redis/CacheServices');
+// const redis = require('redis');
 
 
 describe('ApkRepositoryPostgres', () => {
+  // let cacheService;
+
+  // beforeEach(() => {
+  //     // Membuat instance CacheService sebelum setiap tes
+  //     cacheService = new CacheServices();
+  // });
+
+  // afterEach(async () => {
+  //     // Membersihkan cache setelah setiap tes
+  //     await cacheService.delete('testKey');
+  // });
   afterEach(async () => {
     await AddApkEventTableTestHelper.cleanTable();
     await AddApkPemberitahuanTableTestHelper.cleanTable();
@@ -90,6 +103,7 @@ describe('ApkRepositoryPostgres', () => {
 
     it('should persist add event apk data and success', async () => {
       const addeventApk = new AddeventApk({
+        apkid: 'apk123',
         icongif: 'http://icongif.home',
         posisi: '1',
         switchs: true,
@@ -103,10 +117,12 @@ describe('ApkRepositoryPostgres', () => {
       // Assert
       const dataevent = await AddApkEventTableTestHelper.findeventbyid(idevent);
       expect(dataevent).toHaveLength(1);
+
     });
 
     it('should persist add pemberitahuan apk data and success', async () => {
       const addPemberitahuanApk = new AddPemberitahuanApk({
+        apkid: 'apk123',
         title: 'fake title',
         content: 'ini ada content pemberitahuan',
       });
@@ -117,6 +133,7 @@ describe('ApkRepositoryPostgres', () => {
       // Assert
       const dataevent = await AddApkPemberitahuanTableTestHelper.findnoticebyid(idnotice);
       expect(dataevent).toHaveLength(1);
+
     });
   });
 
@@ -172,6 +189,65 @@ describe('ApkRepositoryPostgres', () => {
       });
 
     });
+
+    //   it('should get Data apk data from cache if available', async () => {
+    //     //arrange
+    //     const params = {
+    //         apkid: 'apk1234'
+    //     };
+    //     const expectedData = {
+    //       apkid: 'apk1234',
+    //       version: '1.0.1',
+    //       home: 'http://home.home',
+    //       deposit: 'http://deposit.home',
+    //       server1: 'http://server1.home',
+    //       server2: 'http://server2.home',
+    //       server3: 'http://server3.home',
+    //       update: 'http://update.home',
+    //       peraturan: 'http://peraturan.home',
+    //       klasemen: 'http://klasemen.home',
+    //       promosi: 'http://promosi.home',
+    //       livescore: 'http://livescore.home',
+    //       livechat: 'http://livechat.home',
+    //       whatsapp1: 'http://whatsapp1.home',
+    //       whatsapp2: 'http://whatsapp2.home',
+    //       facebook: 'http://facebook.home',
+    //       telegram: 'http://telegram.home',
+    //       instagram: 'http://instagram.home',
+    //       prediksi: 'http://prediksi.home',
+    //       icongif: 'http://icongif.home',
+    //       posisi: '1',
+    //       switchs: true,
+    //       bannerurl: 'http://update.home',
+    //       linkevent: 'http://peraturan.home',
+    //       title: 'fake title',
+    //       content: 'ini ada content pemberitahuan',
+    //       created_at: '2024-02-24T15:25:51.326Z',
+    //       updated_at: null
+    //     };
+
+    //     // Simpan data ke cache sebelum pengujian
+    //     await cacheService.set(params.apkid, expectedData);
+
+    //     const apkDataRepository = new ApkDataRepositoryPostgres(pool, {});
+
+    //     // Action
+    //     const data = await apkDataRepository.getapkdata(params.apkid);
+
+    //     // Assert
+    //     expect(data).toEqual(expectedData);
+    // });
+
+    // it('should get Data apk data from database if not available in cache', async () => {
+    //     // Simulasikan data tidak tersedia di cache
+    //     await cacheService.delete('apk1234');
+
+    //     // Lakukan pengujian seperti sebelumnya untuk mengambil data dari database
+    //     // Tes ini akan memastikan bahwa data diambil dari database jika tidak ada di cache
+    // });
+
+
+
   });
 });
 

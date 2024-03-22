@@ -25,30 +25,28 @@ class ApkDataRepositoryPostgres extends ApkRepository {
         return data.rows[0].apkid;
     }
 
-    async events(dataapks, apkid) {
-        const { icongif, posisi, switchs, bannerurl, linkevent } = dataapks;
+    async events(dataapks) {
+        const { apkid, icongif, posisi, switchs, bannerurl, linkevent } = dataapks;
         const created_at = new Date().toISOString();
         const query = {
-            text: 'INSERT INTO dataapkevent (apkid,icongif, posisi, switchs, bannerurl, linkevent, created_at) VALUES($1, $2, $3, $4, $5, $6,$7) RETURNING idevent',
+            text: 'INSERT INTO dataapkevent (apkid,icongif, posisi, switchs, bannerurl, linkevent, created_at) VALUES($1, $2, $3, $4, $5, $6,$7) RETURNING apkid',
             values: [apkid, icongif, posisi, switchs, bannerurl, linkevent, created_at],
         };
 
         const data = await this._pool.query(query);
-        return data.rows[0].idevent;
+        return data.rows[0].apkid;
 
     }
 
-    async pemberitahuans(dataapks, apkid) {
-        const { title, content } = dataapks;
+    async pemberitahuans(dataapks) {
+        const { apkid, title, content } = dataapks;
         const created_at = new Date().toISOString();
         const query = {
-            text: 'INSERT INTO dataapknotice (apkid,title, content, created_at) VALUES($1, $2, $3,$4) RETURNING idnotice',
+            text: 'INSERT INTO dataapknotice (apkid,title, content, created_at) VALUES($1, $2, $3,$4) RETURNING apkid',
             values: [apkid, title, content, created_at],
         };
         const data = await this._pool.query(query);
-        return data.rows[0].idnotice;
-
-
+        return data.rows[0].apkid;
     }
 
     async getapkdata(apkid) {

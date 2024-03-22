@@ -1,121 +1,174 @@
-const GetDataApk = require('../../../Domains/apks/entities/GetDataApk');
-const ApkRepository = require('../../../Domains/apks/ApkRepository');
 const GetDataApkUseCase = require('../GetDataApkUseCase');
-
-
-
+const CacheService = require('../../../Applications/caching/CacheService');
 
 describe('APK DATA RESERVER API POST GET DATA', () => {
-    /**
-     * membuat usecase untuk data apk 
-     */
-
-    it('should get data apk successfully', async () => {
-
+    it('should get data apk caching successfully', async () => {
         const params = {
             apkid: 'apk123'
         };
 
-        const resultmocksettings =
-        {
-            apkid: 'apk123',
-            version: '1.0.1',
-            home: 'http://home.home',
-            deposit: 'http://deposit.home',
-            server1: 'http://server1.home',
-            server2: 'http://server2.home',
-            server3: 'http://server3.home',
-            update: 'http://update.home',
-            peraturan: 'http://peraturan.home',
-            klasemen: 'http://klasemen.home',
-            promosi: 'http://promosi.home',
-            livescore: 'http://livescore.home',
-            livechat: 'http://livechat.home',
-            whatsapp1: 'http://whatsapp1.home',
-            whatsapp2: 'http://whatsapp2.home',
-            facebook: 'http://facebook.home',
-            telegram: 'http://telegram.home',
-            instagram: 'http://instagram.home',
-            prediksi: 'http://prediksi.home',
-            apkid: 'apk123',
-            icongif: 'http://icongif.home#',
-            posisi: '1',
-            switchs: true,
-            bannerurl: 'http://update.home',
-            linkevent: 'http://peraturan.home',
-            apkid: 'apk123',
-            title: 'fake title',
-            content: 'ini ada content pemberitahuan',
+        const resultmocksettings = {
+            masterdata: {
+                apkid: 'apk123',
+                version: '1.0.1',
+                home: 'http://home.home',
+                deposit: 'http://deposit.home',
+                server1: 'http://server1.home',
+                server2: 'http://server2.home',
+                server3: 'http://server3.home',
+                update: 'http://update.home',
+                peraturan: 'http://peraturan.home',
+                klasemen: 'http://klasemen.home',
+                promosi: 'http://promosi.home',
+                livescore: 'http://livescore.home',
+                livechat: 'http://livechat.home',
+                whatsapp1: 'http://whatsapp1.home',
+                whatsapp2: 'http://whatsapp2.home',
+                facebook: 'http://facebook.home',
+                telegram: 'http://telegram.home',
+                instagram: 'http://instagram.home',
+                prediksi: 'http://prediksi.home',
+            },
+            events: {
+                apkid: 'apk123',
+                icongif: 'http://icongif.home#',
+                posisi: '1',
+                switchs: true,
+                bannerurl: 'http://update.home',
+                linkevent: 'http://peraturan.home',
+            }, notice: {
+                title: 'fake title',
+                content: 'ini ada content pemberitahuan',
+            },
             created_at: '2024-02-24T15:25:51.326Z',
             updated_at: '2024-02-24T15:25:51.326Z'
         };
 
-
-        const mockDatasettings =
-        {
-            apkid: 'apk123',
-            version: '1.0.1',
-            home: 'http://home.home',
-            deposit: 'http://deposit.home',
-            server1: 'http://server1.home',
-            server2: 'http://server2.home',
-            server3: 'http://server3.home',
-            update: 'http://update.home',
-            peraturan: 'http://peraturan.home',
-            klasemen: 'http://klasemen.home',
-            promosi: 'http://promosi.home',
-            livescore: 'http://livescore.home',
-            livechat: 'http://livechat.home',
-            whatsapp1: 'http://whatsapp1.home',
-            whatsapp2: 'http://whatsapp2.home',
-            facebook: 'http://facebook.home',
-            telegram: 'http://telegram.home',
-            instagram: 'http://instagram.home',
-            prediksi: 'http://prediksi.home',
-            created_at: '2024-02-24T15:25:51.326Z',
-            updated_at: '2024-02-24T15:25:51.326Z'
-        };
-
-
-        const mockdataevent = {
-            apkid: 'apk123',
-            icongif: 'http://icongif.home#',
-            posisi: '1',
-            switchs: true,
-            bannerurl: 'http://update.home',
-            linkevent: 'http://peraturan.home',
-        };
-
-        const mockdatapemberitahuan = {
-            apkid: 'apk123',
-            title: 'fake title',
-            content: 'ini ada content pemberitahuan',
-        };
-
-
-        /** creating dependency of use case */
-        const mockapkRepository = new ApkRepository();
-
-        /** mocking needed function */
-        mockapkRepository.getapkdata = jest.fn()
-            .mockImplementation(() => Promise.resolve(mockDatasettings));
-        mockapkRepository.getapkevent = jest.fn()
-            .mockImplementation(() => Promise.resolve(mockdataevent));
-        mockapkRepository.getapknotice = jest.fn()
-            .mockImplementation(() => Promise.resolve(mockdatapemberitahuan));
-
-
+        const mockcacheService = new CacheService();
+        mockcacheService.get = jest.fn().mockResolvedValue(JSON.stringify(resultmocksettings));
 
         const getDataApkUseCase = new GetDataApkUseCase({
-            apkRepository: mockapkRepository,
+            cacheServices: mockcacheService
         });
 
         const dataapkusecase = await getDataApkUseCase.execute(params);
 
-        expect(mockapkRepository.getapkdata).toBeCalledWith(params.apkid);
-        expect(mockapkRepository.getapkdata).toBeCalledWith(params.apkid);
-        expect(mockapkRepository.getapkdata).toBeCalledWith(params.apkid);
-        expect(dataapkusecase).toEqual(resultmocksettings);
+        expect(mockcacheService.get).toBeCalledWith(`apkid:${params.apkid}`);
+        expect(dataapkusecase).toEqual({
+            data: resultmocksettings,
+            headers: {
+                'X-Data-Source': 'cache',
+            }
+        });
     });
 
+    it('should get data apk successfully', async () => {
+        const params = {
+            apkid: 'apk123'
+        };
+
+        const resultmocksettings = {
+            masterdata: {
+                apkid: 'apk123',
+                version: '1.0.1',
+                home: 'http://home.home',
+                deposit: 'http://deposit.home',
+                server1: 'http://server1.home',
+                server2: 'http://server2.home',
+                server3: 'http://server3.home',
+                update: 'http://update.home',
+                peraturan: 'http://peraturan.home',
+                klasemen: 'http://klasemen.home',
+                promosi: 'http://promosi.home',
+                livescore: 'http://livescore.home',
+                livechat: 'http://livechat.home',
+                whatsapp1: 'http://whatsapp1.home',
+                whatsapp2: 'http://whatsapp2.home',
+                facebook: 'http://facebook.home',
+                telegram: 'http://telegram.home',
+                instagram: 'http://instagram.home',
+                prediksi: 'http://prediksi.home',
+            },
+            events: {
+                icongif: 'http://icongif.home#',
+                posisi: '1',
+                switchs: true,
+                bannerurl: 'http://update.home',
+                linkevent: 'http://peraturan.home',
+            }, notice: {
+                title: 'fake title',
+                content: 'ini ada content pemberitahuan',
+            },
+            created_at: '2024-02-24T15:25:51.326Z',
+            updated_at: '2024-02-24T15:25:51.326Z'
+        };
+
+        const resultmocksettingss = {
+            apkid: 'apk123',
+            version: '1.0.1',
+            home: 'http://home.home',
+            deposit: 'http://deposit.home',
+            server1: 'http://server1.home',
+            server2: 'http://server2.home',
+            server3: 'http://server3.home',
+            update: 'http://update.home',
+            peraturan: 'http://peraturan.home',
+            klasemen: 'http://klasemen.home',
+            promosi: 'http://promosi.home',
+            livescore: 'http://livescore.home',
+            livechat: 'http://livechat.home',
+            whatsapp1: 'http://whatsapp1.home',
+            whatsapp2: 'http://whatsapp2.home',
+            facebook: 'http://facebook.home',
+            telegram: 'http://telegram.home',
+            instagram: 'http://instagram.home',
+            prediksi: 'http://prediksi.home',
+            created_at: '2024-02-24T15:25:51.326Z',
+            updated_at: '2024-02-24T15:25:51.326Z'
+        }
+
+
+        const resultmockevent = {
+            icongif: 'http://icongif.home#',
+            posisi: '1',
+            switchs: true,
+            bannerurl: 'http://update.home',
+            linkevent: 'http://peraturan.home',
+        }
+
+
+
+        const resultmocknotice = {
+            title: 'fake title',
+            content: 'ini ada content pemberitahuan',
+        }
+
+        const mockcacheService = new CacheService();
+        mockcacheService.get = jest.fn().mockRejectedValue(new Error('Cache tidak ditemukan'));
+        mockcacheService.delete = jest.fn().mockResolvedValue();
+        mockcacheService.set = jest.fn().mockResolvedValue();
+
+        const apkRepository = {
+            getapkdata: jest.fn().mockResolvedValue(resultmocksettingss),
+            getapkevent: jest.fn().mockResolvedValue(resultmockevent),
+            getapknotice: jest.fn().mockResolvedValue(resultmocknotice)
+        };
+
+        const getDataApkUseCase = new GetDataApkUseCase({
+            apkRepository,
+            cacheServices: mockcacheService
+        });
+
+        const dataapkusecase = await getDataApkUseCase.execute(params);
+
+        expect(mockcacheService.get).toBeCalledWith(`apkid:${params.apkid}`);
+        expect(apkRepository.getapkdata).toBeCalledWith(params.apkid);
+        expect(apkRepository.getapkevent).toBeCalledWith(params.apkid);
+        expect(apkRepository.getapknotice).toBeCalledWith(params.apkid);
+        expect(mockcacheService.delete).toBeCalledWith(`apkid:${params.apkid}`);
+        expect(mockcacheService.set).toBeCalledWith(`apkid:${params.apkid}`, JSON.stringify(resultmocksettings));
+        expect(dataapkusecase).toEqual({
+            data: resultmocksettings
+        });
+    });
 });

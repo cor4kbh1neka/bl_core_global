@@ -7,6 +7,8 @@ const { nanoid } = require('nanoid');
 const bcrypt = require('bcrypt');
 const Jwt = require('@hapi/jwt');
 const pool = require('./database/postgres/pool');
+const redis = require('redis');
+
 
 // service (repository, helper, manager, etc)
 const PasswordHash = require('../Applications/security/PasswordHash');
@@ -31,6 +33,8 @@ const RefreshAuthenticationUseCase = require('../Applications/use_case/RefreshAu
 const VerifyUserAuthUseCase = require('../Applications/use_case/VerifyUserAuthUseCase');
 const AdddataApkUseCase = require('../Applications/use_case/AdddataApkUseCase');
 const GetDataApkUseCase = require('../Applications/use_case/GetDataApkUseCase');
+const CacheServices = require('./caching/redis/CacheServices');
+
 
 
 
@@ -100,6 +104,20 @@ container.register([
                 {
                     concrete: nanoid,
                 },
+                {
+                    concrete: redis,
+                }
+            ],
+        },
+    },
+    {
+        key: CacheServices.name,
+        Class: CacheServices,
+        parameter: {
+            dependencies: [
+                {
+                    concrete: redis,
+                }
             ],
         },
     },
@@ -202,6 +220,11 @@ container.register([
                     name: 'apkRepository',
                     internal: ApkRepository.name,
                 },
+
+                {
+                    name: 'cacheServices',
+                    internal: CacheServices.name,
+                },
             ],
         },
     }
@@ -215,6 +238,10 @@ container.register([
                 {
                     name: 'apkRepository',
                     internal: ApkRepository.name,
+                },
+                {
+                    name: 'cacheServices',
+                    internal: CacheServices.name,
                 },
             ],
         },

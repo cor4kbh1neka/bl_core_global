@@ -2,7 +2,8 @@
 const pool = require('../src/Infrastructures/database/postgres/pool');
 
 const AddApkPemberitahuanTableTestHelper = {
-  async addnotice({ apkid = 'apk123',
+  async addnotice({
+    apkid = 'apk123',
     title = 'fake title',
     content = 'ini ada content pemberitahuan', created_at = '2024-02-24T15:25:51.326Z'
   }) {
@@ -16,7 +17,7 @@ const AddApkPemberitahuanTableTestHelper = {
 
   async findnoticebyid(id) {
     const query = {
-      text: 'SELECT * FROM dataapknotice WHERE idnotice = $1',
+      text: 'SELECT * FROM dataapknotice WHERE apkid = $1',
       values: [id],
     };
 

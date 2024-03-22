@@ -10,6 +10,7 @@ exports.up = (pgm) => {
         apkid: {
             type: 'VARCHAR(30)',
             notNull: true,
+            unique: true,
         },
         version: {
             type: 'VARCHAR(18)',

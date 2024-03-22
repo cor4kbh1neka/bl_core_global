@@ -1,6 +1,7 @@
 const Hapi = require('@hapi/hapi');
 const Jwt = require('@hapi/jwt');
 
+
 const ClientError = require('../../Commons/exceptions/ClientError');
 const DomainErrorTranslator = require('../../Commons/exceptions/DomainErrorTranslator');
 const users = require('../../Interfaces/http/api/users');
@@ -52,11 +53,7 @@ const createServer = async (container) => {
     {
       plugin: apks,
       options: { container },
-    },
-    // {
-    //   plugin: comments,
-    //   options: { container },
-    // },
+    }
 
   ]);
 

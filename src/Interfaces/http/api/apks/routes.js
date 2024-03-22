@@ -10,6 +10,26 @@ const routes = (handler) => ([
     },
   },
   {
+    method: 'POST',
+    path: '/apks/settings/event',
+    handler: handler.postApkEventHandler,
+    options: {
+      cors: {
+        origin: ['*'],
+      },
+    },
+  },
+  {
+    method: 'POST',
+    path: '/apks/settings/notice',
+    handler: handler.postApkNoticeHandler,
+    options: {
+      cors: {
+        origin: ['*'],
+      },
+    },
+  },
+  {
     method: 'GET',
     path: '/apks/settings/{apkid}',
     handler: handler.getApkHandler,

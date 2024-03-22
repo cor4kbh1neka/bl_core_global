@@ -2,9 +2,10 @@ class AddeventApk {
     constructor(payload) {
         this._verifyPayload(payload);
 
-        const { icongif, posisi, bannerurl, linkevent, switchs } = payload;
+        const { apkid, icongif, posisi, bannerurl, linkevent, switchs } = payload;
 
 
+        this.apkid = apkid;
         this.icongif = icongif;
         this.posisi = posisi;
         this.bannerurl = bannerurl;
@@ -14,12 +15,12 @@ class AddeventApk {
 
     }
 
-    _verifyPayload({ icongif, posisi, bannerurl, linkevent, switchs }) {
-        if (!icongif || !posisi || !bannerurl || !linkevent || !switchs) {
+    _verifyPayload({ apkid, icongif, posisi, bannerurl, linkevent, switchs }) {
+        if (!apkid || !icongif || !posisi || !bannerurl || !linkevent || !switchs) {
             throw new Error('ADD_EVENT_APK.NOT_CONTAIN_NEEDED_PROPERTY');
         }
 
-        if (typeof icongif !== 'string' || typeof posisi !== 'string' || typeof bannerurl !== 'string' || typeof linkevent !== 'string' ||
+        if (typeof apkid !== 'string' || typeof icongif !== 'string' || typeof posisi !== 'string' || typeof bannerurl !== 'string' || typeof linkevent !== 'string' ||
             typeof switchs !== 'boolean') {
             throw new Error('ADD_EVENT_APK.NOT_MEET_DATA_TYPE_SPECIFICATION');
         }

@@ -21,7 +21,7 @@ const AddApkEventTableTestHelper = {
 
   async findeventbyid(id) {
     const query = {
-      text: 'SELECT * FROM dataapkevent WHERE idevent = $1',
+      text: 'SELECT * FROM dataapkevent WHERE apkid = $1',
       values: [id],
     };
 

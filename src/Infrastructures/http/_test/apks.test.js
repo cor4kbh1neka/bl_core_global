@@ -64,11 +64,59 @@ describe('/adduserendpoints', () => {
                 telegram: 'http://telegram.home',
                 instagram: 'http://instagram.home',
                 prediksi: 'http://prediksi.home',
+
+            };
+
+            // eslint-disable-next-line no-undef
+            const server = await createServer(container);
+
+            // Action
+            const response = await server.inject({
+                method: 'POST',
+                url: '/apks/settings',
+                payload: requestPayload,
+            });
+            // Assert
+            const responseJson = JSON.parse(response.payload);
+            expect(response.statusCode).toEqual(201);
+            expect(responseJson.status).toEqual('success');
+
+        });
+
+        it('should response 201 and persisted event data', async () => {
+            // Arrange
+            const requestPayload = {
+
+                apkid: 'apk123',
                 icongif: 'http://icongif.home',
                 posisi: '1',
                 switchs: true,
                 bannerurl: 'http://update.home',
                 linkevent: 'http://peraturan.home',
+
+            };
+
+            // eslint-disable-next-line no-undef
+            const server = await createServer(container);
+
+            // Action
+            const response = await server.inject({
+                method: 'POST',
+                url: '/apks/settings/event',
+                payload: requestPayload,
+            });
+            // Assert
+            const responseJson = JSON.parse(response.payload);
+            expect(response.statusCode).toEqual(201);
+            expect(responseJson.status).toEqual('success');
+
+        });
+
+
+        it('should response 201 and persisted notice data', async () => {
+            // Arrange
+            const requestPayload = {
+                apkid: 'apk123',
                 title: 'fake title',
                 content: 'ini ada content pemberitahuanontent',
             };
@@ -79,7 +127,7 @@ describe('/adduserendpoints', () => {
             // Action
             const response = await server.inject({
                 method: 'POST',
-                url: '/apks/settings',
+                url: '/apks/settings/notice',
                 payload: requestPayload,
             });
             // Assert
@@ -110,7 +158,7 @@ describe('/adduserendpoints', () => {
             const responseJson = JSON.parse(response.payload);
             expect(response.statusCode).toEqual(200);
             expect(responseJson.status).toEqual('success');
-            expect(responseJson.data.dataapk).toBeDefined();
+            expect(responseJson.data).toBeDefined();
         });
 
     });
