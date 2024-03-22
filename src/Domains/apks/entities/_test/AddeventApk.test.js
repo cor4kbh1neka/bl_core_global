@@ -1,4 +1,4 @@
-const AddEventApk = require('../AddEventApk.js');
+const AddEventApk = require('../AddeventApk.js');
 
 
 describe('entities for APK get data', () => {
