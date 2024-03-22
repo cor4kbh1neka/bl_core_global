@@ -144,110 +144,92 @@ describe('ApkRepositoryPostgres', () => {
       }
       await AddDataApkTableTestHelper.addapk({ apkid: 'apk1234', created_at: '2024-02-24T15:25:51.326Z' });
       await AddApkEventTableTestHelper.addevent({ apkid: 'apk1234', created_at: '2024-02-24T15:25:51.326Z' });
+      await AddApkEventTableTestHelper.addevent({ apkid: 'apk1234', created_at: '2024-02-24T15:25:51.326Z' });
+      await AddApkPemberitahuanTableTestHelper.addnotice({ apkid: 'apk1234', created_at: '2024-02-24T15:25:51.326Z' });
       await AddApkPemberitahuanTableTestHelper.addnotice({ apkid: 'apk1234', created_at: '2024-02-24T15:25:51.326Z' });
 
       const apkDataRepository = new ApkDataRepositoryPostgres(pool, {});
 
-      const { idapk, ...getDataApk } = await apkDataRepository.getapkdata(params.apkid);
+      const { idapk, created_at, updated_at, ...getDataApk } = await apkDataRepository.getapkdata(params.apkid);
       const getNotice = await apkDataRepository.getapknotice(params.apkid);
-      const { idevent, ...getEvent } = await apkDataRepository.getapkevent(params.apkid);
+      const { apkid, ...getEvent } = await apkDataRepository.getapkevent(params.apkid);
+
+      const events = [];
+      for (const key in getEvent) {
+        const { apkid, idapk, idevent, ...eventData } = getEvent[key];
+        events.push({
+          ...eventData
+        });
+      }
+
+      const notice = [];
+      for (const key in getNotice) {
+        notice.push({
+          ...getNotice[key]
+        });
+      }
 
       const mergedData = {
-        ...getDataApk,
-        ...getEvent,
-        ...getNotice
+        masterdata: {
+          ...getDataApk
+        },
+        events: events,
+        notice: notice,
+        created_at,
+        updated_at
       };
+
       expect(mergedData).toStrictEqual({
-        apkid: 'apk1234',
-        version: '1.0.1',
-        home: 'http://home.home',
-        deposit: 'http://deposit.home',
-        server1: 'http://server1.home',
-        server2: 'http://server2.home',
-        server3: 'http://server3.home',
-        update: 'http://update.home',
-        peraturan: 'http://peraturan.home',
-        klasemen: 'http://klasemen.home',
-        promosi: 'http://promosi.home',
-        livescore: 'http://livescore.home',
-        livechat: 'http://livechat.home',
-        whatsapp1: 'http://whatsapp1.home',
-        whatsapp2: 'http://whatsapp2.home',
-        facebook: 'http://facebook.home',
-        telegram: 'http://telegram.home',
-        instagram: 'http://instagram.home',
-        prediksi: 'http://prediksi.home',
-        icongif: 'http://icongif.home',
-        posisi: '1',
-        switchs: true,
-        bannerurl: 'http://update.home',
-        linkevent: 'http://peraturan.home',
-        title: 'fake title',
-        content: 'ini ada content pemberitahuan',
+        masterdata: {
+          apkid: 'apk1234',
+          version: '1.0.1',
+          home: 'http://home.home',
+          deposit: 'http://deposit.home',
+          server1: 'http://server1.home',
+          server2: 'http://server2.home',
+          server3: 'http://server3.home',
+          update: 'http://update.home',
+          peraturan: 'http://peraturan.home',
+          klasemen: 'http://klasemen.home',
+          promosi: 'http://promosi.home',
+          livescore: 'http://livescore.home',
+          livechat: 'http://livechat.home',
+          whatsapp1: 'http://whatsapp1.home',
+          whatsapp2: 'http://whatsapp2.home',
+          facebook: 'http://facebook.home',
+          telegram: 'http://telegram.home',
+          instagram: 'http://instagram.home',
+          prediksi: 'http://prediksi.home'
+        },
+        events: [
+          {
+            icongif: 'http://icongif.home',
+            posisi: '1',
+            switchs: true,
+            bannerurl: 'http://update.home',
+            linkevent: 'http://peraturan.home',
+            created_at: '2024-02-24T15:25:51.326Z',
+            updated_at: null
+          },
+          {
+            icongif: 'http://icongif.home',
+            posisi: '1',
+            switchs: true,
+            bannerurl: 'http://update.home',
+            linkevent: 'http://peraturan.home',
+            created_at: '2024-02-24T15:25:51.326Z',
+            updated_at: null
+          }
+        ],
+        notice: [
+          { title: 'fake title', content: 'ini ada content pemberitahuan' },
+          { title: 'fake title', content: 'ini ada content pemberitahuan' }
+        ],
         created_at: '2024-02-24T15:25:51.326Z',
         updated_at: null
       });
 
     });
-
-    //   it('should get Data apk data from cache if available', async () => {
-    //     //arrange
-    //     const params = {
-    //         apkid: 'apk1234'
-    //     };
-    //     const expectedData = {
-    //       apkid: 'apk1234',
-    //       version: '1.0.1',
-    //       home: 'http://home.home',
-    //       deposit: 'http://deposit.home',
-    //       server1: 'http://server1.home',
-    //       server2: 'http://server2.home',
-    //       server3: 'http://server3.home',
-    //       update: 'http://update.home',
-    //       peraturan: 'http://peraturan.home',
-    //       klasemen: 'http://klasemen.home',
-    //       promosi: 'http://promosi.home',
-    //       livescore: 'http://livescore.home',
-    //       livechat: 'http://livechat.home',
-    //       whatsapp1: 'http://whatsapp1.home',
-    //       whatsapp2: 'http://whatsapp2.home',
-    //       facebook: 'http://facebook.home',
-    //       telegram: 'http://telegram.home',
-    //       instagram: 'http://instagram.home',
-    //       prediksi: 'http://prediksi.home',
-    //       icongif: 'http://icongif.home',
-    //       posisi: '1',
-    //       switchs: true,
-    //       bannerurl: 'http://update.home',
-    //       linkevent: 'http://peraturan.home',
-    //       title: 'fake title',
-    //       content: 'ini ada content pemberitahuan',
-    //       created_at: '2024-02-24T15:25:51.326Z',
-    //       updated_at: null
-    //     };
-
-    //     // Simpan data ke cache sebelum pengujian
-    //     await cacheService.set(params.apkid, expectedData);
-
-    //     const apkDataRepository = new ApkDataRepositoryPostgres(pool, {});
-
-    //     // Action
-    //     const data = await apkDataRepository.getapkdata(params.apkid);
-
-    //     // Assert
-    //     expect(data).toEqual(expectedData);
-    // });
-
-    // it('should get Data apk data from database if not available in cache', async () => {
-    //     // Simulasikan data tidak tersedia di cache
-    //     await cacheService.delete('apk1234');
-
-    //     // Lakukan pengujian seperti sebelumnya untuk mengambil data dari database
-    //     // Tes ini akan memastikan bahwa data diambil dari database jika tidak ada di cache
-    // });
-
-
-
   });
 });
 

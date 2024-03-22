@@ -67,7 +67,7 @@ class ApkDataRepositoryPostgres extends ApkRepository {
             values: [apkid],
         };
         const eventData = await this._pool.query(eventQuery);
-        return eventData.rows[0];
+        return eventData.rows;
 
     }
 
@@ -78,7 +78,7 @@ class ApkDataRepositoryPostgres extends ApkRepository {
             values: [apkid],
         };
         const settingsData = await this._pool.query(settingsQuery);
-        return settingsData.rows[0];
+        return settingsData.rows;
 
     }
 

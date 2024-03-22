@@ -29,17 +29,26 @@ describe('APK DATA RESERVER API POST GET DATA', () => {
                 instagram: 'http://instagram.home',
                 prediksi: 'http://prediksi.home',
             },
-            events: {
-                apkid: 'apk123',
-                icongif: 'http://icongif.home#',
-                posisi: '1',
-                switchs: true,
-                bannerurl: 'http://update.home',
-                linkevent: 'http://peraturan.home',
-            }, notice: {
-                title: 'fake title',
-                content: 'ini ada content pemberitahuan',
-            },
+            events: [
+                {
+                    icongif: 'http://icongif.home#',
+                    posisi: '1',
+                    switchs: true,
+                    bannerurl: 'http://update.home',
+                    linkevent: 'http://peraturan.home'
+                },
+                {
+                    icongif: 'http://icongif.home2',
+                    posisi: '1',
+                    switchs: true,
+                    bannerurl: 'http://update.home2',
+                    linkevent: 'http://peraturan.home2'
+                }
+            ],
+            notice: [
+                { title: 'fake title', content: 'ini ada content pemberitahuan' },
+                { title: 'fake title2', content: 'ini ada content pemberitahuan2' }
+            ],
             created_at: '2024-02-24T15:25:51.326Z',
             updated_at: '2024-02-24T15:25:51.326Z'
         };
@@ -89,16 +98,26 @@ describe('APK DATA RESERVER API POST GET DATA', () => {
                 instagram: 'http://instagram.home',
                 prediksi: 'http://prediksi.home',
             },
-            events: {
-                icongif: 'http://icongif.home#',
-                posisi: '1',
-                switchs: true,
-                bannerurl: 'http://update.home',
-                linkevent: 'http://peraturan.home',
-            }, notice: {
-                title: 'fake title',
-                content: 'ini ada content pemberitahuan',
-            },
+            events: [
+                {
+                    icongif: 'http://icongif.home#',
+                    posisi: '1',
+                    switchs: true,
+                    bannerurl: 'http://update.home',
+                    linkevent: 'http://peraturan.home'
+                },
+                {
+                    icongif: 'http://icongif.home2',
+                    posisi: '1',
+                    switchs: true,
+                    bannerurl: 'http://update.home2',
+                    linkevent: 'http://peraturan.home2'
+                }
+            ],
+            notice: [
+                { title: 'fake title', content: 'ini ada content pemberitahuan' },
+                { title: 'fake title2', content: 'ini ada content pemberitahuan2' }
+            ],
             created_at: '2024-02-24T15:25:51.326Z',
             updated_at: '2024-02-24T15:25:51.326Z'
         };
@@ -129,19 +148,28 @@ describe('APK DATA RESERVER API POST GET DATA', () => {
 
 
         const resultmockevent = {
-            icongif: 'http://icongif.home#',
-            posisi: '1',
-            switchs: true,
-            bannerurl: 'http://update.home',
-            linkevent: 'http://peraturan.home',
+            '0': {
+                icongif: 'http://icongif.home#',
+                posisi: '1',
+                switchs: true,
+                bannerurl: 'http://update.home',
+                linkevent: 'http://peraturan.home'
+            },
+            '1': {
+                icongif: 'http://icongif.home2',
+                posisi: '1',
+                switchs: true,
+                bannerurl: 'http://update.home2',
+                linkevent: 'http://peraturan.home2'
+            }
         }
 
 
 
-        const resultmocknotice = {
-            title: 'fake title',
-            content: 'ini ada content pemberitahuan',
-        }
+        const resultmocknotice = [
+            { title: 'fake title', content: 'ini ada content pemberitahuan' },
+            { title: 'fake title2', content: 'ini ada content pemberitahuan2' }
+        ]
 
         const mockcacheService = new CacheService();
         mockcacheService.get = jest.fn().mockRejectedValue(new Error('Cache tidak ditemukan'));
