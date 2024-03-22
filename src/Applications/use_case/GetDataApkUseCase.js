@@ -59,7 +59,6 @@ class GetDataApkUseCase {
             const data = {
                 data: dataapkfull,
             };
-            console.log(data);
 
             return data;
         };
