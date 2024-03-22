@@ -39,7 +39,6 @@ class GetDataApkUseCase {
                 created_at,
                 updated_at
             };
-            console.log(dataapkfull);
             // console.log('ini params apk id' + params.apkid);
             await this._cacheService.delete(`apkid:${params.apkid}`);
             await this._cacheService.set(`apkid:${params.apkid}`, JSON.stringify(dataapkfull));
