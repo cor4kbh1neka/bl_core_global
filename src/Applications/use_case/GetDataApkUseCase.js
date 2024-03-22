@@ -19,7 +19,7 @@ class GetDataApkUseCase {
                     'X-Data-Source': 'cache',
                 },
             };
-
+            console.log(data);
             return data;
         } catch (error) {
             const { idapk, created_at, updated_at, ...getDataApk } = await this._apkRepository.getapkdata(params.apkid);
@@ -59,6 +59,8 @@ class GetDataApkUseCase {
             const data = {
                 data: dataapkfull,
             };
+            console.log(data);
+
             return data;
         };
     }
