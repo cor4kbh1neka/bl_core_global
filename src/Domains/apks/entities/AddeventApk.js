@@ -25,7 +25,7 @@ class AddeventApk {
             throw new Error('ADD_EVENT_APK.NOT_MEET_DATA_TYPE_SPECIFICATION');
         }
 
-        if (!icongif.match(/^[a-zA-Z0-9\-_~:/?#\[\]@!$&'()*+,;=.]+$/) || !bannerurl.match(/^[a-zA-Z0-9\-_~:/?#\[\]@!$&'()*+,;=.]+$/) || !linkevent.match(/^[a-zA-Z0-9\-_~:/?#\[\]@!$&'()*+,;=.]+$/) || !posisi.match(/^[0-9]+$/)) {
+        if (!icongif.match(/^[a-zA-Z0-9\-_~:/?#\[\]@!$&'()*+,;=.]+$/) || !bannerurl.match(/^[a-zA-Z0-9\-_~:/?#\[\]@!$&'()*+,;=.]+$/) || !linkevent.match(/^[a-zA-Z0-9\-_~:%/?#\[\]@!$&'()*+,;=.]+$/) || !posisi.match(/^[0-9]+$/)) {
             throw new Error('ADD_EVENT_APK.REGISTER_CONTAIN_RESTRICTED_CHARACTER');
         }
     }
