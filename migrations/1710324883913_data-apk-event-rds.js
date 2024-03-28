@@ -26,7 +26,7 @@ exports.up = (pgm) => {
             notNull: true,
         },
         bannerurl: {
-            type: 'VARCHAR(60)',
+            type: 'VARCHAR(120)',
             notNull: true,
         },
         linkevent: {
