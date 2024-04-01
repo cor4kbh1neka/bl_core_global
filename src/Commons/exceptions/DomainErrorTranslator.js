@@ -54,6 +54,12 @@ DomainErrorTranslator._directories = {
 
   'GET_DATA.NOT_CONTAIN_NEEDED_PROPERTY': new NotFoundError('data not found'),
 
+  'ADD_DP_BANK.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('data bank tidak boleh kosong'),
+  'ADD_DP_BANK.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('type data input salah, cek lagi !'),
+  'ADD_DP_BANK.REGISTER_CONTAIN_RESTRICTED_CHARACTER': new InvariantError('masukkan character yang sesuai !'),
+
+
+
 
 
   // 'THREAD.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('bad payload not meet data type'),

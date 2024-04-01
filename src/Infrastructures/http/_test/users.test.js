@@ -71,11 +71,7 @@ describe('/adduserendpoints', () => {
             expect(response.statusCode).toEqual(201);
             expect(responseJson.status).toEqual('success');
             expect(responseJson.data.addedUser).toBeDefined();
-
         });
-
-
-
     });
 
 

@@ -16,7 +16,9 @@ const BcryptPasswordHash = require('./security/BcryptPasswordHash');
 const UserRepository = require('../Domains/users/UserRepository');
 const UserRepositoryPostgres = require('./repository/UserRepositoryPostgres');
 const ApkRepository = require('../Domains/apks/ApkRepository');
+const BnksRepository = require('../Domains/banks/BnksRepository');
 const ApkDataRepositoryPostgres = require('./repository/ApkDataRepositoryPostgres');
+const ApkBnksRepositoryPostgres = require('./repository/ApkBnksRepositoryPostgres');
 
 
 
@@ -33,10 +35,8 @@ const RefreshAuthenticationUseCase = require('../Applications/use_case/RefreshAu
 const VerifyUserAuthUseCase = require('../Applications/use_case/VerifyUserAuthUseCase');
 const AdddataApkUseCase = require('../Applications/use_case/AdddataApkUseCase');
 const GetDataApkUseCase = require('../Applications/use_case/GetDataApkUseCase');
+const AddbnksUseCase = require('../Applications/use_case/AddbnksUseCase');
 const CacheServices = require('./caching/redis/CacheServices');
-
-
-
 
 
 // creating container
@@ -90,6 +90,20 @@ container.register([
                 {
                     concrete: Jwt.token,
                 },
+            ],
+        },
+    },
+    {
+        key: BnksRepository.name,
+        Class: ApkBnksRepositoryPostgres,
+        parameter: {
+            dependencies: [
+                {
+                    concrete: pool,
+                },
+                {
+                    concrete: redis,
+                }
             ],
         },
     },
@@ -227,8 +241,7 @@ container.register([
                 },
             ],
         },
-    }
-    ,
+    },
     {
         key: GetDataApkUseCase.name,
         Class: GetDataApkUseCase,
@@ -238,6 +251,23 @@ container.register([
                 {
                     name: 'apkRepository',
                     internal: ApkRepository.name,
+                },
+                {
+                    name: 'cacheServices',
+                    internal: CacheServices.name,
+                },
+            ],
+        },
+    },
+    {
+        key: AddbnksUseCase.name,
+        Class: AddbnksUseCase,
+        parameter: {
+            injectType: 'destructuring',
+            dependencies: [
+                {
+                    name: 'bnksRepository',
+                    internal: BnksRepository.name,
                 },
                 {
                     name: 'cacheServices',
