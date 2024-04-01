@@ -75,9 +75,9 @@ describe('ApkRepositoryPostgres', () => {
       const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
 
       // Action
-      await AddBnksTableTestHelper.addbks({ idbank: 2, namegroupxyzt: 'groupbank2', norekxyxy: '0355917812' });
+      await AddBnksTableTestHelper.addbks({ idbank: 2, namegroupxyzt: 'groupbank2', norekxyxy: '0355917812', xynamarekx: 'florensia sitanggang' });
       // Assert
-      await expect(apkBnksRepositoryPostgres.checkbnks(addbks.norekxyxy, addbks.namegroupxyzt))
+      await expect(apkBnksRepositoryPostgres.checkbnks(addbks.norekxyxy, addbks.namegroupxyzt, addbks.xynamarekx))
         .rejects.toThrow(InvariantError);
     });
 

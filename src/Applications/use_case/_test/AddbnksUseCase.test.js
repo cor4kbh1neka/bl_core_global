@@ -57,7 +57,7 @@ describe('APK DATA RESERVER API POST GET DATA', () => {
         const databnksusecase = await addbnksUseCase.execute(useCasePayload);
 
         expect(databnksusecase).toStrictEqual('groupbank1');
-        expect(mockbnksRepository.checkbnks).toBeCalledWith(useCasePayload.norekxyxy, useCasePayload.namegroupxyzt);
+        expect(mockbnksRepository.checkbnks).toBeCalledWith(useCasePayload.norekxyxy, useCasePayload.namegroupxyzt, useCasePayload.xynamarekx);
         expect(mockbnksRepository.databnksdp).toBeCalledWith(mockbnksDataSettings);
         expect(mockcacheService.delete).toBeCalledWith(`namegroup:${namegroup}`);
     });
@@ -94,7 +94,10 @@ describe('BANK DATA RESERVER API POST GET DATA', () => {
                     barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
                     zwzwshowbarcode: 1
                 }
-            ]
+            ],
+            headers: {
+                'X-Data-Source': 'cache',
+            }
         };
 
         const mockcacheService = new CacheService();
@@ -103,16 +106,13 @@ describe('BANK DATA RESERVER API POST GET DATA', () => {
         const addbnksUseCase = new AddbnksUseCase({
             cacheServices: mockcacheService
         });
-
         const getdatausecase = await addbnksUseCase.getbanks(params);
 
-        expect(mockcacheService.get).toBeCalledWith(`namegroup:${params.groupname}`);
-        expect(getdatausecase).toEqual({
-            data: resultmockgroup,
-            headers: {
-                'X-Data-Source': 'cache',
-            }
-        });
+        expect(mockcacheService.get).toBeCalledWith(`namegroup:${params.groupname}`); +
+            expect(getdatausecase).toEqual(
+                resultmockgroup
+
+            );
     });
 
     it('should get data bank successfully', async () => {

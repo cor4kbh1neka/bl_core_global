@@ -24,10 +24,10 @@ class ApkBnksRepositoryPostgres extends BnksRepository {
     }
 
 
-    async checkbnks(rek, namegroup) {
+    async checkbnks(rek, namegroup, databks) {
         const query = {
-            text: 'SELECT * FROM datagroupdp WHERE norekxyxy = $1 AND namegroupxyzt = $2 ',
-            values: [rek, namegroup],
+            text: 'SELECT * FROM datagroupdp WHERE norekxyxy = $1 AND namegroupxyzt = $2 AND  xynamarekx = $3',
+            values: [rek, namegroup, databks],
         };
         const data = await this._pool.query(query);
 

@@ -26,9 +26,8 @@ class BnksHandler {
     const databank = await addBanksUsecase.getbanks(request.params);
     const response = h.response({
       status: 'success',
-      data: {
-        databank// Mengubah objek thread menjadi array dengan satu elemen
-      },
+      data: databank      // Mengubah objek thread menjadi array dengan satu elemen
+
     });
     response.code(200);
     return response;

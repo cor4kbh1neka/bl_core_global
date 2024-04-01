@@ -12,7 +12,7 @@ class AddbnksUseCase {
 
         const databks = new AddBnksDp(useCasePayload);
 
-        await this._bnksRepository.checkbnks(databks.norekxyxy, databks.namegroupxyzt);
+        await this._bnksRepository.checkbnks(databks.norekxyxy, databks.namegroupxyzt, databks.xynamarekx);
         const namegroup = await this._bnksRepository.databnksdp(databks);
         await this._cacheService.delete(`namegroup:${namegroup}`);
         return namegroup;
@@ -23,9 +23,9 @@ class AddbnksUseCase {
         try {
             // mendapatkan catatan dari cache
             const result = await this._cacheService.get(`namegroup:${params.groupname}`);
-            const dataapk = JSON.parse(result);
+            const databank = JSON.parse(result);
             const data = {
-                data: dataapk,
+                masterdata: databank.masterdata,
                 headers: {
                     'X-Data-Source': 'cache',
                 },
