@@ -1,14 +1,19 @@
 class VerifyUserAuthUseCase {
-  constructor({
-    authenticationTokenManager,
-  }) {
+  constructor({ authenticationTokenManager, userRepository }) {
     this._authenticationTokenManager = authenticationTokenManager;
+    this._userRepository = userRepository;
   }
 
   async execute(refreshToken) {
     this._verifyPayload(refreshToken);
-    const username = await this._authenticationTokenManager.decodePayload(refreshToken);
-    return username;
+    const datauid = await this._authenticationTokenManager.decodePayload(refreshToken);
+    const datauidit = await this._userRepository.getDataBankByUsername(datauid.username);
+
+    const combinedData = {
+      ...datauid,
+      ...datauidit
+    };
+    return combinedData;
   }
 
   _verifyPayload(refreshToken) {

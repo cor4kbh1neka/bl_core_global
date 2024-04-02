@@ -145,6 +145,20 @@ class UserRepositoryPostgres extends UserRepository {
 
         return xyuseridxy;
     }
+
+    async getDataBankByUsername(username) {
+        const query = {
+            text: 'SELECT xybanknamexyy , xybankuserxy, xxybanknumberxy FROM users WHERE xyusernamexxy = $1',
+            values: [username],
+        };
+
+        const result = await this._pool.query(query);
+        if (!result.rowCount) {
+            throw new InvariantError('data account tidak ditemukan');
+        }
+
+        return result.rows[0];
+    }
 }
 
 module.exports = UserRepositoryPostgres;

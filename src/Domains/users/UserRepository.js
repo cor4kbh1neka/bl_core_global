@@ -31,6 +31,10 @@ class UserRepository {
     async getIdByUsername(username) {
         throw new Error('USER_REPOSITORY.METHOD_NOT_IMPLEMENTED');
     }
+
+    async getDataBankByUsername(username) {
+        throw new Error('USER_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+    }
 }
 
 module.exports = UserRepository;

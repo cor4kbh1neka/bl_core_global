@@ -223,4 +223,27 @@ describe('UserRepositoryPostgres', () => {
             expect(userId).toEqual('user-321');
         });
     });
+
+    describe('getuitByUsername', () => {
+        it('should throw InvariantError when user not found', async () => {
+            // Arrange
+            const userRepositoryPostgres = new UserRepositoryPostgres(pool);
+
+            // Action & Assert
+            await expect(userRepositoryPostgres.getDataBankByUsername('dicoding'))
+                .rejects
+                .toThrowError(InvariantError);
+        });
+
+        it('should return user uit correctly', async () => {
+            // Arrange
+            await UsersTableTestHelper.addUser({ xyusernamexxy: 'fakeuser2222', xybanknamexyy: 'abc', xxybanknumberxy: '12445678' });
+            const userRepositoryPostgres = new UserRepositoryPostgres(pool);
+
+            // Action
+            const databank = await userRepositoryPostgres.getDataBankByUsername('fakeuser2222');
+            // Assert
+            expect(databank).toEqual({ xybanknamexyy: 'abc', xybankuserxy: 'fake name', xxybanknumberxy: '12445678' });
+        });
+    });
 });

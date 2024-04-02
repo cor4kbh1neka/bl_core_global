@@ -31,12 +31,11 @@ class AuthenticationsHandler {
   }
   async postAuthenticationdataHandler(request, h) {
     const verifyUserAuthUseCase = this._container.getInstance(VerifyUserAuthUseCase.name);
-    const { username, iat } = await verifyUserAuthUseCase.execute(request.payload.refreshToken);
+    const databnks = await verifyUserAuthUseCase.execute(request.payload.refreshToken);
     const response = h.response({
       status: 'success',
       data: {
-        username,
-        iat,
+        databnks
       },
     });
     response.code(200);

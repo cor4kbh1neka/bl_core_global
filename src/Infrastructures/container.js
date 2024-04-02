@@ -208,6 +208,7 @@ container.register([
                     name: 'authenticationTokenManager',
                     internal: AuthenticationTokenManager.name,
                 },
+
             ],
         },
     },
@@ -220,6 +221,10 @@ container.register([
                 {
                     name: 'authenticationTokenManager',
                     internal: AuthenticationTokenManager.name,
+                },
+                {
+                    name: 'userRepository',
+                    internal: UserRepository.name,
                 },
             ],
         },

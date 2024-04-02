@@ -394,8 +394,7 @@ describe('/authentications endpoint', () => {
       const responseJson = JSON.parse(response.payload);
       expect(response.statusCode).toEqual(200);
       expect(responseJson.status).toEqual('success');
-      expect(responseJson.data.username).toBeDefined();
-      expect(responseJson.data.iat).toBeDefined();
+      expect(responseJson.data.databnks).toBeDefined();
     });
   });
 });

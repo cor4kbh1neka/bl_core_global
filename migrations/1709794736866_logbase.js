@@ -22,6 +22,11 @@ exports.up = (pgm) => {
             type: 'VARCHAR(80)',
             notNull: true,
         },
+        group: {
+            type: 'VARCHAR(80)',
+            notNull: true,
+            default: 'groupbank1' // Menambahkan nilai default
+        },
         is_verified: {
             type: 'Boolean',
         },

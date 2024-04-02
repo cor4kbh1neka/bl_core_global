@@ -1,4 +1,4 @@
-const AuthenticationRepository = require('../../../Domains/authentications/AuthenticationRepository');
+const UserRepository = require('../../../Domains/users/UserRepository');
 const AuthenticationTokenManager = require('../../security/AuthenticationTokenManager');
 const VerifyUserAuthUseCase = require('../VerifyUserAuthUseCase');
 
@@ -18,16 +18,30 @@ describe('RefreshAuthenticationUseCase', () => {
   it('should orchestrating the refresh authentication action correctly', async () => {
     // Arrange
     const useCasePayload = 'some_refresh_token';
+    const datauid = { username: 'dicoding', id: 'user-123', iat: '1710139445' };
+
+    const resultuid = {
+      username: 'dicoding',
+      id: 'user-123',
+      iat: '1710139445',
+      bank: 'bca',
+      nama_rek: 'jaya kuku',
+      norek: '777777747474'
+    };
 
     const mockAuthenticationTokenManager = new AuthenticationTokenManager();
+    const mockUserRepository = new UserRepository();
     // Mocking
 
     mockAuthenticationTokenManager.decodePayload = jest.fn()
       .mockImplementation(() => Promise.resolve({ username: 'dicoding', id: 'user-123', iat: '1710139445' }));
+    mockUserRepository.getDataBankByUsername = jest.fn()
+      .mockImplementation(() => Promise.resolve({ bank: 'bca', nama_rek: 'jaya kuku', norek: '777777747474' }));
 
     // Create the use case instace
     const refreshAuthenticationUseCase = new VerifyUserAuthUseCase({
       authenticationTokenManager: mockAuthenticationTokenManager,
+      userRepository: mockUserRepository,
     });
 
     // Action
@@ -36,7 +50,9 @@ describe('RefreshAuthenticationUseCase', () => {
 
     expect(mockAuthenticationTokenManager.decodePayload)
       .toBeCalledWith(useCasePayload);
+    expect(mockUserRepository.getDataBankByUsername)
+      .toBeCalledWith(datauid.username);
 
-    expect(payload).toEqual({ username: 'dicoding', id: 'user-123', iat: '1710139445' });
+    expect(payload).toEqual(resultuid);
   });
 });
