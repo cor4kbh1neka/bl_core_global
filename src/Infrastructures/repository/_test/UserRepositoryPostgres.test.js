@@ -230,7 +230,7 @@ describe('UserRepositoryPostgres', () => {
             const userRepositoryPostgres = new UserRepositoryPostgres(pool);
 
             // Action & Assert
-            await expect(userRepositoryPostgres.getDataBankByUsername('dicoding'))
+            await expect(userRepositoryPostgres.getDataBankByUsername('dicoding2'))
                 .rejects
                 .toThrowError(InvariantError);
         });
@@ -243,7 +243,7 @@ describe('UserRepositoryPostgres', () => {
             // Action
             const databank = await userRepositoryPostgres.getDataBankByUsername('fakeuser2222');
             // Assert
-            expect(databank).toEqual({ xybanknamexyy: 'abc', xybankuserxy: 'fake name', xxybanknumberxy: '12445678' });
+            expect(databank).toEqual({ xybanknamexyy: 'abc', xybankuserxy: 'fake name', xxybanknumberxy: '12445678', group: 'groupbank1' });
         });
     });
 });

@@ -31,12 +31,18 @@ exports.up = (pgm) => {
       type: 'VARCHAR(15)',
       notNull: true,
     },
+
     created_at: {
       type: 'TEXT',
       notNull: true,
     },
     updated_at: {
       type: 'TEXT',
+    },
+    group: {
+      type: 'VARCHAR(80)',
+      notNull: true,
+      default: 'groupbank1' // Menambahkan nilai default
     },
   });
 };
