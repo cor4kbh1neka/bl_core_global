@@ -27,7 +27,8 @@ describe('RefreshAuthenticationUseCase', () => {
       bank: 'bca',
       nama_rek: 'jaya kuku',
       norek: '777777747474',
-      group: 'groupbank1'
+      group: 'groupbank1',
+      groupwd: 'groupbank1'
     };
 
     const mockAuthenticationTokenManager = new AuthenticationTokenManager();
@@ -37,7 +38,7 @@ describe('RefreshAuthenticationUseCase', () => {
     mockAuthenticationTokenManager.decodePayload = jest.fn()
       .mockImplementation(() => Promise.resolve({ username: 'dicoding', id: 'user-123', iat: '1710139445' }));
     mockUserRepository.getDataBankByUsername = jest.fn()
-      .mockImplementation(() => Promise.resolve({ bank: 'bca', nama_rek: 'jaya kuku', norek: '777777747474', group: 'groupbank1' }));
+      .mockImplementation(() => Promise.resolve({ bank: 'bca', nama_rek: 'jaya kuku', norek: '777777747474', group: 'groupbank1', groupwd: 'groupbank1' }));
 
     // Create the use case instace
     const refreshAuthenticationUseCase = new VerifyUserAuthUseCase({
