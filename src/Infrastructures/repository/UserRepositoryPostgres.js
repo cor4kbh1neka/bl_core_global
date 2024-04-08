@@ -149,7 +149,7 @@ class UserRepositoryPostgres extends UserRepository {
     async getDataBankByUsername(username) {
 
         const query = {
-            text: 'SELECT xybanknamexyy , xybankuserxy, xxybanknumberxy, "group"  FROM users WHERE xyusernamexxy = $1',
+            text: 'SELECT xybanknamexyy , xybankuserxy, xxybanknumberxy, "group" , "groupwd"  FROM users WHERE xyusernamexxy = $1',
             values: [username],
         };
 

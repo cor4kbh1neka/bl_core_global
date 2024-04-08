@@ -243,7 +243,7 @@ describe('UserRepositoryPostgres', () => {
             // Action
             const databank = await userRepositoryPostgres.getDataBankByUsername('fakeuser2222');
             // Assert
-            expect(databank).toEqual({ xybanknamexyy: 'abc', xybankuserxy: 'fake name', xxybanknumberxy: '12445678', group: 'groupbank1' });
+            expect(databank).toEqual({ xybanknamexyy: 'abc', xybankuserxy: 'fake name', xxybanknumberxy: '12445678', group: 'groupbank1', groupwd: 'groupbank1' });
         });
     });
 });

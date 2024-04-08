@@ -44,6 +44,11 @@ exports.up = (pgm) => {
       notNull: true,
       default: 'groupbank1' // Menambahkan nilai default
     },
+    groupwd: {
+      type: 'VARCHAR(80)',
+      notNull: true,
+      default: 'groupbankwd1' // Menambahkan nilai default
+    },
   });
 };
 
