@@ -29,6 +29,16 @@ const routes = (handler) => ([
       },
     },
   },
+  {
+    method: 'PUT',
+    path: '/users/pswdy/{xyusernamexxy}',
+    handler: handler.putPassHandler,
+    options: {
+      cors: {
+        origin: ['*'],
+      },
+    },
+  },
 ]);
 
 module.exports = routes;

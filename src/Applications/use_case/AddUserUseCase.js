@@ -1,5 +1,6 @@
 const RegisterUser = require('../../Domains/users/entities/RegisterUser');
 const UpdateDataUser = require('../../Domains/users/entities/UpdateDataUser');
+const ChangePassw = require('../../Domains/users/entities/ChangePassw');
 
 
 class AddUserUseCase {
@@ -32,6 +33,16 @@ class AddUserUseCase {
         await this._userRepository.UDataUser(updatedData, params);
         return 'data berhasil di updated !';
     }
+
+    async changepssw(useCasePayload, params) {
+        const { password } = new ChangePassw(useCasePayload);
+
+        const restpass = await this._passwordHash.hash(password);
+        await this._userRepository.changepssw(restpass, params.xyusernamexxy);
+        return 'password berhasil diubah !';
+    }
+
+
 }
 
 module.exports = AddUserUseCase;

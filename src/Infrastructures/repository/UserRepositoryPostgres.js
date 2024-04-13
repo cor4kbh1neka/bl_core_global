@@ -189,9 +189,21 @@ class UserRepositoryPostgres extends UserRepository {
         if (!result.rowCount) {
             throw new NotFoundError('data not found !');
         }
-
         return 'data berhasil di updated !';
+    }
 
+    async changepssw(restpas, params) {
+
+        const query = {
+            text: 'UPDATE logbasxxyte SET password = $1 WHERE username = $2',
+            values: [restpas, params],
+        };
+
+        const result = await this._pool.query(query);
+        if (!result.rowCount) {
+            throw new InvariantError('password gagal diubah !');
+        }
+        return 'password berhasil diubah !';
     }
 }
 

@@ -6,6 +6,7 @@ const InvariantError = require('../../../Commons/exceptions/InvariantError');
 const NotFoundError = require('../../../Commons/exceptions/NotFoundError');
 const RegisterUser = require('../../../Domains/users/entities/RegisterUser');
 const UpdateDataUser = require('../../../Domains/users/entities/UpdateDataUser');
+const ChangePassw = require('../../../Domains/users/entities/ChangePassw');
 const RegisterUserLog = require('../../../Domains/users/entities/RegisterUserLog');
 const RegisteredUser = require('../../../Domains/users/entities/RegisteredUser');
 const pool = require('../../database/postgres/pool');
@@ -314,6 +315,42 @@ describe('UserRepositoryPostgres', () => {
             const UpdatedUser = await userRepositoryPostgres.UDataUser(updatedUser, params);
             expect(UpdatedUser).toStrictEqual("data berhasil di updated !");
 
+        });
+        describe('change password feature', () => {
+
+            it('should throw InvariantError when user not found', async () => {
+                const params = {
+                    xyusernamexxy: 'fakeuser22187878'
+
+                }
+                const useCasePayload = new ChangePassw({
+                    password: 'asdad123b',
+                });
+                // Arrange
+                const userRepositoryPostgres = new UserRepositoryPostgres(pool);
+
+                // Action & Assert
+                await expect(userRepositoryPostgres.changepssw(useCasePayload, params))
+                    .rejects
+                    .toThrowError(InvariantError);
+            });
+            it("should change password correcttly and safely", async () => {
+                const xyusernamexxy = 'fakeuser221';
+
+                const restpas = "mockhaspassword";
+
+                await UsersLogTableTestHelper.addLogBase({
+                    username: 'fakeuser221',
+                    password: 'asdad123a',
+                });
+
+                const userRepositoryPostgres = new UserRepositoryPostgres(pool);
+                const updatedpass = await userRepositoryPostgres.changepssw(restpas, xyusernamexxy);
+
+                expect(updatedpass).toStrictEqual("password berhasil diubah !");
+
+
+            });
         });
 
     });

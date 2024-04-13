@@ -1,4 +1,5 @@
 const UpdateDataUser = require('../../../Domains/users/entities/UpdateDataUser');
+const ChangePassw = require('../../../Domains/users/entities/ChangePassw');
 const RegisterUser = require('../../../Domains/users/entities/RegisterUser');
 const RegisterUserLog = require('../../../Domains/users/entities/RegisterUserLog');
 const RegisteredUser = require('../../../Domains/users/entities/RegisteredUser');
@@ -157,6 +158,45 @@ describe('UserRepository', () => {
         expect(putDataByU).toStrictEqual('data berhasil di updated !');
 
         expect(mockUserRepository.UDataUser).toBeCalledWith(useCasePayload, params);
+
+    });
+
+    it('should change password securely', async () => {
+
+        const params = {
+            xyusernamexxy: 'fakeuser221'
+        };
+
+        const useCasePayload = new ChangePassw({
+            password: 'asdad123a',
+        });
+
+        const restpas = "mockhaspassword";
+
+        const mockUserRepository = new UserRepository();
+        const mockPasswordHash = new PasswordHash();
+
+
+
+
+        mockPasswordHash.hash = jest.fn()
+            .mockImplementation(() => Promise.resolve(restpas));
+        mockUserRepository.changepssw = jest.fn()
+            .mockImplementation(() => Promise.resolve('password berhasil diubah !'));
+
+
+        const chngpsswusecase = new AddUserUseCase({
+            userRepository: mockUserRepository,
+            passwordHash: mockPasswordHash,
+        });
+
+        const changepassworddone = await chngpsswusecase.changepssw(useCasePayload, params);
+
+        expect(changepassworddone).toEqual("password berhasil diubah !");
+
+
+        expect(mockPasswordHash.hash).toBeCalledWith(useCasePayload.password);
+        expect(mockUserRepository.changepssw).toBeCalledWith(restpas, params.xyusernamexxy);
 
     });
 });

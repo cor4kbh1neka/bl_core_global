@@ -41,6 +41,9 @@ class UserRepository {
     async GetDataByUsername(username) {
         throw new Error('USER_REPOSITORY.METHOD_NOT_IMPLEMENTED');
     }
+    async changepssw(username) {
+        throw new Error('USER_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+    }
 }
 
 module.exports = UserRepository;

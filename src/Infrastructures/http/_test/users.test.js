@@ -120,7 +120,7 @@ describe('/adduserendpoints', () => {
 
     describe('WHEN PUT /users/{xyusernamexxy}', () => {
 
-        it('should response 201 and persisted bank', async () => {
+        it('should response 201 whem change succesfully', async () => {
 
             const server = await createServer(container);
             const xyusernamexxy = 'fakeuser9911';
@@ -174,6 +174,56 @@ describe('/adduserendpoints', () => {
             expect(response.statusCode).toEqual(404);
             expect(responseJson.status).toEqual('fail');
             expect(responseJson.message).toEqual('data not found !');
+        });
+    });
+
+    describe('WHEN PUT PASSWORD FEATURES WORKS PERFECTLY', () => {
+        it('should response 201 whem change password succesfully', async () => {
+
+            const server = await createServer(container);
+            const xyusernamexxy = 'fakeuser191';
+
+            const requestPayload = {
+                password: 'asdad123b',
+            };
+            await UsersLogTableTestHelper.addLogBase({
+                username: 'fakeuser191', password: 'asdad123a'
+            });
+
+            const response = await server.inject({
+                method: 'PUT',
+                url: `/users/pswdy/${xyusernamexxy}`,
+                payload: requestPayload,
+
+            })
+
+            // Assert
+            const responseJson = JSON.parse(response.payload);
+            expect(response.statusCode).toEqual(200);
+            expect(responseJson.status).toEqual('success');
+            expect(responseJson.data).toBeDefined();
+        });
+
+        it('should  throw an error 400 when payload is not solve', async () => {
+            const server = await createServer(container);
+            const xyusernamexxy = 'fakeuser1916556';
+
+            const requestPayload = {
+                password: 'asdad123b',
+            };
+
+
+            const response = await server.inject({
+                method: 'PUT',
+                url: `/users/pswdy/${xyusernamexxy}`,
+                payload: requestPayload,
+
+            })
+            // Assert
+            const responseJson = JSON.parse(response.payload);
+            expect(response.statusCode).toEqual(400);
+            expect(responseJson.status).toEqual('fail');
+            expect(responseJson.message).toEqual('password gagal diubah !');
         });
     });
 

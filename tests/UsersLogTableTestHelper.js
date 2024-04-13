@@ -22,6 +22,17 @@ const UsersLogTableTestHelper = {
     const result = await pool.query(query);
     return result.rows;
   },
+  async changepssw(payload, params) {
+    const query = {
+      text: 'UPDATE logbasxxyte SET password = $1 WHERE xyusernamexxy = $2',
+      values: [payload.password, params.xyusernamexxy],
+    };
+
+
+    const result = await pool.query(query);
+    return "password berhasil diubah !";
+  },
+
 
   async cleanTable() {
     await pool.query('DELETE FROM logbasxxyte WHERE 1=1');
