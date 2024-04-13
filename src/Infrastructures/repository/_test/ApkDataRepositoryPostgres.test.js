@@ -2,6 +2,7 @@ const AddApkEventTableTestHelper = require('../../../../tests/AddApkEventTableTe
 const AddApkPemberitahuanTableTestHelper = require('../../../../tests/AddApkPemberitahuanTableTestHelper');
 const AddDataApkTableTestHelper = require('../../../../tests/AddDataApkTableTestHelper');
 const InvariantError = require('../../../Commons/exceptions/InvariantError');
+const NotFoundError = require('../../../Commons/exceptions/NotFoundError');
 const AddApk = require('../../../Domains/apks/entities/AddApk');
 const AddeventApk = require('../../../Domains/apks/entities/AddeventApk');
 const AddPemberitahuanApk = require('../../../Domains/apks/entities/AddPemberitahuanApk');
@@ -138,6 +139,27 @@ describe('ApkRepositoryPostgres', () => {
   });
 
   describe('get Data Apk', () => {
+
+    it('should throw NotFoundError when data bank not found', async () => {
+      // Arrange
+      const params = {
+        apkid: 'apk1234555'
+      }
+      const apkDataRepository = new ApkDataRepositoryPostgres(pool, {});
+
+      // Action & Assert
+      await expect(apkDataRepository.getapkdata(params.apkid))
+        .rejects
+        .toThrowError(NotFoundError);
+      await expect(apkDataRepository.getapknotice(params.apkid))
+        .rejects
+        .toThrowError(NotFoundError);
+      await expect(apkDataRepository.getapkevent(params.apkid))
+        .rejects
+        .toThrowError(NotFoundError);
+    });
+
+
     it('should get Data apk data and success', async () => {
       const params = {
         apkid: 'apk1234'

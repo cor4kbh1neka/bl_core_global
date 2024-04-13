@@ -1,3 +1,4 @@
+const NotFoundError = require('../../Commons/exceptions/NotFoundError');
 const InvariantError = require('../../Commons/exceptions/InvariantError');
 const BnksRepository = require('../../Domains/banks/BnksRepository');
 
@@ -45,6 +46,10 @@ class ApkBnksRepositoryPostgres extends BnksRepository {
             values: [params],
         };
         const databank = await this._pool.query(noticeQuery);
+
+        if (!databank.rowCount) {
+            throw new NotFoundError('data not found !');
+        }
         return databank.rows;
     }
 

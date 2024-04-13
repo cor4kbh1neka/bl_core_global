@@ -74,5 +74,48 @@ describe('/adduserendpoints', () => {
         });
     });
 
+    describe('WHEN GET /users/{xxuserxx}', () => {
+
+        it('should response 201 and persisted bank', async () => {
+
+            const server = await createServer(container);
+            const xxuserxx = 'fakeuser999';
+
+            await UsersTableTestHelper.addUser({ xyuseridxy: 'user999', xyusernamexxy: 'fakeuser999', xybanknamexyy: 'abc', xxybanknumberxy: '124454445' });
+            await UsersTableTestHelper.addUser({ xyuseridxy: 'user998', xyusernamexxy: 'fakeuser888', xybanknamexyy: 'abc', xxybanknumberxy: '124454443' });
+
+
+            const response = await server.inject({
+                method: 'GET',
+                url: `/users/${xxuserxx}`,
+
+            })
+
+            // Assert
+            const responseJson = JSON.parse(response.payload);
+            expect(response.statusCode).toEqual(200);
+            expect(responseJson.status).toEqual('success');
+            expect(responseJson.data).toBeDefined();
+        });
+
+
+        it('should  throw an error 404 when payload is not found', async () => {
+            const server = await createServer(container);
+
+            const xxuserxx = 'fakeuser111';
+
+            // Action
+            const response = await server.inject({
+                method: 'GET',
+                url: `/users/${xxuserxx}`,
+
+            })
+            // Assert
+            const responseJson = JSON.parse(response.payload);
+            expect(response.statusCode).toEqual(404);
+            expect(responseJson.status).toEqual('fail');
+            expect(responseJson.message).toEqual('data not found !');
+        });
+    });
 
 });

@@ -23,7 +23,6 @@ class JwtTokenManager extends AuthenticationTokenManager {
   async createRefreshToken(payload) {
     const TKN_AGE = parseInt(process.env.ACCCESS_TOKEN_AGE); // Mengambil nilai dari environment variable atau default 60000 jika tidak ada
     const expiration = Math.floor(Date.now() / 1000) + TKN_AGE; // Menghitung waktu kedaluwarsa
-
     // return this._jwt.generate(payload, process.env.REFRESH_TOKEN_KEY);
     return this._jwt.generate({ ...payload, exp: expiration }, process.env.REFRESH_TOKEN_KEY);
   }

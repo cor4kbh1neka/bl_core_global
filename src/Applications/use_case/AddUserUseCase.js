@@ -18,6 +18,12 @@ class AddUserUseCase {
         userlogbase.password = await this._passwordHash.hash(registerUser.password);
         return this._userRepository.addLogBase(userlogbase);
     }
+
+
+    async getdatabyu(params) {
+        const dataux = await this._userRepository.GetDataByUsername(params.xxuserxx);
+        return dataux;
+    }
 }
 
 module.exports = AddUserUseCase;

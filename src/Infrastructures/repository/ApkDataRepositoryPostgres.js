@@ -1,4 +1,5 @@
 const InvariantError = require('../../Commons/exceptions/InvariantError');
+const NotFoundError = require('../../Commons/exceptions/NotFoundError');
 const ApkRepository = require('../../Domains/apks/ApkRepository');
 
 
@@ -56,6 +57,9 @@ class ApkDataRepositoryPostgres extends ApkRepository {
             values: [apkid],
         };
         const noticeData = await this._pool.query(noticeQuery);
+        if (!noticeData.rowCount) {
+            throw new NotFoundError('data not found !');
+        }
         return noticeData.rows[0];
     }
 
@@ -67,6 +71,9 @@ class ApkDataRepositoryPostgres extends ApkRepository {
             values: [apkid],
         };
         const eventData = await this._pool.query(eventQuery);
+        if (!eventData.rowCount) {
+            throw new NotFoundError('data not found !');
+        }
         return eventData.rows;
 
     }
@@ -78,6 +85,9 @@ class ApkDataRepositoryPostgres extends ApkRepository {
             values: [apkid],
         };
         const settingsData = await this._pool.query(settingsQuery);
+        if (!settingsData.rowCount) {
+            throw new NotFoundError('data not found !');
+        }
         return settingsData.rows;
 
     }

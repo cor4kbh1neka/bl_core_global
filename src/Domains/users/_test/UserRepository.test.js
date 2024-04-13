@@ -17,5 +17,7 @@ describe('UserRepository interface', () => {
         await expect(userRepository.getPasswordByUsername('')).rejects.toThrowError('USER_REPOSITORY.METHOD_NOT_IMPLEMENTED');
         await expect(userRepository.getIdByUsername('')).rejects.toThrowError('USER_REPOSITORY.METHOD_NOT_IMPLEMENTED');
         await expect(userRepository.getDataBankByUsername()).rejects.toThrowError('USER_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+        await expect(userRepository.UDataUser()).rejects.toThrowError('USER_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+        await expect(userRepository.GetDataByUsername()).rejects.toThrowError('USER_REPOSITORY.METHOD_NOT_IMPLEMENTED');
     });
 });

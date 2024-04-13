@@ -9,6 +9,9 @@ describe('JwtTokenManager', () => {
       const payload = {
         username: 'dicoding',
       };
+      const TKN_AGE = parseInt(process.env.ACCCESS_TOKEN_AGE); // Mengambil nilai dari environment variable atau default 60000 jika tidak ada
+      const expiration = Math.floor(Date.now() / 1000) + TKN_AGE; // Menghitung waktu kedaluwarsa
+
       const mockJwtToken = {
         generate: jest.fn().mockImplementation(() => 'mock_token'),
       };
@@ -18,7 +21,7 @@ describe('JwtTokenManager', () => {
       const accessToken = await jwtTokenManager.createAccessToken(payload);
 
       // Assert
-      expect(mockJwtToken.generate).toBeCalledWith(payload, process.env.ACCESS_TOKEN_KEY);
+      expect(mockJwtToken.generate).toBeCalledWith({ ...payload, exp: expiration }, process.env.ACCESS_TOKEN_KEY);
       expect(accessToken).toEqual('mock_token');
     });
   });
@@ -29,6 +32,10 @@ describe('JwtTokenManager', () => {
       const payload = {
         username: 'dicoding',
       };
+      const TKN_AGE = parseInt(process.env.ACCCESS_TOKEN_AGE); // Mengambil nilai dari environment variable atau default 60000 jika tidak ada
+      const expiration = Math.floor(Date.now() / 1000) + TKN_AGE; // Menghitung waktu kedaluwarsa
+
+
       const mockJwtToken = {
         generate: jest.fn().mockImplementation(() => 'mock_token'),
       };
@@ -38,7 +45,7 @@ describe('JwtTokenManager', () => {
       const refreshToken = await jwtTokenManager.createRefreshToken(payload);
 
       // Assert
-      expect(mockJwtToken.generate).toBeCalledWith(payload, process.env.REFRESH_TOKEN_KEY);
+      expect(mockJwtToken.generate).toBeCalledWith({ ...payload, exp: expiration }, process.env.REFRESH_TOKEN_KEY);
       expect(refreshToken).toEqual('mock_token');
     });
   });

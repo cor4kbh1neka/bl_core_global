@@ -3,6 +3,7 @@ const UsersLogTableTestHelper = require('../../../../tests/UsersLogTableTestHelp
 const UsersEventTableTestHelper = require('../../../../tests/UsersEventTableTestHelper');
 const UsersReffsTableTestHelper = require('../../../../tests/UsersReffsTableTestHelper');
 const InvariantError = require('../../../Commons/exceptions/InvariantError');
+const NotFoundError = require('../../../Commons/exceptions/NotFoundError');
 const RegisterUser = require('../../../Domains/users/entities/RegisterUser');
 const RegisterUserLog = require('../../../Domains/users/entities/RegisterUserLog');
 const RegisteredUser = require('../../../Domains/users/entities/RegisteredUser');
@@ -198,6 +199,29 @@ describe('UserRepositoryPostgres', () => {
             // Action & Assert
             const password = await userRepositoryPostgres.getPasswordByUsername('dicoding');
             expect(password).toBe('secret_password');
+        });
+    });
+
+    describe('Getting data by username parameter', () => {
+        it('should throw NotFoundError when user not found', async () => {
+            // Arrange
+            const userRepositoryPostgres = new UserRepositoryPostgres(pool);
+
+            // Action & Assert
+            await expect(userRepositoryPostgres.GetDataByUsername('dicoding3'))
+                .rejects
+                .toThrowError(NotFoundError);
+        });
+
+        it('should return data  correctly', async () => {
+            // Arrange
+            await UsersTableTestHelper.addUser({ xyusernamexxy: 'fakeuser333', xybanknamexyy: 'abc', xxybanknumberxy: '124454444' });
+            const userRepositoryPostgres = new UserRepositoryPostgres(pool);
+
+            // Action
+            const databank = await userRepositoryPostgres.GetDataByUsername('fakeuser333');
+            // Assert
+            expect(databank).toEqual({ xyusernamexxy: 'fakeuser333', xybanknamexyy: 'abc', xybankuserxy: 'fake name', xxybanknumberxy: '124454444', group: 'groupbank1', groupwd: 'groupbankwd1', xyx11xuser_mailxxyy: 'user@gmail.com', xynumbphonexyyy: '58469874451' });
         });
     });
 

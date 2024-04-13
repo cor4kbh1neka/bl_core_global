@@ -18,30 +18,7 @@ describe('/adduserendpoints', () => {
 
     describe('WHEN POST /users', () => {
 
-        // it('should  throw an error 400 when payload is not valid', async () => {
-        //     const requestPayload = {
-        //         xyusernamexxy: 'fake user',
-        //         password: 'secret',
-        //         xybanknamexyy: 'abc',
-        //         xybankuserxy: 'fake name',
-        //         xxybanknumberxy: '12345678',
-        //         xyx11xuser_mailxxyy: 'user@gmail.com',
-        //         xynumbphonexyyy: '58469874451',
-        //     };
-        //     const server = await createServer(container);
 
-        //     // Action
-        //     const response = await server.inject({
-        //         method: 'POST',
-        //         url: '/users',
-        //         payload: requestPayload,
-        //     });
-        //     // Assert
-        //     const responseJson = JSON.parse(response.payload);
-        //     expect(response.statusCode).toEqual(400);
-        //     expect(responseJson.status).toEqual('fail');
-        //     expect(responseJson.message).toEqual('register fail , input restricted !');
-        // });
 
         it('should response 201 and persisted user data', async () => {
             // Arrange
@@ -139,6 +116,25 @@ describe('/adduserendpoints', () => {
 
     });
     describe('WHEN get /apks/settings/{apkid}', () => {
+
+
+        it('should  throw an error 404 when payload is not found', async () => {
+            const server = await createServer(container);
+
+            const apkid = 'apk12345678';
+
+            // Action
+            const response = await server.inject({
+                method: 'GET',
+                url: `/apks/settings/${apkid}`,
+
+            })
+            // Assert
+            const responseJson = JSON.parse(response.payload);
+            expect(response.statusCode).toEqual(404);
+            expect(responseJson.status).toEqual('fail');
+            expect(responseJson.message).toEqual('data not found !');
+        });
         it('should response 201 and persisted comment', async () => {
 
             const server = await createServer(container);

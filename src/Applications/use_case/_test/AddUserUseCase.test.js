@@ -96,4 +96,36 @@ describe('UserRepository', () => {
         }));
     });
 
+    it('should orchestracing the Get data user action correctly', async () => {
+        const params = {
+            xxuserxx: 'fakeuser'
+        };
+
+        const resultmocksettings = {
+            xyusernamexxy: 'fakeuser333',
+            xybanknamexyy: 'abc',
+            xybankuserxy: 'fake name',
+            xxybanknumberxy: '12345678AA',
+            group: 'groupbank2',
+            groupwd: 'groupbankwd2',
+            xyx11xuser_mailxxyy: 'user@gmail.com',
+            xynumbphonexyyy: '58469874451',
+        }
+
+        /** creating dependency of use case */
+        const mockUserRepository = new UserRepository();
+
+
+        mockUserRepository.GetDataByUsername = jest.fn()
+            .mockImplementation(() => Promise.resolve(resultmocksettings));
+
+        const getDataUsecaseByU = new AddUserUseCase({
+            userRepository: mockUserRepository,
+        });
+
+        const getdataByU = await getDataUsecaseByU.getdatabyu(params);
+
+        expect(getdataByU).toStrictEqual(resultmocksettings);
+        expect(mockUserRepository.GetDataByUsername).toBeCalledWith(params.xxuserxx);
+    });
 });

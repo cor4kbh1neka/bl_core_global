@@ -1,5 +1,6 @@
 const AddBnksTableTestHelper = require('../../../../tests/AddBnksTableTestHelper');
 const InvariantError = require('../../../Commons/exceptions/InvariantError');
+const NotFoundError = require('../../../Commons/exceptions/NotFoundError');
 const AddBnksDp = require('../../../Domains/banks/entities/AddBnksDp');
 const pool = require('../../database/postgres/pool');
 const ApkBnksRepositoryPostgres = require('../ApkBnksRepositoryPostgres');
@@ -85,6 +86,16 @@ describe('ApkRepositoryPostgres', () => {
 
 
     describe('get Data Bank', () => {
+
+      it('should throw NotFoundError when data bank not found', async () => {
+        // Arrange
+        const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
+
+        // Action & Assert
+        await expect(apkBnksRepositoryPostgres.getdatabnksdp('groupbank111112'))
+          .rejects
+          .toThrowError(NotFoundError);
+      });
       it('should get Data apk data and success', async () => {
         const params = {
           groupname: 'groupbank1'

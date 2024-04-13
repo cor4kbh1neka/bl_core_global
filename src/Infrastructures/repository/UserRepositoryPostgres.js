@@ -1,4 +1,5 @@
 const InvariantError = require('../../Commons/exceptions/InvariantError');
+const NotFoundError = require('../../Commons/exceptions/NotFoundError');
 const RegisteredUser = require('../../Domains/users/entities/RegisteredUser');
 const RegisteredUserLog = require('../../Domains/users/entities/RegisteredUserLog');
 const UserRepository = require('../../Domains/users/UserRepository');
@@ -128,6 +129,20 @@ class UserRepositoryPostgres extends UserRepository {
         }
 
         return result.rows[0].password;
+    }
+
+    async GetDataByUsername(params) {
+        const query = {
+            text: 'SELECT xyusernamexxy,xybanknamexyy,xybankuserxy,xxybanknumberxy,xyx11xuser_mailxxyy,xynumbphonexyyy,"group",groupwd FROM users WHERE xyusernamexxy = $1',
+            values: [params],
+        };
+
+        const result = await this._pool.query(query);
+        if (!result.rowCount) {
+            throw new NotFoundError('data not found !');
+        }
+
+        return result.rows[0];
     }
 
     async getIdByUsername(username) {
