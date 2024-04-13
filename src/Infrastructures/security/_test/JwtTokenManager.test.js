@@ -48,7 +48,33 @@ describe('JwtTokenManager', () => {
       expect(mockJwtToken.generate).toBeCalledWith({ ...payload, exp: expiration }, process.env.REFRESH_TOKEN_KEY);
       expect(refreshToken).toEqual('mock_token');
     });
+
+    describe('createapktoken function', () => {
+
+      it('should create apktoken correctly', async () => {
+        // Arrange
+        const payload = {
+          username: 'dicoding',
+        };
+        const TKN_AGE = parseInt(process.env.APK_TOKEN_AGE); // Mengambil nilai dari environment variable atau default 60000 jika tidak ada
+        const expiration = Math.floor(Date.now() / 1000) + TKN_AGE; // Menghitung waktu kedaluwarsa
+
+        const mockJwtToken = {
+          generate: jest.fn().mockImplementation(() => 'mock_token'),
+        };
+        const jwtTokenManager = new JwtTokenManager(mockJwtToken);
+
+        // Action
+        const apktoken = await jwtTokenManager.createApkToken(payload);
+
+        // Assert
+        expect(mockJwtToken.generate).toBeCalledWith({ ...payload, exp: expiration }, process.env.APK_TOKEN_KEY);
+        expect(apktoken).toEqual('mock_token');
+      });
+    });
   });
+
+
 
   describe('verifyRefreshToken function', () => {
     it('should throw InvariantError when verification failed', async () => {

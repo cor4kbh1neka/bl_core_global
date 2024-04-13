@@ -5,6 +5,7 @@ class UsersHandler {
     this._container = container;
     this.postUserHandler = this.postUserHandler.bind(this);
     this.getUserHandler = this.getUserHandler.bind(this);
+    this.putUserHandler = this.putUserHandler.bind(this);
   }
 
   async postUserHandler(request, h) {
@@ -30,6 +31,19 @@ class UsersHandler {
       data: {
         datauser,
       },
+    });
+    response.code(200);
+    return response;
+  }
+
+  async putUserHandler(request, h) {
+    const putDataUsecase = this._container.getInstance(AddUserUseCase.name);
+    const updatedata = await putDataUsecase.UDataUser(request.payload, request.params);
+
+    const response = h.response({
+      status: 'success',
+      data: updatedata,
+
     });
     response.code(200);
     return response;

@@ -15,6 +15,7 @@ describe('GetAuthenticationUseCase', () => {
         const mockedAuthentication = new NewAuth({
             accessToken: 'access_token',
             refreshToken: 'refresh_token',
+            apkToken: 'apk_token'
         });
         const mockUserRepository = new UserRepository();
         const mockAuthenticationRepository = new AuthenticationRepository();
@@ -30,6 +31,8 @@ describe('GetAuthenticationUseCase', () => {
             .mockImplementation(() => Promise.resolve(mockedAuthentication.accessToken));
         mockAuthenticationTokenManager.createRefreshToken = jest.fn()
             .mockImplementation(() => Promise.resolve(mockedAuthentication.refreshToken));
+        mockAuthenticationTokenManager.createApkToken = jest.fn()
+            .mockImplementation(() => Promise.resolve(mockedAuthentication.apkToken));
         mockUserRepository.getIdByUsername = jest.fn()
             .mockImplementation(() => Promise.resolve('user123'));
         mockAuthenticationRepository.addToken = jest.fn()
@@ -50,6 +53,7 @@ describe('GetAuthenticationUseCase', () => {
         expect(actualAuthentication).toEqual(new NewAuth({
             accessToken: 'access_token',
             refreshToken: 'refresh_token',
+            apkToken: 'apk_token'
         }));
         expect(mockUserRepository.getPasswordByUsername)
             .toBeCalledWith('fakeuser');
@@ -60,6 +64,8 @@ describe('GetAuthenticationUseCase', () => {
         expect(mockAuthenticationTokenManager.createAccessToken)
             .toBeCalledWith({ username: 'fakeuser', id: 'user123' });
         expect(mockAuthenticationTokenManager.createRefreshToken)
+            .toBeCalledWith({ username: 'fakeuser', id: 'user123' });
+        expect(mockAuthenticationTokenManager.createApkToken)
             .toBeCalledWith({ username: 'fakeuser', id: 'user123' });
         expect(mockAuthenticationRepository.addToken)
             .toBeCalledWith(mockedAuthentication.refreshToken);

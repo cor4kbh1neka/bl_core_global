@@ -19,6 +19,16 @@ const routes = (handler) => ([
       },
     },
   },
+  {
+    method: 'PUT',
+    path: '/users/{xyusernamexxy}',
+    handler: handler.putUserHandler,
+    options: {
+      cors: {
+        origin: ['*'],
+      },
+    },
+  },
 ]);
 
 module.exports = routes;

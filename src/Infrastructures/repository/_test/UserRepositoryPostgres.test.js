@@ -5,6 +5,7 @@ const UsersReffsTableTestHelper = require('../../../../tests/UsersReffsTableTest
 const InvariantError = require('../../../Commons/exceptions/InvariantError');
 const NotFoundError = require('../../../Commons/exceptions/NotFoundError');
 const RegisterUser = require('../../../Domains/users/entities/RegisterUser');
+const UpdateDataUser = require('../../../Domains/users/entities/UpdateDataUser');
 const RegisterUserLog = require('../../../Domains/users/entities/RegisterUserLog');
 const RegisteredUser = require('../../../Domains/users/entities/RegisteredUser');
 const pool = require('../../database/postgres/pool');
@@ -269,5 +270,51 @@ describe('UserRepositoryPostgres', () => {
             // Assert
             expect(databank).toEqual({ xybanknamexyy: 'abc', xybankuserxy: 'fake name', xxybanknumberxy: '12445678', group: 'groupbank1', groupwd: 'groupbankwd1' });
         });
+    });
+
+    describe('update data user', () => {
+
+        it('should throw InvariantError when user not found', async () => {
+            const params = {
+                xyusernamexxy: '222fakeuser9898'
+
+            }
+            const updatedUser = new UpdateDataUser({
+                xybanknamexyy: 'abc',
+                xybankuserxy: 'fake name',
+                xxybanknumberxy: '12345611',
+                group: 'groupbank2',
+                groupwd: 'groupbankwd2',
+            });
+            // Arrange
+            const userRepositoryPostgres = new UserRepositoryPostgres(pool);
+
+            // Action & Assert
+            await expect(userRepositoryPostgres.UDataUser(updatedUser, params))
+                .rejects
+                .toThrowError(NotFoundError);
+        });
+        it('should update data user correctly', async () => {
+            const params = {
+                xyusernamexxy: 'fakeuser9898'
+
+            }
+            const updatedUser = new UpdateDataUser({
+                xybanknamexyy: 'abc',
+                xybankuserxy: 'fake name',
+                xxybanknumberxy: '12345611',
+                group: 'groupbank2',
+                groupwd: 'groupbankwd2',
+            });
+
+            await UsersTableTestHelper.addUser({ xyusernamexxy: 'fakeuser9898', xybanknamexyy: 'abc', xxybanknumberxy: '124422222' });
+
+
+            const userRepositoryPostgres = new UserRepositoryPostgres(pool);
+            const UpdatedUser = await userRepositoryPostgres.UDataUser(updatedUser, params);
+            expect(UpdatedUser).toStrictEqual("data berhasil di updated !");
+
+        });
+
     });
 });

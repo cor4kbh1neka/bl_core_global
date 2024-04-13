@@ -1,4 +1,5 @@
 const RegisterUser = require('../../Domains/users/entities/RegisterUser');
+const UpdateDataUser = require('../../Domains/users/entities/UpdateDataUser');
 
 
 class AddUserUseCase {
@@ -23,6 +24,13 @@ class AddUserUseCase {
     async getdatabyu(params) {
         const dataux = await this._userRepository.GetDataByUsername(params.xxuserxx);
         return dataux;
+    }
+
+
+    async UDataUser(useCasePayload, params) {
+        const updatedData = new UpdateDataUser(useCasePayload);
+        await this._userRepository.UDataUser(updatedData, params);
+        return 'data berhasil di updated !';
     }
 }
 

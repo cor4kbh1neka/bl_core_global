@@ -27,9 +27,12 @@ class LoginUserUseCase {
             .createAccessToken({ username, id });
         const refreshToken = await this._authenticationTokenManager
             .createRefreshToken({ username, id });
+        const apkToken = await this._authenticationTokenManager
+            .createApkToken({ username, id });
         const newAuthentication = new NewAuthentication({
             accessToken,
             refreshToken,
+            apkToken
         });
         await this._authenticationRepository.addToken(newAuthentication.refreshToken);
 

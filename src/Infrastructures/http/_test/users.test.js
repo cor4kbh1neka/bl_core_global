@@ -118,4 +118,64 @@ describe('/adduserendpoints', () => {
         });
     });
 
+    describe('WHEN PUT /users/{xyusernamexxy}', () => {
+
+        it('should response 201 and persisted bank', async () => {
+
+            const server = await createServer(container);
+            const xyusernamexxy = 'fakeuser9911';
+            ;
+
+
+            const requestPayload = {
+                xybanknamexyy: 'abc',
+                xybankuserxy: 'fake name',
+                xxybanknumberxy: '12345601',
+                group: 'groupbank2',
+                groupwd: 'groupbankwd2',
+            };
+            await UsersTableTestHelper.addUser({ xyuseridxy: 'user919', xyusernamexxy: 'fakeuser9911', xybanknamexyy: 'abc', xxybanknumberxy: '124004445' });
+
+
+            const response = await server.inject({
+                method: 'PUT',
+                url: `/users/${xyusernamexxy}`,
+                payload: requestPayload,
+
+            })
+
+            // Assert
+            const responseJson = JSON.parse(response.payload);
+            expect(response.statusCode).toEqual(200);
+            expect(responseJson.status).toEqual('success');
+            expect(responseJson.data).toBeDefined();
+        });
+
+
+        it('should  throw an error 404 when payload is not found', async () => {
+            const server = await createServer(container);
+
+            const xyusernamexxy = 'fakeuser9911656';
+            const requestPayload = {
+                xybanknamexyy: 'abc',
+                xybankuserxy: 'fake name',
+                xxybanknumberxy: '12345601',
+                group: 'groupbank2',
+                groupwd: 'groupbankwd2',
+            };
+            // Action
+            const response = await server.inject({
+                method: 'PUT',
+                url: `/users/${xyusernamexxy}`,
+                payload: requestPayload,
+            })
+            // Assert
+            const responseJson = JSON.parse(response.payload);
+            expect(response.statusCode).toEqual(404);
+            expect(responseJson.status).toEqual('fail');
+            expect(responseJson.message).toEqual('data not found !');
+        });
+    });
+
+
 });

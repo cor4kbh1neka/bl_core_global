@@ -1,3 +1,4 @@
+const UpdateDataUser = require('../../../Domains/users/entities/UpdateDataUser');
 const RegisterUser = require('../../../Domains/users/entities/RegisterUser');
 const RegisterUserLog = require('../../../Domains/users/entities/RegisterUserLog');
 const RegisteredUser = require('../../../Domains/users/entities/RegisteredUser');
@@ -127,5 +128,35 @@ describe('UserRepository', () => {
 
         expect(getdataByU).toStrictEqual(resultmocksettings);
         expect(mockUserRepository.GetDataByUsername).toBeCalledWith(params.xxuserxx);
+    });
+
+    it('should updated data user correctly', async () => {
+        const params = {
+            xyusernamexxy: 'fakeuser'
+        };
+
+        const useCasePayload = new UpdateDataUser({
+            xybanknamexyy: 'abc',
+            xybankuserxy: 'fake name',
+            xxybanknumberxy: '12345611',
+            group: 'groupbank2',
+            groupwd: 'groupbankwd2',
+        });
+        const mockUserRepository = new UserRepository();
+
+
+        mockUserRepository.UDataUser = jest.fn()
+            .mockImplementation(() => Promise.resolve('data berhasil di updated !'));
+
+        const putDataUseCaseByU = new AddUserUseCase({
+            userRepository: mockUserRepository,
+        });
+
+        const putDataByU = await putDataUseCaseByU.UDataUser(useCasePayload, params);
+
+        expect(putDataByU).toStrictEqual('data berhasil di updated !');
+
+        expect(mockUserRepository.UDataUser).toBeCalledWith(useCasePayload, params);
+
     });
 });

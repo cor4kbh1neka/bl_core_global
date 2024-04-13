@@ -5,7 +5,6 @@ describe('entities for update data Users', () => {
     it('should throw error whe payload not contain needed properties', () => {
         //arrange
         const payload = {
-            xybanknamexyy: 'abc',
             xybankuserxy: 'fake name',
             xxybanknumberxy: '12345678',
             group: 'groupbank2',
@@ -24,7 +23,6 @@ describe('entities for update data Users', () => {
             xxybanknumberxy: '12345678',
             group: 'groupbank2',
             groupwd: 'groupbankwd2',
-            password: 'secret',
         };
         // Action and Assert
         expect(() => new UpdateDataUser(payload)).toThrowError('UPDATED_USER.NOT_MEET_DATA_TYPE_SPECIFICATION');
@@ -39,7 +37,6 @@ describe('entities for update data Users', () => {
             xxybanknumberxy: '12345678',
             group: 'groupbank2',
             groupwd: 'groupbankwd2',
-            password: 'secret',
         };
 
         // Action and Assert
@@ -57,7 +54,6 @@ describe('entities for update data Users', () => {
             xxybanknumberxy: '12345678AA',
             group: 'groupbank2',
             groupwd: 'groupbankwd2',
-            password: 'secret',
         };
 
         // Action and Assert
@@ -76,7 +72,7 @@ describe('entities for update data Users', () => {
             password: 'secret',
         };
         // Action
-        const { xybanknamexyy, xybankuserxy, xxybanknumberxy, group, groupwd, password } = new UpdateDataUser(payload);
+        const { xybanknamexyy, xybankuserxy, xxybanknumberxy, group, groupwd, } = new UpdateDataUser(payload);
 
         // Assert
         expect(xybanknamexyy).toEqual(payload.xybanknamexyy);
@@ -84,6 +80,5 @@ describe('entities for update data Users', () => {
         expect(xxybanknumberxy).toEqual(payload.xxybanknumberxy);
         expect(group).toEqual(payload.group);
         expect(groupwd).toEqual(payload.groupwd);
-        expect(password).toEqual(payload.password);
     });
 });

@@ -177,6 +177,22 @@ class UserRepositoryPostgres extends UserRepository {
         return result.rows[0];
 
     }
+
+    async UDataUser(usecasepayload, params) {
+        const username = params.xyusernamexxy;
+        const query = {
+            text: 'UPDATE users SET xybanknamexyy = $1, xybankuserxy = $2, xxybanknumberxy = $3, "group" = $4, "groupwd" = $5 WHERE xyusernamexxy = $6',
+            values: [usecasepayload.xybanknamexyy, usecasepayload.xybankuserxy, usecasepayload.xxybanknumberxy, usecasepayload.group, usecasepayload.groupwd, username],
+        };
+
+        const result = await this._pool.query(query);
+        if (!result.rowCount) {
+            throw new NotFoundError('data not found !');
+        }
+
+        return 'data berhasil di updated !';
+
+    }
 }
 
 module.exports = UserRepositoryPostgres;

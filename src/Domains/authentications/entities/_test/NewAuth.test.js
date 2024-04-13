@@ -5,6 +5,7 @@ describe('NewAuth entities', () => {
     // Arrange
     const payload = {
       accessToken: 'accessToken',
+      apkToken: 'apkToken',
     };
 
     // Action & Assert
@@ -16,6 +17,8 @@ describe('NewAuth entities', () => {
     const payload = {
       accessToken: 'accessToken',
       refreshToken: 1234,
+      apkToken: 'apkToken',
+
     };
 
     // Action & Assert
@@ -27,6 +30,7 @@ describe('NewAuth entities', () => {
     const payload = {
       accessToken: 'accessToken',
       refreshToken: 'refreshToken',
+      apkToken: 'apkToken',
     };
 
     // Action
@@ -36,5 +40,6 @@ describe('NewAuth entities', () => {
     expect(newAuth).toBeInstanceOf(NewAuth);
     expect(newAuth.accessToken).toEqual(payload.accessToken);
     expect(newAuth.refreshToken).toEqual(payload.refreshToken);
+    expect(newAuth.apkToken).toEqual(payload.apkToken);
   });
 });
