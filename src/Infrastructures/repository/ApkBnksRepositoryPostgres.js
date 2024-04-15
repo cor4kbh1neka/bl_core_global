@@ -11,6 +11,63 @@ class ApkBnksRepositoryPostgres extends BnksRepository {
 
     }
 
+
+    async addgrp(addgroup) {
+        const query = {
+            text: 'INSERT INTO mastergroup (groupbank) VALUES($1) RETURNING groupbank',
+            values: [addgroup],
+        };
+        const data = await this._pool.query(query);
+        return data.rows[0].groupbank;
+    }
+
+    async getdtGroup() {
+        const grouquery = {
+            text: 'SELECT * FROM mastergroup',
+            values: [],
+        };
+        const data = await this._pool.query(grouquery);
+        // console.log(data.rows);
+        // const groupbankArray = data.rows.map(row => row.groupbank);
+        return data.rows;
+    }
+
+
+    async findgroup(params) {
+        // Kueri untuk mencari dataapknotice
+        const noticeQuery = {
+            text: 'SELECT * FROM mastergroup WHERE idgroup = $1',
+            values: [params],
+        };
+        const databank = await this._pool.query(noticeQuery);
+        if (!databank.rowCount) {
+            throw new NotFoundError('data not found !');
+        }
+        return databank.rows;
+    }
+
+    async delgroup(params) {
+        // Kueri untuk mencari dataapknotice
+        const noticeQuery = {
+            text: 'DELETE FROM mastergroup WHERE idgroup = $1',
+            values: [params],
+        };
+        await this._pool.query(noticeQuery);
+        return "success delete group";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
     async databnksdp(databks) {
 
         const { namegroupxyzt, namebankxxyy, statusxxyy, yyxxmethod, xynamarekx, norekxyxy, barcodexrxr, zwzwshowbarcode } = databks;
@@ -52,6 +109,8 @@ class ApkBnksRepositoryPostgres extends BnksRepository {
         }
         return databank.rows;
     }
+
+
 
 
 }

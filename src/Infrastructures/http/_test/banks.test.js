@@ -1,5 +1,6 @@
 const pool = require('../../database/postgres/pool');
 const AddBnksTableTestHelper = require('../../../../tests/AddBnksTableTestHelper');
+const AddGroupTableTestHelper = require('../../../../tests/AddGroupTableTestHelper');
 const container = require('../../container');
 const createServer = require('../createServer');
 
@@ -12,6 +13,87 @@ describe('/adduserendpoints', () => {
         await AddBnksTableTestHelper.cleanTable();
     });
 
+    describe('When add and get group bank /banks/group', () => {
+        it('should repsonse 201 and persisted group bank data', async () => {
+            const requestPayload = {
+                namegroupxyzt: 'groupbank2',
+            };
+
+            const server = await createServer(container);
+
+            // Action
+            const response = await server.inject({
+                method: 'POST',
+                url: '/banks/group',
+                payload: requestPayload,
+            });
+            // Assert
+            const responseJson = JSON.parse(response.payload);
+            expect(response.statusCode).toEqual(201);
+            expect(responseJson.status).toEqual('success');
+
+        });
+
+
+        it('should repsonse 200 and get group bank data', async () => {
+
+
+            const server = await createServer(container);
+
+            await AddGroupTableTestHelper.addgroup({ idgroup: 3, groupbank: 'groupbank3' });
+            await AddGroupTableTestHelper.addgroup({ idgroup: 4, groupbank: 'groupbank4' });
+            // Action
+            const response = await server.inject({
+                method: 'GET',
+                url: '/banks/group',
+            });
+            // Assert
+            const responseJson = JSON.parse(response.payload);
+            expect(response.statusCode).toEqual(200);
+            expect(responseJson.status).toEqual('success');
+
+        });
+
+        it('should repsonse 200 and delete group bank data', async () => {
+
+            const groupid = '18';
+
+            const server = await createServer(container);
+
+            await AddGroupTableTestHelper.addgroup({ idgroup: 18, groupbank: 'groupbank8' });
+            await AddGroupTableTestHelper.addgroup({ idgroup: 19, groupbank: 'groupbank9' });
+            // Action
+            const response = await server.inject({
+                method: 'DELETE',
+                url: `/banks/group/${groupid}`,
+
+            });
+            // Assert
+            const responseJson = JSON.parse(response.payload);
+            expect(response.statusCode).toEqual(200);
+            expect(responseJson.status).toEqual('success');
+
+        });
+
+        // it('should repsonse 404 when delete group bank data', async () => {
+
+        //     const groupid = '20';
+
+        //     const server = await createServer(container);
+        //     // Action
+        //     const response = await server.inject({
+        //         method: 'DELETE',
+        //         url: `/banks/group/${groupid}`,
+
+        //     });
+        //     // Assert
+        //     const responseJson = JSON.parse(response.payload);
+        //     expect(response.statusCode).toEqual(404);
+        //     expect(responseJson.status).toEqual('data not found !');
+
+        // });
+
+    });
     describe('WHEN POST /banks', () => {
 
         it('should response 201 and persisted banks data', async () => {

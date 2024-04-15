@@ -1,6 +1,16 @@
 const BnksRepository = require('../BnksRepository');
 
 describe('apkRepository reddis interface', () => {
+
+    it('should throw an error whe invoke abstract behavior on add group', async () => {
+        const bnksRepository = new BnksRepository()
+
+        await expect(bnksRepository.addgrp()).rejects.toThrowError('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+        await expect(bnksRepository.getdtGroup()).rejects.toThrow('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+        await expect(bnksRepository.delgroup()).rejects.toThrow('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+        await expect(bnksRepository.findgroup()).rejects.toThrow('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+    });
+
     it('should throw an error whe invoke abstract behavior', async () => {
         //arrange
         const bnksRepository = new BnksRepository()
@@ -9,6 +19,8 @@ describe('apkRepository reddis interface', () => {
         await expect(bnksRepository.checkbnks()).rejects.toThrowError('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
 
         await expect(bnksRepository.databnksdp()).rejects.toThrowError('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+
+
     });
 
     it('should throw an error when no have function in the usecase', async () => {

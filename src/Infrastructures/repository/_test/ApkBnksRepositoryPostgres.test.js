@@ -1,20 +1,112 @@
 const AddBnksTableTestHelper = require('../../../../tests/AddBnksTableTestHelper');
+const AddGroupTableTestHelper = require('../../../../tests/AddGroupTableTestHelper');
 const InvariantError = require('../../../Commons/exceptions/InvariantError');
 const NotFoundError = require('../../../Commons/exceptions/NotFoundError');
 const AddBnksDp = require('../../../Domains/banks/entities/AddBnksDp');
+const AddGroupBnks = require('../../../Domains/banks/entities/AddGroupBnks');
 const pool = require('../../database/postgres/pool');
 const ApkBnksRepositoryPostgres = require('../ApkBnksRepositoryPostgres');
 
 
 
-describe('ApkRepositoryPostgres', () => {
+describe('DataBank repository', () => {
   afterEach(async () => {
     await AddBnksTableTestHelper.cleanTable();
+    await AddGroupTableTestHelper.cleanTable();
   });
 
   afterAll(async () => {
     await pool.end();
   });
+
+
+  describe('add group bank in data', () => {
+    it('should add data group and return group', async () => {
+      //arrange
+      const addgroup = new AddGroupBnks({
+        namegroupxyzt: 'groupbank2',
+      });
+
+      const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
+
+      // Action
+      await apkBnksRepositoryPostgres.addgrp(addgroup);
+
+      const groupdata = await AddGroupTableTestHelper.findgrp(addgroup.namegroupxyzt);
+      expect(groupdata).toHaveLength(1);
+
+    });
+
+  });
+
+  describe('get data group', () => {
+    it('should return data group', async () => {
+
+
+      await AddGroupTableTestHelper.addgroup({ idgroup: 3, groupbank: 'groupbank3' });
+      await AddGroupTableTestHelper.addgroup({ idgroup: 4, groupbank: 'groupbank4' });
+
+      const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
+
+      const getbankdata = await apkBnksRepositoryPostgres.getdtGroup();
+
+      expect(getbankdata).toStrictEqual([{ "idgroup": 3, groupbank: "groupbank3" }, { "idgroup": 4, groupbank: "groupbank4" }]);
+    });
+
+
+    describe('delete data group', () => {
+      it('should check data bnks have in database', async () => {
+        //arrange
+        params = {
+          idgroup: 17
+        }
+
+        const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
+
+        // Action
+        await AddGroupTableTestHelper.addgroup({ idgroup: 13, groupbank: 'groupbank7' });
+        // Assert
+        await expect(apkBnksRepositoryPostgres.findgroup(params.idgroup))
+          .rejects.toThrow(NotFoundError);
+      });
+      it('should return data group', async () => {
+        params = {
+          idgroup: 12
+        }
+        await AddGroupTableTestHelper.addgroup({ idgroup: 12, groupbank: 'groupbank3' });
+
+        const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
+
+        await apkBnksRepositoryPostgres.findgroup(params.idgroup);
+        const datadelete = await apkBnksRepositoryPostgres.delgroup(params.idgroup);
+
+        expect(datadelete).toStrictEqual("success delete group");
+      });
+
+    });
+
+
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   describe('add data in bnks data settings', () => {
     it('should persist add data settings and return success', async () => {

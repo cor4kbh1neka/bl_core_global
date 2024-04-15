@@ -5,9 +5,46 @@ class BnksHandler {
   constructor(container) {
     this._container = container;
     this.postBanksHandler = this.postBanksHandler.bind(this);
+    this.postGroupHandler = this.postGroupHandler.bind(this);
+    this.getGroupHandler = this.getGroupHandler.bind(this);
+    this.delGroupHandler = this.delGroupHandler.bind(this);
     this.getBanksHandler = this.getBanksHandler.bind(this);
     // this.postApkNoticeHandler = this.postApkNoticeHandler.bind(this);
     // this.getApkHandler = this.getApkHandler.bind(this);
+  }
+
+  async postGroupHandler(request, h) {
+    const addGroupBankUsecase = this._container.getInstance(AddbnksUseCase.name);
+    const groupbnks = await addGroupBankUsecase.addgrp(request.payload);
+    const response = h.response({
+      status: 'success',
+      data: groupbnks
+    });
+    response.code(201);
+    return response;
+  }
+  async getGroupHandler(request, h) {
+
+    const getGroupBankUsecase = this._container.getInstance(AddbnksUseCase.name);
+    const datagroup = await getGroupBankUsecase.getgroup();
+    const response = h.response({
+      status: 'success',
+      data: datagroup
+    });
+    response.code(200);
+    return response;
+  }
+
+  async delGroupHandler(request, h) {
+
+    const delGroupBankUsecase = this._container.getInstance(AddbnksUseCase.name);
+    const datagroup = await delGroupBankUsecase.delgroupdata(request.params);
+    const response = h.response({
+      status: 'success',
+      data: datagroup
+    });
+    response.code(200);
+    return response;
   }
 
   async postBanksHandler(request, h) {

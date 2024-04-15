@@ -1,4 +1,5 @@
 const AddBnksDp = require('../../Domains/banks/entities/AddBnksDp');
+const AddGroupBnks = require('../../Domains/banks/entities/AddGroupBnks');
 
 
 class AddbnksUseCase {
@@ -18,6 +19,22 @@ class AddbnksUseCase {
         return namegroup;
     }
 
+    async addgrp(useCasePayload) {
+        const addgroup = new AddGroupBnks(useCasePayload);
+        const namegroup = await this._bnksRepository.addgrp(addgroup.namegroupxyzt);
+        return namegroup;
+    }
+
+    async getgroup() {
+        const namegroup = await this._bnksRepository.getdtGroup();
+        return namegroup;
+    }
+
+    async delgroupdata(params) {
+        await this._bnksRepository.findgroup(params.idgroup);
+        const data = await this._bnksRepository.delgroup(params.idgroup);
+        return data;
+    }
 
     async getbanks(params) {
         try {

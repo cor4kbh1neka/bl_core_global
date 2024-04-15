@@ -2,7 +2,7 @@
 exports.shorthands = undefined;
 
 exports.up = (pgm) => {
-    pgm.createTable('datagroupwd', {
+    pgm.createTable('databnk', {
         idbank: {
             type: 'SERIAL',
             primaryKey: true,
@@ -10,14 +10,13 @@ exports.up = (pgm) => {
         namegroupxyzt: {
             type: 'VARCHAR(30)',
             notNull: true,
-            unique: true,
         },
-        namebankxxyy: {
+        masterbnkxyxt: {
             type: 'VARCHAR(30)',
             notNull: true,
         },
-        statusxxyy: {
-            type: 'INTEGER',
+        namebankxxyy: {
+            type: 'VARCHAR(30)',
             notNull: true,
         },
         yyxxmethod: {
@@ -32,6 +31,14 @@ exports.up = (pgm) => {
             type: 'VARCHAR(20)',
             notNull: true,
         },
+        barcodexrxr: {
+            type: 'VARCHAR(130)',
+            notNull: true,
+        },
+        zwzwshowbarcode: {
+            type: 'INTEGER',
+            notNull: true,
+        },
         created_at: {
             type: 'TEXT',
             notNull: true,
@@ -43,5 +50,5 @@ exports.up = (pgm) => {
 };
 
 exports.down = (pgm) => {
-    pgm.dropTable('datagroupwd');
+    pgm.dropTable('databnk');
 };

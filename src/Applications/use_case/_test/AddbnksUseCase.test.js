@@ -1,10 +1,91 @@
 const AddBnksDp = require('../../../Domains/banks/entities/AddBnksDp');
+const AddGroupBnks = require('../../../Domains/banks/entities/AddGroupBnks');
 const BnksRepository = require('../../../Domains/banks/BnksRepository');
 const AddbnksUseCase = require('../AddbnksUseCase');
 const CacheService = require('../../caching/CacheService');
 
 
+describe('AddGroup bnks api for add master data', () => {
+    it('should orchestrating add group correctly', async () => {
+        const useCasePayload = new AddGroupBnks({
+            namegroupxyzt: 'groupbank2',
+        });
+        const namegroup = 'groupbank2';
 
+        const mockbnksRepository = new BnksRepository();
+
+        mockbnksRepository.addgrp = jest.fn()
+            .mockImplementation(() => Promise.resolve(namegroup));
+
+
+        const addgroupusecase = new AddbnksUseCase({
+            bnksRepository: mockbnksRepository,
+
+        });
+
+        const datagroupusecase = await addgroupusecase.addgrp(useCasePayload);
+        expect(datagroupusecase).toStrictEqual(namegroup);
+        expect(mockbnksRepository.addgrp).toBeCalledWith(useCasePayload.namegroupxyzt);
+
+    });
+});
+
+describe('GetDataGroup that already create', () => {
+    it('should get data group bank', async () => {
+
+
+        const resultmockgroup = [{ "idgroup": 3, groupbank: "groupbank3" }, { "idgroup": 4, groupbank: "groupbank4" }];
+
+
+        const mockBnksRepository = new BnksRepository();
+
+        mockBnksRepository.getdtGroup = jest.fn()
+            .mockImplementation(() => Promise.resolve(resultmockgroup));
+
+
+        const getGroupDataUsecase = new AddbnksUseCase({
+            bnksRepository: mockBnksRepository,
+        });
+
+        const payload = await getGroupDataUsecase.getgroup();
+
+        expect(mockBnksRepository.getdtGroup)
+            .toBeCalledWith();
+        expect(payload).toEqual(resultmockgroup);
+    });
+});
+
+describe("delete  group bank for master data", () => {
+    it("should delete data group succesfully", async () => {
+
+        params = {
+            idgroup: 12
+        }
+
+        resultdelete = "success delete group";
+
+        const mockBnksRepository = new BnksRepository();
+
+        mockBnksRepository.findgroup = jest.fn()
+            .mockImplementation(() => Promise.resolve());
+        mockBnksRepository.delgroup = jest.fn()
+            .mockImplementation(() => Promise.resolve(resultdelete));
+
+
+        const delGroupDataUsecase = new AddbnksUseCase({
+            bnksRepository: mockBnksRepository,
+        });
+
+        const datasuccess = await delGroupDataUsecase.delgroupdata(params);
+
+        expect(mockBnksRepository.findgroup)
+            .toBeCalledWith(params.idgroup);
+        expect(mockBnksRepository.delgroup)
+            .toBeCalledWith(params.idgroup);
+        expect(datasuccess).toEqual(resultdelete);
+
+    });
+});
 
 describe('APK DATA RESERVER API POST GET DATA', () => {
     /**
