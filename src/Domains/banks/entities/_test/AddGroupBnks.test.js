@@ -7,6 +7,7 @@ describe('entities for APK data', () => {
     it('should send an error when not contain fill in data spesification', () => {
         //arrange
         const payload = {
+            grouptype: true
         };
 
         expect(() => new AddGroupBnks(payload)).toThrowError('ADD_GROUP_BANK.NOT_CONTAIN_NEEDED_PROPERTY');
@@ -16,6 +17,8 @@ describe('entities for APK data', () => {
         //arrange
         const payload = {
             namegroupxyzt: 123,
+            grouptype: true,
+
         };
 
         expect(() => new AddGroupBnks(payload)).toThrowError('ADD_GROUP_BANK.NOT_MEET_DATA_TYPE_SPECIFICATION');
@@ -25,6 +28,8 @@ describe('entities for APK data', () => {
         //arrange
         const payload = {
             namegroupxyzt: "restrict characters",
+            grouptype: true,
+
         };
 
         expect(() => new AddGroupBnks(payload)).toThrowError('ADD_GROUP_BANK.REGISTER_CONTAIN_RESTRICTED_CHARACTER');
@@ -35,12 +40,14 @@ describe('entities for APK data', () => {
         //arrange
         const payload = {
             namegroupxyzt: 'groupbank1',
+            grouptype: true,
         };
 
-        const { namegroupxyzt } = new AddGroupBnks(payload);
+        const { namegroupxyzt, grouptype } = new AddGroupBnks(payload);
 
         // Assert
         expect(namegroupxyzt).toEqual(payload.namegroupxyzt);
+        expect(grouptype).toEqual(payload.grouptype);
 
     });
 });

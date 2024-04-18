@@ -5,10 +5,11 @@ const AddGroupTableTestHelper = {
   async addgroup({
     idgroup = 1,
     groupbank = 'groupbank1',
+    grouptype = true,
   }) {
     const query = {
-      text: 'INSERT INTO mastergroup  (idgroup,groupbank) VALUES($1, $2)',
-      values: [idgroup, groupbank],
+      text: 'INSERT INTO mastergroup  (idgroup,groupbank, grouptype) VALUES($1, $2 , $3)',
+      values: [idgroup, groupbank, grouptype],
     };
 
     await pool.query(query);

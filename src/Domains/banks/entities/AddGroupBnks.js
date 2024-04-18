@@ -2,17 +2,18 @@ class AddGroupBnks {
     constructor(payload) {
         this._verifyPayload(payload);
 
-        const { namegroupxyzt } = payload;
+        const { namegroupxyzt, grouptype } = payload;
 
         this.namegroupxyzt = namegroupxyzt;
+        this.grouptype = grouptype;
     }
 
-    _verifyPayload({ namegroupxyzt }) {
-        if (!namegroupxyzt) {
+    _verifyPayload({ namegroupxyzt, grouptype }) {
+        if (!namegroupxyzt || !grouptype) {
             throw new Error('ADD_GROUP_BANK.NOT_CONTAIN_NEEDED_PROPERTY');
         }
 
-        if (typeof namegroupxyzt !== 'string') {
+        if (typeof namegroupxyzt !== 'string' || typeof grouptype !== 'boolean') {
             throw new Error('ADD_GROUP_BANK.NOT_MEET_DATA_TYPE_SPECIFICATION');
         }
 

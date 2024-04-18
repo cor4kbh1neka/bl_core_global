@@ -34,10 +34,14 @@ exports.up = (pgm) => {
         barcodexrxr: {
             type: 'VARCHAR(130)',
             notNull: true,
+            default: false // Menambahkan nilai default
+
         },
         zwzwshowbarcode: {
-            type: 'INTEGER',
+            type: 'BOOLEAN',
             notNull: true,
+            default: false // Menambahkan nilai default
+
         },
         created_at: {
             type: 'TEXT',

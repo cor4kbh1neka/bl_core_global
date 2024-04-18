@@ -12,6 +12,10 @@ exports.up = (pgm) => {
             notNull: true,
             unique: true,
 
+        },
+        grouptype: {
+            type: 'BOOLEAN',
+            notNull: true,
         }
     });
 };

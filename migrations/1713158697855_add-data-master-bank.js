@@ -21,9 +21,9 @@ exports.up = (pgm) => {
             notNull: true,
         },
         statusxyxyy: {
-            type: 'BOOLEAN',
+            type: 'INTEGER',
             notNull: true,
-            default: true,
+            default: 1,
         },
         created_at: {
             type: 'TEXT',

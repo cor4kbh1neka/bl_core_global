@@ -62,7 +62,15 @@ DomainErrorTranslator._directories = {
   'UPDATED_USER.UPDATED_CONTAIN_RESTRICTED_CHARACTER': new InvariantError('masukkan character yang sesuai !'),
   'UPDATED_USER.RESTRICTED_LIMIT_CHARACTER': new InvariantError('Character melebihi batas maksimum !'),
   'UPDATED_USER.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('Input tipe data yang sesuai !'),
-  'UPDATED_USER.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('isi semua fill yang sesuai !'),
+  'UPDATED_USER.NOT_CONTAIN_NEEDED_PROPERTY': new NotFoundError('isi semua fill yang sesuai !'),
+
+  'ADD_GROUP_BANK.UPDATED_CONTAIN_RESTRICTED_CHARACTER': new InvariantError('masukkan character yang sesuai !'),
+  'ADD_GROUP_BANK.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('Input tipe data yang sesuai !'),
+  'ADD_GROUP_BANK.NOT_CONTAIN_NEEDED_PROPERTY': new NotFoundError('isi semua fill yang sesuai !'),
+
+  'ADD_MASRTER_BANK.UPDATED_CONTAIN_RESTRICTED_CHARACTER': new InvariantError('masukkan character yang sesuai !'),
+  'ADD_MASRTER_BANK.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('Input tipe data yang sesuai !'),
+  'ADD_MASRTER_BANK.NOT_CONTAIN_NEEDED_PROPERTY': new NotFoundError('isi semua fill yang sesuai !'),
 
 
 };

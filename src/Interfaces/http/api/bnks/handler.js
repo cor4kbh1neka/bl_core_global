@@ -4,14 +4,28 @@ const AddbnksUseCase = require('../../../../Applications/use_case/AddbnksUseCase
 class BnksHandler {
   constructor(container) {
     this._container = container;
-    this.postBanksHandler = this.postBanksHandler.bind(this);
+    // this.postBanksHandler = this.postBanksHandler.bind(this);
+    // this.getBanksHandler = this.getBanksHandler.bind(this);
+
     this.postGroupHandler = this.postGroupHandler.bind(this);
     this.getGroupHandler = this.getGroupHandler.bind(this);
     this.delGroupHandler = this.delGroupHandler.bind(this);
-    this.getBanksHandler = this.getBanksHandler.bind(this);
-    // this.postApkNoticeHandler = this.postApkNoticeHandler.bind(this);
-    // this.getApkHandler = this.getApkHandler.bind(this);
+
+    this.postMasterHandler = this.postMasterHandler.bind(this);
+    this.putMasterHandler = this.putMasterHandler.bind(this);
+    this.getMasterHandler = this.getMasterHandler.bind(this);
+    this.delMasterHandler = this.delMasterHandler.bind(this);
+
+    this.postBanknwHandler = this.postBanknwHandler.bind(this);
+    this.putBanknwHandler = this.putBanknwHandler.bind(this);
+    this.getBanknwHandler = this.getBanknwHandler.bind(this);
+
   }
+
+  /**
+ * @param {group} untuk master bank 
+ * harus add group dulu baru master
+ */
 
   async postGroupHandler(request, h) {
     const addGroupBankUsecase = this._container.getInstance(AddbnksUseCase.name);
@@ -47,9 +61,13 @@ class BnksHandler {
     return response;
   }
 
-  async postBanksHandler(request, h) {
-    const addBanksUsecase = this._container.getInstance(AddbnksUseCase.name);
-    const groupbnks = await addBanksUsecase.execute(request.payload);
+  /**
+   * @param {master} untuk master bank 
+   * harus add group dulu baru master
+   */
+  async postMasterHandler(request, h) {
+    const addMasterBankUsecase = this._container.getInstance(AddbnksUseCase.name);
+    const groupbnks = await addMasterBankUsecase.admasterbank(request.payload);
     const response = h.response({
       status: 'success',
       data: groupbnks
@@ -57,38 +75,110 @@ class BnksHandler {
     response.code(201);
     return response;
   }
-
-  async getBanksHandler(request, h) {
-    const addBanksUsecase = this._container.getInstance(AddbnksUseCase.name);
-    const databank = await addBanksUsecase.getbanks(request.params);
+  async putMasterHandler(request, h) {
+    const putMasterBankUsecase = this._container.getInstance(AddbnksUseCase.name);
+    const datamasterbnks = await putMasterBankUsecase.putmasterbank(request.payload, request.params);
     const response = h.response({
       status: 'success',
-      data: databank      // Mengubah objek thread menjadi array dengan satu elemen
-
+      data: datamasterbnks
+    });
+    response.code(200);
+    return response;
+  }
+  async getMasterHandler(request, h) {
+    const getmasterBankUsecase = this._container.getInstance(AddbnksUseCase.name);
+    const datamastr = await getmasterBankUsecase.getdtmstr();
+    const response = h.response({
+      status: 'success',
+      data: datamastr
     });
     response.code(200);
     return response;
   }
 
-  // async postApkNoticeHandler(request, h) {
-  //   const addApkUseCase = this._container.getInstance(AdddataApkUseCase.name);
-  //   const dataid = await addApkUseCase.executenotice(request.payload);
 
+  async delMasterHandler(request, h) {
+
+    const delmsterBankUsecase = this._container.getInstance(AddbnksUseCase.name);
+    const datadeletemstr = await delmsterBankUsecase.delmasterdata(request.params);
+    const response = h.response({
+      status: 'success',
+      data: datadeletemstr
+    });
+    response.code(200);
+    return response;
+  }
+
+
+
+
+  /**
+   * @param {Bank}
+   * khusus data tambah bank
+   */
+
+  async postBanknwHandler(request, h) {
+    const adddataBankUsecase = this._container.getInstance(AddbnksUseCase.name);
+    const databank = await adddataBankUsecase.addbnkdt(request.payload);
+    const response = h.response({
+      status: 'success',
+      data: databank
+    });
+    response.code(201);
+    return response;
+  }
+
+  async putBanknwHandler(request, h) {
+    const putBankUsecase = this._container.getInstance(AddbnksUseCase.name);
+    const databankedit = await putBankUsecase.edtbank(request.payload, request.params);
+    const response = h.response({
+      status: 'success',
+      data: databankedit
+    });
+    response.code(200);
+    return response;
+  }
+  async getBanknwHandler(request, h) {
+    const getBankUsecase = this._container.getInstance(AddbnksUseCase.name);
+    const databankall = await getBankUsecase.getbankdt(request.params);
+    const response = h.response({
+      status: 'success',
+      data: databankall
+    });
+    response.code(200);
+    return response;
+  }
+
+
+
+
+
+
+
+
+
+  // /**
+  //  * @param {false project} untuk awal dan akan diubah 
+  //  * harus add group dulu baru master
+  //  */
+  // async postBanksHandler(request, h) {
+  //   const addBanksUsecase = this._container.getInstance(AddbnksUseCase.name);
+  //   const groupbnks = await addBanksUsecase.execute(request.payload);
   //   const response = h.response({
   //     status: 'success',
-  //     data: {
-  //       dataid// Mengubah objek thread menjadi array dengan satu elemen
-  //     },
+  //     data: groupbnks
   //   });
   //   response.code(201);
   //   return response;
   // }
-  // async getApkHandler(request, h) {
-  //   const getDataApkUseCase = this._container.getInstance(GetDataApkUseCase.name);
-  //   const dataapk = await getDataApkUseCase.execute(request.params);
+
+  // async getBanksHandler(request, h) {
+  //   const addBanksUsecase = this._container.getInstance(AddbnksUseCase.name);
+  //   const databank = await addBanksUsecase.getbanks(request.params);
   //   const response = h.response({
   //     status: 'success',
-  //     data: dataapk.data
+  //     data: databank      // Mengubah objek thread menjadi array dengan satu elemen
+
   //   });
   //   response.code(200);
   //   return response;
