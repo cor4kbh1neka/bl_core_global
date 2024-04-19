@@ -8,7 +8,7 @@ exports.up = (pgm) => {
             primaryKey: true,
         },
         namegroupxyzt: {
-            type: 'VARCHAR(30)',
+            type: 'VARCHAR(30)[]', // Definisi kolom sebagai array dari VARCHAR
             notNull: true,
         },
         masterbnkxyxt: {

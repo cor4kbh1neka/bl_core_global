@@ -19,6 +19,7 @@ class BnksHandler {
     this.postBanknwHandler = this.postBanknwHandler.bind(this);
     this.putBanknwHandler = this.putBanknwHandler.bind(this);
     this.getBanknwHandler = this.getBanknwHandler.bind(this);
+    this.getBanknwexHandler = this.getBanknwexHandler.bind(this);
 
   }
 
@@ -141,6 +142,18 @@ class BnksHandler {
   async getBanknwHandler(request, h) {
     const getBankUsecase = this._container.getInstance(AddbnksUseCase.name);
     const databankall = await getBankUsecase.getbankdt(request.params);
+    const response = h.response({
+      status: 'success',
+      data: databankall
+    });
+    response.code(200);
+    return response;
+  }
+
+
+  async getBanknwexHandler(request, h) {
+    const getBankexUsecase = this._container.getInstance(AddbnksUseCase.name);
+    const databankall = await getBankexUsecase.getbankdtex(request.params);
     const response = h.response({
       status: 'success',
       data: databankall

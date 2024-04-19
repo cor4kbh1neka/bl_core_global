@@ -12,10 +12,6 @@ exports.up = (pgm) => {
             notNull: true,
             unique: true,
         },
-        groupbank: {
-            type: 'VARCHAR(35)',
-            notNull: true,
-        },
         urllogoxxyx: {
             type: 'VARCHAR(130)',
             notNull: true,

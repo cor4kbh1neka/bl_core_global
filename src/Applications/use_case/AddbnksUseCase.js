@@ -32,24 +32,39 @@ class AddbnksUseCase {
         const payload = new AddMasterBnks(useCasePayload);
         await this._bnksRepository.chckmstr(payload.bnkmstrxyxyx);
         const data = await this._bnksRepository.addmstr(payload);
+        await this._cacheService.delete(`namemaster:master`);
         return data;
     }
 
     async putmasterbank(useCasePayload, params) {
         const payload = new AddMasterBnks(useCasePayload);
         const data = await this._bnksRepository.putmstrbnk(payload, params.mstrbnks);
+        await this._cacheService.delete(`namemaster:master`);
+
         return data;
     }
     async getdtmstr() {
+        try {
 
-        const dtbnksmstr = await this._bnksRepository.getmstrbnk();
+            // mendapatkan catatan dari cache
+            // await this._cacheService.delete(`namegroupex:${params.groupname}`);
 
-        return dtbnksmstr;
+            const result = await this._cacheService.get(`namemaster:master`);
+            const dataresult = JSON.parse(result);
+            return dataresult;
+        } catch (error) {
+            const dtbnksmstr = await this._bnksRepository.getmstrbnk();
+            await this._cacheService.delete(`namemaster:master`);
+            await this._cacheService.set(`namemaster:master`, JSON.stringify(dtbnksmstr));
+            return dtbnksmstr;
+
+        }
     }
 
     async delmasterdata(params) {
         await this._bnksRepository.findmstr(params.idbnkmaster);
         const data = await this._bnksRepository.delmstrbnk(params.idbnkmaster);
+        await this._cacheService.delete(`namemaster:master`);
         return data;
     }
     /**
@@ -82,7 +97,7 @@ class AddbnksUseCase {
         const payload = new AddBnks(useCasePayload);
         await this._bnksRepository.chckbnks(payload);
         const databanks = await this._bnksRepository.addbnks(payload);
-        await this._cacheService.delete(`namegroup:${databanks.namegroupxyzt}`);
+        await this._cacheService.delete(`namegroup:${databanks.namegroupxyzt[0]}`);
         return databanks;
     }
 
@@ -90,7 +105,8 @@ class AddbnksUseCase {
     async edtbank(useCasePayload, params) {
         const payload = new AddBnks(useCasePayload);
         const data = await this._bnksRepository.putbnks(payload, params.idbank);
-        await this._cacheService.delete(`namegroup:${data.namegroupxyzt}`);
+        await this._cacheService.delete(`namegroup:${payload.namegroupxyzt[0]}`);
+
         return "Bank Edit Success !";
     }
 
@@ -110,52 +126,162 @@ class AddbnksUseCase {
             const getgroupbankdata = await this._bnksRepository.getgroupbnks(params.groupname);
             const getmasterbankdata = await this._bnksRepository.getmasterbnks(params.groupname);
 
+            const foundGroup = getgroupbankdata.find(group => group.groupbank === params.groupname);
 
-
-
-            // const databankmaster = {}
             const bankbybankmaster = {};
             const groupedData = {};
 
             for (const master of getmasterbankdata) {
                 const { bnkmstrxyxyx, ...datamaster } = master;
+
                 bankbybankmaster[bnkmstrxyxyx] = {
                     url_logo: datamaster.urllogoxxyx, // Anda bisa mengisi URL logo bank dari 
-                    statusxxyy: datamaster.statusxyxyy, // Anda bisa mengisi status dari getmasterbankdata
+                    statusxxyy: datamaster.statusxyxyy, // Anda bisa mengisi status dari 
                 };
                 bankbybankmaster[bnkmstrxyxyx];
             }
-            // Memasukkan data dari getbankdata ke dalam struktur yang diinginkan
+
             for (const bank of getbankdata) {
                 const { namegroupxyzt, masterbnkxyxt, ...bankData } = bank;
-                if (!groupedData[namegroupxyzt]) {
-                    groupedData[getgroupbankdata[0].groupbank] = {};
+                for (const groupName of namegroupxyzt) {
+                    if (groupName === foundGroup.groupbank) {
+
+                        if (!groupedData[groupName]) {
+                            groupedData[foundGroup.groupbank] = {};
+
+                        }
+
+                        if (!groupedData[foundGroup.groupbank][masterbnkxyxt]) {
+                            groupedData[foundGroup.groupbank][masterbnkxyxt] = {
+                                data_bank: []
+                            };
+                        }
+
+                        // Jika ya, masukkan data bankbybankmaster ke dalam groupedData
+                        groupedData[foundGroup.groupbank][masterbnkxyxt] = {
+                            ...bankbybankmaster[masterbnkxyxt],
+                            data_bank: groupedData[foundGroup.groupbank][masterbnkxyxt].data_bank,
+                        };
+                        groupedData[foundGroup.groupbank][masterbnkxyxt].data_bank.push(bankData);
+
+                    }
 
                 }
-                if (!groupedData[getgroupbankdata[0].groupbank][masterbnkxyxt]) {
-                    groupedData[getgroupbankdata[0].groupbank][masterbnkxyxt] = {
-                        data_bank: []
-                    };
-
-                }
-                // Jika ya, masukkan data bankbybankmaster ke dalam groupedData
-                groupedData[getgroupbankdata[0].groupbank][masterbnkxyxt] = {
-                    ...bankbybankmaster[masterbnkxyxt],
-                    data_bank: groupedData[getgroupbankdata[0].groupbank][masterbnkxyxt].data_bank,
-                };
-                groupedData[getgroupbankdata[0].groupbank][masterbnkxyxt].data_bank.push(bankData);
             }
+
+            // const bankbybankmaster = {};
+            // const groupedData = {};
+
+            // for (const master of getmasterbankdata) {
+            //     const { bnkmstrxyxyx, ...datamaster } = master;
+            //     bankbybankmaster[bnkmstrxyxyx] = {
+            //         url_logo: datamaster.urllogoxxyx, // Anda bisa mengisi URL logo bank dari 
+            //         statusxxyy: datamaster.statusxyxyy, // Anda bisa mengisi status dari getmasterbankdata
+            //     };
+            //     bankbybankmaster[bnkmstrxyxyx];
+            // }
+
+            // // Memasukkan data dari getbankdata ke dalam struktur yang diinginkan
+            // for (const bank of getbankdata) {
+            //     const { namegroupxyzt, masterbnkxyxt, ...bankData } = bank;
+            //     if (!groupedData[namegroupxyzt]) {
+            //         groupedData[getgroupbankdata[0].groupbank] = {};
+            //     }
+            //     if (!groupedData[getgroupbankdata[0].groupbank][masterbnkxyxt]) {
+            //         groupedData[getgroupbankdata[0].groupbank][masterbnkxyxt] = {
+            //             data_bank: []
+            //         };
+            //     }
+            //     // Jika ya, masukkan data bankbybankmaster ke dalam groupedData
+            //     groupedData[getgroupbankdata[0].groupbank][masterbnkxyxt] = {
+            //         ...bankbybankmaster[masterbnkxyxt],
+            //         data_bank: groupedData[getgroupbankdata[0].groupbank][masterbnkxyxt].data_bank,
+            //     };
+            //     groupedData[getgroupbankdata[0].groupbank][masterbnkxyxt].data_bank.push(bankData);
+            // }
 
 
             // Memasukkan data ke dalam objek hasil
             // result[getgroupbankdata.groupbank] = groupedData;
 
-            // console.log('ini params apk id' + params.apkid);
             await this._cacheService.delete(`namegroup:${params.groupname}`);
             await this._cacheService.set(`namegroup:${params.groupname}`, JSON.stringify(groupedData));
-            // const databank = {
-            //     data: groupedData,
-            // };
+            return groupedData;
+        };
+    }
+
+    async getbankdtex(params) {
+        try {
+
+            // mendapatkan catatan dari cache
+            // await this._cacheService.delete(`namegroupex:${params.groupname}`);
+
+            const result = await this._cacheService.get(`namegroupex:${params.groupname}`);
+            const dataresult = JSON.parse(result);
+
+            dataresult.headers = {
+                'X-Data-Source': 'cache',
+            };
+            return dataresult;
+        } catch (error) {
+            const getbankdata = await this._bnksRepository.getbnkex(params.groupname);
+            const getgroupbankdata = await this._bnksRepository.getgroupbnkex(params.groupname);
+            const getmasterbankdata = await this._bnksRepository.getmasterbnks(params.groupname);
+            const tmpgroup = {};
+            for (const groupdt of getgroupbankdata) {
+                if (groupdt.groupbank != params.groupname) {
+                    tmpgroup[groupdt.groupbank] = groupdt; // Memasukkan data yang memenuhi kondisi ke dalam tmpgroup
+                }
+            }
+
+            const bankbybankmaster = {};
+            const groupedData = {};
+
+            for (const master of getmasterbankdata) {
+                const { bnkmstrxyxyx, ...datamaster } = master;
+
+                bankbybankmaster[bnkmstrxyxyx] = {
+                    url_logo: datamaster.urllogoxxyx, // Anda bisa mengisi URL logo bank dari 
+                    statusxxyy: datamaster.statusxyxyy, // Anda bisa mengisi status dari 
+                };
+                bankbybankmaster[bnkmstrxyxyx];
+            }
+
+            for (const bank of getbankdata) {
+                if (!bank.namegroupxyzt.includes(params.groupname)) {
+
+                    const { namegroupxyzt, masterbnkxyxt, ...bankData } = bank;
+
+                    for (const groupName of namegroupxyzt) {
+                        for (const tmpgr of Object.values(tmpgroup)) { // Menggunakan Object.values() untuk mendapatkan nilai-nilai dari tmpgroup
+
+                            if (groupName === tmpgr.groupbank) {
+                                if (!groupedData[groupName]) {
+                                    groupedData[tmpgr.groupbank] = {};
+
+                                }
+                                groupedData[tmpgr.groupbank][masterbnkxyxt] = {
+                                    data_bank: []
+                                };
+
+                                // Jika ya, masukkan data bankbybankmaster ke dalam groupedData
+                                groupedData[tmpgr.groupbank][masterbnkxyxt] = {
+                                    ...bankbybankmaster[masterbnkxyxt],
+                                    data_bank: groupedData[tmpgr.groupbank][masterbnkxyxt].data_bank,
+                                };
+
+                                groupedData[tmpgr.groupbank][masterbnkxyxt].data_bank.push(bankData);
+
+                            }
+                        }
+                    }
+
+                }
+            }
+
+
+            await this._cacheService.delete(`namegroupex:${params.groupname}`);
+            await this._cacheService.set(`namegroupex:${params.groupname}`, JSON.stringify(groupedData));
             return groupedData;
         };
     }

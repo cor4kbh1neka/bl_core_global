@@ -51,6 +51,9 @@ class BnksRepository {
     async getbnks() {
         throw new Error('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
     }
+    async getbnkex() {
+        throw new Error('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+    }
     async getgroupbnks() {
         throw new Error('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
     }

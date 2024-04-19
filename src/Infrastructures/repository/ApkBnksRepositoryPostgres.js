@@ -71,13 +71,13 @@ class ApkBnksRepositoryPostgres extends BnksRepository {
     }
     async addmstr(usecasepayload) {
 
-        const { bnkmstrxyxyx, groupbank, urllogoxxyx, statusxyxyy } = usecasepayload
+        const { bnkmstrxyxyx, urllogoxxyx, statusxyxyy } = usecasepayload
         const created_at = new Date().toISOString();
 
         // Kueri untuk mencari dataapknotice
         const query = {
-            text: 'INSERT INTO masterbank (bnkmstrxyxyx, groupbank, urllogoxxyx, statusxyxyy, created_at) VALUES($1, $2 , $3, $4, $5) RETURNING  bnkmstrxyxyx',
-            values: [bnkmstrxyxyx, groupbank, urllogoxxyx, statusxyxyy, created_at],
+            text: 'INSERT INTO masterbank (bnkmstrxyxyx, urllogoxxyx, statusxyxyy, created_at) VALUES($1, $2 , $3, $4) RETURNING  bnkmstrxyxyx',
+            values: [bnkmstrxyxyx, urllogoxxyx, statusxyxyy, created_at],
         };
         const datamaster = await this._pool.query(query);
         return datamaster.rows[0];
@@ -85,12 +85,12 @@ class ApkBnksRepositoryPostgres extends BnksRepository {
     async putmstrbnk(usecasepayload, params) {
 
 
-        const { bnkmstrxyxyx, groupbank, urllogoxxyx, statusxyxyy } = usecasepayload;
+        const { bnkmstrxyxyx, urllogoxxyx, statusxyxyy } = usecasepayload;
 
         // Kueri untuk mencari dataapknotice
         const query = {
-            text: 'UPDATE masterbank SET bnkmstrxyxyx = $1, groupbank = $2, urllogoxxyx = $3, "statusxyxyy" = $4 WHERE bnkmstrxyxyx = $5',
-            values: [bnkmstrxyxyx, groupbank, urllogoxxyx, statusxyxyy, params],
+            text: 'UPDATE masterbank SET bnkmstrxyxyx = $1, statusxyxyy = $2, urllogoxxyx = $3 WHERE bnkmstrxyxyx = $4',
+            values: [bnkmstrxyxyx, statusxyxyy, urllogoxxyx, params],
         };
 
         const datamaster = await this._pool.query(query);
@@ -104,7 +104,7 @@ class ApkBnksRepositoryPostgres extends BnksRepository {
     async getmstrbnk() {
 
         const grouquery = {
-            text: 'SELECT bnkmstrxyxyx,idbnkmaster,groupbank,statusxyxyy,urllogoxxyx FROM masterbank',
+            text: 'SELECT bnkmstrxyxyx,idbnkmaster,statusxyxyy,urllogoxxyx FROM masterbank',
             values: [],
         };
 
@@ -189,14 +189,38 @@ class ApkBnksRepositoryPostgres extends BnksRepository {
         if (!databnk.rowCount) {
             throw new InvariantError('fail edit data !');
         }
-        return databnk.rows[0];
+        return "Bank Edit Success !";
 
     }
 
     async getbnks(params) {
         const query = {
-            text: 'SELECT idbank,masterbnkxyxt,namebankxxyy,namegroupxyzt,xynamarekx,norekxyxy,yyxxmethod,barcodexrxr,zwzwshowbarcode FROM databnk WHERE namegroupxyzt = $1',
+            text: 'SELECT idbank,masterbnkxyxt,namebankxxyy,namegroupxyzt,xynamarekx,norekxyxy,yyxxmethod,barcodexrxr,zwzwshowbarcode FROM databnk WHERE   $1 = ANY (namegroupxyzt) ',
             values: [params],
+        };
+        const data = await this._pool.query(query);
+
+        if (!data.rowCount) {
+            throw new NotFoundError('data not found !');
+        }
+
+        // const newDataRows = data.rows.map((obj) => {
+        //     // Menyalin objek kecuali properti updated_at dan created_at
+        //     const { created_at, updated_at, ...newObj } = obj;
+        //     return newObj;
+        // });
+
+        // // Menggabungkan data kembali dengan properti baru
+        // const newData = {
+        //     ...data,
+        //     rows: newDataRows,
+        // };
+        return data.rows;
+    }
+    async getbnkex(params) {
+        const query = {
+            text: 'SELECT idbank,masterbnkxyxt,namebankxxyy,namegroupxyzt,xynamarekx,norekxyxy,yyxxmethod,barcodexrxr,zwzwshowbarcode FROM databnk',
+            values: [],
         };
         const data = await this._pool.query(query);
 
@@ -230,13 +254,25 @@ class ApkBnksRepositoryPostgres extends BnksRepository {
         }
         return databank.rows;
     }
+    async getgroupbnkex(params) {
+        // Kueri untuk mencari dataapknotice
+        const noticeQuery = {
+            text: 'SELECT * FROM mastergroup ',
+            values: [],
+        };
+        const databank = await this._pool.query(noticeQuery);
+        if (!databank.rowCount) {
+            throw new NotFoundError('data not found !');
+        }
+        return databank.rows;
+    }
 
 
     async getmasterbnks(params) {
         // Kueri untuk mencari dataapknotice
         const noticeQuery = {
-            text: 'SELECT idbnkmaster,bnkmstrxyxyx,groupbank,urllogoxxyx,statusxyxyy  FROM masterbank WHERE groupbank = $1',
-            values: [params],
+            text: 'SELECT idbnkmaster,bnkmstrxyxyx,urllogoxxyx,statusxyxyy FROM masterbank',
+            values: [],
         };
         const databank = await this._pool.query(noticeQuery);
         if (!databank.rowCount) {

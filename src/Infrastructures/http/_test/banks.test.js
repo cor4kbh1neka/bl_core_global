@@ -208,7 +208,7 @@ describe('/adduserendpoints', () => {
 
                     const server = await createServer(container);
 
-                    await AddMasterTableTestHelper.addmaster({ idbnkmaster: 99, bnkmstrxyxyx: 'bca99' });
+                    await AddMasterTableTestHelper.addmaster({ idbnkmaster: 99, bnkmstrxyxyx: 'bca' });
                     // Action
                     const response = await server.inject({
                         method: 'DELETE',
@@ -250,7 +250,7 @@ describe('/adduserendpoints', () => {
             it('should response 201 and persisted banks data', async () => {
                 // Arrange
                 const requestPayload = {
-                    namegroupxyzt: 'groupbank2',
+                    namegroupxyzt: ['groupbank1'],
                     masterbnkxyxt: 'mandiri',
                     namebankxxyy: 'mamdiri2',
                     yyxxmethod: 'bank',
@@ -281,7 +281,7 @@ describe('/adduserendpoints', () => {
                 const idbank = '4';
 
                 const requestPayload = {
-                    namegroupxyzt: 'groupbank1',
+                    namegroupxyzt: ['groupbank1'],
                     masterbnkxyxt: 'bca',
                     namebankxxyy: 'bca4',
                     yyxxmethod: 'bank',
@@ -310,17 +310,15 @@ describe('/adduserendpoints', () => {
     });
 
 
-    describe('WHEN POST /banks/{groupname}', () => {
+    describe('WHEN GET /banks/{groupname}', () => {
 
         it('should response 201 and persisted bank', async () => {
 
             const server = await createServer(container);
             const groupname = 'groupbank8';
 
-            await AddBanksTableTestHelper.addbks({
-                idbank: 4, namegroupxyzt: 'groupbank8', norekxyxy: '0355917810', masterbnkxyxt: 'mandiri', namebankxxyy: 'mandiri1',
-            });
-            await AddMasterTableTestHelper.addmaster({ idbnkmaster: 99, bnkmstrxyxyx: 'mandiri', groupbank: 'groupbank8' });
+            await AddBanksTableTestHelper.addbks({ idbank: 4, namegroupxyzt: ['groupbank8'], norekxyxy: '0355917810', masterbnkxyxt: 'mandiri', namebankxxyy: 'mandiri1' });
+            await AddMasterTableTestHelper.addmaster({ idbnkmaster: 99, bnkmstrxyxyx: 'mandiri' });
             await AddGroupTableTestHelper.addgroup({ idgroup: 18, groupbank: 'groupbank8' });
 
             const response = await server.inject({
@@ -357,7 +355,50 @@ describe('/adduserendpoints', () => {
     });
 
 
+    describe('WHEN GET /banks/exc/{groupname}', () => {
 
+        it('should response 200 and persisted bank exc ', async () => {
+
+            const server = await createServer(container);
+            const groupname = 'groupbank2';
+
+            await AddBanksTableTestHelper.addbks({ idbank: 7, namegroupxyzt: ['groupbank7'], norekxyxy: '0355917810', masterbnkxyxt: 'mandiri', namebankxxyy: 'mandiri2' });
+            await AddBanksTableTestHelper.addbks({ idbank: 9, namegroupxyzt: ['groupbank7', 'groupbank2'], norekxyxy: '0355917810', masterbnkxyxt: 'mandiri', namebankxxyy: 'mandiri1' });
+            await AddMasterTableTestHelper.addmaster({ idbnkmaster: 99, bnkmstrxyxyx: 'mandiri' });
+            await AddGroupTableTestHelper.addgroup({ idgroup: 18, groupbank: 'groupbank7' }, { idgroup: 19, groupbank: 'groupbank2' });
+
+            const response = await server.inject({
+                method: 'GET',
+                url: `/banks/exc/${groupname}`,
+
+            })
+
+            // Assert
+            const responseJson = JSON.parse(response.payload);
+            expect(response.statusCode).toEqual(200);
+            expect(responseJson.status).toEqual('success');
+            expect(responseJson.data).toBeDefined();
+        });
+
+        it('should  throw an error 404 when payload is not found', async () => {
+            const server = await createServer(container);
+            const groupname = 'groupbank555';
+
+            // Action
+            const response = await server.inject({
+                method: 'GET',
+                url: `/banks/exc/${groupname}`,
+
+            })
+            // Assert
+            const responseJson = JSON.parse(response.payload);
+            expect(response.statusCode).toEqual(404);
+            expect(responseJson.status).toEqual('fail');
+            expect(responseJson.message).toEqual('data not found !');
+        });
+
+
+    });
 
 
 

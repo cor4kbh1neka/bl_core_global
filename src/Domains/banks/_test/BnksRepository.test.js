@@ -28,6 +28,7 @@ describe('apkRepository reddis interface', () => {
         await expect(bnksRepository.addbnks()).rejects.toThrowError('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
         await expect(bnksRepository.putbnks()).rejects.toThrowError('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
         await expect(bnksRepository.getbnks()).rejects.toThrowError('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+        await expect(bnksRepository.getbnkex()).rejects.toThrowError('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
         await expect(bnksRepository.getgroupbnks()).rejects.toThrowError('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
         await expect(bnksRepository.getmasterbnks()).rejects.toThrowError('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
     });

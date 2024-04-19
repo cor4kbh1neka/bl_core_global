@@ -7,7 +7,7 @@ describe('entities for BANK MASTER data', () => {
     it('should send an error when not contain fill in data spesification', () => {
         //arrange
         const payload = {
-            groupbank: 'groupbank1',
+            // groupbank: 'groupbank1',
             urllogoxxyx: 'https://www.coskoc.com/api/',
             statusxyxyy: 1,
         };
@@ -20,7 +20,7 @@ describe('entities for BANK MASTER data', () => {
         //arrange
         const payload = {
             bnkmstrxyxyx: 1,
-            groupbank: 'groupbank1',
+            // groupbank: 'groupbank1',
             urllogoxxyx: 'https://www.coskoc.com/api/',
             statusxyxyy: 1,
         };
@@ -34,7 +34,7 @@ describe('entities for BANK MASTER data', () => {
         //arrange
         const payload = {
             bnkmstrxyxyx: 'bca bukan',
-            groupbank: 'groupbank1#',
+            // groupbank: 'groupbank1#',
             urllogoxxyx: 'https://www.coskoc.com/api/',
             statusxyxyy: 1,
         };
@@ -47,7 +47,7 @@ describe('entities for BANK MASTER data', () => {
         //arrange
         const payload = {
             bnkmstrxyxyx: 'bca',
-            groupbank: 'groupbank1',
+            // groupbank: 'groupbank1',
             urllogoxxyx: 'https://www.coskoc.com/api/',
             statusxyxyy: 1,
         };
@@ -58,7 +58,7 @@ describe('entities for BANK MASTER data', () => {
         // Assert
         expect(addMasterBnks).toBeInstanceOf(AddMasterBnks);
         expect(addMasterBnks.bnkmstrxyxyx).toEqual(payload.bnkmstrxyxyx);
-        expect(addMasterBnks.groupbank).toEqual(payload.groupbank);
+        // expect(addMasterBnks.groupbank).toEqual(payload.groupbank);
         expect(addMasterBnks.urllogoxxyx).toEqual(payload.urllogoxxyx);
         expect(addMasterBnks.statusxyxyy).toEqual(payload.statusxyxyy);
     });

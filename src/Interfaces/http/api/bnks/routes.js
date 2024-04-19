@@ -100,6 +100,16 @@ const routes = (handler) => ([
         origin: ['*'],
       },
     },
+  },
+  {
+    method: 'GET',
+    path: '/banks/exc/{groupname}',
+    handler: handler.getBanknwexHandler,
+    options: {
+      cors: {
+        origin: ['*'],
+      },
+    },
   }
   // ,
   // {

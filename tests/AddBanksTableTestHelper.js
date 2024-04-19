@@ -4,7 +4,7 @@ const pool = require('../src/Infrastructures/database/postgres/pool');
 const AddBanksTableTestHelper = {
   async addbks({
     idbank = 1,
-    namegroupxyzt = 'groupbank1',
+    namegroupxyzt = ['groupbank1'],
     namebankxxyy = 'bca1',
     masterbnkxyxt = 'bca',
     yyxxmethod = 'bank',

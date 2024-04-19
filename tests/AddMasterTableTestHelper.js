@@ -5,14 +5,13 @@ const AddMasterTableTestHelper = {
   async addmaster({
     idbnkmaster = 1,
     bnkmstrxyxyx = 'bca',
-    groupbank = 'groupbank1',
     urllogoxxyx = 'https://www.coskoc.com/api/',
     statusxyxyy = 1,
     created_at = '2024-02-24T15:25:51.326Z'
   }) {
     const query = {
-      text: 'INSERT INTO masterbank  (idbnkmaster,bnkmstrxyxyx, groupbank, urllogoxxyx, statusxyxyy, created_at) VALUES($1, $2 , $3, $4, $5, $6)',
-      values: [idbnkmaster, bnkmstrxyxyx, groupbank, urllogoxxyx, statusxyxyy, created_at],
+      text: 'INSERT INTO masterbank  (idbnkmaster,bnkmstrxyxyx, urllogoxxyx, statusxyxyy, created_at) VALUES($1, $2 , $3, $4, $5)',
+      values: [idbnkmaster, bnkmstrxyxyx, urllogoxxyx, statusxyxyy, created_at],
     };
 
     await pool.query(query);

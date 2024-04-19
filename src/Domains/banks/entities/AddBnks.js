@@ -18,12 +18,21 @@ class AddBnks {
             throw new Error('ADD_BANK.NOT_CONTAIN_NEEDED_PROPERTY');
         }
 
-        if (typeof namegroupxyzt !== 'string' || typeof namebankxxyy !== 'string' || typeof yyxxmethod !== 'string' || typeof xynamarekx !== 'string' || typeof norekxyxy !== 'string' || typeof barcodexrxr !== 'string' || typeof masterbnkxyxt != 'string') {
+        if (typeof namebankxxyy !== 'string' || typeof yyxxmethod !== 'string' || typeof xynamarekx !== 'string' || typeof norekxyxy !== 'string' || typeof barcodexrxr !== 'string' || typeof masterbnkxyxt != 'string') {
             throw new Error('ADD_BANK.NOT_MEET_DATA_TYPE_SPECIFICATION');
         }
 
+        for (const name of namegroupxyzt) {
+            if (typeof name !== 'string') {
+                throw new Error('ADD_BANK.NOT_MEET_DATA_TYPE_SPECIFICATION');
+            }
+            if (!name.match(/^[a-zA-Z0-9]+$/)) {
+                throw new Error('ADD_BANK.REGISTER_CONTAIN_RESTRICTED_CHARACTER');
+            }
+        }
 
-        if (!namegroupxyzt.match(/^[a-zA-Z0-9]+$/) || !masterbnkxyxt.match(/^[a-zA-Z0-9]+$/) || !namebankxxyy.match(/^[A-Za-z0-9\s]+$/) || !yyxxmethod.match(/^[A-Za-z\s]+$/) || !xynamarekx.match(/^[A-Za-z\s]+$/) || !norekxyxy.match(/^[0-9]+$/) || !barcodexrxr.match(/^[a-zA-Z0-9\-_~:/?#\[\]@!$&'()*+,;=.]+$/)) {
+
+        if (!masterbnkxyxt.match(/^[a-zA-Z0-9]+$/) || !namebankxxyy.match(/^[A-Za-z0-9\s]+$/) || !yyxxmethod.match(/^[A-Za-z\s]+$/) || !xynamarekx.match(/^[A-Za-z\s]+$/) || !norekxyxy.match(/^[0-9]+$/) || !barcodexrxr.match(/^[a-zA-Z0-9\-_~:/?#\[\]@!$&'()*+,;=.]+$/)) {
             throw new Error('ADD_BANK.REGISTER_CONTAIN_RESTRICTED_CHARACTER');
         }
     }
