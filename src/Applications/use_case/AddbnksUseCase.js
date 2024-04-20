@@ -279,7 +279,6 @@ class AddbnksUseCase {
 
 
             // for (const bank of getbankdata) {
-            //     console.log(bank);
             //     if (!bank.namegroupxyzt.includes(params.groupname)) {
             //         const { namegroupxyzt, masterbnkxyxt, ...bankData } = bank;
             //         // console.log(namegroupxyzt);
