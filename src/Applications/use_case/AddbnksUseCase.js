@@ -83,13 +83,24 @@ class AddbnksUseCase {
     async getgroup() {
         try {
             const result = await this._cacheService.get(`group:group`);
+
             const dataresult = JSON.parse(result);
             return dataresult;
         } catch (error) {
             const namegroup = await this._bnksRepository.getdtGroup();
+
+            const formattedData = {};
+
+            namegroup.forEach(group => {
+                const { groupbank, idgroup, grouptype, min_dp, max_dp, min_wd, max_wd } = group;
+                formattedData[groupbank] = { idgroup, grouptype, min_dp, max_dp, min_wd, max_wd };
+            });
+
+
+
             await this._cacheService.delete(`group:group`);
-            await this._cacheService.set(`group:group`, JSON.stringify(namegroup));
-            return namegroup;
+            await this._cacheService.set(`group:group`, JSON.stringify(formattedData));
+            return formattedData;
         }
     }
     async delgroupdata(params) {
@@ -127,7 +138,6 @@ class AddbnksUseCase {
 
             const result = await this._cacheService.get(`namegroup:${params.groupname}`);
             // await this._cacheService.delete(`namegroup:${params.groupname}`);
-
             const dataresult = JSON.parse(result);
             dataresult.headers = {
                 'X-Data-Source': 'cache',

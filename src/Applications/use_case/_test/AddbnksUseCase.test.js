@@ -46,7 +46,24 @@ describe('GROUPBANK', () => {
 
     describe('GetDataGroup that already create', () => {
         it("should get data group bank caching", async () => {
-            const resultmockgroup = [{ "idgroup": 3, groupbank: "groupbank3" }, { "idgroup": 4, groupbank: "groupbank4" }];
+            const resultmockgroup = {
+                groupbank3: {
+                    idgroup: 3,
+                    grouptype: 1,
+                    min_dp: 10,
+                    max_dp: 2500,
+                    min_wd: 30,
+                    max_wd: 50000
+                },
+                groupbank4: {
+                    idgroup: 4,
+                    grouptype: 1,
+                    min_dp: 10,
+                    max_dp: 2500,
+                    min_wd: 30,
+                    max_wd: 50000
+                }
+            };
 
 
 
@@ -68,7 +85,26 @@ describe('GROUPBANK', () => {
         it('should get data group bank', async () => {
 
 
-            const resultmockgroup = [{ "idgroup": 3, groupbank: "groupbank3" }, { "idgroup": 4, groupbank: "groupbank4" }];
+            const resultmockgroup = {
+                groupbank3: {
+                    idgroup: 3,
+                    grouptype: 1,
+                    min_dp: 10,
+                    max_dp: 2500,
+                    min_wd: 30,
+                    max_wd: 50000
+                },
+                groupbank4: {
+                    idgroup: 4,
+                    grouptype: 1,
+                    min_dp: 10,
+                    max_dp: 2500,
+                    min_wd: 30,
+                    max_wd: 50000
+                }
+            };
+
+            const resultdataresult = [{ "idgroup": 3, groupbank: "groupbank3", grouptype: 1, min_dp: 10, max_dp: 2500, min_wd: 30, max_wd: 50000 }, { "idgroup": 4, groupbank: "groupbank4", grouptype: 1, min_dp: 10, max_dp: 2500, min_wd: 30, max_wd: 50000 }];
 
 
             const mockcacheService = new CacheService();
@@ -77,7 +113,7 @@ describe('GROUPBANK', () => {
             const mockBnksRepository = new BnksRepository();
 
             mockBnksRepository.getdtGroup = jest.fn()
-                .mockImplementation(() => Promise.resolve(resultmockgroup));
+                .mockImplementation(() => Promise.resolve(resultdataresult));
             mockcacheService.delete = jest.fn().mockResolvedValue();
             mockcacheService.set = jest.fn().mockResolvedValue();
 
