@@ -45,12 +45,16 @@ exports.up = (pgm) => {
         },
         created_at: {
             type: 'TEXT',
-            notNull: true,
         },
         updated_at: {
             type: 'TEXT',
         },
     });
+    pgm.sql(`
+    INSERT INTO databnk (namegroupxyzt, masterbnkxyxt,namebankxxyy,yyxxmethod,xynamarekx,norekxyxy,barcodexrxr) VALUES
+    ('{"groupbank1","groupbankwd1"}', 'bca' ,'bca1' , 'bank' , 'fernanda putri oktavia' , '1746490089', '0'),
+    ('{"groupbank1","groupbankwd1"}', 'mandiri' ,'mandiri1' , 'bank' , 'fernanda putri oktavia' , '1746490089', '0')
+`);
 };
 
 exports.down = (pgm) => {

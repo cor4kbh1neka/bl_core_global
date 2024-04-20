@@ -23,13 +23,32 @@ exports.up = (pgm) => {
         },
         created_at: {
             type: 'TEXT',
-            notNull: true,
         },
         updated_at: {
             type: 'TEXT',
         },
     });
+    pgm.sql(`
+    INSERT INTO masterbank (bnkmstrxyxyx, urllogoxxyx,statusxyxyy) VALUES
+    ('bca', 'iniContohLogo',1),
+    ('bni','iniContohLogo', 1),
+    ('bri','iniContohLogo', 1),
+    ('mandiri','iniContohLogo', 2),
+    ('cimb','iniContohLogo', 1),
+    ('danamon','iniContohLogo', 1),
+    ('panin','iniContohLogo', 1),
+    ('permata','iniContohLogo', 1),
+    ('bsi','iniContohLogo', 1),
+    ('dana','iniContohLogo', 1),
+    ('gopay','iniContohLogo', 1),
+    ('ovo','iniContohLogo', 1),
+    ('pulsa','iniContohLogo', 1),
+    ('linkaja','iniContohLogo', 1),
+    ('qris','iniContohLogo', 1)
+`);
 };
+
+
 
 exports.down = (pgm) => {
     pgm.dropTable('masterbank');
