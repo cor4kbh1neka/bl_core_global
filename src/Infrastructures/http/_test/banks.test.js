@@ -22,7 +22,7 @@ describe('/adduserendpoints', () => {
         it('should repsonse 201 and persisted group bank data', async () => {
             const requestPayload = {
                 namegroupxyzt: 'groupbank88',
-                grouptype: true
+                grouptype: 1
             };
 
             const server = await createServer(container);

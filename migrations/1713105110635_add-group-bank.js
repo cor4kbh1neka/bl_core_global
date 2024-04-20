@@ -14,7 +14,7 @@ exports.up = (pgm) => {
 
         },
         grouptype: {
-            type: 'BOOLEAN',
+            type: 'INTEGER', // Menggunakan tipe INTEGER untuk grouptype
             notNull: true,
         }
     });

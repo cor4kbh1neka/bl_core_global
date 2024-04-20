@@ -13,7 +13,7 @@ class AddGroupBnks {
             throw new Error('ADD_GROUP_BANK.NOT_CONTAIN_NEEDED_PROPERTY');
         }
 
-        if (typeof namegroupxyzt !== 'string' || typeof grouptype !== 'boolean') {
+        if (typeof namegroupxyzt !== 'string') {
             throw new Error('ADD_GROUP_BANK.NOT_MEET_DATA_TYPE_SPECIFICATION');
         }
 

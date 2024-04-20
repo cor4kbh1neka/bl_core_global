@@ -194,28 +194,16 @@ class ApkBnksRepositoryPostgres extends BnksRepository {
     }
 
     async getbnks(params) {
+
         const query = {
             text: 'SELECT idbank,masterbnkxyxt,namebankxxyy,namegroupxyzt,xynamarekx,norekxyxy,yyxxmethod,barcodexrxr,zwzwshowbarcode FROM databnk WHERE   $1 = ANY (namegroupxyzt) ',
             values: [params],
         };
-        const data = await this._pool.query(query);
-
-        if (!data.rowCount) {
+        const databanks = await this._pool.query(query);
+        if (!databanks.rowCount) {
             throw new NotFoundError('data not found !');
         }
-
-        // const newDataRows = data.rows.map((obj) => {
-        //     // Menyalin objek kecuali properti updated_at dan created_at
-        //     const { created_at, updated_at, ...newObj } = obj;
-        //     return newObj;
-        // });
-
-        // // Menggabungkan data kembali dengan properti baru
-        // const newData = {
-        //     ...data,
-        //     rows: newDataRows,
-        // };
-        return data.rows;
+        return databanks.rows;
     }
     async getbnkex(params) {
         const query = {
@@ -249,6 +237,7 @@ class ApkBnksRepositoryPostgres extends BnksRepository {
             values: [params],
         };
         const databank = await this._pool.query(noticeQuery);
+
         if (!databank.rowCount) {
             throw new NotFoundError('data not found !');
         }

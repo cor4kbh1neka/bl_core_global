@@ -104,7 +104,7 @@ class AddbnksUseCase {
 
     async edtbank(useCasePayload, params) {
         const payload = new AddBnks(useCasePayload);
-        const data = await this._bnksRepository.putbnks(payload, params.idbank);
+        await this._bnksRepository.putbnks(payload, params.idbank);
         await this._cacheService.delete(`namegroup:${payload.namegroupxyzt[0]}`);
 
         return "Bank Edit Success !";
@@ -114,21 +114,27 @@ class AddbnksUseCase {
     async getbankdt(params) {
         try {
             // mendapatkan catatan dari cache
-            const result = await this._cacheService.get(`namegroup:${params.groupname}`);
-            const dataresult = JSON.parse(result);
 
+            const result = await this._cacheService.get(`namegroup:${params.groupname}`);
+            // await this._cacheService.delete(`namegroup:${params.groupname}`);
+
+            const dataresult = JSON.parse(result);
             dataresult.headers = {
                 'X-Data-Source': 'cache',
             };
+
             return dataresult;
         } catch (error) {
             const getbankdata = await this._bnksRepository.getbnks(params.groupname);
+
             const getgroupbankdata = await this._bnksRepository.getgroupbnks(params.groupname);
+
             const getmasterbankdata = await this._bnksRepository.getmasterbnks(params.groupname);
 
             const foundGroup = getgroupbankdata.find(group => group.groupbank === params.groupname);
 
             const bankbybankmaster = {};
+
             const groupedData = {};
 
             for (const master of getmasterbankdata) {
@@ -144,7 +150,7 @@ class AddbnksUseCase {
             for (const bank of getbankdata) {
                 const { namegroupxyzt, masterbnkxyxt, ...bankData } = bank;
                 for (const groupName of namegroupxyzt) {
-                    if (groupName === foundGroup.groupbank) {
+                    if (groupName == foundGroup.groupbank) {
 
                         if (!groupedData[groupName]) {
                             groupedData[foundGroup.groupbank] = {};
@@ -168,6 +174,11 @@ class AddbnksUseCase {
 
                 }
             }
+
+            await this._cacheService.delete(`namegroup:${params.groupname}`);
+            await this._cacheService.set(`namegroup:${params.groupname}`, JSON.stringify(groupedData));
+            return groupedData;
+
 
             // const bankbybankmaster = {};
             // const groupedData = {};
@@ -204,9 +215,7 @@ class AddbnksUseCase {
             // Memasukkan data ke dalam objek hasil
             // result[getgroupbankdata.groupbank] = groupedData;
 
-            await this._cacheService.delete(`namegroup:${params.groupname}`);
-            await this._cacheService.set(`namegroup:${params.groupname}`, JSON.stringify(groupedData));
-            return groupedData;
+
         };
     }
 
@@ -214,6 +223,7 @@ class AddbnksUseCase {
         try {
 
             // mendapatkan catatan dari cache
+            // await this._cacheService.delete(`namegroupex:${params.groupname}`);
             // await this._cacheService.delete(`namegroupex:${params.groupname}`);
 
             const result = await this._cacheService.get(`namegroupex:${params.groupname}`);
@@ -233,7 +243,6 @@ class AddbnksUseCase {
                     tmpgroup[groupdt.groupbank] = groupdt; // Memasukkan data yang memenuhi kondisi ke dalam tmpgroup
                 }
             }
-
             const bankbybankmaster = {};
             const groupedData = {};
 
@@ -247,37 +256,60 @@ class AddbnksUseCase {
                 bankbybankmaster[bnkmstrxyxyx];
             }
 
-            for (const bank of getbankdata) {
+            getbankdata.forEach(bank => {
                 if (!bank.namegroupxyzt.includes(params.groupname)) {
+                    bank.namegroupxyzt.forEach(group => {
+                        const { namegroupxyzt, masterbnkxyxt, ...bankData } = bank;
 
-                    const { namegroupxyzt, masterbnkxyxt, ...bankData } = bank;
-
-                    for (const groupName of namegroupxyzt) {
-                        for (const tmpgr of Object.values(tmpgroup)) { // Menggunakan Object.values() untuk mendapatkan nilai-nilai dari tmpgroup
-
-                            if (groupName === tmpgr.groupbank) {
-                                if (!groupedData[groupName]) {
-                                    groupedData[tmpgr.groupbank] = {};
-
-                                }
-                                groupedData[tmpgr.groupbank][masterbnkxyxt] = {
-                                    data_bank: []
-                                };
-
-                                // Jika ya, masukkan data bankbybankmaster ke dalam groupedData
-                                groupedData[tmpgr.groupbank][masterbnkxyxt] = {
-                                    ...bankbybankmaster[masterbnkxyxt],
-                                    data_bank: groupedData[tmpgr.groupbank][masterbnkxyxt].data_bank,
-                                };
-
-                                groupedData[tmpgr.groupbank][masterbnkxyxt].data_bank.push(bankData);
-
-                            }
+                        if (!groupedData[group]) {
+                            groupedData[group] = {};
                         }
-                    }
+                        groupedData[group][masterbnkxyxt] = {
+                            url_logo: "URL_logo_bank",
+                            statusxxyy: 1,
+                            data_bank: []
+                        };
 
+
+                        groupedData[group][masterbnkxyxt].data_bank.push(bankData);
+                    });
                 }
-            }
+            });
+
+
+
+            // for (const bank of getbankdata) {
+            //     console.log(bank);
+            //     if (!bank.namegroupxyzt.includes(params.groupname)) {
+            //         const { namegroupxyzt, masterbnkxyxt, ...bankData } = bank;
+            //         // console.log(namegroupxyzt);
+            //         for (const groupName of namegroupxyzt) {
+            //             // for (const tmpgr of Object.values(tmpgroup)) { // Menggunakan Object.values() untuk mendapatkan nilai-nilai dari tmpgroup
+            //             // console.log(tmpgr.groupbank);
+            //             if (!groupedData[groupName]) {
+            //                 // if (groupName === tmpgr.groupbank) {
+            //                 // if (!groupedData[groupName]) {
+            //                 groupedData[groupName] = {};
+            //             }
+
+            //             groupedData[groupName][masterbnkxyxt] = {
+            //                 data_bank: []
+            //             };
+
+            //             // Jika ya, masukkan data bankbybankmaster ke dalam groupedData
+            //             groupedData[groupName][masterbnkxyxt] = {
+            //                 ...bankbybankmaster[masterbnkxyxt],
+            //                 data_bank: groupedData[groupName][masterbnkxyxt].data_bank,
+            //             };
+
+            //             groupedData[groupName][masterbnkxyxt].data_bank.push(bankData);
+
+            //             // }
+            //             // }
+            //         }
+
+            //     }
+            // }
 
 
             await this._cacheService.delete(`namegroupex:${params.groupname}`);

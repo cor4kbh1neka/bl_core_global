@@ -5,7 +5,7 @@ const AddGroupTableTestHelper = {
   async addgroup({
     idgroup = 1,
     groupbank = 'groupbank1',
-    grouptype = true,
+    grouptype = 1,
   }) {
     const query = {
       text: 'INSERT INTO mastergroup  (idgroup,groupbank, grouptype) VALUES($1, $2 , $3)',

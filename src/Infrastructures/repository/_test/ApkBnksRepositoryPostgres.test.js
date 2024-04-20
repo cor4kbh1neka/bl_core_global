@@ -32,7 +32,7 @@ describe('DataBank repository', () => {
         //arrange
         const addgroup = new AddGroupBnks({
           namegroupxyzt: 'groupbank2',
-          grouptype: true
+          grouptype: 1
         });
 
         const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
@@ -58,7 +58,7 @@ describe('DataBank repository', () => {
 
         const getbankdata = await apkBnksRepositoryPostgres.getdtGroup();
 
-        expect(getbankdata).toStrictEqual([{ "idgroup": 3, "grouptype": true, groupbank: "groupbank3" }, { "idgroup": 4, "grouptype": true, groupbank: "groupbank4" }]);
+        expect(getbankdata).toStrictEqual([{ "idgroup": 3, "grouptype": 1, groupbank: "groupbank3" }, { "idgroup": 4, "grouptype": 1, groupbank: "groupbank4" }]);
       });
 
     });
@@ -560,7 +560,7 @@ describe('DataBank repository', () => {
           await AddGroupTableTestHelper.addgroup({ idgroup: 5, groupbank: 'groupbank5' });
           const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
           const getbankdata = await apkBnksRepositoryPostgres.getgroupbnks(params.groupname);
-          expect(getbankdata).toStrictEqual([{ "idgroup": 5, "grouptype": true, groupbank: "groupbank5" }]);
+          expect(getbankdata).toStrictEqual([{ "idgroup": 5, "grouptype": 1, groupbank: "groupbank5" }]);
         });
 
         it('should get data bank bank fail', async () => {
@@ -589,7 +589,7 @@ describe('DataBank repository', () => {
           await AddGroupTableTestHelper.addgroup({ idgroup: 6, groupbank: 'groupbank6' });
           const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
           const getbankdata = await apkBnksRepositoryPostgres.getgroupbnkex(params.groupname);
-          expect(getbankdata).toStrictEqual([{ idgroup: 5, "grouptype": true, groupbank: 'groupbank5' }, { idgroup: 6, "grouptype": true, groupbank: 'groupbank6' }]);
+          expect(getbankdata).toStrictEqual([{ idgroup: 5, "grouptype": 1, groupbank: 'groupbank5' }, { idgroup: 6, "grouptype": 1, groupbank: 'groupbank6' }]);
         });
 
         it('should get data bank bank fail', async () => {

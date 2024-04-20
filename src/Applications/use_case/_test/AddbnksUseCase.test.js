@@ -12,7 +12,7 @@ describe('GROUPBANK', () => {
         it('should orchestrating add group correctly', async () => {
             const useCasePayload = new AddGroupBnks({
                 namegroupxyzt: 'groupbank2',
-                grouptype: true
+                grouptype: 1
             });
             const namegroup = 'groupbank2';
 
@@ -440,11 +440,11 @@ describe('DATA BANK', () => {
                 cacheServices: mockcacheService
             });
             const getdatausecase = await getDataBankUseCase.getbankdt(params);
-            expect(mockcacheService.get).toBeCalledWith(`namegroup:${params.groupname}`); +
-                expect(getdatausecase).toEqual(
-                    resultmockgroup
+            expect(mockcacheService.get).toBeCalledWith(`namegroup:${params.groupname}`);
+            expect(getdatausecase).toEqual(
+                resultmockgroup
 
-                );
+            );
         });
 
         it('should get data bank successfully', async () => {
@@ -566,11 +566,11 @@ describe('DATA BANK', () => {
             const resultgroup = [{
                 idgroup: 1,
                 groupbank: "groupbank1",
-                grouptype: true
+                grouptype: 1
             }, {
                 idgroup: 1,
                 groupbank: "groupbank2",
-                grouptype: true
+                grouptype: 1
             }
             ]
 
@@ -589,27 +589,40 @@ describe('DATA BANK', () => {
                 },
             ]
 
-
+            const mockbnksRepository = new BnksRepository();
             const mockcacheService = new CacheService();
+
+
+
+
+            mockbnksRepository.getbnks = jest.fn()
+                .mockImplementation(() => Promise.resolve(resultbank));
+            mockbnksRepository.getgroupbnks = jest.fn()
+                .mockImplementation(() => Promise.resolve(resultgroup));
+            mockbnksRepository.getmasterbnks = jest.fn()
+                .mockImplementation(() => Promise.resolve(resultmaster));
             mockcacheService.delete = jest.fn().mockResolvedValue();
             mockcacheService.set = jest.fn().mockResolvedValue();
 
-            const bnksRepository = {
-                getbnks: jest.fn().mockResolvedValue(resultbank),
-                getgroupbnks: jest.fn().mockResolvedValue(resultgroup),
-                getmasterbnks: jest.fn().mockResolvedValue(resultmaster),
-            };
+
+
+
+            // const bnksRepository = {
+            //     getbnks: jest.fn().mockResolvedValue(resultbank),
+            //     getgroupbnks: jest.fn().mockResolvedValue(resultgroup),
+            //     getmasterbnks: jest.fn().mockResolvedValue(resultmaster),
+            // };
 
             const getDataBankUseCase = new AddbnksUseCase({
-                bnksRepository,
+                bnksRepository: mockbnksRepository,
                 cacheServices: mockcacheService
             });
 
             const getdatausecase = await getDataBankUseCase.getbankdt(params);
 
-            expect(bnksRepository.getbnks).toBeCalledWith(params.groupname);
-            expect(bnksRepository.getgroupbnks).toBeCalledWith(params.groupname);
-            expect(bnksRepository.getmasterbnks).toBeCalledWith(params.groupname);
+            expect(mockbnksRepository.getbnks).toBeCalledWith(params.groupname);
+            expect(mockbnksRepository.getgroupbnks).toBeCalledWith(params.groupname);
+            expect(mockbnksRepository.getmasterbnks).toBeCalledWith(params.groupname);
             expect(mockcacheService.delete).toBeCalledWith(`namegroup:${params.groupname}`);
             expect(mockcacheService.set).toBeCalledWith(`namegroup:${params.groupname}`, JSON.stringify(getdatausecase));
             expect(getdatausecase).toEqual(resultmockgroup);
@@ -617,7 +630,7 @@ describe('DATA BANK', () => {
     });
 
     describe('BANK DATA GET DATA EXCEPT GROUP', () => {
-        it('should get data apk caching successfully', async () => {
+        it('should get data bank except caching successfully', async () => {
             const params = {
                 groupname: 'groupbank2',
             };
@@ -704,14 +717,14 @@ describe('DATA BANK', () => {
                 cacheServices: mockcacheService
             });
             const getdatausecase = await getDataBankUseCase.getbankdtex(params);
-            expect(mockcacheService.get).toBeCalledWith(`namegroupex:${params.groupname}`); +
-                expect(getdatausecase).toEqual(
-                    resultmockgroup
+            expect(mockcacheService.get).toBeCalledWith(`namegroupex:${params.groupname}`);
+            expect(getdatausecase).toEqual(
+                resultmockgroup
 
-                );
+            );
         });
 
-        it('should get data bank successfully', async () => {
+        it('should get data bank except successfully', async () => {
             const params = {
                 groupname: 'groupbank2'
             };
@@ -735,8 +748,8 @@ describe('DATA BANK', () => {
                         ]
                     },
                     mandiri: {
-                        url_logo: "URL_logo_bank_mandiri",
-                        statusxxyy: 2,
+                        url_logo: "URL_logo_bank",
+                        statusxxyy: 1,
                         data_bank: [
                             {
                                 idbank: 2,
@@ -769,8 +782,8 @@ describe('DATA BANK', () => {
                         ]
                     },
                     mandiri: {
-                        url_logo: "URL_logo_bank_mandiri",
-                        statusxxyy: 2,
+                        url_logo: "URL_logo_bank",
+                        statusxxyy: 1,
                         data_bank: [
                             {
                                 idbank: 2,
@@ -842,15 +855,15 @@ describe('DATA BANK', () => {
             const resultgroup = [{
                 idgroup: 1,
                 groupbank: "groupbank1",
-                grouptype: true
+                grouptype: 1
             }, {
                 idgroup: 2,
                 groupbank: "groupbank2",
-                grouptype: true
+                grouptype: 1
             }, {
                 idgroup: 3,
                 groupbank: "groupbank3",
-                grouptype: true
+                grouptype: 1
             }
             ]
 
