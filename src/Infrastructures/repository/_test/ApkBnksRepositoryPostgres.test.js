@@ -32,7 +32,11 @@ describe('DataBank repository', () => {
         //arrange
         const addgroup = new AddGroupBnks({
           namegroupxyzt: 'groupbank2',
-          grouptype: 1
+          grouptype: 1,
+          min_dp: 10,
+          max_dp: 2500,
+          min_wd: 30,
+          max_wd: 50000,
         });
 
         const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
@@ -58,7 +62,7 @@ describe('DataBank repository', () => {
 
         const getbankdata = await apkBnksRepositoryPostgres.getdtGroup();
 
-        expect(getbankdata).toStrictEqual([{ "idgroup": 3, "grouptype": 1, groupbank: "groupbank3" }, { "idgroup": 4, "grouptype": 1, groupbank: "groupbank4" }]);
+        expect(getbankdata).toStrictEqual([{ "idgroup": 3, "grouptype": 1, min_dp: 10, max_dp: 2500, min_wd: 30, max_wd: 50000, groupbank: "groupbank3" }, { "idgroup": 4, "grouptype": 1, groupbank: "groupbank4", min_dp: 10, max_dp: 2500, min_wd: 30, max_wd: 50000, }]);
       });
 
     });
@@ -560,7 +564,7 @@ describe('DataBank repository', () => {
           await AddGroupTableTestHelper.addgroup({ idgroup: 5, groupbank: 'groupbank5' });
           const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
           const getbankdata = await apkBnksRepositoryPostgres.getgroupbnks(params.groupname);
-          expect(getbankdata).toStrictEqual([{ "idgroup": 5, "grouptype": 1, groupbank: "groupbank5" }]);
+          expect(getbankdata).toStrictEqual([{ "idgroup": 5, "grouptype": 1, groupbank: "groupbank5", min_dp: 10, max_dp: 2500, min_wd: 30, max_wd: 50000 }]);
         });
 
         it('should get data bank bank fail', async () => {
@@ -589,7 +593,7 @@ describe('DataBank repository', () => {
           await AddGroupTableTestHelper.addgroup({ idgroup: 6, groupbank: 'groupbank6' });
           const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
           const getbankdata = await apkBnksRepositoryPostgres.getgroupbnkex(params.groupname);
-          expect(getbankdata).toStrictEqual([{ idgroup: 5, "grouptype": 1, groupbank: 'groupbank5' }, { idgroup: 6, "grouptype": 1, groupbank: 'groupbank6' }]);
+          expect(getbankdata).toStrictEqual([{ idgroup: 5, "grouptype": 1, groupbank: 'groupbank5', min_dp: 10, max_dp: 2500, min_wd: 30, max_wd: 50000 }, { idgroup: 6, "grouptype": 1, groupbank: 'groupbank6', min_dp: 10, max_dp: 2500, min_wd: 30, max_wd: 50000 }]);
         });
 
         it('should get data bank bank fail', async () => {

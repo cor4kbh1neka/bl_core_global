@@ -14,10 +14,10 @@ class ApkBnksRepositoryPostgres extends BnksRepository {
 
     async addgrp(addgroup) {
         // try {
-        const { namegroupxyzt, grouptype } = addgroup
+        const { namegroupxyzt, grouptype, min_dp, max_dp, min_wd, max_wd } = addgroup
         const query = {
-            text: 'INSERT INTO mastergroup (groupbank, grouptype) VALUES($1, $2) RETURNING groupbank',
-            values: [namegroupxyzt, grouptype],
+            text: 'INSERT INTO mastergroup (groupbank, grouptype,min_dp,max_dp,min_wd,max_wd) VALUES($1, $2, $3, $4, $5, $6) RETURNING groupbank',
+            values: [namegroupxyzt, grouptype, min_dp, max_dp, min_wd, max_wd],
         };
         const data = await this._pool.query(query);
         return data.rows[0].groupbank;
@@ -111,7 +111,6 @@ class ApkBnksRepositoryPostgres extends BnksRepository {
         const data = await this._pool.query(grouquery);
         return data.rows;
     }
-
     async findmstr(params) {
         // Kueri untuk mencari dataapknotice
         const noticeQuery = {
@@ -124,7 +123,6 @@ class ApkBnksRepositoryPostgres extends BnksRepository {
         }
         return databank.rows;
     }
-
     async delmstrbnk(params) {
         // Kueri untuk mencari dataapknotice
         const noticeQuery = {
@@ -153,7 +151,6 @@ class ApkBnksRepositoryPostgres extends BnksRepository {
         return data.rows[0];
 
     }
-
     async chckbnks(namebankxxyy, xynamarekx, norekxyxy) {
         // Kueri untuk mencari dataapknotice
         const noticeQuery = {
@@ -165,7 +162,6 @@ class ApkBnksRepositoryPostgres extends BnksRepository {
             throw new InvariantError('data already in database !');
         }
     }
-
     async putbnks(usecasepayload, params) {
 
 
@@ -192,7 +188,6 @@ class ApkBnksRepositoryPostgres extends BnksRepository {
         return "Bank Edit Success !";
 
     }
-
     async getbnks(params) {
 
         const query = {
@@ -229,7 +224,6 @@ class ApkBnksRepositoryPostgres extends BnksRepository {
         // };
         return data.rows;
     }
-
     async getgroupbnks(params) {
         // Kueri untuk mencari dataapknotice
         const noticeQuery = {
@@ -255,8 +249,6 @@ class ApkBnksRepositoryPostgres extends BnksRepository {
         }
         return databank.rows;
     }
-
-
     async getmasterbnks(params) {
         // Kueri untuk mencari dataapknotice
         const noticeQuery = {

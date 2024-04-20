@@ -12,43 +12,79 @@ describe('GROUPBANK', () => {
         it('should orchestrating add group correctly', async () => {
             const useCasePayload = new AddGroupBnks({
                 namegroupxyzt: 'groupbank2',
-                grouptype: 1
+                grouptype: 1,
+                min_dp: 10,
+                max_dp: 2500,
+                min_wd: 30,
+                max_wd: 50000,
             });
             const namegroup = 'groupbank2';
+
+            const mockcacheService = new CacheService();
 
             const mockbnksRepository = new BnksRepository();
 
             mockbnksRepository.addgrp = jest.fn()
                 .mockImplementation(() => Promise.resolve(namegroup));
+            mockcacheService.delete = jest.fn().mockResolvedValue();
 
 
             const addgroupusecase = new AddbnksUseCase({
                 bnksRepository: mockbnksRepository,
+                cacheServices: mockcacheService
 
             });
 
             const datagroupusecase = await addgroupusecase.addgrp(useCasePayload);
             expect(datagroupusecase).toStrictEqual(namegroup);
             expect(mockbnksRepository.addgrp).toBeCalledWith(useCasePayload);
+            expect(mockcacheService.delete).toBeCalledWith(`group:group`);
+
 
         });
     });
 
     describe('GetDataGroup that already create', () => {
+        it("should get data group bank caching", async () => {
+            const resultmockgroup = [{ "idgroup": 3, groupbank: "groupbank3" }, { "idgroup": 4, groupbank: "groupbank4" }];
+
+
+
+            const mockcacheService = new CacheService();
+            mockcacheService.get = jest.fn().mockResolvedValue(JSON.stringify(resultmockgroup));
+
+            const getDataMasterUseCase = new AddbnksUseCase({
+                cacheServices: mockcacheService
+            });
+
+            const payload = await getDataMasterUseCase.getgroup();
+
+            expect(mockcacheService.get).toBeCalledWith(`group:group`);
+            expect(payload).toEqual(
+                resultmockgroup
+
+            );
+        });
         it('should get data group bank', async () => {
 
 
             const resultmockgroup = [{ "idgroup": 3, groupbank: "groupbank3" }, { "idgroup": 4, groupbank: "groupbank4" }];
 
 
+            const mockcacheService = new CacheService();
+
+
             const mockBnksRepository = new BnksRepository();
 
             mockBnksRepository.getdtGroup = jest.fn()
                 .mockImplementation(() => Promise.resolve(resultmockgroup));
-
+            mockcacheService.delete = jest.fn().mockResolvedValue();
+            mockcacheService.set = jest.fn().mockResolvedValue();
 
             const getGroupDataUsecase = new AddbnksUseCase({
                 bnksRepository: mockBnksRepository,
+                cacheServices: mockcacheService
+
             });
 
             const payload = await getGroupDataUsecase.getgroup();
@@ -56,6 +92,8 @@ describe('GROUPBANK', () => {
             expect(mockBnksRepository.getdtGroup)
                 .toBeCalledWith();
             expect(payload).toEqual(resultmockgroup);
+            expect(mockcacheService.delete).toBeCalledWith(`group:group`);
+            expect(mockcacheService.set).toBeCalledWith(`group:group`, JSON.stringify(resultmockgroup));
         });
     });
 

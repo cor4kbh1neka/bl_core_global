@@ -76,11 +76,21 @@ class AddbnksUseCase {
     async addgrp(useCasePayload) {
         const addgroup = new AddGroupBnks(useCasePayload);
         const namegroup = await this._bnksRepository.addgrp(addgroup);
+        await this._cacheService.delete(`group:group`);
+
         return namegroup;
     }
     async getgroup() {
-        const namegroup = await this._bnksRepository.getdtGroup();
-        return namegroup;
+        try {
+            const result = await this._cacheService.get(`group:group`);
+            const dataresult = JSON.parse(result);
+            return dataresult;
+        } catch (error) {
+            const namegroup = await this._bnksRepository.getdtGroup();
+            await this._cacheService.delete(`group:group`);
+            await this._cacheService.set(`group:group`, JSON.stringify(namegroup));
+            return namegroup;
+        }
     }
     async delgroupdata(params) {
         await this._bnksRepository.findgroup(params.idgroup);

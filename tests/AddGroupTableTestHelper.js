@@ -6,10 +6,14 @@ const AddGroupTableTestHelper = {
     idgroup = 1,
     groupbank = 'groupbank1',
     grouptype = 1,
+    min_dp = 10,
+    max_dp = 2500,
+    min_wd = 30,
+    max_wd = 50000,
   }) {
     const query = {
-      text: 'INSERT INTO mastergroup  (idgroup,groupbank, grouptype) VALUES($1, $2 , $3)',
-      values: [idgroup, groupbank, grouptype],
+      text: 'INSERT INTO mastergroup  (idgroup,groupbank, grouptype,min_dp,max_dp,min_wd,max_wd) VALUES($1, $2 , $3, $4, $5, $6, $7)',
+      values: [idgroup, groupbank, grouptype, min_dp, max_dp, min_wd, max_wd],
     };
 
     await pool.query(query);
