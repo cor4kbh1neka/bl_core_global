@@ -38,6 +38,9 @@ class UserRepository {
     async UDataUser(username) {
         throw new Error('USER_REPOSITORY.METHOD_NOT_IMPLEMENTED');
     }
+    async Uvipuser(username) {
+        throw new Error('USER_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+    }
     async GetDataByUsername(username) {
         throw new Error('USER_REPOSITORY.METHOD_NOT_IMPLEMENTED');
     }

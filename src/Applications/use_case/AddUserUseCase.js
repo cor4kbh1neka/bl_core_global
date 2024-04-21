@@ -16,7 +16,7 @@ class AddUserUseCase {
         await this._userRepository.verifybankuser(registerUser);
         const userlogbase = await this._userRepository.addUser(registerUser);
         this._userRepository.addEventUser(userlogbase.xyuseridxy);
-        this._userRepository.addReffUser(userlogbase.xyuseridxy);
+        // this._userRepository.addReffUser(userlogbase.xyuseridxy);
         userlogbase.password = await this._passwordHash.hash(registerUser.password);
         return this._userRepository.addLogBase(userlogbase);
     }
@@ -31,6 +31,11 @@ class AddUserUseCase {
     async UDataUser(useCasePayload, params) {
         const updatedData = new UpdateDataUser(useCasePayload);
         await this._userRepository.UDataUser(updatedData, params);
+        return 'data berhasil di updated !';
+    }
+
+    async Uvipuser(useCasePayload, params) {
+        await this._userRepository.Uvipuser(useCasePayload, params);
         return 'data berhasil di updated !';
     }
 

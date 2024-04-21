@@ -69,7 +69,6 @@ describe('entities for update data Users', () => {
             xxybanknumberxy: '12345678',
             group: 'groupbank2',
             groupwd: 'groupbankwd2',
-            password: 'secret',
         };
         // Action
         const { xybanknamexyy, xybankuserxy, xxybanknumberxy, group, groupwd, } = new UpdateDataUser(payload);

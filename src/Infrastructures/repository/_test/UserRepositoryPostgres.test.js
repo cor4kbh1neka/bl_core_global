@@ -140,21 +140,21 @@ describe('UserRepositoryPostgres', () => {
 
 
 
-        describe('add userreffs ', () => {
-            it('should persist userreffs user and return registered user correctly', async () => {
-                const registerUserLog = 'user123';
-                const fakeIdGenerator = () => '123'; // stub!
-                const userRepositoryPostgres = new UserRepositoryPostgres(pool, fakeIdGenerator);
+        // describe('add userreffs ', () => {
+        //     it('should persist userreffs user and return registered user correctly', async () => {
+        //         const registerUserLog = 'user123';
+        //         const fakeIdGenerator = () => '123'; // stub!
+        //         const userRepositoryPostgres = new UserRepositoryPostgres(pool, fakeIdGenerator);
 
-                // Action
-                await userRepositoryPostgres.addReffUser(registerUserLog);
+        //         // Action
+        //         await userRepositoryPostgres.addReffUser(registerUserLog);
 
-                // Assert
-                const users = await UsersReffsTableTestHelper.findUsersByIdreffs('user123');
-                expect(users).toHaveLength(1);
-            });
+        //         // Assert
+        //         const users = await UsersReffsTableTestHelper.findUsersByIdreffs('user123');
+        //         expect(users).toHaveLength(1);
+        //     });
 
-        });
+        // });
 
 
 
@@ -223,7 +223,7 @@ describe('UserRepositoryPostgres', () => {
             // Action
             const databank = await userRepositoryPostgres.GetDataByUsername('fakeuser333');
             // Assert
-            expect(databank).toEqual({ xyusernamexxy: 'fakeuser333', xybanknamexyy: 'abc', xybankuserxy: 'fake name', xxybanknumberxy: '124454444', group: 'groupbank1', groupwd: 'groupbankwd1', xyx11xuser_mailxxyy: 'user@gmail.com', xynumbphonexyyy: '58469874451' });
+            expect(databank).toEqual({ xyusernamexxy: 'fakeuser333', xybanknamexyy: 'abc', xybankuserxy: 'fake name', xxybanknumberxy: '124454444', group: 'groupbank1', groupwd: 'groupbankwd1', xyx11xuser_mailxxyy: 'user@gmail.com', xynumbphonexyyy: '58469874451', is_verified: false });
         });
     });
 
@@ -269,7 +269,7 @@ describe('UserRepositoryPostgres', () => {
             // Action
             const databank = await userRepositoryPostgres.getDataBankByUsername('fakeuser2222');
             // Assert
-            expect(databank).toEqual({ xybanknamexyy: 'abc', xybankuserxy: 'fake name', xxybanknumberxy: '12445678', group: 'groupbank1', groupwd: 'groupbankwd1' });
+            expect(databank).toEqual({ xybanknamexyy: 'abc', xybankuserxy: 'fake name', xxybanknumberxy: '12445678', group: 'groupbank1', groupwd: 'groupbankwd1', is_verified: false });
         });
     });
 
@@ -316,6 +316,45 @@ describe('UserRepositoryPostgres', () => {
             expect(UpdatedUser).toStrictEqual("data berhasil di updated !");
 
         });
+
+        describe('update data VIP user', () => {
+
+            it('should throw InvariantError when user not found', async () => {
+                const params = {
+                    xyusernamexxy: '222fakeuser9898'
+
+                }
+                const updatedUser = {
+                    is_verified: true
+                };
+                // Arrange
+                const userRepositoryPostgres = new UserRepositoryPostgres(pool);
+
+                // Action & Assert
+                await expect(userRepositoryPostgres.Uvipuser(updatedUser, params))
+                    .rejects
+                    .toThrowError(NotFoundError);
+            });
+            it('should update data user correctly', async () => {
+                const params = {
+                    xyusernamexxy: 'fakeuser9898'
+
+                }
+                const updatedUser = {
+                    is_verified: true
+
+                };
+
+                await UsersTableTestHelper.addUser({ xyusernamexxy: 'fakeuser9898', xybanknamexyy: 'abc', xxybanknumberxy: '124422222' });
+
+
+                const userRepositoryPostgres = new UserRepositoryPostgres(pool);
+                const UpdatedUser = await userRepositoryPostgres.Uvipuser(updatedUser, params);
+                expect(UpdatedUser).toStrictEqual("data berhasil di updated !");
+
+            });
+        });
+
         describe('change password feature', () => {
 
             it('should throw InvariantError when user not found', async () => {

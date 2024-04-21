@@ -18,6 +18,7 @@ describe('UserRepository interface', () => {
         await expect(userRepository.getIdByUsername('')).rejects.toThrowError('USER_REPOSITORY.METHOD_NOT_IMPLEMENTED');
         await expect(userRepository.getDataBankByUsername()).rejects.toThrowError('USER_REPOSITORY.METHOD_NOT_IMPLEMENTED');
         await expect(userRepository.UDataUser()).rejects.toThrowError('USER_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+        await expect(userRepository.Uvipuser()).rejects.toThrowError('USER_REPOSITORY.METHOD_NOT_IMPLEMENTED');
         await expect(userRepository.GetDataByUsername()).rejects.toThrowError('USER_REPOSITORY.METHOD_NOT_IMPLEMENTED');
         await expect(userRepository.changepssw()).rejects.toThrowError('USER_REPOSITORY.METHOD_NOT_IMPLEMENTED');
     });

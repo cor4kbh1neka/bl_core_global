@@ -31,6 +31,16 @@ const routes = (handler) => ([
   },
   {
     method: 'PUT',
+    path: '/users/vip/{xyusernamexxy}',
+    handler: handler.putUserVIPHandler,
+    options: {
+      cors: {
+        origin: ['*'],
+      },
+    },
+  },
+  {
+    method: 'PUT',
     path: '/users/pswdy/{xyusernamexxy}',
     handler: handler.putPassHandler,
     options: {

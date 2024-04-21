@@ -31,7 +31,14 @@ exports.up = (pgm) => {
       type: 'VARCHAR(15)',
       notNull: true,
     },
-
+    is_verified: {
+      type: 'BOOLEAN',
+      notNull: true,
+      default: false // Menambahkan nilai default
+    },
+    last_login: {
+      type: 'TEXT',
+    },
     created_at: {
       type: 'TEXT',
       notNull: true,

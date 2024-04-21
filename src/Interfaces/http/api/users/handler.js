@@ -7,6 +7,7 @@ class UsersHandler {
     this.getUserHandler = this.getUserHandler.bind(this);
     this.putUserHandler = this.putUserHandler.bind(this);
     this.putPassHandler = this.putPassHandler.bind(this);
+    this.putUserVIPHandler = this.putUserVIPHandler.bind(this);
   }
 
   async postUserHandler(request, h) {
@@ -40,6 +41,18 @@ class UsersHandler {
   async putUserHandler(request, h) {
     const putDataUsecase = this._container.getInstance(AddUserUseCase.name);
     const updatedata = await putDataUsecase.UDataUser(request.payload, request.params);
+
+    const response = h.response({
+      status: 'success',
+      data: updatedata,
+
+    });
+    response.code(200);
+    return response;
+  }
+  async putUserVIPHandler(request, h) {
+    const putDataVIPUsecase = this._container.getInstance(AddUserUseCase.name);
+    const updatedata = await putDataVIPUsecase.Uvipuser(request.payload, request.params);
 
     const response = h.response({
       status: 'success',

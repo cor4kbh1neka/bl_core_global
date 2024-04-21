@@ -66,11 +66,12 @@ class UserRepositoryPostgres extends UserRepository {
     }
 
     async addUser(registerUser) {
+
         const { xyusernamexxy, xybanknamexyy, xybankuserxy, xxybanknumberxy, xyx11xuser_mailxxyy, xynumbphonexyyy } = registerUser;
         const xyuseridxy = `user${this._idGenerator()}`;
         const created_at = new Date().toISOString();
         const query = {
-            text: 'INSERT INTO users VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING xyuseridxy, xyusernamexxy',
+            text: 'INSERT INTO users (xyuseridxy, xyusernamexxy, xybanknamexyy, xybankuserxy, xxybanknumberxy, xyx11xuser_mailxxyy, xynumbphonexyyy, created_at) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING xyuseridxy, xyusernamexxy',
             values: [xyuseridxy, xyusernamexxy, xybanknamexyy, xybankuserxy, xxybanknumberxy, xyx11xuser_mailxxyy, xynumbphonexyyy, created_at],
         };
 
@@ -103,17 +104,17 @@ class UserRepositoryPostgres extends UserRepository {
         await this._pool.query(query);
     }
 
-    async addReffUser(registerUser) {
+    // async addReffUser(registerUser) {
 
-        const xyuseridxy = registerUser;
-        const reffs_id = `idev${this._idGenerator()}`;
-        const query = {
-            text: 'INSERT INTO reffs VALUES($1, $2)',
-            values: [reffs_id, xyuseridxy],
-        };
-        await this._pool.query(query);
+    //     const xyuseridxy = registerUser;
+    //     const reffs_id = `idev${this._idGenerator()}`;
+    //     const query = {
+    //         text: 'INSERT INTO reffs VALUES($1, $2)',
+    //         values: [reffs_id, xyuseridxy],
+    //     };
+    //     await this._pool.query(query);
 
-    }
+    // }
 
 
     async getPasswordByUsername(username) {
@@ -133,7 +134,7 @@ class UserRepositoryPostgres extends UserRepository {
 
     async GetDataByUsername(params) {
         const query = {
-            text: 'SELECT xyusernamexxy,xybanknamexyy,xybankuserxy,xxybanknumberxy,xyx11xuser_mailxxyy,xynumbphonexyyy,"group",groupwd FROM users WHERE xyusernamexxy = $1',
+            text: 'SELECT xyusernamexxy,xybanknamexyy,xybankuserxy,xxybanknumberxy,xyx11xuser_mailxxyy,xynumbphonexyyy,"group",groupwd,is_verified FROM users WHERE xyusernamexxy = $1',
             values: [params],
         };
 
@@ -164,7 +165,7 @@ class UserRepositoryPostgres extends UserRepository {
     async getDataBankByUsername(username) {
 
         const query = {
-            text: 'SELECT xybanknamexyy , xybankuserxy, xxybanknumberxy, "group" , "groupwd"  FROM users WHERE xyusernamexxy = $1',
+            text: 'SELECT xybanknamexyy , xybankuserxy, xxybanknumberxy, "group" , "groupwd" , is_verified  FROM users WHERE xyusernamexxy = $1',
             values: [username],
         };
 
@@ -191,6 +192,21 @@ class UserRepositoryPostgres extends UserRepository {
         }
         return 'data berhasil di updated !';
     }
+
+    async Uvipuser(usecasepayload, params) {
+        const username = params.xyusernamexxy;
+        const query = {
+            text: 'UPDATE users SET is_verified = $1 WHERE xyusernamexxy = $2',
+            values: [usecasepayload.is_verified, username],
+        };
+
+        const result = await this._pool.query(query);
+        if (!result.rowCount) {
+            throw new NotFoundError('data not found !');
+        }
+        return 'data berhasil di updated !';
+    }
+
 
     async changepssw(restpas, params) {
 

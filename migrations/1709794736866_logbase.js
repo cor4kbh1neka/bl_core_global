@@ -21,15 +21,16 @@ exports.up = (pgm) => {
         password: {
             type: 'VARCHAR(80)',
             notNull: true,
-        },
-
-        is_verified: {
-            type: 'Boolean',
-        },
-
-        last_login: {
-            type: 'TEXT',
         }
+        // ,
+
+        // is_verified: {
+        //     type: 'Boolean',
+        // },
+
+        // last_login: {
+        //     type: 'TEXT',
+        // }
     });
 };
 
