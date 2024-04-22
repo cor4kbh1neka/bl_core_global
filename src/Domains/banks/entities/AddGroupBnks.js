@@ -22,9 +22,11 @@ class AddGroupBnks {
         }
 
 
-        if (!namegroupxyzt.match(/^[a-zA-Z0-9]+$/)) {
-            throw new Error('ADD_GROUP_BANK.REGISTER_CONTAIN_RESTRICTED_CHARACTER');
+        if (!namegroupxyzt.match(/^[a-zA-Z0-9]+\s*$/)) {
+            throw new Error('ADD_GROUP_BANK.UPDATED_CONTAIN_RESTRICTED_CHARACTER');
         }
+
+
     }
 }
 

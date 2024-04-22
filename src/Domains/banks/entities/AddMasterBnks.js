@@ -21,7 +21,7 @@ class AddMasterBnks {
 
         // if (!bnkmstrxyxyx.match(/^[a-zA-Z0-9]+$/) || !groupbank.match(/^[a-zA-Z0-9]+$/) || !urllogoxxyx.match(/^[a-zA-Z0-9\-_~:/?#\[\]@!$&'()*+,;=.]+$/)) {
 
-        if (!bnkmstrxyxyx.match(/^[a-zA-Z0-9]+$/) || !urllogoxxyx.match(/^[a-zA-Z0-9\-_~:/?#\[\]@!$&'()*+,;=.]+$/)) {
+        if (!bnkmstrxyxyx.match(/^[a-zA-Z0-9]+\s*$/) || !urllogoxxyx.match(/^[a-zA-Z0-9\-_~:/?#\[\]@!$&'()*+,;=.]+\s*$/)) {
             throw new Error('ADD_MASRTER_BANK.REGISTER_CONTAIN_RESTRICTED_CHARACTER');
         }
     }

@@ -1,7 +1,7 @@
 const AddGroupBnks = require('../AddGroupBnks.js');
 
 
-describe('entities for APK data', () => {
+describe('entities for BANK data', () => {
 
 
     it('should send an error when not contain fill in data spesification', () => {
@@ -31,6 +31,7 @@ describe('entities for APK data', () => {
         expect(() => new AddGroupBnks(payload)).toThrowError('ADD_GROUP_BANK.NOT_MEET_DATA_TYPE_SPECIFICATION');
     });
 
+
     it('should send an error when not data restrict given', () => {
         //arrange
         const payload = {
@@ -42,11 +43,12 @@ describe('entities for APK data', () => {
             max_wd: 50000,
         };
 
-        expect(() => new AddGroupBnks(payload)).toThrowError('ADD_GROUP_BANK.REGISTER_CONTAIN_RESTRICTED_CHARACTER');
+        expect(() => new AddGroupBnks(payload)).toThrowError('ADD_GROUP_BANK.UPDATED_CONTAIN_RESTRICTED_CHARACTER');
     });
 
 
-    it('should add bank dp data Correctly', () => {
+
+    it('should add bank data Correctly', () => {
         //arrange
         const payload = {
             namegroupxyzt: 'groupbank1',
