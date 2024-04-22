@@ -33,7 +33,7 @@ describe('entities for BANK MASTER data', () => {
         //arrange
         //arrange
         const payload = {
-            bnkmstrxyxyx: 'bcabukan%',
+            bnkmstrxyxyx: 'bca bukan',
             // groupbank: 'groupbank1#',
             urllogoxxyx: 'https://www.coskoc.com/api/',
             statusxyxyy: 1,

@@ -68,7 +68,7 @@ DomainErrorTranslator._directories = {
   'ADD_GROUP_BANK.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('Input tipe data yang sesuai !'),
   'ADD_GROUP_BANK.NOT_CONTAIN_NEEDED_PROPERTY': new NotFoundError('isi semua fill yang sesuai !'),
 
-  'ADD_MASRTER_BANK.UPDATED_CONTAIN_RESTRICTED_CHARACTER': new InvariantError('masukkan character yang sesuai !'),
+  'ADD_MASRTER_BANK.REGISTER_CONTAIN_RESTRICTED_CHARACTER': new InvariantError('masukkan character yang sesuai !'),
   'ADD_MASRTER_BANK.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('Input tipe data yang sesuai !'),
   'ADD_MASRTER_BANK.NOT_CONTAIN_NEEDED_PROPERTY': new NotFoundError('isi semua fill yang sesuai !'),
 
