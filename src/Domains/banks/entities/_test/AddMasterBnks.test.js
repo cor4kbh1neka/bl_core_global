@@ -10,6 +10,8 @@ describe('entities for BANK MASTER data', () => {
             // groupbank: 'groupbank1',
             urllogoxxyx: 'https://www.coskoc.com/api/',
             statusxyxyy: 1,
+            wdstatusxyxyy: 1,
+
         };
 
 
@@ -23,6 +25,8 @@ describe('entities for BANK MASTER data', () => {
             // groupbank: 'groupbank1',
             urllogoxxyx: 'https://www.coskoc.com/api/',
             statusxyxyy: 1,
+            wdstatusxyxyy: 1,
+
         };
 
 
@@ -37,6 +41,8 @@ describe('entities for BANK MASTER data', () => {
             // groupbank: 'groupbank1#',
             urllogoxxyx: 'https://www.coskoc.com/api/',
             statusxyxyy: 1,
+            wdstatusxyxyy: 1,
+
         };
 
         expect(() => new AddMasterBnks(payload)).toThrowError('ADD_MASRTER_BANK.REGISTER_CONTAIN_RESTRICTED_CHARACTER');
@@ -50,6 +56,7 @@ describe('entities for BANK MASTER data', () => {
             // groupbank: 'groupbank1',
             urllogoxxyx: 'https://www.coskoc.com/api/',
             statusxyxyy: 1,
+            wdstatusxyxyy: 1,
         };
 
         const addMasterBnks = new AddMasterBnks(payload);
@@ -61,5 +68,6 @@ describe('entities for BANK MASTER data', () => {
         // expect(addMasterBnks.groupbank).toEqual(payload.groupbank);
         expect(addMasterBnks.urllogoxxyx).toEqual(payload.urllogoxxyx);
         expect(addMasterBnks.statusxyxyy).toEqual(payload.statusxyxyy);
+        expect(addMasterBnks.wdstatusxyxyy).toEqual(payload.wdstatusxyxyy);
     });
 });

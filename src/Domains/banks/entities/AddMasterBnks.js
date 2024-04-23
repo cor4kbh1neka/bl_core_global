@@ -6,15 +6,16 @@ class AddMasterBnks {
         // this.groupbank = payload.groupbank;
         this.urllogoxxyx = payload.urllogoxxyx;
         this.statusxyxyy = payload.statusxyxyy;
+        this.wdstatusxyxyy = payload.wdstatusxyxyy;
     }
 
-    _verifyPayload({ bnkmstrxyxyx, urllogoxxyx, statusxyxyy }) {
-        if (!bnkmstrxyxyx || !urllogoxxyx || !statusxyxyy) {
+    _verifyPayload({ bnkmstrxyxyx, urllogoxxyx, statusxyxyy, wdstatusxyxyy }) {
+        if (!bnkmstrxyxyx || !urllogoxxyx || !statusxyxyy || !wdstatusxyxyy) {
             throw new Error('ADD_MASRTER_BANK.NOT_CONTAIN_NEEDED_PROPERTY');
         }
 
         // if (typeof bnkmstrxyxyx !== 'string' || typeof groupbank !== 'string' || typeof urllogoxxyx !== 'string' || typeof statusxyxyy !== 'number') {
-        if (typeof bnkmstrxyxyx !== 'string' || typeof urllogoxxyx !== 'string' || typeof statusxyxyy !== 'number') {
+        if (typeof bnkmstrxyxyx !== 'string' || typeof urllogoxxyx !== 'string' || typeof statusxyxyy !== 'number' || typeof wdstatusxyxyy !== 'number') {
             throw new Error('ADD_MASRTER_BANK.NOT_MEET_DATA_TYPE_SPECIFICATION');
         }
 

@@ -176,6 +176,7 @@ describe('MASTER BANK', () => {
                 // groupbank: 'groupbank1',
                 urllogoxxyx: 'https://www.coskoc.com/api/',
                 statusxyxyy: 1,
+                wdstatusxyxyy: 1,
             });
 
             const resultmockmaster = {
@@ -218,6 +219,9 @@ describe('MASTER BANK', () => {
                 // groupbank: 'groupbank1',
                 urllogoxxyx: 'https://www.coskoc.com/api/',
                 statusxyxyy: 1,
+                wdstatusxyxyy: 1,
+
+
             });
 
             const resultmockmaster = "Master Bank Edit Success !!";

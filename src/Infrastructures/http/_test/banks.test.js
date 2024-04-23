@@ -6,7 +6,7 @@ const AddBanksTableTestHelper = require('../../../../tests/AddBanksTableTestHelp
 const container = require('../../container');
 const createServer = require('../createServer');
 
-describe('/adduserendpoints', () => {
+describe('/addBankEndpoints', () => {
     afterAll(async () => {
         await pool.end();
     });
@@ -114,6 +114,7 @@ describe('/adduserendpoints', () => {
                     groupbank: 'groupbank1',
                     urllogoxxyx: 'https://www.coskoc.com/api/',
                     statusxyxyy: 1,
+                    wdstatusxyxyy: 1
                 };
 
                 const server = await createServer(container);
@@ -138,6 +139,7 @@ describe('/adduserendpoints', () => {
                     groupbank: 'groupbank1',
                     urllogoxxyx: 'https://www.coskoc.com/api/',
                     statusxyxyy: 1,
+                    wdstatusxyxyy: 1,
                 };
                 await AddMasterTableTestHelper.addmaster({ bnkmstrxyxyx: 'ovo', });
 
@@ -165,6 +167,7 @@ describe('/adduserendpoints', () => {
                     groupbank: 'groupbank1',
                     urllogoxxyx: 'https://www.coskoc.com/api/',
                     statusxyxyy: 2,
+                    wdstatusxyxyy: 1,
                 };
                 await AddMasterTableTestHelper.addmaster({ bnkmstrxyxyx: 'ovo', });
 

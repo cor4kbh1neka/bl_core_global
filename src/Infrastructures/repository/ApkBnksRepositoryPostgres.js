@@ -71,13 +71,13 @@ class ApkBnksRepositoryPostgres extends BnksRepository {
     }
     async addmstr(usecasepayload) {
 
-        const { bnkmstrxyxyx, urllogoxxyx, statusxyxyy } = usecasepayload
+        const { bnkmstrxyxyx, urllogoxxyx, statusxyxyy, wdstatusxyxyy } = usecasepayload
         const created_at = new Date().toISOString();
 
         // Kueri untuk mencari dataapknotice
         const query = {
-            text: 'INSERT INTO masterbank (bnkmstrxyxyx, urllogoxxyx, statusxyxyy, created_at) VALUES($1, $2 , $3, $4) RETURNING  bnkmstrxyxyx',
-            values: [bnkmstrxyxyx, urllogoxxyx, statusxyxyy, created_at],
+            text: 'INSERT INTO masterbank (bnkmstrxyxyx, urllogoxxyx, statusxyxyy,wdstatusxyxyy, created_at) VALUES($1, $2 , $3, $4,$5) RETURNING  bnkmstrxyxyx',
+            values: [bnkmstrxyxyx, urllogoxxyx, statusxyxyy, wdstatusxyxyy, created_at],
         };
         const datamaster = await this._pool.query(query);
         return datamaster.rows[0];
@@ -85,12 +85,12 @@ class ApkBnksRepositoryPostgres extends BnksRepository {
     async putmstrbnk(usecasepayload, params) {
 
 
-        const { bnkmstrxyxyx, urllogoxxyx, statusxyxyy } = usecasepayload;
+        const { bnkmstrxyxyx, urllogoxxyx, statusxyxyy, wdstatusxyxyy } = usecasepayload;
 
         // Kueri untuk mencari dataapknotice
         const query = {
-            text: 'UPDATE masterbank SET bnkmstrxyxyx = $1, statusxyxyy = $2, urllogoxxyx = $3 WHERE bnkmstrxyxyx = $4',
-            values: [bnkmstrxyxyx, statusxyxyy, urllogoxxyx, params],
+            text: 'UPDATE masterbank SET bnkmstrxyxyx = $1, statusxyxyy = $2, urllogoxxyx = $3 ,wdstatusxyxyy = $4 WHERE bnkmstrxyxyx = $5',
+            values: [bnkmstrxyxyx, statusxyxyy, urllogoxxyx, wdstatusxyxyy, params],
         };
 
         const datamaster = await this._pool.query(query);
@@ -104,7 +104,7 @@ class ApkBnksRepositoryPostgres extends BnksRepository {
     async getmstrbnk() {
 
         const grouquery = {
-            text: 'SELECT bnkmstrxyxyx,idbnkmaster,statusxyxyy,urllogoxxyx FROM masterbank',
+            text: 'SELECT bnkmstrxyxyx,idbnkmaster,statusxyxyy,urllogoxxyx,wdstatusxyxyy FROM masterbank',
             values: [],
         };
 

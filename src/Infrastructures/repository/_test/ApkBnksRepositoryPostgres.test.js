@@ -129,6 +129,8 @@ describe('DataBank repository', () => {
           bnkmstrxyxyx: 'mandiri',
           urllogoxxyx: 'https://www.coskoc.com/api/',
           statusxyxyy: 1,
+          wdstatusxyxyy: 1,
+
         });
 
         const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
@@ -151,6 +153,8 @@ describe('DataBank repository', () => {
           bnkmstrxyxyx: 'mandiri',
           urllogoxxyx: 'https://www.coskoc.com/api/',
           statusxyxyy: 2,
+          wdstatusxyxyy: 1,
+
         });
         // Arrange
         const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
@@ -170,6 +174,8 @@ describe('DataBank repository', () => {
           bnkmstrxyxyx: 'mandiri',
           urllogoxxyx: 'https://www.coskoc.com/api/',
           statusxyxyy: 2,
+          wdstatusxyxyy: 1,
+
         });
 
         await AddMasterTableTestHelper.addmaster({ bnkmstrxyxyx: 'mandiri' });
@@ -197,11 +203,15 @@ describe('DataBank repository', () => {
           bnkmstrxyxyx: 'bca2',
           urllogoxxyx: 'https://www.coskoc.com/api/',
           statusxyxyy: 1,
+          wdstatusxyxyy: 1,
+
         }, {
           idbnkmaster: 6,
           bnkmstrxyxyx: 'bca3',
           urllogoxxyx: 'https://www.coskoc.com/api/',
           statusxyxyy: 1,
+          wdstatusxyxyy: 1,
+
         }]);
       });
 
