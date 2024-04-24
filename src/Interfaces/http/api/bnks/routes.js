@@ -21,6 +21,16 @@ const routes = (handler) => ([
     },
   },
   {
+    method: 'PUT',
+    path: '/banks/group/{namegroup}',
+    handler: handler.putGroupHandler,
+    options: {
+      cors: {
+        origin: ['*'],
+      },
+    },
+  },
+  {
     method: 'DELETE',
     path: '/banks/group/{idgroup}',
     handler: handler.delGroupHandler,

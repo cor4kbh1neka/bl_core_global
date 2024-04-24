@@ -8,6 +8,7 @@ class BnksHandler {
     // this.getBanksHandler = this.getBanksHandler.bind(this);
 
     this.postGroupHandler = this.postGroupHandler.bind(this);
+    this.putGroupHandler = this.putGroupHandler.bind(this);
     this.getGroupHandler = this.getGroupHandler.bind(this);
     this.delGroupHandler = this.delGroupHandler.bind(this);
 
@@ -36,6 +37,16 @@ class BnksHandler {
       data: groupbnks
     });
     response.code(201);
+    return response;
+  }
+  async putGroupHandler(request, h) {
+    const putGroupBankUsecase = this._container.getInstance(AddbnksUseCase.name);
+    const datagroupDone = await putGroupBankUsecase.editgroupbnks(request.payload, request.params);
+    const response = h.response({
+      status: 'success',
+      data: datagroupDone
+    });
+    response.code(200);
     return response;
   }
   async getGroupHandler(request, h) {

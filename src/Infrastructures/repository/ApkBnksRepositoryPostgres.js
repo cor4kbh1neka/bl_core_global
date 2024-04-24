@@ -26,6 +26,23 @@ class ApkBnksRepositoryPostgres extends BnksRepository {
 
         // }
     }
+    async edtgrp(usecasepayload, params) {
+
+
+        const { namegroupxyzt, grouptype, min_dp, max_dp, min_wd, max_wd } = usecasepayload
+        // Kueri untuk mencari dataapknotice
+        const query = {
+            text: 'UPDATE mastergroup SET groupbank = $1, grouptype = $2, min_dp = $3 ,max_dp = $4,min_wd = $5,max_wd = $6 WHERE groupbank = $7',
+            values: [namegroupxyzt, grouptype, min_dp, max_dp, min_wd, max_wd, params],
+        };
+
+        const datagroup = await this._pool.query(query);
+        if (!datagroup.rowCount) {
+            throw new InvariantError('fail edit data !');
+        }
+        return "Group Bank Edit Success !";
+
+    }
     async getdtGroup() {
         const grouquery = {
             text: 'SELECT * FROM mastergroup',

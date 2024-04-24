@@ -9,6 +9,9 @@ class BnksRepository {
     async addgrp(nmgroup) {
         throw new Error('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
     }
+    async edtgrp(nmgroup) {
+        throw new Error('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+    }
 
 
     async getdtGroup() {

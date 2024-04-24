@@ -44,6 +44,49 @@ describe('GROUPBANK', () => {
         });
     });
 
+    describe('Edit Group bnks for add Group data', () => {
+
+        it('should edit data Group data correctly', async () => {
+
+            const params = {
+                namegroup: 'groupbank2'
+            }
+            const useCasePayload = new AddGroupBnks({
+                namegroupxyzt: 'groupbank2',
+                grouptype: 1,
+                min_dp: 10,
+                max_dp: 2500,
+                min_wd: 30,
+                max_wd: 50000,
+            });
+
+            const resultmockGroup = "Group Bank Edit Success !!";
+
+            const mockcacheService = new CacheService();
+            const mockbnksRepository = new BnksRepository();
+
+
+            mockbnksRepository.edtgrp = jest.fn()
+                .mockImplementation(() => Promise.resolve(resultmockGroup));
+            mockcacheService.delete = jest.fn().mockResolvedValue();
+
+
+            const addgroupusecase = new AddbnksUseCase({
+                bnksRepository: mockbnksRepository,
+                cacheServices: mockcacheService
+
+            });
+
+            const datagroupusecase = await addgroupusecase.editgroupbnks(useCasePayload, params);
+
+            expect(datagroupusecase).toStrictEqual(resultmockGroup);
+            expect(mockbnksRepository.edtgrp).toBeCalledWith(useCasePayload, params.namegroup);
+            expect(mockcacheService.delete).toBeCalledWith(`group:group`);
+
+        });
+    });
+
+
     describe('GetDataGroup that already create', () => {
         it("should get data group bank caching", async () => {
             const resultmockgroup = {

@@ -51,6 +51,54 @@ describe('DataBank repository', () => {
 
     });
 
+    describe('EDIT Group bank data success', () => {
+
+      it('should edit data Group bank fail', async () => {
+        const params = {
+          namegroup: 'groupbank2'
+        }
+        const useCasePayload = new AddGroupBnks({
+          namegroupxyzt: 'groupbank3',
+          grouptype: 1,
+          min_dp: 10,
+          max_dp: 2500,
+          min_wd: 30,
+          max_wd: 50000,
+        });
+
+        // Arrange
+        const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
+
+        // Action & Assert
+        await expect(apkBnksRepositoryPostgres.edtgrp(useCasePayload, params.namegroup))
+          .rejects
+          .toThrowError(InvariantError);
+      });
+
+      it('should edit data Group bank successfully', async () => {
+        const params = {
+          namegroup: 'groupbank4'
+        }
+        const useCasePayload = new AddGroupBnks({
+          namegroupxyzt: 'groupbank5',
+          grouptype: 1,
+          min_dp: 10,
+          max_dp: 2500,
+          min_wd: 30,
+          max_wd: 50000,
+        });
+
+        await AddGroupTableTestHelper.addgroup({ idgroup: 9, groupbank: 'groupbank4' });
+
+
+        const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
+
+        // Action
+        const dataresulteditgrp = await apkBnksRepositoryPostgres.edtgrp(useCasePayload, params.namegroup);
+        expect(dataresulteditgrp).toStrictEqual("Group Bank Edit Success !");
+      });
+    });
+
     describe('get data group', () => {
       it('should return data group', async () => {
 

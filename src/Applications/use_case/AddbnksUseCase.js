@@ -80,6 +80,14 @@ class AddbnksUseCase {
 
         return namegroup;
     }
+
+    async editgroupbnks(useCasePayload, params) {
+        const payload = new AddGroupBnks(useCasePayload);
+        const data = await this._bnksRepository.edtgrp(payload, params.namegroup);
+        await this._cacheService.delete(`group:group`);
+
+        return data;
+    }
     async getgroup() {
         try {
             const result = await this._cacheService.get(`group:group`);

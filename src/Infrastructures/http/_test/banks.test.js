@@ -19,88 +19,125 @@ describe('/addBankEndpoints', () => {
     });
 
     describe('When add and get group bank /banks/group', () => {
-        it('should repsonse 201 and persisted group bank data', async () => {
-            const requestPayload = {
-                namegroupxyzt: 'groupbank88',
-                grouptype: 1,
-                min_dp: 10,
-                max_dp: 2500,
-                min_wd: 30,
-                max_wd: 50000,
-            };
+        describe('Group Bank Add', () => {
 
-            const server = await createServer(container);
+            it('should repsonse 201 and persisted group bank data', async () => {
+                const requestPayload = {
+                    namegroupxyzt: 'groupbank88',
+                    grouptype: 1,
+                    min_dp: 10,
+                    max_dp: 2500,
+                    min_wd: 30,
+                    max_wd: 50000,
+                };
 
-            // Action
-            const response = await server.inject({
-                method: 'POST',
-                url: '/banks/group',
-                payload: requestPayload,
+                const server = await createServer(container);
+
+                // Action
+                const response = await server.inject({
+                    method: 'POST',
+                    url: '/banks/group',
+                    payload: requestPayload,
+                });
+                // Assert
+                const responseJson = JSON.parse(response.payload);
+                expect(response.statusCode).toEqual(201);
+                expect(responseJson.status).toEqual('success');
+
             });
-            // Assert
-            const responseJson = JSON.parse(response.payload);
-            expect(response.statusCode).toEqual(201);
-            expect(responseJson.status).toEqual('success');
+        });
+        describe('Group Bank PUT', () => {
+            it('should repsonse 200 when edit and persisted Group bank data', async () => {
+                const namegroup = 'groupbank77';
 
+                const requestPayload = {
+                    namegroupxyzt: 'groupbank78',
+                    grouptype: 1,
+                    min_dp: 10,
+                    max_dp: 2500,
+                    min_wd: 30,
+                    max_wd: 50000,
+                };
+                await AddGroupTableTestHelper.addgroup({ idgroup: 77, groupbank: 'groupbank77' });
+
+                const server = await createServer(container);
+
+                // Action
+                const response = await server.inject({
+                    method: 'PUT',
+                    url: `/banks/group/${namegroup}`,
+                    payload: requestPayload,
+                });
+                // Assert
+                const responseJson = JSON.parse(response.payload);
+                expect(response.statusCode).toEqual(200);
+                expect(responseJson.status).toEqual('success');
+
+            });
         });
 
+        describe('Group Bank GET', () => {
 
-        it('should repsonse 200 and get group bank data', async () => {
+            it('should repsonse 200 and get group bank data', async () => {
 
 
-            const server = await createServer(container);
+                const server = await createServer(container);
 
-            await AddGroupTableTestHelper.addgroup({ idgroup: 3, groupbank: 'groupbank3' });
-            await AddGroupTableTestHelper.addgroup({ idgroup: 4, groupbank: 'groupbank4' });
-            // Action
-            const response = await server.inject({
-                method: 'GET',
-                url: '/banks/group',
+                await AddGroupTableTestHelper.addgroup({ idgroup: 3, groupbank: 'groupbank3' });
+                await AddGroupTableTestHelper.addgroup({ idgroup: 4, groupbank: 'groupbank4' });
+                // Action
+                const response = await server.inject({
+                    method: 'GET',
+                    url: '/banks/group',
+                });
+                // Assert
+                const responseJson = JSON.parse(response.payload);
+                expect(response.statusCode).toEqual(200);
+                expect(responseJson.status).toEqual('success');
+
             });
-            // Assert
-            const responseJson = JSON.parse(response.payload);
-            expect(response.statusCode).toEqual(200);
-            expect(responseJson.status).toEqual('success');
-
         });
+        describe('Group Bank Delete', () => {
 
-        it('should repsonse 200 and delete group bank data', async () => {
+            it('should repsonse 200 and delete group bank data', async () => {
 
-            const groupid = '18';
+                const groupid = '18';
 
-            const server = await createServer(container);
+                const server = await createServer(container);
 
-            await AddGroupTableTestHelper.addgroup({ idgroup: 18, groupbank: 'groupbank8' });
-            await AddGroupTableTestHelper.addgroup({ idgroup: 19, groupbank: 'groupbank9' });
-            // Action
-            const response = await server.inject({
-                method: 'DELETE',
-                url: `/banks/group/${groupid}`,
+                await AddGroupTableTestHelper.addgroup({ idgroup: 18, groupbank: 'groupbank8' });
+                await AddGroupTableTestHelper.addgroup({ idgroup: 19, groupbank: 'groupbank9' });
+                // Action
+                const response = await server.inject({
+                    method: 'DELETE',
+                    url: `/banks/group/${groupid}`,
 
-            });
-            // Assert
-            const responseJson = JSON.parse(response.payload);
-            expect(response.statusCode).toEqual(200);
-            expect(responseJson.status).toEqual('success');
-
-        });
-
-        it('should repsonse 404 when delete group bank data', async () => {
-
-            const groupid = '20';
-
-            const server = await createServer(container);
-            // Action
-            const response = await server.inject({
-                method: 'DELETE',
-                url: `/banks/group/${groupid}`,
+                });
+                // Assert
+                const responseJson = JSON.parse(response.payload);
+                expect(response.statusCode).toEqual(200);
+                expect(responseJson.status).toEqual('success');
 
             });
-            // Assert
-            const responseJson = JSON.parse(response.payload);
-            expect(response.statusCode).toEqual(404);
-            expect(responseJson.status).toEqual('fail');
 
+
+            it('should repsonse 404 when delete group bank data', async () => {
+
+                const groupid = '20';
+
+                const server = await createServer(container);
+                // Action
+                const response = await server.inject({
+                    method: 'DELETE',
+                    url: `/banks/group/${groupid}`,
+
+                });
+                // Assert
+                const responseJson = JSON.parse(response.payload);
+                expect(response.statusCode).toEqual(404);
+                expect(responseJson.status).toEqual('fail');
+
+            });
         });
 
     });
