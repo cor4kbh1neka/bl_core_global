@@ -19,6 +19,8 @@ const ApkRepository = require('../Domains/apks/ApkRepository');
 const BnksRepository = require('../Domains/banks/BnksRepository');
 const ApkDataRepositoryPostgres = require('./repository/ApkDataRepositoryPostgres');
 const ApkBnksRepositoryPostgres = require('./repository/ApkBnksRepositoryPostgres');
+const MemoRepository = require('../Domains/memo/MemoRepository');
+const MemoRepositoryPostgres = require('./repository/MemoRepositoryPostgres');
 
 
 
@@ -36,6 +38,7 @@ const VerifyUserAuthUseCase = require('../Applications/use_case/VerifyUserAuthUs
 const AdddataApkUseCase = require('../Applications/use_case/AdddataApkUseCase');
 const GetDataApkUseCase = require('../Applications/use_case/GetDataApkUseCase');
 const AddbnksUseCase = require('../Applications/use_case/AddbnksUseCase');
+const MemoUseCase = require('../Applications/use_case/MemoUseCase');
 const CacheServices = require('./caching/redis/CacheServices');
 
 
@@ -110,6 +113,23 @@ container.register([
     {
         key: ApkRepository.name,
         Class: ApkDataRepositoryPostgres,
+        parameter: {
+            dependencies: [
+                {
+                    concrete: pool,
+                },
+                {
+                    concrete: nanoid,
+                },
+                {
+                    concrete: redis,
+                }
+            ],
+        },
+    },
+    {
+        key: MemoRepository.name,
+        Class: MemoRepositoryPostgres,
         parameter: {
             dependencies: [
                 {
@@ -273,6 +293,24 @@ container.register([
                 {
                     name: 'bnksRepository',
                     internal: BnksRepository.name,
+                },
+                {
+                    name: 'cacheServices',
+                    internal: CacheServices.name,
+                },
+            ],
+        },
+    }
+    ,
+    {
+        key: MemoUseCase.name,
+        Class: MemoUseCase,
+        parameter: {
+            injectType: 'destructuring',
+            dependencies: [
+                {
+                    name: 'memoRepository',
+                    internal: MemoRepository.name,
                 },
                 {
                     name: 'cacheServices',
