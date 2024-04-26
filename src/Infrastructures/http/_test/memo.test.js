@@ -78,5 +78,44 @@ describe('/addBankEndpoints', () => {
             });
 
         });
+
+        describe(' Memo DELETE /memo/{idmemo}', () => {
+            it('should repsonse 200 and delete Memo data', async () => {
+
+                const idmemo = '50';
+
+                const server = await createServer(container);
+
+                await AddMemoTableTestHelper.addmemo({ idmemo: 50 });
+                // Action
+                const response = await server.inject({
+                    method: 'DELETE',
+                    url: `/memo/${idmemo}`,
+
+                });
+                // Assert
+                const responseJson = JSON.parse(response.payload);
+                expect(response.statusCode).toEqual(200);
+                expect(responseJson.status).toEqual('success');
+
+            });
+
+            it('should repsonse 404 when delete group bank data', async () => {
+
+                const idmemo = '51';
+
+                const server = await createServer(container);
+                // Action
+                const response = await server.inject({
+                    method: 'DELETE',
+                    url: `/memo/${idmemo}`,
+                });
+                // Assert
+                const responseJson = JSON.parse(response.payload);
+                expect(response.statusCode).toEqual(404);
+                expect(responseJson.status).toEqual('fail');
+            });
+
+        });
     });
 });

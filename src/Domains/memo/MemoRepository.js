@@ -6,6 +6,13 @@ class MemoRepository {
     async getmemo(addmemo) {
         throw new Error('MEMO_REPOSITORY.METHOD_NOT_IMPLEMENTED');
     }
+
+    async findmemo(addmemo) {
+        throw new Error('MEMO_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+    }
+    async deletememo(addmemo) {
+        throw new Error('MEMO_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+    }
 }
 
 module.exports = MemoRepository;

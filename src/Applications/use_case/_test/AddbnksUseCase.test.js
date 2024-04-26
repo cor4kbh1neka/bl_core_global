@@ -185,16 +185,21 @@ describe('GROUPBANK', () => {
 
             resultdelete = "success delete group";
 
+            const mockcacheService = new CacheService();
             const mockBnksRepository = new BnksRepository();
 
             mockBnksRepository.findgroup = jest.fn()
                 .mockImplementation(() => Promise.resolve());
             mockBnksRepository.delgroup = jest.fn()
                 .mockImplementation(() => Promise.resolve(resultdelete));
+            mockcacheService.delete = jest.fn().mockResolvedValue();
+
 
 
             const delGroupDataUsecase = new AddbnksUseCase({
                 bnksRepository: mockBnksRepository,
+                cacheServices: mockcacheService
+
             });
 
             const datasuccess = await delGroupDataUsecase.delgroupdata(params);
@@ -204,6 +209,8 @@ describe('GROUPBANK', () => {
             expect(mockBnksRepository.delgroup)
                 .toBeCalledWith(params.idgroup);
             expect(datasuccess).toEqual(resultdelete);
+            expect(mockcacheService.delete).toBeCalledWith(`group:group`);
+
 
         });
     });

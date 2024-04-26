@@ -20,6 +20,16 @@ const routes = (handler) => ([
       },
     },
   },
+  {
+    method: 'DELETE',
+    path: '/memo/{idmemo}',
+    handler: handler.delMemo,
+    options: {
+      cors: {
+        origin: ['*'],
+      },
+    },
+  },
 ]);
 
 module.exports = routes;

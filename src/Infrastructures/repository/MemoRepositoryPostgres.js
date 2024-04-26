@@ -13,7 +13,6 @@ class MemoRepositoryPostgres extends MemoRepository {
 
 
     async addmemo(addmemo) {
-        // try {
         const { statustype, statuspriority, subject, memo } = addmemo
         const query = {
             text: 'INSERT INTO memodata  (statustype, statuspriority,subject,memo) VALUES($1, $2 , $3, $4) ',
@@ -35,6 +34,29 @@ class MemoRepositoryPostgres extends MemoRepository {
         }
         return data.rows;
     }
+
+    async findmemo(params) {
+
+        const noticeQuery = {
+            text: 'SELECT * FROM memodata WHERE idmemo = $1',
+            values: [params],
+        };
+        const datamem = await this._pool.query(noticeQuery);
+        if (!datamem.rowCount) {
+            throw new NotFoundError('data not found !');
+        }
+        return;
+    }
+    async deletememo(params) {
+        // Kueri untuk mencari dataapknotice
+        const noticeQuery = {
+            text: 'DELETE FROM memodata WHERE idmemo = $1',
+            values: [params],
+        };
+        await this._pool.query(noticeQuery);
+        return "success delete memo";
+    }
+
 
 }
 

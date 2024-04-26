@@ -27,5 +27,12 @@ class MemoUseCase {
 
         }
     }
+
+    async delmemodata(params) {
+        await this._memoRepository.findmemo(params.idmemo);
+        const data = await this._memoRepository.deletememo(params.idmemo)
+        await this._cacheService.delete(`memo:memo`);
+        return data;
+    }
 }
 module.exports = MemoUseCase;

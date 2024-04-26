@@ -4,12 +4,9 @@ const MemoUseCase = require('../../../../Applications/use_case/MemoUseCase');
 class MemoHandler {
   constructor(container) {
     this._container = container;
-
     this.postMemo = this.postMemo.bind(this);
     this.getMemo = this.getMemo.bind(this);
-
-
-
+    this.delMemo = this.delMemo.bind(this);
   }
 
   /**
@@ -34,6 +31,18 @@ class MemoHandler {
     const response = h.response({
       status: 'success',
       data: getmemo
+    });
+    response.code(200);
+    return response;
+  }
+
+  async delMemo(request, h) {
+    const delMemoUsecase = this._container.getInstance(MemoUseCase.name);
+    const delmemo = await delMemoUsecase.delmemodata(request.params);
+
+    const response = h.response({
+      status: 'success',
+      data: delmemo
     });
     response.code(200);
     return response;

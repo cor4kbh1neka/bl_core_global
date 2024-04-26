@@ -53,4 +53,48 @@ describe('DataBank repository', () => {
 
     });
   });
+
+  describe('delete data memo', () => {
+
+
+    it('should check data memo have in database', async () => {
+      //arrange
+      const params = {
+        idmemo: 32
+      }
+      const memoRepositoryPostgres = new MemoRepositoryPostgres(pool);
+
+      // Action
+      await AddMemoTableTestHelper.addmemo({ idmemo: 33 });
+      await expect(memoRepositoryPostgres.findmemo(params.idmemo))
+        .rejects.toThrow(NotFoundError);
+    });
+
+    it('should not throw NotFoundError if memo have in database', async () => {
+      // Arrange
+      const params = {
+        idmemo: 33
+      }
+      const memoRepositoryPostgres = new MemoRepositoryPostgres(pool);
+      await AddMemoTableTestHelper.addmemo({ idmemo: 33 });
+      await expect(memoRepositoryPostgres.findmemo(params.idmemo))
+        .resolves.not.toThrow(NotFoundError);
+    });
+    it('should return data group', async () => {
+      const params = {
+        idmemo: 14
+      }
+      await AddMemoTableTestHelper.addmemo({ idmemo: 14 });
+
+      const memoRepositoryPostgres = new MemoRepositoryPostgres(pool);
+
+      await memoRepositoryPostgres.findmemo(params.idmemo);
+      const datadelete = await memoRepositoryPostgres.deletememo(params.idmemo);
+
+      expect(datadelete).toStrictEqual("success delete memo");
+    });
+
+
+  });
 });
+

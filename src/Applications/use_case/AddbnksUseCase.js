@@ -114,6 +114,8 @@ class AddbnksUseCase {
     async delgroupdata(params) {
         await this._bnksRepository.findgroup(params.idgroup);
         const data = await this._bnksRepository.delgroup(params.idgroup);
+        await this._cacheService.delete(`group:group`);
+
         return data;
     }
 

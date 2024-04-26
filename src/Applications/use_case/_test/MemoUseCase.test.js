@@ -90,8 +90,6 @@ describe('MEMO', () => {
                 }
             ];
 
-            // const resultdataresult = [{ "idgroup": 3, groupbank: "groupbank3", grouptype: 1, min_dp: 10, max_dp: 2500, min_wd: 30, max_wd: 50000 }, { "idgroup": 4, groupbank: "groupbank4", grouptype: 1, min_dp: 10, max_dp: 2500, min_wd: 30, max_wd: 50000 }];
-
             const mockcacheService = new CacheService();
             const mockMemoRepository = new MemoRepository();
 
@@ -114,6 +112,44 @@ describe('MEMO', () => {
             expect(payload).toEqual(resultmemo);
             expect(mockcacheService.delete).toBeCalledWith(`memo:memo`);
             expect(mockcacheService.set).toBeCalledWith(`memo:memo`, JSON.stringify(resultmemo));
+        });
+    });
+
+    describe("delete  group bank for master data", () => {
+        it("should delete data group succesfully", async () => {
+
+            params = {
+                idmemo: 12
+            }
+
+            resultdelete = "success delete memo";
+            const mockcacheService = new CacheService();
+            const mockMemoRepository = new MemoRepository();
+
+            mockMemoRepository.findmemo = jest.fn()
+                .mockImplementation(() => Promise.resolve());
+            mockMemoRepository.deletememo = jest.fn()
+                .mockImplementation(() => Promise.resolve(resultdelete));
+            mockcacheService.delete = jest.fn().mockResolvedValue();
+
+
+
+            const deletememousecase = new MemoUseCase({
+                memoRepository: mockMemoRepository,
+                cacheServices: mockcacheService
+            });
+
+            const datasuccess = await deletememousecase.delmemodata(params);
+
+            expect(mockMemoRepository.findmemo)
+                .toBeCalledWith(params.idmemo);
+            expect(mockMemoRepository.deletememo)
+                .toBeCalledWith(params.idmemo);
+            expect(mockcacheService.delete).toBeCalledWith(`memo:memo`);
+            expect(datasuccess).toEqual(resultdelete);
+
+
+
         });
     });
 
