@@ -24,6 +24,18 @@ class MemoRepositoryPostgres extends MemoRepository {
         return "Add memo Success !";
     }
 
+    async getmemo() {
+        const grouquery = {
+            text: 'SELECT idmemo,statustype,statuspriority,subject,memo FROM memodata',
+            values: [],
+        };
+        const data = await this._pool.query(grouquery);
+        if (!data.rowCount) {
+            throw new NotFoundError('data not found !');
+        }
+        return data.rows;
+    }
+
 }
 
 module.exports = MemoRepositoryPostgres;

@@ -10,6 +10,16 @@ const routes = (handler) => ([
       },
     },
   },
+  {
+    method: 'GET',
+    path: '/memo',
+    handler: handler.getMemo,
+    options: {
+      cors: {
+        origin: ['*'],
+      },
+    },
+  },
 ]);
 
 module.exports = routes;

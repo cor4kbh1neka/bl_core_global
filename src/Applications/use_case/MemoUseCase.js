@@ -13,5 +13,19 @@ class MemoUseCase {
         await this._cacheService.delete(`memo:memo`);
         return data;
     }
+
+    async getmemodt() {
+        try {
+            const result = await this._cacheService.get(`memo:memo`);
+            const datamemo = JSON.parse(result);
+            return datamemo;
+        } catch (error) {
+            const dtmemo = await this._memoRepository.getmemo();
+            await this._cacheService.delete(`memo:memo`);
+            await this._cacheService.set(`memo:memo`, JSON.stringify(dtmemo));
+            return dtmemo;
+
+        }
+    }
 }
 module.exports = MemoUseCase;

@@ -38,5 +38,19 @@ describe('DataBank repository', () => {
 
       });
     });
+    describe('get data memo', () => {
+      it('should return data memo', async () => {
+
+
+        await AddMemoTableTestHelper.addmemo({ idmemo: 3 });
+
+        const memoRepositoryPostgres = new MemoRepositoryPostgres(pool);
+
+        const getbankdata = await memoRepositoryPostgres.getmemo();
+
+        expect(getbankdata).toStrictEqual([{ "idmemo": 3, "statustype": 1, "statuspriority": 10, "subject": 'ini contoh subject 50 character', "memo": 'ini contoh memo unlimited length character ini contoh memo unlimited length characterini contoh memo unlimited length character' }]);
+      });
+
+    });
   });
 });
