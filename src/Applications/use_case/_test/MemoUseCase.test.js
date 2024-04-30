@@ -33,10 +33,9 @@ describe('MEMO', () => {
             expect(datamemousecase).toStrictEqual(resultadd);
             expect(mockmemoRepository.addmemo).toBeCalledWith(useCasePayload);
             expect(mockcacheService.delete).toBeCalledWith(`memo:memo`);
-
         });
     });
-    describe('getdatamemo that already create', () => {
+    describe('getdatamemo VIP that already create', () => {
         it("should get data memo caching", async () => {
             const resultmemo = [
                 {
@@ -45,13 +44,17 @@ describe('MEMO', () => {
                     statuspriority: 1,
                     subject: 'ini contoh subject 50 character',
                     memo: 'ini contoh memo unlimited length character ini contoh memo unlimited length characterini contoh memo unlimited length character',
+                    created_at: '2024-02-24T15:25:51.326Z',
+
                 },
                 {
                     idmemo: 2,
                     statustype: 1,
-                    statuspriority: 1,
+                    statuspriority: 2,
                     subject: 'ini contoh subject 50 character',
                     memo: 'ini contoh memo unlimited length character ini contoh memo unlimited length characterini contoh memo unlimited length character',
+                    created_at: '2024-02-24T15:25:51.326Z',
+
                 }
             ];
 
@@ -80,13 +83,17 @@ describe('MEMO', () => {
                     statuspriority: 1,
                     subject: 'ini contoh subject 50 character',
                     memo: 'ini contoh memo unlimited length character ini contoh memo unlimited length characterini contoh memo unlimited length character',
+                    created_at: '2024-02-24T15:25:51.326Z',
+
                 },
                 {
                     idmemo: 2,
                     statustype: 1,
-                    statuspriority: 1,
+                    statuspriority: 2,
                     subject: 'ini contoh subject 50 character',
                     memo: 'ini contoh memo unlimited length character ini contoh memo unlimited length characterini contoh memo unlimited length character',
+                    created_at: '2024-02-24T15:25:51.326Z',
+
                 }
             ];
 
@@ -112,6 +119,101 @@ describe('MEMO', () => {
             expect(payload).toEqual(resultmemo);
             expect(mockcacheService.delete).toBeCalledWith(`memo:memo`);
             expect(mockcacheService.set).toBeCalledWith(`memo:memo`, JSON.stringify(resultmemo));
+        });
+    });
+
+    describe('getdatamemo that already create', () => {
+        it("should get data memo caching", async () => {
+            const params = {
+                statustype: 1
+            }
+
+            const resultmemo = [
+                {
+                    idmemo: 1,
+                    statustype: 1,
+                    statuspriority: 1,
+                    subject: 'ini contoh subject 50 character',
+                    memo: 'ini contoh memo unlimited length character ini contoh memo unlimited length characterini contoh memo unlimited length character',
+                    created_at: '2024-02-24T15:25:51.326Z',
+
+                },
+                {
+                    idmemo: 2,
+                    statustype: 1,
+                    statuspriority: 1,
+                    subject: 'ini contoh subject 50 character',
+                    memo: 'ini contoh memo unlimited length character ini contoh memo unlimited length characterini contoh memo unlimited length character',
+                    created_at: '2024-02-24T15:25:51.326Z',
+
+                }
+            ];
+
+
+
+            const mockcacheService = new CacheService();
+            mockcacheService.get = jest.fn().mockResolvedValue(JSON.stringify(resultmemo));
+
+            const getMemoUsecase = new MemoUseCase({
+                cacheServices: mockcacheService
+            });
+
+            const payload = await getMemoUsecase.getmemodtall(params);
+
+            expect(mockcacheService.get).toBeCalledWith(`memoll:${params.statustype}`);
+            expect(payload).toEqual(
+                resultmemo
+            );
+        });
+        it('should get data memo bank', async () => {
+
+            const params = {
+                statustype: 1
+            }
+
+
+            const resultmemo = [
+                {
+                    idmemo: 1,
+                    statustype: 1,
+                    statuspriority: 1,
+                    subject: 'ini contoh subject 50 character',
+                    memo: 'ini contoh memo unlimited length character ini contoh memo unlimited length characterini contoh memo unlimited length character',
+                    created_at: '2024-02-24T15:25:51.326Z',
+
+                },
+                {
+                    idmemo: 2,
+                    statustype: 1,
+                    statuspriority: 1,
+                    subject: 'ini contoh subject 50 character',
+                    memo: 'ini contoh memo unlimited length character ini contoh memo unlimited length characterini contoh memo unlimited length character',
+                    created_at: '2024-02-24T15:25:51.326Z',
+                }
+            ];
+
+            const mockcacheService = new CacheService();
+            const mockMemoRepository = new MemoRepository();
+
+
+            mockMemoRepository.getmemomem = jest.fn()
+                .mockImplementation(() => Promise.resolve(resultmemo));
+            mockcacheService.delete = jest.fn().mockResolvedValue();
+            mockcacheService.set = jest.fn().mockResolvedValue();
+
+            const getMemoUsecase = new MemoUseCase({
+                memoRepository: mockMemoRepository,
+                cacheServices: mockcacheService
+
+            });
+
+            const payload = await getMemoUsecase.getmemodtall(params);
+
+            expect(mockMemoRepository.getmemomem)
+                .toBeCalledWith(params.statustype);
+            expect(payload).toEqual(resultmemo);
+            expect(mockcacheService.delete).toBeCalledWith(`memoll:${params.statustype}`);
+            expect(mockcacheService.set).toBeCalledWith(`memoll:${params.statustype}`, JSON.stringify(resultmemo));
         });
     });
 

@@ -6,6 +6,7 @@ class MemoHandler {
     this._container = container;
     this.postMemo = this.postMemo.bind(this);
     this.getMemo = this.getMemo.bind(this);
+    this.getMemostts = this.getMemostts.bind(this);
     this.delMemo = this.delMemo.bind(this);
   }
 
@@ -28,6 +29,16 @@ class MemoHandler {
   async getMemo(request, h) {
     const getMemoUsecase = this._container.getInstance(MemoUseCase.name);
     const getmemo = await getMemoUsecase.getmemodt(request.payload);
+    const response = h.response({
+      status: 'success',
+      data: getmemo
+    });
+    response.code(200);
+    return response;
+  }
+  async getMemostts(request, h) {
+    const getMemobystatusUsecase = this._container.getInstance(MemoUseCase.name);
+    const getmemo = await getMemobystatusUsecase.getmemodtall(request.params);
     const response = h.response({
       status: 'success',
       data: getmemo

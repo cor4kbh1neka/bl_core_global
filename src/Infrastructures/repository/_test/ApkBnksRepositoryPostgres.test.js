@@ -384,7 +384,7 @@ describe('DataBank repository', () => {
 
         const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
         // Action & Assert
-        await expect(apkBnksRepositoryPostgres.chckbnks(addbks.namebankxxyy, addbks.xynamarekx, addbks.norekxyxy)).rejects.toThrowError(InvariantError);
+        await expect(apkBnksRepositoryPostgres.chckbnks(addbks)).rejects.toThrowError(InvariantError);
       });
 
       it('should not throw InvariantError if bank not available', async () => {
@@ -407,7 +407,7 @@ describe('DataBank repository', () => {
 
         const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
         // Action & Assert
-        await expect(apkBnksRepositoryPostgres.chckbnks(addbks.namebankxxyy, addbks.xynamarekx, addbks.norekxyxy)).resolves.not.toThrow(InvariantError);
+        await expect(apkBnksRepositoryPostgres.chckbnks(addbks)).resolves.not.toThrow(InvariantError);
       });
     });
 

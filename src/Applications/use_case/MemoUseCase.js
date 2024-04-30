@@ -27,6 +27,19 @@ class MemoUseCase {
 
         }
     }
+    async getmemodtall(params) {
+        try {
+            const result = await this._cacheService.get(`memoll:${params.statustype}`);
+            const datamemo = JSON.parse(result);
+            return datamemo;
+        } catch (error) {
+            const dtmemo = await this._memoRepository.getmemomem(params.statustype);
+            await this._cacheService.delete(`memoll:${params.statustype}`);
+            await this._cacheService.set(`memoll:${params.statustype}`, JSON.stringify(dtmemo));
+            return dtmemo;
+
+        }
+    }
 
     async delmemodata(params) {
         await this._memoRepository.findmemo(params.idmemo);

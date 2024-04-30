@@ -8,11 +8,12 @@ const AddMemoTableTestHelper = {
     statuspriority = 10,
     subject = 'ini contoh subject 50 character',
     memo = 'ini contoh memo unlimited length character ini contoh memo unlimited length characterini contoh memo unlimited length character',
+    created_at = '2024-02-24T15:25:51.326Z'
 
   }) {
     const query = {
-      text: 'INSERT INTO memodata  (idmemo,statustype, statuspriority,subject,memo) VALUES($1, $2 , $3, $4, $5)',
-      values: [idmemo, statustype, statuspriority, subject, memo],
+      text: 'INSERT INTO memodata  (idmemo,statustype, statuspriority,subject,memo,created_at) VALUES($1, $2 , $3, $4, $5,$6)',
+      values: [idmemo, statustype, statuspriority, subject, memo, created_at],
     };
 
     await pool.query(query);

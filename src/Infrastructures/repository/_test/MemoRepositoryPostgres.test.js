@@ -38,18 +38,38 @@ describe('DataBank repository', () => {
 
       });
     });
-    describe('get data memo', () => {
+    describe('get data memo vip', () => {
       it('should return data memo', async () => {
+        await AddMemoTableTestHelper.addmemo({ idmemo: 3 });
+        const memoRepositoryPostgres = new MemoRepositoryPostgres(pool);
+        const getbankdata = await memoRepositoryPostgres.getmemo();
+        expect(getbankdata).toStrictEqual([{ "idmemo": 3, "statustype": 1, "statuspriority": 10, "subject": 'ini contoh subject 50 character', "memo": 'ini contoh memo unlimited length character ini contoh memo unlimited length characterini contoh memo unlimited length character', "created_at": "2024-02-24T15:25:51.326Z" }]);
+      });
+    });
 
+    describe('get data memo by status', () => {
+      it('should return data memo', async () => {
+        const params = {
+          statustype: 1
+        }
 
         await AddMemoTableTestHelper.addmemo({ idmemo: 3 });
+        const memoRepositoryPostgres = new MemoRepositoryPostgres(pool);
+        const getbankdata = await memoRepositoryPostgres.getmemomem(params.statustype);
+        expect(getbankdata).toStrictEqual([{ "idmemo": 3, "statustype": 1, "statuspriority": 10, "subject": 'ini contoh subject 50 character', "memo": 'ini contoh memo unlimited length character ini contoh memo unlimited length characterini contoh memo unlimited length character', "created_at": "2024-02-24T15:25:51.326Z" }]);
+      });
+
+      it('should return invariant error when get data memo', async () => {
+        const params = {
+          statustype: 1
+        }
 
         const memoRepositoryPostgres = new MemoRepositoryPostgres(pool);
-
-        const getbankdata = await memoRepositoryPostgres.getmemo();
-
-        expect(getbankdata).toStrictEqual([{ "idmemo": 3, "statustype": 1, "statuspriority": 10, "subject": 'ini contoh subject 50 character', "memo": 'ini contoh memo unlimited length character ini contoh memo unlimited length characterini contoh memo unlimited length character' }]);
+        await expect(memoRepositoryPostgres.getmemomem(params.statustype))
+          .rejects
+          .toThrowError(NotFoundError);
       });
+
 
     });
   });

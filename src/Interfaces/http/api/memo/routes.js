@@ -21,6 +21,16 @@ const routes = (handler) => ([
     },
   },
   {
+    method: 'GET',
+    path: '/memo/{statustype}',
+    handler: handler.getMemostts,
+    options: {
+      cors: {
+        origin: ['*'],
+      },
+    },
+  },
+  {
     method: 'DELETE',
     path: '/memo/{idmemo}',
     handler: handler.delMemo,

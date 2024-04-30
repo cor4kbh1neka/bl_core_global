@@ -270,10 +270,7 @@ describe('MASTER BANK', () => {
                 urllogoxxyx: 'https://www.coskoc.com/api/',
                 statusxyxyy: 1,
                 wdstatusxyxyy: 1,
-
-
             });
-
             const resultmockmaster = "Master Bank Edit Success !!";
 
             const mockcacheService = new CacheService();
@@ -290,9 +287,7 @@ describe('MASTER BANK', () => {
                 cacheServices: mockcacheService
 
             });
-
             const datagroupusecase = await addgroupusecase.putmasterbank(useCasePayload, params);
-
             expect(datagroupusecase).toStrictEqual(resultmockmaster);
             expect(mockbnksRepository.putmstrbnk).toBeCalledWith(useCasePayload, params.mstrbnks);
             expect(mockcacheService.delete).toBeCalledWith(`namemaster:master`);
@@ -307,20 +302,15 @@ describe('MASTER BANK', () => {
                 { "idbnkmaster": 5, bnkmstrxyxyx: "bca2" },
                 { "idbnkmaster": 6, bnkmstrxyxyx: "bca3" }];
 
-
             const mockcacheService = new CacheService();
             mockcacheService.get = jest.fn().mockResolvedValue(JSON.stringify(resultmockmaster));
-
             const getDataMasterUseCase = new AddbnksUseCase({
                 cacheServices: mockcacheService
             });
-
             const payload = await getDataMasterUseCase.getdtmstr();
-
             expect(mockcacheService.get).toBeCalledWith(`namemaster:master`);
             expect(payload).toEqual(
                 resultmockmaster
-
             );
         });
         it('should get data master bank', async () => {
@@ -331,11 +321,6 @@ describe('MASTER BANK', () => {
             const mockcacheService = new CacheService();
             mockcacheService.delete = jest.fn().mockResolvedValue();
             mockcacheService.set = jest.fn().mockResolvedValue();
-
-
-
-
-
 
             const mockBnksRepository = {
                 getmstrbnk: jest.fn().mockResolvedValue(resultmockmaster),
@@ -359,7 +344,6 @@ describe('MASTER BANK', () => {
     });
 
     describe("delete  master bank for master data", () => {
-
         it("should delete data master succesfully", async () => {
 
             params = {
@@ -447,6 +431,7 @@ describe('DATA BANK', () => {
             expect(mockbnksRepository.chckbnks).toBeCalledWith(useCasePayload);
             expect(mockbnksRepository.addbnks).toBeCalledWith(useCasePayload);
             expect(mockcacheService.delete).toBeCalledWith(`namegroup:${resultmockdoneadd.namegroupxyzt[0]}`);
+            expect(mockcacheService.delete).toBeCalledWith(`namegroupex:${resultmockdoneadd.namegroupxyzt[0]}`);
         });
     });
     describe('edit data BANK', () => {
@@ -474,7 +459,8 @@ describe('DATA BANK', () => {
             const mockbnksRepository = new BnksRepository();
             const mockcacheService = new CacheService();
 
-
+            mockbnksRepository.chckbnks = jest.fn()
+                .mockImplementation(() => Promise.resolve());
             mockbnksRepository.putbnks = jest.fn()
                 .mockImplementation(() => Promise.resolve(resultmockresult));
             mockcacheService.delete = jest.fn().mockResolvedValue();
@@ -488,8 +474,10 @@ describe('DATA BANK', () => {
             const resultbankusecase = await putBankusecase.edtbank(useCasePayload, params);
 
             expect(resultbankusecase).toStrictEqual(resultmockresult);
+            expect(mockbnksRepository.chckbnks).toBeCalledWith(useCasePayload);
             expect(mockbnksRepository.putbnks).toBeCalledWith(useCasePayload, params.idbank);
             expect(mockcacheService.delete).toBeCalledWith(`namegroup:${useCasePayload.namegroupxyzt[0]}`);
+            expect(mockcacheService.delete).toBeCalledWith(`namegroupex:${useCasePayload.namegroupxyzt[0]}`);
 
 
         });
@@ -876,8 +864,8 @@ describe('DATA BANK', () => {
                         ]
                     },
                     mandiri: {
-                        url_logo: "URL_logo_bank",
-                        statusxxyy: 1,
+                        url_logo: "URL_logo_bank_mandiri",
+                        statusxxyy: 2,
                         data_bank: [
                             {
                                 idbank: 2,
@@ -906,12 +894,21 @@ describe('DATA BANK', () => {
                                 barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
                                 zwzwshowbarcode: true,
 
+                            },
+                            {
+                                idbank: 4,
+                                namebankxxyy: 'bca2',
+                                yyxxmethod: 'bank',
+                                xynamarekx: 'florensia sitanggang',
+                                norekxyxy: '0355917811',
+                                barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
+                                zwzwshowbarcode: true,
                             }
                         ]
                     },
                     mandiri: {
-                        url_logo: "URL_logo_bank",
-                        statusxxyy: 1,
+                        url_logo: "URL_logo_bank_mandiri",
+                        statusxxyy: 2,
                         data_bank: [
                             {
                                 idbank: 2,
@@ -969,7 +966,7 @@ describe('DATA BANK', () => {
                 },
                 {
                     idbank: 4,
-                    namegroupxyzt: ['groupbank1', 'groupbank2', 'groupbank3'],
+                    namegroupxyzt: ['groupbank3'],
                     masterbnkxyxt: 'bca',
                     namebankxxyy: 'bca2',
                     yyxxmethod: 'bank',
@@ -1040,205 +1037,3 @@ describe('DATA BANK', () => {
 
 
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// describe('APK DATA RESERVER API POST GET DATA', () => {
-//     /**
-//      * membuat usecase untuk data apk
-//      */
-//     it('should orchestrating add data apk get correctly', async () => {
-//         //arrange
-//         const useCasePayload = {
-//             namegroupxyzt: 'groupbank1',
-//             namebankxxyy: 'bca',
-//             statusxxyy: 1,
-//             yyxxmethod: 'bank',
-//             xynamarekx: 'florensia sitanggang',
-//             norekxyxy: '0355917811',
-//             barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
-//             zwzwshowbarcode: 1,
-//         };
-
-//         const namegroup = 'groupbank1';
-//         const mockbnksDataSettings = new AddBnksDp({
-//             namegroupxyzt: useCasePayload.namegroupxyzt,
-//             namebankxxyy: useCasePayload.namebankxxyy,
-//             statusxxyy: useCasePayload.statusxxyy,
-//             yyxxmethod: useCasePayload.yyxxmethod,
-//             xynamarekx: useCasePayload.xynamarekx,
-//             norekxyxy: useCasePayload.norekxyxy,
-//             barcodexrxr: useCasePayload.barcodexrxr,
-//             zwzwshowbarcode: useCasePayload.zwzwshowbarcode,
-//         });
-
-//         /** creating dependency of use case */
-//         const mockcacheService = new CacheService();
-//         const mockbnksRepository = new BnksRepository();
-
-//         /** mocking needed function */
-
-//         mockbnksRepository.checkbnks = jest.fn()
-//             .mockImplementation(() => Promise.resolve('completed'));
-//         mockbnksRepository.databnksdp = jest.fn()
-//             .mockImplementation(() => Promise.resolve(namegroup));
-//         mockcacheService.delete = jest.fn().mockResolvedValue();
-
-
-//         const addbnksUseCase = new AddbnksUseCase({
-//             bnksRepository: mockbnksRepository,
-//             cacheServices: mockcacheService
-
-//         });
-
-//         const databnksusecase = await addbnksUseCase.execute(useCasePayload);
-
-//         expect(databnksusecase).toStrictEqual('groupbank1');
-//         expect(mockbnksRepository.checkbnks).toBeCalledWith(useCasePayload.norekxyxy, useCasePayload.namegroupxyzt, useCasePayload.xynamarekx);
-//         expect(mockbnksRepository.databnksdp).toBeCalledWith(mockbnksDataSettings);
-//         expect(mockcacheService.delete).toBeCalledWith(`namegroup:${namegroup}`);
-//     });
-
-
-// });
-
-// describe('BANK DATA RESERVER API POST GET DATA', () => {
-//     it('should get data apk caching successfully', async () => {
-//         const params = {
-//             groupname: 'groupbank1'
-//         };
-
-//         const resultmockgroup = {
-//             masterdata: [
-//                 {
-//                     namegroupxyzt: 'groupbank1',
-//                     namebankxxyy: 'bca',
-//                     statusxxyy: 1,
-//                     yyxxmethod: 'bank',
-//                     xynamarekx: 'florensia sitanggang',
-//                     norekxyxy: '0355917811',
-//                     barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
-//                     zwzwshowbarcode: 1
-//                 },
-//                 {
-//                     namegroupxyzt: 'groupbank1',
-//                     namebankxxyy: 'bca',
-//                     statusxxyy: 1,
-//                     yyxxmethod: 'bank',
-//                     xynamarekx: 'florensia sitanggang',
-//                     norekxyxy: '0355917812',
-//                     barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
-//                     zwzwshowbarcode: 1
-//                 }
-//             ],
-//             headers: {
-//                 'X-Data-Source': 'cache',
-//             }
-//         };
-
-//         const mockcacheService = new CacheService();
-//         mockcacheService.get = jest.fn().mockResolvedValue(JSON.stringify(resultmockgroup));
-
-//         const addbnksUseCase = new AddbnksUseCase({
-//             cacheServices: mockcacheService
-//         });
-//         const getdatausecase = await addbnksUseCase.getbanks(params);
-
-//         expect(mockcacheService.get).toBeCalledWith(`namegroup:${params.groupname}`); +
-//             expect(getdatausecase).toEqual(
-//                 resultmockgroup
-
-//             );
-//     });
-
-//     it('should get data bank successfully', async () => {
-//         const params = {
-//             groupname: 'groupbank1'
-//         };
-
-//         const resultmockgroup = {
-//             masterdata: [
-//                 {
-//                     namegroupxyzt: 'groupbank1',
-//                     namebankxxyy: 'bca',
-//                     statusxxyy: 1,
-//                     yyxxmethod: 'bank',
-//                     xynamarekx: 'florensia sitanggang',
-//                     norekxyxy: '0355917811',
-//                     barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
-//                     zwzwshowbarcode: 1
-//                 },
-//                 {
-//                     namegroupxyzt: 'groupbank1',
-//                     namebankxxyy: 'bca',
-//                     statusxxyy: 1,
-//                     yyxxmethod: 'bank',
-//                     xynamarekx: 'florensia sitanggang',
-//                     norekxyxy: '0355917812',
-//                     barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
-//                     zwzwshowbarcode: 1
-//                 }
-//             ]
-//         };
-
-
-//         const resultdata = [
-//             {
-//                 namegroupxyzt: 'groupbank1',
-//                 namebankxxyy: 'bca',
-//                 statusxxyy: 1,
-//                 yyxxmethod: 'bank',
-//                 xynamarekx: 'florensia sitanggang',
-//                 norekxyxy: '0355917811',
-//                 barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
-//                 zwzwshowbarcode: 1,
-//             },
-//             {
-//                 namegroupxyzt: 'groupbank1',
-//                 namebankxxyy: 'bca',
-//                 statusxxyy: 1,
-//                 yyxxmethod: 'bank',
-//                 xynamarekx: 'florensia sitanggang',
-//                 norekxyxy: '0355917812',
-//                 barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
-//                 zwzwshowbarcode: 1,
-//             }
-//         ]
-
-
-//         const mockcacheService = new CacheService();
-//         mockcacheService.delete = jest.fn().mockResolvedValue();
-//         mockcacheService.set = jest.fn().mockResolvedValue();
-
-//         const bnksRepository = {
-//             getdatabnksdp: jest.fn().mockResolvedValue(resultdata),
-//         };
-
-//         const getDataApkUseCase = new AddbnksUseCase({
-//             bnksRepository,
-//             cacheServices: mockcacheService
-//         });
-
-//         const getdatausecase = await getDataApkUseCase.getbanks(params);
-
-//         expect(bnksRepository.getdatabnksdp).toBeCalledWith(params.groupname);
-//         expect(mockcacheService.delete).toBeCalledWith(`namegroup:${params.groupname}`);
-//         expect(mockcacheService.set).toBeCalledWith(`namegroup:${params.groupname}`, JSON.stringify(getdatausecase));
-
-//         expect(getdatausecase).toEqual(resultmockgroup);
-//     });
-// });

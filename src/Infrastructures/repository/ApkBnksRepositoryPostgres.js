@@ -168,14 +168,14 @@ class ApkBnksRepositoryPostgres extends BnksRepository {
         return data.rows[0];
 
     }
-    async chckbnks(namebankxxyy, xynamarekx, norekxyxy) {
-        // Kueri untuk mencari dataapknotice
+    async chckbnks(payload) {
+        const { namebankxxyy, xynamarekx, norekxyxy } = payload        // Kueri untuk mencari dataapknotice
         const noticeQuery = {
             text: 'SELECT * FROM databnk WHERE namebankxxyy = $1 AND xynamarekx = $2 AND norekxyxy = $3',
             values: [namebankxxyy, xynamarekx, norekxyxy],
         };
         const databank = await this._pool.query(noticeQuery);
-        if (databank.rowCount != 0) {
+        if (databank.rowCount > 0) {
             throw new InvariantError('data already in database !');
         }
     }
@@ -212,9 +212,11 @@ class ApkBnksRepositoryPostgres extends BnksRepository {
             values: [params],
         };
         const databanks = await this._pool.query(query);
+
         if (!databanks.rowCount) {
             throw new NotFoundError('data not found !');
         }
+
         return databanks.rows;
     }
     async getbnkex(params) {
