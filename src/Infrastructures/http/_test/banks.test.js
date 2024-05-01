@@ -320,6 +320,119 @@ describe('/addBankEndpoints', () => {
             });
         });
 
+        describe('Bank DELETE', () => {
+            it('should repsonse 200 and delete group bank data', async () => {
+
+                const idbank = '74';
+                const namabank = 'bca81';
+
+                const server = await createServer(container);
+
+                await AddBanksTableTestHelper.addbks({ idbank: '74', namebankxxyy: 'bca81' });
+                // Action
+                const response = await server.inject({
+                    method: 'DELETE',
+                    url: `/banks/${idbank}/${namabank}`,
+
+                });
+                // Assert
+                const responseJson = JSON.parse(response.payload);
+                expect(response.statusCode).toEqual(200);
+                expect(responseJson.status).toEqual('success');
+
+            });
+
+            it('should repsonse 404 when delete bank data fail', async () => {
+
+                const idbank = '79';
+                const namabank = 'bca81';
+
+                await AddBanksTableTestHelper.addbks({ idbank: '75', namebankxxyy: 'bca82' });
+
+                const server = await createServer(container);
+
+                // Action
+                const response = await server.inject({
+                    method: 'DELETE',
+                    url: `/banks/${idbank}/${namabank}`,
+                });
+                // Assert
+                const responseJson = JSON.parse(response.payload);
+                expect(response.statusCode).toEqual(404);
+                expect(responseJson.status).toEqual('fail');
+                expect(responseJson.message).toEqual('data not found !');
+
+            });
+        });
+
+        describe('Bank DELETE ARRAY', () => {
+            it('should repsonse 200 and delete group array bank data', async () => {
+
+                const idbank = '75';
+                const groupbank = 'groupbank4';
+
+                const server = await createServer(container);
+
+                await AddBanksTableTestHelper.addbks({ idbank: '75', namebankxxyy: 'bca82', namegroupxyzt: ['groupbank4'] });
+                // Action
+                const response = await server.inject({
+                    method: 'DELETE',
+                    url: `/banks/arr/${idbank}/${groupbank}`,
+
+                });
+                // Assert
+                const responseJson = JSON.parse(response.payload);
+                expect(response.statusCode).toEqual(200);
+                expect(responseJson.status).toEqual('success');
+
+            });
+
+            it('should repsonse 404 when delete bank data fail', async () => {
+
+                const idbank = '76';
+                const groupbank = 'groupbank4';
+
+                const server = await createServer(container);
+
+                // Action
+                const response = await server.inject({
+                    method: 'DELETE',
+                    url: `/banks/arr/${idbank}/${groupbank}`,
+
+                });
+                // Assert
+                const responseJson = JSON.parse(response.payload);
+                expect(response.statusCode).toEqual(404);
+                expect(responseJson.status).toEqual('fail');
+                expect(responseJson.message).toEqual('data not found !');
+
+            });
+            it('should repsonse 400 when delete bank data fail', async () => {
+
+                const idbank = '78';
+                const groupbank = 'groupbank4';
+
+                const server = await createServer(container);
+
+                await AddBanksTableTestHelper.addbks({ idbank: '78', namebankxxyy: 'bca83', namegroupxyzt: ['groupbank1'] });
+                // Action
+                const response = await server.inject({
+                    method: 'DELETE',
+                    url: `/banks/arr/${idbank}/${groupbank}`,
+
+                });
+                // Assert
+                const responseJson = JSON.parse(response.payload);
+                expect(response.statusCode).toEqual(400);
+                expect(responseJson.status).toEqual('fail');
+                expect(responseJson.message).toEqual('data fail to delete !');
+
+            });
+        });
+
+
+
+
         describe('Bank PUT', () => {
             it('should repsonse 200 when edit and persisted  bank data', async () => {
                 const idbank = '4';
@@ -347,6 +460,57 @@ describe('/addBankEndpoints', () => {
                 const responseJson = JSON.parse(response.payload);
                 expect(response.statusCode).toEqual(200);
                 expect(responseJson.status).toEqual('success');
+
+            });
+
+
+        });
+
+
+        describe('Bank PUTCHANGE GROUP', () => {
+            it('should repsonse 200 when edit and persisted  bank data', async () => {
+                const idbank = '52';
+
+                const requestPayload = {
+                    namegroupxyzt: 'groupbank2'
+                };
+                await AddBanksTableTestHelper.addbks({ idbank: '52' });
+
+                const server = await createServer(container);
+
+                // Action
+                const response = await server.inject({
+                    method: 'PUT',
+                    url: `/banks/v3/${idbank}`,
+                    payload: requestPayload,
+                });
+                // Assert
+                const responseJson = JSON.parse(response.payload);
+                expect(response.statusCode).toEqual(200);
+                expect(responseJson.status).toEqual('success');
+            });
+
+            it('should repsonse 404 when edit and persisted  bank data', async () => {
+                const idbank = '52';
+
+                const requestPayload = {
+                    namegroupxyzt: 'groupbank1'
+                };
+                await AddBanksTableTestHelper.addbks({ idbank: '52' });
+
+                const server = await createServer(container);
+
+                // Action
+                const response = await server.inject({
+                    method: 'PUT',
+                    url: `/banks/v3/${idbank}`,
+                    payload: requestPayload,
+                });
+                // Assert
+                const responseJson = JSON.parse(response.payload);
+                expect(response.statusCode).toEqual(400);
+                expect(responseJson.status).toEqual('fail');
+                expect(responseJson.message).toEqual('Group already exists in this bank!');
 
             });
         });
@@ -445,102 +609,4 @@ describe('/addBankEndpoints', () => {
     });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // describe('WHEN POST /banks', () => {
-
-    //     it('should response 201 and persisted banks data', async () => {
-    //         // Arrange
-    //         const requestPayload = {
-    //             namegroupxyzt: 'groupbank1',
-    //             namebankxxyy: 'bca',
-    //             statusxxyy: 1,
-    //             yyxxmethod: 'bank',
-    //             xynamarekx: 'florensia sitanggang',
-    //             norekxyxy: '0355917811',
-    //             barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
-    //             zwzwshowbarcode: 1,
-    //         };
-
-    //         // eslint-disable-next-line no-undef
-    //         const server = await createServer(container);
-
-    //         // Action
-    //         const response = await server.inject({
-    //             method: 'POST',
-    //             url: '/banks',
-    //             payload: requestPayload,
-    //         });
-    //         // Assert
-    //         const responseJson = JSON.parse(response.payload);
-    //         expect(response.statusCode).toEqual(201);
-    //         expect(responseJson.status).toEqual('success');
-
-    //     });
-    // });
-
-    // describe('WHEN POST /banks/{groupname}', () => {
-
-    //     it('should response 201 and persisted bank', async () => {
-
-    //         const server = await createServer(container);
-    //         const groupname = 'groupbank1';
-
-    //         await AddBnksTableTestHelper.addbks({ idbank: 4, namegroupxyzt: 'groupbank1', norekxyxy: '0355917810' });
-    //         await AddBnksTableTestHelper.addbks({ idbank: 5, namegroupxyzt: 'groupbank1', norekxyxy: '0355917811' });
-
-
-    //         const response = await server.inject({
-    //             method: 'GET',
-    //             url: `/banks/${groupname}`,
-
-    //         })
-
-    //         // Assert
-    //         const responseJson = JSON.parse(response.payload);
-    //         expect(response.statusCode).toEqual(200);
-    //         expect(responseJson.status).toEqual('success');
-    //         expect(responseJson.data).toBeDefined();
-    //     });
-
-    //     it('should  throw an error 404 when payload is not found', async () => {
-    //         const server = await createServer(container);
-    //         const groupname = 'groupbank555';
-
-    //         // Action
-    //         const response = await server.inject({
-    //             method: 'GET',
-    //             url: `/banks/${groupname}`,
-
-    //         })
-    //         // Assert
-    //         const responseJson = JSON.parse(response.payload);
-    //         expect(response.statusCode).toEqual(404);
-    //         expect(responseJson.status).toEqual('fail');
-    //         expect(responseJson.message).toEqual('data not found !');
-    //     });
-
-
-    // });
 });

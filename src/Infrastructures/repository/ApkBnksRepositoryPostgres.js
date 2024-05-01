@@ -205,6 +205,90 @@ class ApkBnksRepositoryPostgres extends BnksRepository {
         return "Bank Edit Success !";
 
     }
+
+    async checkbankar(useCasePayload, params) {
+        const { namegroupxyzt } = useCasePayload;
+        const noticeQuery = {
+            text: 'SELECT * FROM databnk WHERE  idbank = $1 ',
+            values: [params],
+        };
+        const databank = await this._pool.query(noticeQuery);
+        const row = databank.rows[0];
+        if (row.namegroupxyzt.includes(namegroupxyzt)) {
+            throw new InvariantError('Group already exists in this bank!');
+        }
+
+    }
+    async editbankar(useCasePayload, params) {
+
+        const { namegroupxyzt } = useCasePayload;
+        // Kueri untuk mencari dataapknotice
+        const query = {
+            text: 'UPDATE databnk SET namegroupxyzt = array_append(namegroupxyzt, $1) WHERE idbank = $2 RETURNING namegroupxyzt',
+            values: [namegroupxyzt, params],
+        };
+
+        await this._pool.query(query);
+        return "Bank Edit Success !";
+
+    }
+
+    async findbank(params) {
+        // Kueri untuk mencari dataapknotice
+        const noticeQuery = {
+            text: 'SELECT namegroupxyzt FROM databnk WHERE idbank = $1',
+            values: [params],
+        };
+        const databank = await this._pool.query(noticeQuery);
+        if (!databank.rowCount) {
+            throw new NotFoundError('data not found !');
+        }
+        return databank.rows[0].namegroupxyzt[0];
+    }
+
+    async delbnks(params) {
+        // Kueri untuk mencari dataapknotice
+        const noticeQuery = {
+            text: 'DELETE FROM databnk WHERE idbank = $1 AND namebankxxyy = $2',
+            values: [params.idbank, params.namabank],
+        };
+        await this._pool.query(noticeQuery);
+        return "success delete bank";
+    }
+
+
+
+
+    async findbankarr(params) {
+        // Kueri untuk mencari dataapknotice
+        const noticeQuery = {
+            text: 'SELECT namegroupxyzt FROM databnk WHERE idbank = $1',
+            values: [params.idbank],
+        };
+        const bankarr = await this._pool.query(noticeQuery);
+        if (!bankarr.rowCount) {
+            throw new NotFoundError('data not found !');
+        }
+    }
+
+
+
+    async delbankar(params) {
+        // Kueri untuk mencari dataapknotice
+        const deleteQuery = {
+            text: 'UPDATE databnk SET namegroupxyzt = array_remove(namegroupxyzt, $1) WHERE idbank = $2 AND $1 = ANY(namegroupxyzt)',
+            values: [params.groupbank, params.idbank],
+        };
+        const data = await this._pool.query(deleteQuery);
+        if (!data.rowCount) {
+            throw new InvariantError('data fail to delete !');
+        }
+        return "success delete array bank";
+    }
+
+
+
+
     async getbnks(params) {
 
         const query = {
@@ -230,17 +314,6 @@ class ApkBnksRepositoryPostgres extends BnksRepository {
             throw new NotFoundError('data not found !');
         }
 
-        // const newDataRows = data.rows.map((obj) => {
-        //     // Menyalin objek kecuali properti updated_at dan created_at
-        //     const { created_at, updated_at, ...newObj } = obj;
-        //     return newObj;
-        // });
-
-        // // Menggabungkan data kembali dengan properti baru
-        // const newData = {
-        //     ...data,
-        //     rows: newDataRows,
-        // };
         return data.rows;
     }
     async getgroupbnks(params) {
@@ -295,44 +368,7 @@ class ApkBnksRepositoryPostgres extends BnksRepository {
 
 
 
-    // async databnksdp(databks) {
 
-    //     const { namegroupxyzt, namebankxxyy, statusxxyy, yyxxmethod, xynamarekx, norekxyxy, barcodexrxr, zwzwshowbarcode } = databks;
-    //     const created_at = new Date().toISOString();
-    //     const query = {
-    //         text: 'INSERT INTO datagroupdp (namegroupxyzt, namebankxxyy, statusxxyy, yyxxmethod, xynamarekx, norekxyxy , barcodexrxr , zwzwshowbarcode,created_at ) VALUES($1, $2, $3, $4, $5, $6,$7, $8, $9) RETURNING namegroupxyzt',
-    //         values: [namegroupxyzt, namebankxxyy, statusxxyy, yyxxmethod, xynamarekx, norekxyxy, barcodexrxr, zwzwshowbarcode, created_at],
-    //     };
-    //     const data = await this._pool.query(query);
-    //     return data.rows[0].namegroupxyzt;
-
-    // }
-    // async checkbnks(rek, namegroup, databks) {
-    //     const query = {
-    //         text: 'SELECT * FROM datagroupdp WHERE norekxyxy = $1 AND namegroupxyzt = $2 AND  xynamarekx = $3',
-    //         values: [rek, namegroup, databks],
-    //     };
-    //     const data = await this._pool.query(query);
-
-    //     if (data.rowCount === 1) {
-    //         throw new InvariantError('Data Bank sudah ada , mohon cek lagi !');
-    //     }
-    // }
-
-
-    // async getdatabnksdp(params) {
-    //     // Kueri untuk mencari dataapknotice
-    //     const noticeQuery = {
-    //         text: 'SELECT * FROM datagroupdp WHERE namegroupxyzt = $1',
-    //         values: [params],
-    //     };
-    //     const databank = await this._pool.query(noticeQuery);
-
-    //     if (!databank.rowCount) {
-    //         throw new NotFoundError('data not found !');
-    //     }
-    //     return databank.rows;
-    // }
 }
 
 module.exports = ApkBnksRepositoryPostgres;

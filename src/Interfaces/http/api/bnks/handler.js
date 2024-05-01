@@ -19,8 +19,11 @@ class BnksHandler {
 
     this.postBanknwHandler = this.postBanknwHandler.bind(this);
     this.putBanknwHandler = this.putBanknwHandler.bind(this);
+    this.putGroupBanknwHandler = this.putGroupBanknwHandler.bind(this);
     this.getBanknwHandler = this.getBanknwHandler.bind(this);
     this.getBanknwexHandler = this.getBanknwexHandler.bind(this);
+    this.delBankHandler = this.delBankHandler.bind(this);
+    this.delArrBankHandler = this.delArrBankHandler.bind(this);
 
   }
 
@@ -150,6 +153,37 @@ class BnksHandler {
     response.code(200);
     return response;
   }
+
+  async delBankHandler(request, h) {
+    const delBankUsecase = this._container.getInstance(AddbnksUseCase.name);
+    const databankdel = await delBankUsecase.delbankdata(request.params);
+    const response = h.response({
+      status: 'success',
+      data: databankdel
+    });
+    response.code(200);
+    return response;
+  }
+  async delArrBankHandler(request, h) {
+    const delArrBankUsecase = this._container.getInstance(AddbnksUseCase.name);
+    const databankarrdel = await delArrBankUsecase.delbankdataarr(request.params);
+    const response = h.response({
+      status: 'success',
+      data: databankarrdel
+    });
+    response.code(200);
+    return response;
+  }
+  async putGroupBanknwHandler(request, h) {
+    const putGroupBankUsecase = this._container.getInstance(AddbnksUseCase.name);
+    const databankeditgr = await putGroupBankUsecase.edtbankgroup(request.payload, request.params);
+    const response = h.response({
+      status: 'success',
+      data: databankeditgr
+    });
+    response.code(200);
+    return response;
+  }
   async getBanknwHandler(request, h) {
     const getBankUsecase = this._container.getInstance(AddbnksUseCase.name);
     const databankall = await getBankUsecase.getbankdt(request.params);
@@ -181,32 +215,6 @@ class BnksHandler {
 
 
 
-  // /**
-  //  * @param {false project} untuk awal dan akan diubah 
-  //  * harus add group dulu baru master
-  //  */
-  // async postBanksHandler(request, h) {
-  //   const addBanksUsecase = this._container.getInstance(AddbnksUseCase.name);
-  //   const groupbnks = await addBanksUsecase.execute(request.payload);
-  //   const response = h.response({
-  //     status: 'success',
-  //     data: groupbnks
-  //   });
-  //   response.code(201);
-  //   return response;
-  // }
-
-  // async getBanksHandler(request, h) {
-  //   const addBanksUsecase = this._container.getInstance(AddbnksUseCase.name);
-  //   const databank = await addBanksUsecase.getbanks(request.params);
-  //   const response = h.response({
-  //     status: 'success',
-  //     data: databank      // Mengubah objek thread menjadi array dengan satu elemen
-
-  //   });
-  //   response.code(200);
-  //   return response;
-  // }
 }
 
 module.exports = BnksHandler;

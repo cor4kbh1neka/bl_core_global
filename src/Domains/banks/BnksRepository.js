@@ -63,7 +63,27 @@ class BnksRepository {
     async getmasterbnks() {
         throw new Error('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
     }
+    async editbankar() {
+        throw new Error('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+    }
+    async checkbankar() {
+        throw new Error('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+    }
 
+
+    async findbank() {
+        throw new Error('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+    }
+    async delbnks() {
+        throw new Error('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+    }
+
+    async findbankarr() {
+        throw new Error('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+    }
+    async delbankar() {
+        throw new Error('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+    }
 
 
 

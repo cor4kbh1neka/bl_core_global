@@ -102,6 +102,16 @@ const routes = (handler) => ([
     },
   },
   {
+    method: 'PUT',
+    path: '/banks/v3/{idbank}',
+    handler: handler.putGroupBanknwHandler,
+    options: {
+      cors: {
+        origin: ['*'],
+      },
+    },
+  },
+  {
     method: 'GET',
     path: '/banks/v2/{groupname}',
     handler: handler.getBanknwHandler,
@@ -120,28 +130,27 @@ const routes = (handler) => ([
         origin: ['*'],
       },
     },
-  }
-  // ,
-  // {
-  //   method: 'POST',
-  //   path: '/banks',
-  //   handler: handler.postBanksHandler,
-  //   options: {
-  //     cors: {
-  //       origin: ['*'],
-  //     },
-  //   },
-  // },
-  // {
-  //   method: 'GET',
-  //   path: '/banks/{groupname}',
-  //   handler: handler.getBanksHandler,
-  //   options: {
-  //     cors: {
-  //       origin: ['*'],
-  //     },
-  //   },
-  // },
+  },
+  {
+    method: 'DELETE',
+    path: '/banks/{idbank}/{namabank}',
+    handler: handler.delBankHandler,
+    options: {
+      cors: {
+        origin: ['*'],
+      },
+    },
+  },
+  {
+    method: 'DELETE',
+    path: '/banks/arr/{idbank}/{groupbank}',
+    handler: handler.delArrBankHandler,
+    options: {
+      cors: {
+        origin: ['*'],
+      },
+    },
+  },
 ]);
 
 module.exports = routes;

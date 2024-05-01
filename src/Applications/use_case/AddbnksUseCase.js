@@ -1,7 +1,10 @@
 // const AddBnksDp = require('../../Domains/banks/entities/AddBnksDp');
 const AddBnks = require('../../Domains/banks/entities/AddBnks');
+const EditGroupBnks = require('../../Domains/banks/entities/EditGroupBnks');
 const AddGroupBnks = require('../../Domains/banks/entities/AddGroupBnks');
 const AddMasterBnks = require('../../Domains/banks/entities/AddMasterBnks');
+const NotFoundError = require('../../Commons/exceptions/NotFoundError');
+
 
 
 class AddbnksUseCase {
@@ -128,8 +131,9 @@ class AddbnksUseCase {
         const payload = new AddBnks(useCasePayload);
         await this._bnksRepository.chckbnks(payload);
         const databanks = await this._bnksRepository.addbnks(payload);
-        await this._cacheService.delete(`namegroup:${databanks.namegroupxyzt[0]}`);
-        await this._cacheService.delete(`namegroupex:${databanks.namegroupxyzt[0]}`);
+        databanks.namegroupxyzt.forEach(async (group) => {
+            await this._cacheService.delete(`namegroup:${group}`);
+        });
         return databanks;
     }
 
@@ -138,8 +142,17 @@ class AddbnksUseCase {
         const payload = new AddBnks(useCasePayload);
         await this._bnksRepository.chckbnks(useCasePayload);
         await this._bnksRepository.putbnks(payload, params.idbank);
-        await this._cacheService.delete(`namegroup:${payload.namegroupxyzt[0]}`);
-        await this._cacheService.delete(`namegroupex:${payload.namegroupxyzt[0]}`);
+        payload.namegroupxyzt.forEach(async (group) => {
+            await this._cacheService.delete(`namegroup:${group}`);
+        });
+
+        return "Bank Edit Success !";
+    }
+    async edtbankgroup(useCasePayload, params) {
+        const payload = new EditGroupBnks(useCasePayload);
+        await this._bnksRepository.checkbankar(payload, params.idbank);
+        await this._bnksRepository.editbankar(payload, params.idbank);
+        await this._cacheService.delete(`namegroup:${payload.namegroupxyzt}`);
 
         return "Bank Edit Success !";
     }
@@ -253,71 +266,83 @@ class AddbnksUseCase {
     }
 
     async getbankdtex(params) {
-        try {
+        // try {
 
-            // mendapatkan catatan dari cache
-            // await this._cacheService.delete(`namegroupex:${params.groupname}`);
-            // await this._cacheService.delete(`namegroupex:${params.groupname}`);
+        //     // mendapatkan catatan dari cache
+        //     // await this._cacheService.delete(`namegroupex:${params.groupname}`);
+        //     // await this._cacheService.delete(`namegroupex:${params.groupname}`);
 
-            const result = await this._cacheService.get(`namegroupex:${params.groupname}`);
-            const dataresult = JSON.parse(result);
+        //     const result = await this._cacheService.get(`namegroupex:${params.groupname}`);
+        //     const dataresult = JSON.parse(result);
 
-            dataresult.headers = {
-                'X-Data-Source': 'cache',
+        //     dataresult.headers = {
+        //         'X-Data-Source': 'cache',
+        //     };
+        //     return dataresult;
+        // } catch (error) {
+        const getbankdata = await this._bnksRepository.getbnkex(params.groupname);
+        const getgroupbankdata = await this._bnksRepository.getgroupbnkex(params.groupname);
+        const getmasterbankdata = await this._bnksRepository.getmasterbnks(params.groupname);
+        const tmpgroup = {};
+        for (const groupdt of getgroupbankdata) {
+            if (groupdt.groupbank != params.groupname) {
+                tmpgroup[groupdt.groupbank] = groupdt; // Memasukkan data yang memenuhi kondisi ke dalam tmpgroup
+            }
+        }
+        const bankbybankmaster = {};
+        const groupedData = {};
+
+        for (const master of getmasterbankdata) {
+            const { bnkmstrxyxyx, ...datamaster } = master;
+
+            bankbybankmaster[bnkmstrxyxyx] = {
+                url_logo: datamaster.urllogoxxyx, // Anda bisa mengisi URL logo bank dari 
+                statusxxyy: datamaster.statusxyxyy, // Anda bisa mengisi status dari 
             };
-            return dataresult;
-        } catch (error) {
-            const getbankdata = await this._bnksRepository.getbnkex(params.groupname);
-            const getgroupbankdata = await this._bnksRepository.getgroupbnkex(params.groupname);
-            const getmasterbankdata = await this._bnksRepository.getmasterbnks(params.groupname);
-            const tmpgroup = {};
-            for (const groupdt of getgroupbankdata) {
-                if (groupdt.groupbank != params.groupname) {
-                    tmpgroup[groupdt.groupbank] = groupdt; // Memasukkan data yang memenuhi kondisi ke dalam tmpgroup
-                }
-            }
-            const bankbybankmaster = {};
-            const groupedData = {};
+            bankbybankmaster[bnkmstrxyxyx];
+        }
 
-            for (const master of getmasterbankdata) {
-                const { bnkmstrxyxyx, ...datamaster } = master;
-
-                bankbybankmaster[bnkmstrxyxyx] = {
-                    url_logo: datamaster.urllogoxxyx, // Anda bisa mengisi URL logo bank dari 
-                    statusxxyy: datamaster.statusxyxyy, // Anda bisa mengisi status dari 
-                };
-                bankbybankmaster[bnkmstrxyxyx];
-            }
-
-            getbankdata.forEach(bank => {
-                if (!bank.namegroupxyzt.includes(params.groupname)) {
-                    bank.namegroupxyzt.forEach(group => {
-                        const { namegroupxyzt, masterbnkxyxt, ...bankData } = bank;
-                        if (!groupedData[group]) {
-                            groupedData[group] = {};
-                        }
-                        if (!groupedData[group][bank.masterbnkxyxt]) {
-                            groupedData[group][bank.masterbnkxyxt] = {
-                                data_bank: []
-                            };
-                        }
+        getbankdata.forEach(bank => {
+            if (!bank.namegroupxyzt.includes(params.groupname)) {
+                bank.namegroupxyzt.forEach(group => {
+                    const { namegroupxyzt, masterbnkxyxt, ...bankData } = bank;
+                    if (!groupedData[group]) {
+                        groupedData[group] = {};
+                    }
+                    if (!groupedData[group][bank.masterbnkxyxt]) {
                         groupedData[group][bank.masterbnkxyxt] = {
-                            ...bankbybankmaster[masterbnkxyxt],
-                            data_bank: groupedData[group][bank.masterbnkxyxt].data_bank,
+                            data_bank: []
                         };
+                    }
+                    groupedData[group][bank.masterbnkxyxt] = {
+                        ...bankbybankmaster[masterbnkxyxt],
+                        data_bank: groupedData[group][bank.masterbnkxyxt].data_bank,
+                    };
 
-                        groupedData[group][bank.masterbnkxyxt].data_bank.push(bankData);
-                    });
-                }
-            });
-
-            await this._cacheService.delete(`namegroupex:${params.groupname}`);
-            await this._cacheService.set(`namegroupex:${params.groupname}`, JSON.stringify(groupedData));
-            return groupedData;
-        };
+                    groupedData[group][bank.masterbnkxyxt].data_bank.push(bankData);
+                });
+            }
+        });
+        // console.log(params.groupname);
+        // await this._cacheService.delete(`namegroupex:${params.groupname}`);
+        // await this._cacheService.set(`namegroupex:${params.groupname}`, JSON.stringify(groupedData));
+        return groupedData;
+        // };
     }
 
+    async delbankdata(params) {
+        const groupbank = await this._bnksRepository.findbank(params.idbank);
+        const result = await this._bnksRepository.delbnks(params);
+        await this._cacheService.delete(`namegroup:${groupbank}`);
+        return result;
+    }
+    async delbankdataarr(params) {
+        await this._bnksRepository.findbankarr(params);
 
+        const result = await this._bnksRepository.delbankar(params);
+        await this._cacheService.delete(`namegroup:${params.groupbank}`);
+        return result;
+    }
 
 }
 module.exports = AddbnksUseCase;

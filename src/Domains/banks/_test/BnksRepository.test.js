@@ -32,6 +32,8 @@ describe('apkRepository reddis interface', () => {
         await expect(bnksRepository.getbnkex()).rejects.toThrowError('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
         await expect(bnksRepository.getgroupbnks()).rejects.toThrowError('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
         await expect(bnksRepository.getmasterbnks()).rejects.toThrowError('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+        await expect(bnksRepository.findbank()).rejects.toThrowError('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+        await expect(bnksRepository.delbnks()).rejects.toThrowError('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
     });
 
 
@@ -43,9 +45,17 @@ describe('apkRepository reddis interface', () => {
         await expect(bnksRepository.databnksdp()).rejects.toThrowError('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
     });
 
-    // it('should throw an error when no have function in the usecase', async () => {
-    //     const bnksRepository = new BnksRepository()
-    //     await expect(bnksRepository.getdatabnksdp()).rejects.toThrow('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
-    // });
+
+    it('should throw an error whe invoke abstract behavior when edit delete group array bank', async () => {
+        //arrange
+        const bnksRepository = new BnksRepository()
+        //action and Assertion
+        await expect(bnksRepository.editbankar()).rejects.toThrowError('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+        await expect(bnksRepository.checkbankar()).rejects.toThrowError('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+        await expect(bnksRepository.delbankar()).rejects.toThrowError('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+        await expect(bnksRepository.findbankarr()).rejects.toThrowError('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+
+    });
+
 
 });

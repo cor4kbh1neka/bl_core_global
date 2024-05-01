@@ -6,6 +6,7 @@ const InvariantError = require('../../../Commons/exceptions/InvariantError');
 const NotFoundError = require('../../../Commons/exceptions/NotFoundError');
 const AddBnksDp = require('../../../Domains/banks/entities/AddBnksDp');
 const AddBnks = require('../../../Domains/banks/entities/AddBnks');
+const EditGroupBnks = require('../../../Domains/banks/entities/EditGroupBnks');
 const AddGroupBnks = require('../../../Domains/banks/entities/AddGroupBnks');
 const AddMasterBnks = require('../../../Domains/banks/entities/AddMasterBnks');
 const pool = require('../../database/postgres/pool');
@@ -98,6 +99,8 @@ describe('DataBank repository', () => {
         expect(dataresulteditgrp).toStrictEqual("Group Bank Edit Success !");
       });
     });
+
+
 
     describe('get data group', () => {
       it('should return data group', async () => {
@@ -411,7 +414,137 @@ describe('DataBank repository', () => {
       });
     });
 
-    describe('EDIT Master bank data success', () => {
+    describe('delete data Bank', () => {
+
+      it('should check data bnks donthave in database', async () => {
+        //arrange
+        params = {
+          namabank: "bca321",
+          idbank: 51
+        }
+
+        const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
+
+        // Action
+        await expect(apkBnksRepositoryPostgres.findbank(params.idbank))
+          .rejects.toThrow(NotFoundError);
+      });
+      it('should return data group', async () => {
+        //arrange
+        params = {
+          namabank: "bca333",
+          idbank: 52
+        }
+
+
+        // Action
+        await AddBanksTableTestHelper.addbks({
+          idbank: 52,
+          namebankxxyy: 'bca33',
+          xynamarekx: 'flsia sitanggang',
+          norekxyxy: '0322917811'
+        });
+
+        const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
+
+        const datadelete = await apkBnksRepositoryPostgres.delbnks(params.idbank);
+
+        expect(datadelete).toStrictEqual("success delete bank");
+      });
+
+    });
+
+    describe('delete data array groupBank', () => {
+
+      it('should not throw InvariantError if bankmaster not available', async () => {
+        // Arrange
+        params = {
+          idbank: 21,
+          groupbank: "groupbank52"
+        }
+
+        await AddBanksTableTestHelper.addbks({
+          namegroupxyzt: ['groupbank1', 'groupbank3'],
+          idbank: 21,
+          namebankxxyy: 'bca51',
+          xynamarekx: 'flsia sitanggang',
+          norekxyxy: '0322917811'
+        });
+
+        const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
+
+        // Action
+        await expect(apkBnksRepositoryPostgres.findbankarr(params))
+          .resolves.not.toThrow(NotFoundError);
+      });
+
+
+      it('should check data bnks donthave in database', async () => {
+        //arrange
+        params = {
+          idbank: 20,
+          groupbank: "groupbank52"
+        }
+
+        const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
+
+        // Action
+        await expect(apkBnksRepositoryPostgres.findbankarr(params))
+          .rejects.toThrow(NotFoundError);
+
+      });
+
+      it('should fail delete bank array', async () => {
+        const params = {
+          idbank: 19,
+          groupbank: "groupbank52"
+        }
+        // Action
+        await AddBanksTableTestHelper.addbks({
+          namegroupxyzt: ['groupbank1', 'groupbank3'],
+          idbank: 19,
+          namebankxxyy: 'bca51',
+          xynamarekx: 'flsia sitanggang',
+          norekxyxy: '0322917811'
+        });
+        // Arrange
+        const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
+
+        // Action & Assert
+        await expect(apkBnksRepositoryPostgres.delbankar(params))
+          .rejects
+          .toThrow(InvariantError);
+      });
+
+
+
+      it('should delete data bank array', async () => {
+        //arrange
+        params = {
+          idbank: 16,
+          groupbank: "groupbank3"
+        }
+
+
+        // Action
+        await AddBanksTableTestHelper.addbks({
+          namegroupxyzt: ['groupbank1', 'groupbank3'],
+          idbank: 16,
+          namebankxxyy: 'bca51',
+          xynamarekx: 'flsia sitanggang',
+          norekxyxy: '0322917811'
+        });
+
+        const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
+
+        const datadelete = await apkBnksRepositoryPostgres.delbankar(params);
+
+        expect(datadelete).toStrictEqual("success delete array bank");
+      });
+
+    });
+
+    describe('EDIT bank data success', () => {
 
       it('should edit data bank fail', async () => {
         const params = {
@@ -489,378 +622,271 @@ describe('DataBank repository', () => {
         expect(dataresulteditmster).toStrictEqual("Bank Edit Success !");
       });
     });
+    describe('EDIT bank change group data success', () => {
 
-    describe('GET bank', () => {
-      describe('GET bank bank data success', () => {
-        it('should get data bank data', async () => {
-          const params = {
-            groupname: 'groupbank1'
-          };
+      it('should edit data bank fail when group already have', async () => {
 
-          await AddBanksTableTestHelper.addbks({
-            idbank: 1, namebankxxyy: 'bca1',
-            barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
-            zwzwshowbarcode: true,
-          });
-          await AddBanksTableTestHelper.addbks({
-            idbank: 2, namebankxxyy: 'bca2',
-            barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
-            zwzwshowbarcode: true,
-          });
-          const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
+        const params = {
+          idbank: 27,
+        }
+        const useCasePayload = new EditGroupBnks({
+          namegroupxyzt: 'groupbank1',
 
-          const getbankdata = await apkBnksRepositoryPostgres.getbnks(params.groupname);
-
-          expect(getbankdata).toStrictEqual([
-            {
-              idbank: 1,
-              namegroupxyzt: ['groupbank1'],
-              masterbnkxyxt: 'bca',
-              namebankxxyy: 'bca1',
-              yyxxmethod: 'bank',
-              xynamarekx: 'florensia sitangg',
-              norekxyxy: '0355917811',
-              barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
-              zwzwshowbarcode: true,
-
-            },
-            {
-              idbank: 2,
-              namegroupxyzt: ['groupbank1'],
-              masterbnkxyxt: 'bca',
-              namebankxxyy: 'bca2',
-              yyxxmethod: 'bank',
-              xynamarekx: 'florensia sitangg',
-              norekxyxy: '0355917811',
-              barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
-              zwzwshowbarcode: true,
-
-            }]);
         });
 
-        it('should get data bank bank fail', async () => {
-          const params = {
-            groupname: 'groupbank1'
-          };
-
-          // Arrange
-          const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
-
-          // Action & Assert
-          await expect(apkBnksRepositoryPostgres.getbnks(params.groupname))
-            .rejects
-            .toThrowError(NotFoundError);
+        await AddBanksTableTestHelper.addbks({
+          idbank: 27
         });
 
-      });
-      describe('get data bank except group', () => {
-        it('should get data bank data except group', async () => {
-          const params = {
-            groupname: 'groupbank2'
-          };
+        // Arrange
+        const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
 
-          await AddBanksTableTestHelper.addbks({
-            idbank: 1, namebankxxyy: 'bca1',
-            barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
-            zwzwshowbarcode: true,
-          });
-          await AddBanksTableTestHelper.addbks({
-            idbank: 2, namebankxxyy: 'bca2',
-            barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
-            zwzwshowbarcode: true,
-          });
-          const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
-
-          const getbankdata = await apkBnksRepositoryPostgres.getbnkex(params.groupname);
-
-          expect(getbankdata).toStrictEqual([
-            {
-              idbank: 1,
-              namegroupxyzt: ['groupbank1'],
-              masterbnkxyxt: 'bca',
-              namebankxxyy: 'bca1',
-              yyxxmethod: 'bank',
-              xynamarekx: 'florensia sitangg',
-              norekxyxy: '0355917811',
-              barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
-              zwzwshowbarcode: true,
-
-            },
-            {
-              idbank: 2,
-              namegroupxyzt: ['groupbank1'],
-              masterbnkxyxt: 'bca',
-              namebankxxyy: 'bca2',
-              yyxxmethod: 'bank',
-              xynamarekx: 'florensia sitangg',
-              norekxyxy: '0355917811',
-              barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
-              zwzwshowbarcode: true,
-
-            }]);
-        });
-        it('should get data bank bank fail except group', async () => {
-          const params = {
-            groupname: 'groupbank5'
-          };
-
-          // Arrange
-          const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
-
-          // Action & Assert
-          await expect(apkBnksRepositoryPostgres.getbnkex(params.groupname))
-            .rejects
-            .toThrowError(NotFoundError);
-        });
-      });
-      describe('get data group', () => {
-        it('should return data group', async () => {
-          const params = {
-            groupname: 'groupbank5'
-          };
-
-          await AddGroupTableTestHelper.addgroup({ idgroup: 5, groupbank: 'groupbank5' });
-          const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
-          const getbankdata = await apkBnksRepositoryPostgres.getgroupbnks(params.groupname);
-          expect(getbankdata).toStrictEqual([{ "idgroup": 5, "grouptype": 1, groupbank: "groupbank5", min_dp: 10, max_dp: 2500, min_wd: 30, max_wd: 50000 }]);
-        });
-
-        it('should get data bank bank fail', async () => {
-          const params = {
-            groupname: 'groupbank1'
-          };
-
-          // Arrange
-          const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
-
-          // Action & Assert
-          await expect(apkBnksRepositoryPostgres.getgroupbnks(params.groupname))
-            .rejects
-            .toThrowError(NotFoundError);
-        });
-
+        // Action & Assert
+        await expect(apkBnksRepositoryPostgres.checkbankar(useCasePayload, params.idbank))
+          .rejects
+          .toThrowError(InvariantError);
       });
 
-      describe('get all data group except', () => {
-        it('should return data group', async () => {
-          const params = {
-            groupname: 'groupbank5'
-          };
 
-          await AddGroupTableTestHelper.addgroup({ idgroup: 5, groupbank: 'groupbank5' });
-          await AddGroupTableTestHelper.addgroup({ idgroup: 6, groupbank: 'groupbank6' });
-          const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
-          const getbankdata = await apkBnksRepositoryPostgres.getgroupbnkex(params.groupname);
-          expect(getbankdata).toStrictEqual([{ idgroup: 5, "grouptype": 1, groupbank: 'groupbank5', min_dp: 10, max_dp: 2500, min_wd: 30, max_wd: 50000 }, { idgroup: 6, "grouptype": 1, groupbank: 'groupbank6', min_dp: 10, max_dp: 2500, min_wd: 30, max_wd: 50000 }]);
+      it('should edit data bank successfully with value true in barcode', async () => {
+        const params = {
+          idbank: 5,
+        }
+
+        const useCasePayload = new EditGroupBnks({
+          namegroupxyzt: 'groupbank2',
         });
 
-        it('should get data bank bank fail', async () => {
-          const params = {
-            groupname: 'groupbank7'
-          };
-
-          // Arrange
-          const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
-
-          // Action & Assert
-          await expect(apkBnksRepositoryPostgres.getgroupbnkex(params.groupname))
-            .rejects
-            .toThrowError(NotFoundError);
-        });
-
-      });
-
-      describe('get data master', () => {
-        it('should return data master ', async () => {
-
-          const params = {
-            groupname: 'groupbank5'
-          };
-          await AddMasterTableTestHelper.addmaster({ idbnkmaster: 5 });
-
-          const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
-
-          const getbankdata = await apkBnksRepositoryPostgres.getmasterbnks(params.groupname);
-
-          expect(getbankdata).toStrictEqual([{
-            idbnkmaster: 5,
-            bnkmstrxyxyx: 'bca',
-            urllogoxxyx: 'https://www.coskoc.com/api/',
-            statusxyxyy: 1,
-          }
-          ]);
-        });
-        it('should get dat master bank fail', async () => {
-          const params = {
-            groupname: 'groupbank1'
-          };
-
-          // Arrange
-          const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
-
-          // Action & Assert
-          await expect(apkBnksRepositoryPostgres.getmasterbnks(params.groupname))
-            .rejects
-            .toThrowError(NotFoundError);
+        await AddBanksTableTestHelper.addbks({
+          idbank: 5
         });
 
 
+        const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
+
+        // Action
+        await apkBnksRepositoryPostgres.checkbankar(useCasePayload, params.idbank)
+        const dataresulteditmster = await apkBnksRepositoryPostgres.editbankar(useCasePayload, params.idbank);
+        expect(dataresulteditmster).toStrictEqual("Bank Edit Success !");
       });
     });
+
+    describe('GET bank bank data success', () => {
+      it('should get data bank data', async () => {
+        const params = {
+          groupname: 'groupbank1'
+        };
+
+        await AddBanksTableTestHelper.addbks({
+          idbank: 1, namebankxxyy: 'bca1',
+          barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
+          zwzwshowbarcode: true,
+        });
+        await AddBanksTableTestHelper.addbks({
+          idbank: 2, namebankxxyy: 'bca2',
+          barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
+          zwzwshowbarcode: true,
+        });
+        const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
+
+        const getbankdata = await apkBnksRepositoryPostgres.getbnks(params.groupname);
+
+        expect(getbankdata).toStrictEqual([
+          {
+            idbank: 1,
+            namegroupxyzt: ['groupbank1'],
+            masterbnkxyxt: 'bca',
+            namebankxxyy: 'bca1',
+            yyxxmethod: 'bank',
+            xynamarekx: 'florensia sitangg',
+            norekxyxy: '0355917811',
+            barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
+            zwzwshowbarcode: true,
+
+          },
+          {
+            idbank: 2,
+            namegroupxyzt: ['groupbank1'],
+            masterbnkxyxt: 'bca',
+            namebankxxyy: 'bca2',
+            yyxxmethod: 'bank',
+            xynamarekx: 'florensia sitangg',
+            norekxyxy: '0355917811',
+            barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
+            zwzwshowbarcode: true,
+
+          }]);
+      });
+
+      it('should get data bank bank fail', async () => {
+        const params = {
+          groupname: 'groupbank1'
+        };
+
+        // Arrange
+        const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
+
+        // Action & Assert
+        await expect(apkBnksRepositoryPostgres.getbnks(params.groupname))
+          .rejects
+          .toThrowError(NotFoundError);
+      });
+
+    });
+    describe('get data bank except group', () => {
+      it('should get data bank data except group', async () => {
+        const params = {
+          groupname: 'groupbank2'
+        };
+
+        await AddBanksTableTestHelper.addbks({
+          idbank: 1, namebankxxyy: 'bca1',
+          barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
+          zwzwshowbarcode: true,
+        });
+        await AddBanksTableTestHelper.addbks({
+          idbank: 2, namebankxxyy: 'bca2',
+          barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
+          zwzwshowbarcode: true,
+        });
+        const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
+
+        const getbankdata = await apkBnksRepositoryPostgres.getbnkex(params.groupname);
+
+        expect(getbankdata).toStrictEqual([
+          {
+            idbank: 1,
+            namegroupxyzt: ['groupbank1'],
+            masterbnkxyxt: 'bca',
+            namebankxxyy: 'bca1',
+            yyxxmethod: 'bank',
+            xynamarekx: 'florensia sitangg',
+            norekxyxy: '0355917811',
+            barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
+            zwzwshowbarcode: true,
+
+          },
+          {
+            idbank: 2,
+            namegroupxyzt: ['groupbank1'],
+            masterbnkxyxt: 'bca',
+            namebankxxyy: 'bca2',
+            yyxxmethod: 'bank',
+            xynamarekx: 'florensia sitangg',
+            norekxyxy: '0355917811',
+            barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
+            zwzwshowbarcode: true,
+
+          }]);
+      });
+      it('should get data bank bank fail except group', async () => {
+        const params = {
+          groupname: 'groupbank5'
+        };
+
+        // Arrange
+        const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
+
+        // Action & Assert
+        await expect(apkBnksRepositoryPostgres.getbnkex(params.groupname))
+          .rejects
+          .toThrowError(NotFoundError);
+      });
+    });
+    describe('get data group', () => {
+      it('should return data group', async () => {
+        const params = {
+          groupname: 'groupbank5'
+        };
+
+        await AddGroupTableTestHelper.addgroup({ idgroup: 5, groupbank: 'groupbank5' });
+        const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
+        const getbankdata = await apkBnksRepositoryPostgres.getgroupbnks(params.groupname);
+        expect(getbankdata).toStrictEqual([{ "idgroup": 5, "grouptype": 1, groupbank: "groupbank5", min_dp: 10, max_dp: 2500, min_wd: 30, max_wd: 50000 }]);
+      });
+
+      it('should get data bank bank fail', async () => {
+        const params = {
+          groupname: 'groupbank1'
+        };
+
+        // Arrange
+        const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
+
+        // Action & Assert
+        await expect(apkBnksRepositoryPostgres.getgroupbnks(params.groupname))
+          .rejects
+          .toThrowError(NotFoundError);
+      });
+
+    });
+
+    describe('get all data group except', () => {
+      it('should return data group', async () => {
+        const params = {
+          groupname: 'groupbank5'
+        };
+
+        await AddGroupTableTestHelper.addgroup({ idgroup: 5, groupbank: 'groupbank5' });
+        await AddGroupTableTestHelper.addgroup({ idgroup: 6, groupbank: 'groupbank6' });
+        const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
+        const getbankdata = await apkBnksRepositoryPostgres.getgroupbnkex(params.groupname);
+        expect(getbankdata).toStrictEqual([{ idgroup: 5, "grouptype": 1, groupbank: 'groupbank5', min_dp: 10, max_dp: 2500, min_wd: 30, max_wd: 50000 }, { idgroup: 6, "grouptype": 1, groupbank: 'groupbank6', min_dp: 10, max_dp: 2500, min_wd: 30, max_wd: 50000 }]);
+      });
+
+      it('should get data bank bank fail', async () => {
+        const params = {
+          groupname: 'groupbank7'
+        };
+
+        // Arrange
+        const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
+
+        // Action & Assert
+        await expect(apkBnksRepositoryPostgres.getgroupbnkex(params.groupname))
+          .rejects
+          .toThrowError(NotFoundError);
+      });
+
+    });
+
+    describe('get data master', () => {
+      it('should return data master ', async () => {
+
+        const params = {
+          groupname: 'groupbank5'
+        };
+        await AddMasterTableTestHelper.addmaster({ idbnkmaster: 5 });
+
+        const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
+
+        const getbankdata = await apkBnksRepositoryPostgres.getmasterbnks(params.groupname);
+
+        expect(getbankdata).toStrictEqual([{
+          idbnkmaster: 5,
+          bnkmstrxyxyx: 'bca',
+          urllogoxxyx: 'https://www.coskoc.com/api/',
+          statusxyxyy: 1,
+        }
+        ]);
+      });
+      it('should get dat master bank fail', async () => {
+        const params = {
+          groupname: 'groupbank1'
+        };
+
+        // Arrange
+        const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
+
+        // Action & Assert
+        await expect(apkBnksRepositoryPostgres.getmasterbnks(params.groupname))
+          .rejects
+          .toThrowError(NotFoundError);
+      });
+
+
+    });
+
+
   });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // describe('add data in bnks data settings', () => {
-  //   it('should persist add data settings and return success', async () => {
-  //     //arrange
-  //     const addbks = new AddBnksDp({
-  //       namegroupxyzt: 'groupbank1',
-  //       namebankxxyy: 'bca',
-  //       statusxxyy: 1,
-  //       yyxxmethod: 'bank',
-  //       xynamarekx: 'florensia sitanggang',
-  //       norekxyxy: '0355917811',
-  //       barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
-  //       zwzwshowbarcode: 1,
-  //     });
-
-  //     const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
-
-  //     // Action
-  //     await apkBnksRepositoryPostgres.databnksdp(addbks);
-  //     // Assert
-  //     const datasettings = await AddBnksTableTestHelper.findbks('groupbank1');
-  //     expect(datasettings).toHaveLength(1);
-  //   });
-
-  //   it('should return 201 add bank correctly', async () => {
-  //     //arrange
-  //     const addbks = new AddBnksDp({
-  //       namegroupxyzt: 'groupbank1',
-  //       namebankxxyy: 'bca',
-  //       statusxxyy: 1,
-  //       yyxxmethod: 'bank',
-  //       xynamarekx: 'florensia sitanggang',
-  //       norekxyxy: '0355917811',
-  //       barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
-  //       zwzwshowbarcode: 1,
-  //     });
-
-  //     const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
-
-  //     // Action
-  //     const data = await apkBnksRepositoryPostgres.databnksdp(addbks);
-  //     // Assert
-  //     expect(data).toStrictEqual('groupbank1');
-  //   });
-
-  //   it('should check data bnks have in database', async () => {
-  //     //arrange
-  //     const addbks = new AddBnksDp({
-  //       namegroupxyzt: 'groupbank2',
-  //       namebankxxyy: 'bca',
-  //       statusxxyy: 1,
-  //       yyxxmethod: 'bank',
-  //       xynamarekx: 'florensia sitanggang',
-  //       norekxyxy: '0355917812',
-  //       barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
-  //       zwzwshowbarcode: 1,
-  //     });
-
-  //     const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
-
-  //     // Action
-  //     await AddBnksTableTestHelper.addbks({ idbank: 2, namegroupxyzt: 'groupbank2', norekxyxy: '0355917812', xynamarekx: 'florensia sitanggang' });
-  //     // Assert
-  //     await expect(apkBnksRepositoryPostgres.checkbnks(addbks.norekxyxy, addbks.namegroupxyzt, addbks.xynamarekx))
-  //       .rejects.toThrow(InvariantError);
-  //   });
-
-
-
-
-  // describe('get Data Bank', () => {
-
-  //   it('should throw NotFoundError when data bank not found', async () => {
-  //     // Arrange
-  //     const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
-
-  //     // Action & Assert
-  //     await expect(apkBnksRepositoryPostgres.getdatabnksdp('groupbank111112'))
-  //       .rejects
-  //       .toThrowError(NotFoundError);
-  //   });
-  //   it('should get Data apk data and success', async () => {
-  //     const params = {
-  //       groupname: 'groupbank1'
-  //     }
-  //     await AddBnksTableTestHelper.addbks({ idbank: 3, namegroupxyzt: 'groupbank1', norekxyxy: '0355917877' });
-  //     await AddBnksTableTestHelper.addbks({ idbank: 4, namegroupxyzt: 'groupbank1', norekxyxy: '0355917878' });
-
-  //     const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
-
-  //     const getbankdata = await apkBnksRepositoryPostgres.getdatabnksdp(params.groupname);
-
-
-  //     const databankarr = [];
-  //     for (const key in getbankdata) {
-  //       const { idbank, created_at, updated_at, ...bankdata } = getbankdata[key];
-  //       databankarr.push({
-  //         ...bankdata
-  //       });
-  //     }
-
-  //     const databank = {
-  //       masterdata: databankarr,
-  //     };
-
-  //     expect(databank).toStrictEqual({
-  //       masterdata: [
-  //         {
-  //           namegroupxyzt: 'groupbank1',
-  //           namebankxxyy: 'bca',
-  //           statusxxyy: 1,
-  //           yyxxmethod: 'bank',
-  //           xynamarekx: 'florensia sitangg',
-  //           norekxyxy: '0355917877',
-  //           barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
-  //           zwzwshowbarcode: 1
-  //         },
-  //         {
-  //           namegroupxyzt: 'groupbank1',
-  //           namebankxxyy: 'bca',
-  //           statusxxyy: 1,
-  //           yyxxmethod: 'bank',
-  //           xynamarekx: 'florensia sitangg',
-  //           norekxyxy: '0355917878',
-  //           barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
-  //           zwzwshowbarcode: 1
-  //         }
-  //       ]
-  //     });
-
-  //   });
-  // });
-  // });
 });
