@@ -144,7 +144,7 @@ class AddbnksUseCase {
         const checkbank = await this._bnksRepository.chckbnks2(payload, params.nmbank);
         await this._bnksRepository.putbnks(payload, params.idbank);
         checkbank.namegroupxyzt.forEach(async (group) => {
-            await this._cacheService.delete(`namegroup:${group.namegroupxyzt}`);
+            await this._cacheService.delete(`namegroup:${group}`);
         });
 
         return "Bank Edit Success !";
