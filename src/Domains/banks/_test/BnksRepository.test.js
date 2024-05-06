@@ -26,6 +26,7 @@ describe('apkRepository reddis interface', () => {
         const bnksRepository = new BnksRepository()
         //action and Assertion
         await expect(bnksRepository.chckbnks()).rejects.toThrowError('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+        await expect(bnksRepository.chckbnks2()).rejects.toThrowError('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
         await expect(bnksRepository.addbnks()).rejects.toThrowError('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
         await expect(bnksRepository.putbnks()).rejects.toThrowError('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
         await expect(bnksRepository.getbnks()).rejects.toThrowError('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');

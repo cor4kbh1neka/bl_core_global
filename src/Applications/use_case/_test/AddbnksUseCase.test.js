@@ -1,6 +1,7 @@
 // const AddBnksDp = require('../../../Domains/banks/entities/AddBnksDp');
 const AddGroupBnks = require('../../../Domains/banks/entities/AddGroupBnks');
 const AddBnks = require('../../../Domains/banks/entities/AddBnks');
+const EditBnks = require('../../../Domains/banks/entities/EditBnks');
 const EditGroupBnks = require('../../../Domains/banks/entities/EditGroupBnks');
 const AddMasterBnks = require('../../../Domains/banks/entities/AddMasterBnks');
 const BnksRepository = require('../../../Domains/banks/BnksRepository');
@@ -482,9 +483,9 @@ describe('DATA BANK', () => {
 
             const params = {
                 idbank: 2,
+                nmbank: 'bca2'
             }
-            const useCasePayload = new AddBnks({
-                namegroupxyzt: ['groupbank1'],
+            const useCasePayload = new EditBnks({
                 masterbnkxyxt: 'bca',
                 namebankxxyy: 'bca1',
                 yyxxmethod: 'bank',
@@ -493,6 +494,9 @@ describe('DATA BANK', () => {
                 barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
             });
 
+            checkbank = { namegroupxyzt: ['groupbank3', 'groupbankwd1'] };
+
+
             const resultmockresult = "Bank Edit Success !";
 
             // const resultmockbank = { namegroupxyzt: 'groupbank1' };
@@ -500,10 +504,11 @@ describe('DATA BANK', () => {
             const mockbnksRepository = new BnksRepository();
             const mockcacheService = new CacheService();
 
-            mockbnksRepository.chckbnks = jest.fn()
-                .mockImplementation(() => Promise.resolve());
+            mockbnksRepository.chckbnks2 = jest.fn()
+                .mockImplementation(() => Promise.resolve(checkbank));
             mockbnksRepository.putbnks = jest.fn()
                 .mockImplementation(() => Promise.resolve(resultmockresult));
+            mockcacheService.delete = jest.fn().mockResolvedValue();
             mockcacheService.delete = jest.fn().mockResolvedValue();
 
 
@@ -515,9 +520,11 @@ describe('DATA BANK', () => {
             const resultbankusecase = await putBankusecase.edtbank(useCasePayload, params);
 
             expect(resultbankusecase).toStrictEqual(resultmockresult);
-            expect(mockbnksRepository.chckbnks).toBeCalledWith(useCasePayload);
+            expect(mockbnksRepository.chckbnks2).toBeCalledWith(useCasePayload, params.nmbank);
             expect(mockbnksRepository.putbnks).toBeCalledWith(useCasePayload, params.idbank);
-            expect(mockcacheService.delete).toBeCalledWith(`namegroup:${useCasePayload.namegroupxyzt[0]}`);
+            checkbank.namegroupxyzt.forEach(async (group) => {
+                expect(mockcacheService.delete).toBeCalledWith(`namegroup:${group.namegroupxyzt}`);
+            });
 
 
         });

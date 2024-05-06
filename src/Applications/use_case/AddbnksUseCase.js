@@ -1,5 +1,6 @@
 // const AddBnksDp = require('../../Domains/banks/entities/AddBnksDp');
 const AddBnks = require('../../Domains/banks/entities/AddBnks');
+const EditBnks = require('../../Domains/banks/entities/EditBnks');
 const EditGroupBnks = require('../../Domains/banks/entities/EditGroupBnks');
 const AddGroupBnks = require('../../Domains/banks/entities/AddGroupBnks');
 const AddMasterBnks = require('../../Domains/banks/entities/AddMasterBnks');
@@ -139,11 +140,11 @@ class AddbnksUseCase {
 
 
     async edtbank(useCasePayload, params) {
-        const payload = new AddBnks(useCasePayload);
-        await this._bnksRepository.chckbnks(useCasePayload);
+        const payload = new EditBnks(useCasePayload);
+        const checkbank = await this._bnksRepository.chckbnks2(payload, params.nmbank);
         await this._bnksRepository.putbnks(payload, params.idbank);
-        payload.namegroupxyzt.forEach(async (group) => {
-            await this._cacheService.delete(`namegroup:${group}`);
+        checkbank.namegroupxyzt.forEach(async (group) => {
+            await this._cacheService.delete(`namegroup:${group.namegroupxyzt}`);
         });
 
         return "Bank Edit Success !";

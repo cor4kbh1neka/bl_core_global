@@ -93,7 +93,7 @@ const routes = (handler) => ([
   },
   {
     method: 'PUT',
-    path: '/banks/v2/{idbank}',
+    path: '/banks/v2/{idbank}/{nmbank}',
     handler: handler.putBanknwHandler,
     options: {
       cors: {

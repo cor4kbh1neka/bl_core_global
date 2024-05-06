@@ -435,25 +435,27 @@ describe('/addBankEndpoints', () => {
 
         describe('Bank PUT', () => {
             it('should repsonse 200 when edit and persisted  bank data', async () => {
-                const idbank = '4';
+                const idbank = '89';
+                const nmbank = 'bca47';
 
                 const requestPayload = {
-                    namegroupxyzt: ['groupbank1'],
                     masterbnkxyxt: 'bca',
-                    namebankxxyy: 'bca4',
+                    namebankxxyy: 'bca44',
                     yyxxmethod: 'bank',
-                    xynamarekx: 'florensia sitanggang',
+                    xynamarekx: 'florensia sitangg',
                     norekxyxy: '0355917811',
                     barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
                 };
-                await AddBanksTableTestHelper.addbks({ idbank: '4' });
+                await AddBanksTableTestHelper.addbks({
+                    idbank: '89', namebankxxyy: 'bca47',
+                });
 
                 const server = await createServer(container);
 
                 // Action
                 const response = await server.inject({
                     method: 'PUT',
-                    url: `/banks/v2/${idbank}`,
+                    url: `/banks/v2/${idbank}/${nmbank}`,
                     payload: requestPayload,
                 });
                 // Assert

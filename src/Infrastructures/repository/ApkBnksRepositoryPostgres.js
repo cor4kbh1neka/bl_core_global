@@ -179,10 +179,25 @@ class ApkBnksRepositoryPostgres extends BnksRepository {
             throw new InvariantError('data already in database !');
         }
     }
+
+    async chckbnks2(payload, params) {
+        const { xynamarekx, norekxyxy } = payload
+
+        // Kueri untuk mencari dataapknotice
+        const noticeQuery = {
+            text: 'SELECT namegroupxyzt FROM databnk WHERE xynamarekx = $1 AND norekxyxy = $2 AND namebankxxyy = $3',
+            values: [xynamarekx, norekxyxy, params],
+        };
+        const databank = await this._pool.query(noticeQuery);
+        if (databank.rowCount === 0) {
+            throw new InvariantError('data unknown!');
+        }
+        return databank.rows[0];
+    }
     async putbnks(usecasepayload, params) {
 
 
-        const { namegroupxyzt, masterbnkxyxt, namebankxxyy, yyxxmethod, xynamarekx, norekxyxy, barcodexrxr } = usecasepayload;
+        const { masterbnkxyxt, namebankxxyy, yyxxmethod, xynamarekx, norekxyxy, barcodexrxr } = usecasepayload;
 
         let zwzwshowbarcode = ""
         if (barcodexrxr.length > 2) {
@@ -192,8 +207,8 @@ class ApkBnksRepositoryPostgres extends BnksRepository {
         }
         // Kueri untuk mencari dataapknotice
         const query = {
-            text: 'UPDATE databnk SET namegroupxyzt = $1, masterbnkxyxt = $2, namebankxxyy = $3, "yyxxmethod" = $4 , "xynamarekx" = $5 , "norekxyxy" = $6 , "barcodexrxr" = $7 , "zwzwshowbarcode" = $8 WHERE idbank = $9 RETURNING namegroupxyzt',
-            values: [namegroupxyzt, masterbnkxyxt, namebankxxyy, yyxxmethod, xynamarekx, norekxyxy, barcodexrxr, zwzwshowbarcode, params],
+            text: 'UPDATE databnk SET  masterbnkxyxt = $1, namebankxxyy = $2, "yyxxmethod" = $3 , "xynamarekx" = $4 , "norekxyxy" = $5 , "barcodexrxr" = $6 , "zwzwshowbarcode" = $7 WHERE idbank = $8',
+            values: [masterbnkxyxt, namebankxxyy, yyxxmethod, xynamarekx, norekxyxy, barcodexrxr, zwzwshowbarcode, params],
         };
 
 

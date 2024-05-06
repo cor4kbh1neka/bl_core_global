@@ -6,6 +6,7 @@ const InvariantError = require('../../../Commons/exceptions/InvariantError');
 const NotFoundError = require('../../../Commons/exceptions/NotFoundError');
 const AddBnksDp = require('../../../Domains/banks/entities/AddBnksDp');
 const AddBnks = require('../../../Domains/banks/entities/AddBnks');
+const EditBnks = require('../../../Domains/banks/entities/EditBnks');
 const EditGroupBnks = require('../../../Domains/banks/entities/EditGroupBnks');
 const AddGroupBnks = require('../../../Domains/banks/entities/AddGroupBnks');
 const AddMasterBnks = require('../../../Domains/banks/entities/AddMasterBnks');
@@ -390,6 +391,27 @@ describe('DataBank repository', () => {
         await expect(apkBnksRepositoryPostgres.chckbnks(addbks)).rejects.toThrowError(InvariantError);
       });
 
+      it('should check data bank have in database when edit bank', async () => {
+        const addbks = new EditBnks({
+          masterbnkxyxt: 'bca',
+          namebankxxyy: 'bca2',
+          yyxxmethod: 'bank',
+          xynamarekx: 'flsia sitanggang',
+          norekxyxy: '0322917811',
+          barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
+        });
+        // Arrange
+        await AddBanksTableTestHelper.addbks({
+          namebankxxyy: 'bca3',
+          xynamarekx: 'flsia sitanggang',
+          norekxyxy: '0322917811'
+        });
+
+        const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
+        // Action & Assert
+        await expect(apkBnksRepositoryPostgres.chckbnks2(addbks)).rejects.toThrowError(InvariantError);
+      });
+
       it('should not throw InvariantError if bank not available', async () => {
         // Arrange
         const addbks = new AddBnks({
@@ -411,6 +433,60 @@ describe('DataBank repository', () => {
         const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
         // Action & Assert
         await expect(apkBnksRepositoryPostgres.chckbnks(addbks)).resolves.not.toThrow(InvariantError);
+      });
+
+      it('should check data bank have in database when edit bank', async () => {
+
+        const params = {
+          nmbank: 'bca2'
+        }
+        const addbks = new EditBnks({
+          masterbnkxyxt: 'bca',
+          namebankxxyy: 'bca2',
+          yyxxmethod: 'bank',
+          xynamarekx: 'flsia sitanggang',
+          norekxyxy: '0322917811',
+          barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
+        });
+        // Arrange
+        await AddBanksTableTestHelper.addbks({
+          namebankxxyy: 'bca3',
+          xynamarekx: 'flsia sitanggang',
+          norekxyxy: '0322917811'
+        });
+
+        const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
+        // Action & Assert
+        await expect(apkBnksRepositoryPostgres.chckbnks2(addbks, params.nmbank)).rejects.toThrowError(InvariantError);
+      });
+
+      it('should not throw return data if bank have in database', async () => {
+
+        const params = {
+          nmbank: 'bca83'
+
+        };
+        const addbks = new EditBnks({
+          masterbnkxyxt: 'bca',
+          namebankxxyy: 'bca83',
+          yyxxmethod: 'bank',
+          xynamarekx: 'flsia sitanggang',
+          norekxyxy: '0322917811',
+          barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
+        });
+        // Arrange
+        await AddBanksTableTestHelper.addbks({
+          namebankxxyy: 'bca83',
+          xynamarekx: 'flsia sitanggang',
+          norekxyxy: '0322917811'
+        });
+
+        const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
+        const dataresultedit = await apkBnksRepositoryPostgres.chckbnks2(addbks, params.nmbank);
+
+        // Action & Assert
+        expect(dataresultedit).toStrictEqual({ "namegroupxyzt": ["groupbank1"] });
+
       });
     });
 
@@ -549,9 +625,9 @@ describe('DataBank repository', () => {
       it('should edit data bank fail', async () => {
         const params = {
           idbank: 2,
+          nmbank: 'bca2'
         }
-        const useCasePayload = new AddBnks({
-          namegroupxyzt: ['groupbank1'],
+        const useCasePayload = new EditBnks({
           masterbnkxyxt: 'bca',
           namebankxxyy: 'bca1',
           yyxxmethod: 'bank',
@@ -571,12 +647,12 @@ describe('DataBank repository', () => {
       it('should edit data bank successfully with value true in barcode', async () => {
         const params = {
           idbank: 2,
+          nmbank: 'bca1'
         }
 
-        const useCasePayload = new AddBnks({
-          namegroupxyzt: ['groupbank1'],
+        const useCasePayload = new EditBnks({
           masterbnkxyxt: 'bca',
-          namebankxxyy: 'bca1',
+          namebankxxyy: 'bca67',
           yyxxmethod: 'bank',
           xynamarekx: 'florensia sitanggang',
           norekxyxy: '0355917811',
@@ -600,8 +676,7 @@ describe('DataBank repository', () => {
           idbank: 3,
         }
 
-        const useCasePayload = new AddBnks({
-          namegroupxyzt: ['groupbank1'],
+        const useCasePayload = new EditBnks({
           masterbnkxyxt: 'bca',
           namebankxxyy: 'bca1',
           yyxxmethod: 'bank',

@@ -45,6 +45,10 @@ class BnksRepository {
     async chckbnks() {
         throw new Error('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
     }
+
+    async chckbnks2() {
+        throw new Error('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+    }
     async addbnks() {
         throw new Error('BNKS_REPOSITORY.METHOD_NOT_IMPLEMENTED');
     }
