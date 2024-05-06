@@ -523,7 +523,7 @@ describe('DATA BANK', () => {
             expect(mockbnksRepository.chckbnks2).toBeCalledWith(useCasePayload, params.nmbank);
             expect(mockbnksRepository.putbnks).toBeCalledWith(useCasePayload, params.idbank);
             checkbank.namegroupxyzt.forEach(async (group) => {
-                expect(mockcacheService.delete).toBeCalledWith(`namegroup:${group.namegroupxyzt}`);
+                expect(mockcacheService.delete).toBeCalledWith(`namegroup:${group}`);
             });
 
 
