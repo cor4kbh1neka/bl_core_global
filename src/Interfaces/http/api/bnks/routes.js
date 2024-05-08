@@ -83,7 +83,7 @@ const routes = (handler) => ([
   },
   {
     method: 'POST',
-    path: '/banks/v2',
+    path: '/banks/v2/add',
     handler: handler.postBanknwHandler,
     options: {
       cors: {

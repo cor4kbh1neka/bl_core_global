@@ -309,7 +309,7 @@ describe('/addBankEndpoints', () => {
                 // Action
                 const response = await server.inject({
                     method: 'POST',
-                    url: '/banks/v2',
+                    url: '/banks/v2/add',
                     payload: requestPayload,
                 });
                 // Assert
