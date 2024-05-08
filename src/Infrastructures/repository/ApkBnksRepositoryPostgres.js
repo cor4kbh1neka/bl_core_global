@@ -180,7 +180,7 @@ class ApkBnksRepositoryPostgres extends BnksRepository {
         }
     }
 
-    async chckbnks2(payload, params) {
+    async chckedybnks(payload, params) {
         const { xynamarekx, norekxyxy } = payload
 
         // Kueri untuk mencari dataapknotice

@@ -504,7 +504,7 @@ describe('DATA BANK', () => {
             const mockbnksRepository = new BnksRepository();
             const mockcacheService = new CacheService();
 
-            mockbnksRepository.chckbnks2 = jest.fn()
+            mockbnksRepository.chckedybnks = jest.fn()
                 .mockImplementation(() => Promise.resolve(checkbank));
             mockbnksRepository.putbnks = jest.fn()
                 .mockImplementation(() => Promise.resolve(resultmockresult));
@@ -520,7 +520,7 @@ describe('DATA BANK', () => {
             const resultbankusecase = await putBankusecase.edtbank(useCasePayload, params);
 
             expect(resultbankusecase).toStrictEqual(resultmockresult);
-            expect(mockbnksRepository.chckbnks2).toBeCalledWith(useCasePayload, params.nmbank);
+            expect(mockbnksRepository.chckedybnks).toBeCalledWith(useCasePayload, params.nmbank);
             expect(mockbnksRepository.putbnks).toBeCalledWith(useCasePayload, params.idbank);
             checkbank.namegroupxyzt.forEach(async (group) => {
                 expect(mockcacheService.delete).toBeCalledWith(`namegroup:${group}`);

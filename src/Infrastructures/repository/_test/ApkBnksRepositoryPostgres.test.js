@@ -409,7 +409,7 @@ describe('DataBank repository', () => {
 
         const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
         // Action & Assert
-        await expect(apkBnksRepositoryPostgres.chckbnks2(addbks)).rejects.toThrowError(InvariantError);
+        await expect(apkBnksRepositoryPostgres.chckedybnks(addbks)).rejects.toThrowError(InvariantError);
       });
 
       it('should not throw InvariantError if bank not available', async () => {
@@ -457,7 +457,7 @@ describe('DataBank repository', () => {
 
         const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
         // Action & Assert
-        await expect(apkBnksRepositoryPostgres.chckbnks2(addbks, params.nmbank)).rejects.toThrowError(InvariantError);
+        await expect(apkBnksRepositoryPostgres.chckedybnks(addbks, params.nmbank)).rejects.toThrowError(InvariantError);
       });
 
       it('should not throw return data if bank have in database', async () => {
@@ -482,7 +482,7 @@ describe('DataBank repository', () => {
         });
 
         const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
-        const dataresultedit = await apkBnksRepositoryPostgres.chckbnks2(addbks, params.nmbank);
+        const dataresultedit = await apkBnksRepositoryPostgres.chckedybnks(addbks, params.nmbank);
 
         // Action & Assert
         expect(dataresultedit).toStrictEqual({ "namegroupxyzt": ["groupbank1"] });

@@ -141,7 +141,7 @@ class AddbnksUseCase {
 
     async edtbank(useCasePayload, params) {
         const payload = new EditBnks(useCasePayload);
-        const checkbank = await this._bnksRepository.chckbnks2(payload, params.nmbank);
+        const checkbank = await this._bnksRepository.chckedybnks(payload, params.nmbank);
         await this._bnksRepository.putbnks(payload, params.idbank);
         checkbank.namegroupxyzt.forEach(async (group) => {
             await this._cacheService.delete(`namegroup:${group}`);
