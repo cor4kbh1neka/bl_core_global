@@ -16,11 +16,15 @@ const createServer = async (container) => {
   const server = Hapi.server({
     host: process.env.HOST,
     port: process.env.PORT,
-    // routes: {
-    //   cors: {
-    //     origin: ['https://bostoni.pro', 'https://bosraka.com'],
-    //   },
-    // },
+    routes: {
+      cors: {
+        // origin: ['https://bostoni.pro', 'https://bosraka.com'],
+        additionalHeaders: ['Origin', 'Access-Control-Allow-Origin'],
+        additionalExposedHeaders: ['Origin', 'Access-Control-Allow-Origin'],
+        credentials: true,
+
+      },
+    },
   });
 
 
@@ -88,6 +92,12 @@ const createServer = async (container) => {
         });
         newResponse.code(translatedError.statusCode);
         return newResponse;
+      }
+
+      //Jika respons dari server adalah Boom (kesalahan HTTP), kami menambahkan header Access-Control-Allow-Origin ke respons dengan nilai Origin dari header permintaan. Ini memastikan bahwa bahkan jika permintaan berasal dari domain lain, header CORS akan disertakan dalam respons, sehingga browser tidak akan menolak respons karena kebijakan CORS.
+      if (response.isBoom) {
+        const corsHeaders = request.headers['origin'] || '*';
+        response.output.headers['Access-Control-Allow-Origin'] = corsHeaders;
       }
 
       // mempertahankan penanganan client error oleh hapi secara native, seperti 404, etc.
