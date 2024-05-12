@@ -14,11 +14,11 @@ const routes = (handler) => ([
     method: 'GET',
     path: '/banks/group',
     handler: handler.getGroupHandler,
-    options: {
-      cors: {
-        origin: ['*'],
-      },
-    },
+    // options: {
+    //   cors: {
+    //     origin: ['*'],
+    //   },
+    // },
   },
   {
     method: 'PUT',
@@ -65,11 +65,11 @@ const routes = (handler) => ([
     method: 'GET',
     path: '/banks/master',
     handler: handler.getMasterHandler,
-    options: {
-      cors: {
-        origin: ['*'],
-      },
-    },
+    // options: {
+    //   cors: {
+    //     origin: ['*'],
+    //   },
+    // },
   },
   {
     method: 'DELETE',
@@ -115,11 +115,11 @@ const routes = (handler) => ([
     method: 'GET',
     path: '/banks/v2/{groupname}',
     handler: handler.getBanknwHandler,
-    options: {
-      cors: {
-        origin: ['*'],
-      },
-    },
+    // options: {
+    //   cors: {
+    //     origin: ['*'],
+    //   },
+    // },
   },
   {
     method: 'GET',

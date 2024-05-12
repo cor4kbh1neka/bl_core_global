@@ -18,7 +18,7 @@ const createServer = async (container) => {
     port: process.env.PORT,
     routes: {
       cors: {
-        // origin: ['https://bostoni.pro', 'https://bosraka.com'],
+        origin: ['https://bostoni.pro'],
         additionalHeaders: ['Origin', 'Access-Control-Allow-Origin'],
         additionalExposedHeaders: ['Origin', 'Access-Control-Allow-Origin'],
         credentials: true,

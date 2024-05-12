@@ -14,21 +14,21 @@ const routes = (handler) => ([
     method: 'GET',
     path: '/memo',
     handler: handler.getMemo,
-    options: {
-      cors: {
-        origin: ['*'],
-      },
-    },
+    // options: {
+    //   cors: {
+    //     origin: ['*'],
+    //   },
+    // },
   },
   {
     method: 'GET',
     path: '/memo/{statustype}',
     handler: handler.getMemostts,
-    options: {
-      cors: {
-        origin: ['*'],
-      },
-    },
+    // options: {
+    //   cors: {
+    //     origin: ['*'],
+    //   },
+    // },
   },
   //cors
   {
