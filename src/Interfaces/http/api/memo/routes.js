@@ -1,12 +1,12 @@
 const routes = (handler) => ([
-
+  //cors
   {
     method: 'POST',
     path: '/memo',
     handler: handler.postMemo,
     options: {
       cors: {
-        origin: ['*'],
+        origin: ['https://bostoni.pro'],
       },
     },
   },
@@ -30,13 +30,14 @@ const routes = (handler) => ([
       },
     },
   },
+  //cors
   {
     method: 'DELETE',
     path: '/memo/{idmemo}',
     handler: handler.delMemo,
     options: {
       cors: {
-        origin: ['*'],
+        origin: ['https://bostoni.pro'],
       },
     },
   },

@@ -17,6 +17,7 @@ const routes = (handler) => ([
       cors: {
         origin: ['*'],
       },
+      auth: 'dashbljwt',
     },
   },
   {
@@ -27,7 +28,9 @@ const routes = (handler) => ([
       cors: {
         origin: ['*'],
       },
+      auth: 'dashbljwt',
     },
+
   },
   {
     method: 'DELETE',
@@ -37,6 +40,7 @@ const routes = (handler) => ([
       cors: {
         origin: ['*'],
       },
+      auth: 'dashbljwt',
     },
   },
 ]);

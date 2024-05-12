@@ -5,7 +5,7 @@ const routes = (handler) => ([
     handler: handler.postApkHandler,
     options: {
       cors: {
-        origin: ['*'],
+        origin: ['https://bostoni.pro'],
       },
     },
   },
@@ -15,7 +15,7 @@ const routes = (handler) => ([
     handler: handler.postApkEventHandler,
     options: {
       cors: {
-        origin: ['*'],
+        origin: ['https://bostoni.pro'],
       },
     },
   },
@@ -25,10 +25,11 @@ const routes = (handler) => ([
     handler: handler.postApkNoticeHandler,
     options: {
       cors: {
-        origin: ['*'],
+        origin: ['https://bostoni.pro'],
       },
     },
   },
+  //hanya pake auth
   {
     method: 'GET',
     path: '/apks/settings/{apkid}',

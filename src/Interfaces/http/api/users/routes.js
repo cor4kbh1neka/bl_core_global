@@ -5,47 +5,53 @@ const routes = (handler) => ([
     handler: handler.postUserHandler,
     options: {
       cors: {
-        origin: ['*'],
+        origin: ['https://bostoni.pro'],
       },
     },
   },
+  //cors backend +access token
   {
     method: 'GET',
     path: '/users/{xxuserxx}',
     handler: handler.getUserHandler,
     options: {
       cors: {
-        origin: ['*'],
+        origin: ['https://bostoni.pro'],
       },
     },
   },
+  //cors backend +access token
   {
     method: 'PUT',
     path: '/users/{xyusernamexxy}',
     handler: handler.putUserHandler,
     options: {
       cors: {
-        origin: ['*'],
+        origin: ['https://bostoni.pro'],
       },
     },
   },
+  //cors backend +access token
   {
     method: 'PUT',
     path: '/users/vip/{xyusernamexxy}',
     handler: handler.putUserVIPHandler,
     options: {
       cors: {
-        origin: ['*'],
+        origin: ['https://bostoni.pro'],
       },
+
     },
   },
+  //cors backend +access token
+
   {
     method: 'PUT',
     path: '/users/pswdy/{xyusernamexxy}',
     handler: handler.putPassHandler,
     options: {
       cors: {
-        origin: ['*'],
+        origin: ['https://bostoni.pro'],
       },
     },
   },

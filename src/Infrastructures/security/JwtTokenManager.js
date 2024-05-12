@@ -17,7 +17,6 @@ class JwtTokenManager extends AuthenticationTokenManager {
     const expiration = Math.floor(Date.now() / 1000) + TKN_AGE; // Menghitung waktu kedaluwarsa
     // return this._jwt.generate(payload, process.env.ACCESS_TOKEN_KEY);
     return this._jwt.generate({ ...payload, exp: expiration }, process.env.ACCESS_TOKEN_KEY);
-
   }
 
   async createRefreshToken(payload) {
@@ -46,7 +45,6 @@ class JwtTokenManager extends AuthenticationTokenManager {
   async decodePayload(token) {
     // try {
     const artifacts = this._jwt.decode(token);
-
     return artifacts.decoded.payload;
     // } catch (error) {
     //   throw new ClientError('Missing authentication');

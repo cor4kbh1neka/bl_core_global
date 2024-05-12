@@ -2,6 +2,7 @@ const pool = require('../../database/postgres/pool');
 const AddMemoTableTestHelper = require('../../../../tests/AddMemoTableTestHelper');
 const container = require('../../container');
 const createServer = require('../createServer');
+const AuthenticationTokenManager = require('../../../Applications/security/AuthenticationTokenManager');
 
 describe('/addBankEndpoints', () => {
     afterAll(async () => {
@@ -43,11 +44,15 @@ describe('/addBankEndpoints', () => {
 
             it('should  throw an error 404 when payload is not found', async () => {
                 const server = await createServer(container);
+                // const accessToken = await container.getInstance(AuthenticationTokenManager.name).createAccessToken({ username: 'dicoding' });
 
                 // Action
                 const response = await server.inject({
                     method: 'GET',
                     url: `/memo`,
+                    // headers: {
+                    //     Authorization: `Bearer ${accessToken}`,
+                    // },
 
                 })
                 // Assert
@@ -59,6 +64,7 @@ describe('/addBankEndpoints', () => {
             it('should response 201 and persisted memoget', async () => {
 
                 const server = await createServer(container);
+                // const accessToken = await container.getInstance(AuthenticationTokenManager.name).createAccessToken({ username: 'dicoding' });
 
                 await AddMemoTableTestHelper.addmemo({ idmemo: 3 });
                 await AddMemoTableTestHelper.addmemo({ idmemo: 4 });
@@ -67,7 +73,9 @@ describe('/addBankEndpoints', () => {
                 const response = await server.inject({
                     method: 'GET',
                     url: `/memo`,
-
+                    // headers: {
+                    //     Authorization: `Bearer ${accessToken}`,
+                    // },
                 })
 
                 // Assert
@@ -84,12 +92,16 @@ describe('/addBankEndpoints', () => {
 
             it('should  throw an error 404 when payload is not found', async () => {
                 const server = await createServer(container);
+                // const accessToken = await container.getInstance(AuthenticationTokenManager.name).createAccessToken({ username: 'dicoding' });
+
                 const statustype = 3;
                 // Action
                 const response = await server.inject({
                     method: 'GET',
                     url: `/memo/${statustype}`,
-
+                    // headers: {
+                    //     Authorization: `Bearer ${accessToken}`,
+                    // },
                 })
                 // Assert
                 const responseJson = JSON.parse(response.payload);
@@ -100,6 +112,8 @@ describe('/addBankEndpoints', () => {
             it('should response 201 and persisted memoget', async () => {
 
                 const server = await createServer(container);
+                // const accessToken = await container.getInstance(AuthenticationTokenManager.name).createAccessToken({ username: 'dicoding' });
+
                 const statustype = 1;
 
                 await AddMemoTableTestHelper.addmemo({ idmemo: 4 });
@@ -110,6 +124,9 @@ describe('/addBankEndpoints', () => {
                 const response = await server.inject({
                     method: 'GET',
                     url: `/memo/${statustype}`,
+                    // headers: {
+                    //     Authorization: `Bearer ${accessToken}`,
+                    // },
 
                 })
 

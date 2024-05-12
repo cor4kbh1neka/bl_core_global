@@ -16,6 +16,11 @@ const createServer = async (container) => {
   const server = Hapi.server({
     host: process.env.HOST,
     port: process.env.PORT,
+    // routes: {
+    //   cors: {
+    //     origin: ['https://bostoni.pro', 'https://bosraka.com'],
+    //   },
+    // },
   });
 
 
@@ -25,21 +30,21 @@ const createServer = async (container) => {
     }
   ]);
 
-  // server.auth.strategy('jwtowner', 'jwt', {
-  //   keys: process.env.ACCESS_TOKEN_KEY,
-  //   verify: {
-  //     aud: false,
-  //     iss: false,
-  //     sub: false,
-  //     maxAgeSec: process.env.ACCESS_TOKEN_AGE,
-  //   },
-  //   validate: (artifacts) => ({
-  //     isValid: true,
-  //     credentials: {
-  //       id: artifacts.decoded.payload.username,
-  //     },
-  //   }),
-  // });
+  server.auth.strategy('dashbljwt', 'jwt', {
+    keys: process.env.ACCESS_TOKEN_KEY,
+    verify: {
+      aud: false,
+      iss: false,
+      sub: false,
+      maxAgeSec: process.env.ACCESS_TOKEN_AGE,
+    },
+    validate: (artifacts) => ({
+      isValid: true,
+      credentials: {
+        id: artifacts.decoded.payload.username,
+      },
+    }),
+  });
 
 
   await server.register([

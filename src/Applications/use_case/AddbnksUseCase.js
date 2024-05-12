@@ -162,14 +162,12 @@ class AddbnksUseCase {
     async getbankdt(params) {
         try {
             // mendapatkan catatan dari cache
-
             const result = await this._cacheService.get(`namegroup:${params.groupname}`);
             // await this._cacheService.delete(`namegroup:${params.groupname}`);
             const dataresult = JSON.parse(result);
             dataresult.headers = {
                 'X-Data-Source': 'cache',
             };
-
             return dataresult;
         } catch (error) {
             const getbankdata = await this._bnksRepository.getbnks(params.groupname);

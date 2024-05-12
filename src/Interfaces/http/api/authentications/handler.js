@@ -14,7 +14,6 @@ class AuthenticationsHandler {
   }
 
   async postAuthenticationHandler(request, h) {
-
     const loginUserUseCase = this._container.getInstance(LoginUserUseCase.name);
     const { accessToken, refreshToken, apkToken } = await loginUserUseCase.execute(request.payload);
 
