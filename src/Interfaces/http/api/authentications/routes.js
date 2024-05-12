@@ -3,20 +3,20 @@ const routes = (handler) => ([
     method: 'POST',
     path: '/authentications',
     handler: handler.postAuthenticationHandler,
-    // options: {
-    //   cors: {
-    //     origin: ['*'],
-    //   },
-    // },
+    options: {
+      cors: {
+        origin: ['*'],
+      },
+    },
   },
   {
     method: 'POST',
     path: '/authentications/datauser',
     handler: handler.postAuthenticationdataHandler,
     options: {
-      // cors: {
-      //   origin: ['*'],
-      // },
+      cors: {
+        origin: ['*'],
+      },
       auth: 'dashbljwt',
     },
   },
@@ -25,9 +25,9 @@ const routes = (handler) => ([
     path: '/authentications',
     handler: handler.putAuthenticationHandler,
     options: {
-      // cors: {
-      //   origin: ['*'],
-      // },
+      cors: {
+        origin: ['*'],
+      },
       auth: 'dashbljwt',
     },
 
@@ -37,9 +37,9 @@ const routes = (handler) => ([
     path: '/authentications',
     handler: handler.deleteAuthenticationHandler,
     options: {
-      // cors: {
-      //   origin: ['*'],
-      // },
+      cors: {
+        origin: ['*'],
+      },
       auth: 'dashbljwt',
     },
   },
