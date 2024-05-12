@@ -18,7 +18,6 @@ const createServer = async (container) => {
     port: process.env.PORT,
     routes: {
       cors: {
-        origin: ['https://bostoni.pro'],
         additionalHeaders: ['Origin', 'Access-Control-Allow-Origin'],
         additionalExposedHeaders: ['Origin', 'Access-Control-Allow-Origin'],
         credentials: true,
@@ -95,10 +94,7 @@ const createServer = async (container) => {
       }
 
       //Jika respons dari server adalah Boom (kesalahan HTTP), kami menambahkan header Access-Control-Allow-Origin ke respons dengan nilai Origin dari header permintaan. Ini memastikan bahwa bahkan jika permintaan berasal dari domain lain, header CORS akan disertakan dalam respons, sehingga browser tidak akan menolak respons karena kebijakan CORS.
-      if (response.isBoom) {
-        const corsHeaders = request.headers['origin'] || '*';
-        response.output.headers['Access-Control-Allow-Origin'] = corsHeaders;
-      }
+
 
       // mempertahankan penanganan client error oleh hapi secara native, seperti 404, etc.
       if (!translatedError.isServer) {
@@ -112,6 +108,10 @@ const createServer = async (container) => {
       });
       newResponse.code(500);
       return newResponse;
+    }
+    if (response.isBoom) {
+      const corsHeaders = request.headers['origin'] || '*';
+      response.output.headers['Access-Control-Allow-Origin'] = corsHeaders;
     }
 
     // jika bukan error, lanjutkan dengan response sebelumnya (tanpa terintervensi)
