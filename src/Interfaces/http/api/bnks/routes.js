@@ -67,7 +67,7 @@ const routes = (handler) => ([
     handler: handler.getMasterHandler,
     options: {
       cors: {
-        origin: ['https://bostoni.pro'],
+        origin: ['*'],
       },
     },
   },
