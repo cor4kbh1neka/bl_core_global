@@ -16,7 +16,7 @@ const routes = (handler) => ([
     handler: handler.getMemo,
     options: {
       cors: {
-        origin: ['*'],
+        origin: ['https://bostoni.pro'],
       },
     },
   },
@@ -26,7 +26,7 @@ const routes = (handler) => ([
     handler: handler.getMemostts,
     options: {
       cors: {
-        origin: ['https://bostoni.pro'],
+        origin: ['*'],
       },
     },
   },
