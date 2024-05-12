@@ -109,10 +109,34 @@ const createServer = async (container) => {
       newResponse.code(500);
       return newResponse;
     }
-    if (response.isBoom) {
-      const corsHeaders = request.headers['origin'] || '*';
-      response.output.headers['Access-Control-Allow-Origin'] = corsHeaders;
+    // Handle CORS
+    const corsHeaders = {
+      'Access-Control-Allow-Methods': 'OPTIONS, GET, POST, PUT, DELETE',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    };
+
+    // Check if CORS header is present in the response
+    const responseHeaders = response.headers || {};
+    const hasCorsHeader = Object.keys(responseHeaders).some(header =>
+      header.toLowerCase() === 'access-control-allow-origin'
+    );
+
+    if (!hasCorsHeader) {
+      // If CORS header is not present, allow access from all origins
+      corsHeaders['Access-Control-Allow-Origin'] = '*';
     }
+
+    if (request.method === 'options') {
+      // Handling preflight request
+      return h.response().code(200).headers(corsHeaders);
+    }
+
+    // Apply CORS headers to response
+    const responseWithCors = response.isBoom ? response.output : response;
+    responseWithCors.headers = {
+      ...responseWithCors.headers,
+      ...corsHeaders,
+    };
 
     // jika bukan error, lanjutkan dengan response sebelumnya (tanpa terintervensi)
     return h.continue;
