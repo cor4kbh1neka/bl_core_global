@@ -191,6 +191,8 @@ const routes = (handler) => ([
     options: {
       cors: {
         origin: ['*'],
+        headers: ["Accept", "Content-Type"],
+        additionalHeaders: ["X-Requested-With"]
       },
       auth: 'dashbljwt',
     },
