@@ -1,4 +1,5 @@
 const Hapi = require('@hapi/hapi');
+const H2o2 = require('@hapi/h2o2');
 const Jwt = require('@hapi/jwt');
 
 
@@ -18,7 +19,7 @@ const createServer = async (container) => {
     port: process.env.PORT,
   });
 
-
+  await server.register(H2o2);
   await server.register([
     {
       plugin: Jwt,
