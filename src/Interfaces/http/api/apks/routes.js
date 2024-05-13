@@ -160,7 +160,7 @@ const routes = (handler) => ([
   },
   {
     method: 'POST',
-    path: '/prx/checkBalances', // Route untuk proxy
+    path: '/prx/checkBalance', // Route untuk proxy
     options: {
       auth: 'dashbljwt',
     },
