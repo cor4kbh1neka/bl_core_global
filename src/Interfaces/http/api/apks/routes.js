@@ -191,9 +191,10 @@ const routes = (handler) => ([
     options: {
       cors: {
         origin: ['*'],
-        headers: ['Accept', 'Authorization', 'Content-Type', 'If-None-Match', 'Accept-language'], // all default apart from Accept-language
+        headers: ["Accept", "Content-Type"],
         additionalHeaders: ['cache-control', 'x-requested-with']
       },
+      pre: [{ method: checkOriginAndProxy, assign: 'checkOrigin' }],
       auth: 'dashbljwt',
     },
     handler: {
