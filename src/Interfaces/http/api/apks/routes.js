@@ -202,6 +202,7 @@ const routes = (handler) => ([
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       });
       response.header('Access-Control-Allow-Origin', '*'); // Menambahkan header Access-Control-Allow-Origin
+      console.log(response);
       return response;
     }
   },
