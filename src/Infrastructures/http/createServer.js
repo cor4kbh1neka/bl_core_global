@@ -67,6 +67,21 @@ const createServer = async (container) => {
 
   ]);
 
+  // const allowedOrigins = ['https://bosraka.com', 'https://bostoni.pro'];
+
+
+  // server.ext('onRequest', (request, h) => {
+  //   // Memeriksa origin permintaan
+  //   const origin = request.headers.origin;
+  //   if (!origin || !allowedOrigins.includes(origin)) {
+  //     return h.response({ message: 'Origin not allowed' }).code(403);
+  //   }
+
+  //   // Lanjutkan dengan proxy jika origin diperbolehkan
+  //   return h.continue;
+  // });
+
+
 
   server.ext('onPreResponse', (request, h) => {
     // mendapatkan konteks response dari request
