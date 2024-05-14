@@ -186,43 +186,23 @@ const routes = (handler) => ([
     }
   },
   {
-    method: 'GET',
+    method: 'POST',
     path: '/prx/checkBalance', // Route untuk proxy
     options: {
-      auth: 'dashbljwt',
-      handler: (request, h) => {
-        // Periksa metode permintaan
-        if (request.method.toUpperCase() === 'GET') {
-          // Lakukan redirect jika metode GET
-          return h.redirect('https://katakunci.com');
-        } else {
-          // Salurkan respons langsung dari URI target jika metode POST
-          return h.proxy({
-            uri: 'https://bostoni.pro/api/checkBalance',
-            passThrough: true
-          });
-        }
+      cors: {
+        origin: ['*'],
+        headers: ["Accept", "Content-Type"],
+        additionalHeaders: ['cache-control', 'x-requested-with', 'utilitiesgenerate']
+      },
+      // auth: 'dashbljwt',
+    },
+    handler: {
+      proxy: {
+        uri: 'https://bostoni.pro/api/checkBalance', // URL target proxy
+        passThrough: true, // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       }
     }
   },
-  // {
-  //   method: 'POST',
-  //   path: '/prx/checkBalance', // Route untuk proxy
-  //   options: {
-  //     cors: {
-  //       origin: ['*'],
-  //       headers: ["Accept", "Content-Type"],
-  //       additionalHeaders: ['cache-control', 'x-requested-with', 'utilitiesgenerate']
-  //     },
-  //     // auth: 'dashbljwt',
-  //   },
-  //   handler: {
-  //     proxy: {
-  //       uri: 'https://bostoni.pro/api/checkBalance', // URL target proxy
-  //       passThrough: true, // Mengizinkan respons dari endpoint ditransfer langsung ke klien
-  //     }
-  //   }
-  // },
   {
     method: 'POST',
     path: '/prx/getHistoryGame', // Route untuk proxy
