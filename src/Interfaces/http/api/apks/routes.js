@@ -191,19 +191,28 @@ const routes = (handler) => ([
     options: {
       cors: {
         origin: ['*'],
-        headers: ["Accept", "Content-Type", "cache-control", "x-requested-with"],
-        additionalHeaders: ['X-Custom-Header', 'utilitiesgenerate']
+        headers: ["Accept", "Content-Type"],
+        additionalHeaders: ['cache-control', 'x-requested-with', 'utilitiesgenerate']
       },
       auth: 'dashbljwt',
     },
-    handler: async (request, h) => {
-      const response = await h.proxy({
+    handler: {
+      proxy: {
         uri: 'https://bostoni.pro/api/checkBalance', // URL target proxy
-        passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
-      });
-      response.header('Access-Control-Allow-Origin', '*'); // Menambahkan header Access-Control-Allow-Origin
-      console.log(response);
-      return response;
+        passThrough: true, // Mengizinkan respons dari endpoint ditransfer langsung ke klien
+        onResponse: (err, res, request, h, settings, ttl) => {
+          if (err) {
+            throw err;
+          }
+
+          // Tambahkan header Access-Control-Allow-Origin
+          if (!res.headers['Access-Control-Allow-Origin']) {
+            res.headers['Access-Control-Allow-Origin'] = '*';
+          }
+
+          return h.proxy(res);
+        }
+      }
     }
   },
   {
