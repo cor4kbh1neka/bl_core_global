@@ -192,10 +192,9 @@ const routes = (handler) => ([
       cors: {
         origin: ['*'],
         headers: ["Accept", "Content-Type"],
-        additionalHeaders: ['cache-control', 'x-requested-with', 'utilitiesgenerate'],
-
+        additionalHeaders: ['cache-control', 'x-requested-with', 'utilitiesgenerate']
       },
-      // auth: 'dashbljwt',
+      auth: 'dashbljwt',
     },
     handler: {
       proxy: {

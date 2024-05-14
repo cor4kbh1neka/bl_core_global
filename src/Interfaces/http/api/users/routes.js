@@ -5,7 +5,7 @@ const routes = (handler) => ([
     handler: handler.postUserHandler,
     options: {
       cors: {
-        origin: ['https://bostoni.pro'],
+        origin: ['*'],
       },
     },
   },
