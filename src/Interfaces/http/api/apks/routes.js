@@ -193,7 +193,7 @@ const routes = (handler) => ([
         origin: ['*'],
         headers: ["Accept", "Content-Type"],
         additionalHeaders: ['cache-control', 'x-requested-with', 'utilitiesgenerate'],
-        methods: ['POST', 'PATCH', 'OPTIONS'] // Tambahkan metode yang diizinkan di sini
+
       },
       // auth: 'dashbljwt',
     },
