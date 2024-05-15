@@ -21,7 +21,7 @@ class AddMemo {
         }
 
 
-        if (!subject.match(/^[\w.,\s\-%]+$/) || !memo.match(/^[\w.,\s\-%]+$/)) {
+        if (!subject.match(/^[\w.,\s\-%]+$/) || !memo.match(/^[\w.,\s\n\-%]+$/)) {
             throw new Error('ADD_MEMO.ADD_CONTAIN_RESTRICTED_CHARACTER');
         }
     }
