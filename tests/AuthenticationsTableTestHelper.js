@@ -11,6 +11,15 @@ const AuthenticationsTableTestHelper = {
     await pool.query(query);
   },
 
+  async updatetoken(token, oldtoken) {
+    const query = {
+      text: 'UPDATE authentications SET token = $1 WHERE token = $2',
+      values: [token, oldtoken],
+    };
+
+    await pool.query(query);
+  },
+
   async findToken(token) {
     const query = {
       text: 'SELECT token FROM authentications WHERE token = $1',

@@ -28,6 +28,22 @@ describe('AuthenticationRepository postgres', () => {
     });
   });
 
+  describe('updateToken', () => {
+    it('should update token correctly', async () => {
+      const authenticationRepository = new AuthenticationRepositoryPostgres(pool);
+      const token = 'token';
+      const newtoken = 'newtoken';
+      await AuthenticationsTableTestHelper.addToken(token);
+      await authenticationRepository.updatetoken(newtoken, token);
+      // Assert
+      const tokens = await AuthenticationsTableTestHelper.findToken(newtoken);
+      expect(tokens).toHaveLength(1);
+      expect(tokens[0].token).toBe(newtoken);
+    });
+
+
+  });
+
   describe('checkAvailabilityToken function', () => {
     it('should throw InvariantError if token not available', async () => {
       // Arrange

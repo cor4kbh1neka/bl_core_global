@@ -14,6 +14,7 @@ class AuthenticationsHandler {
   }
 
   async postAuthenticationHandler(request, h) {
+
     const loginUserUseCase = this._container.getInstance(LoginUserUseCase.name);
     const { accessToken, refreshToken, apkToken } = await loginUserUseCase.execute(request.payload);
 
@@ -46,12 +47,14 @@ class AuthenticationsHandler {
   async putAuthenticationHandler(request) {
     const refreshAuthenticationUseCase = this._container
       .getInstance(RefreshAuthenticationUseCase.name);
-    const accessToken = await refreshAuthenticationUseCase.execute(request.payload);
+    const { accessToken, refreshTokennew, apkToken } = await refreshAuthenticationUseCase.execute(request.payload);
 
     return {
       status: 'success',
       data: {
         accessToken,
+        refreshTokennew,
+        apkToken
       },
     };
   }

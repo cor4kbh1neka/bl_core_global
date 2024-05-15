@@ -1,3 +1,5 @@
+const NewAuthentication = require('../../Domains/authentications/entities/NewAuth');
+
 class RefreshAuthenticationUseCase {
   constructor({
     authenticationRepository,
@@ -14,8 +16,22 @@ class RefreshAuthenticationUseCase {
     await this._authenticationRepository.checkAvailabilityToken(refreshToken);
 
     const { username, id } = await this._authenticationTokenManager.decodePayload(refreshToken);
+    const accessToken = await this._authenticationTokenManager
+      .createAccessToken({ username, id });
+    const refreshTokennew = await this._authenticationTokenManager
+      .createRefreshToken({ username, id });
+    const apkToken = await this._authenticationTokenManager
+      .createApkToken({ username, id });
 
-    return this._authenticationTokenManager.createAccessToken({ username, id });
+    const newAuthentication = {
+      accessToken,
+      refreshTokennew,
+      apkToken
+    };
+
+    await this._authenticationRepository.updatetoken(newAuthentication.refreshTokennew, refreshToken);
+
+    return newAuthentication;
   }
 
   _verifyPayload(payload) {

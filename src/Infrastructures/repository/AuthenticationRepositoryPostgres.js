@@ -20,6 +20,19 @@ class AuthenticationRepositoryPostgres extends AuthenticationRepository {
     // }
   }
 
+  async updatetoken(token, oldtoken) {
+    // try {
+    const query = {
+      text: 'UPDATE authentications SET token = $1 WHERE token = $2',
+      values: [token, oldtoken],
+    };
+    await this._pool.query(query);
+    // } catch (err) {
+    //   console.error(err.message);
+
+    // }
+  }
+
   async checkAvailabilityToken(token) {
     const query = {
       text: 'SELECT * FROM authentications WHERE token = $1',

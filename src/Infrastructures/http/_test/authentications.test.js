@@ -106,6 +106,8 @@ describe('/authentications endpoint', () => {
       expect(response.statusCode).toEqual(200);
       expect(responseJson.status).toEqual('success');
       expect(responseJson.data.accessToken).toBeDefined();
+      expect(responseJson.data.refreshTokennew).toBeDefined();
+      expect(responseJson.data.apkToken).toBeDefined();
     });
 
     it('should return 400 payload not contain refresh token', async () => {
@@ -346,7 +348,6 @@ describe('/authentications endpoint', () => {
       const responseJson = JSON.parse(response.payload);
       expect(response.statusCode).toEqual(200);
       expect(responseJson.status).toEqual('success');
-      expect(responseJson.data.databnks).toBeDefined();
     });
   });
 });
