@@ -33,7 +33,7 @@ describe('JwtTokenManager', () => {
         username: 'dicoding',
       };
       const TKN_AGE = parseInt(process.env.ACCCESS_TOKEN_AGE); // Mengambil nilai dari environment variable atau default 60000 jika tidak ada
-      const expiration = Math.floor(Date.now() / 1000) + TKN_AGE; // Menghitung waktu kedaluwarsa
+      const expiration = Math.floor(Date.now() / 1000) + TKN_AGE + 120; // Menghitung waktu kedaluwarsa
 
 
       const mockJwtToken = {
