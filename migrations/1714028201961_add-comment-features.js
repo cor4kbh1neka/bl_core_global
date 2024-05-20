@@ -32,6 +32,10 @@ exports.up = (pgm) => {
             type: 'TEXT',
         },
     });
+    pgm.sql(`
+    INSERT INTO memodata (statustype, statuspriority,subject,memo) VALUES
+    ('1', '1' ,'Selamat Datang' , 'langsung cek promo yang ada..! atau bisa hubungi livechat dan akan terhubung oleh admin kami yang bertugas' ),
+`);
 };
 
 exports.down = (pgm) => {
