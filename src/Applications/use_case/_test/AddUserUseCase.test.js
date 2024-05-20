@@ -7,6 +7,8 @@ const RegisteredUserLog = require('../../../Domains/users/entities/RegisteredUse
 const UserRepository = require('../../../Domains/users/UserRepository');
 const PasswordHash = require('../../security/PasswordHash');
 const AddUserUseCase = require('../AddUserUseCase');
+const CacheService = require('../../caching/CacheService');
+
 
 describe('UserRepository', () => {
     /**
@@ -150,18 +152,23 @@ describe('UserRepository', () => {
                 groupwd: 'groupbankwd2',
             });
             const mockUserRepository = new UserRepository();
+            const mockcacheService = new CacheService();
+
 
 
             mockUserRepository.UDataUser = jest.fn()
                 .mockImplementation(() => Promise.resolve('data berhasil di updated !'));
+            mockcacheService.delete = jest.fn().mockResolvedValue();
 
             const putDataUseCaseByU = new AddUserUseCase({
                 userRepository: mockUserRepository,
+                cacheServices: mockcacheService
             });
 
             const putDataByU = await putDataUseCaseByU.UDataUser(useCasePayload, params);
 
             expect(putDataByU).toStrictEqual('data berhasil di updated !');
+            expect(mockcacheService.delete).toBeCalledWith(`datauser:${params.xyusernamexxy}`);
 
             expect(mockUserRepository.UDataUser).toBeCalledWith(useCasePayload, params);
 
@@ -176,20 +183,24 @@ describe('UserRepository', () => {
                 is_verified: true
             };
             const mockUserRepository = new UserRepository();
+            const mockcacheService = new CacheService();
 
 
             mockUserRepository.Uvipuser = jest.fn()
                 .mockImplementation(() => Promise.resolve('data berhasil di updated !'));
+            mockcacheService.delete = jest.fn().mockResolvedValue();
 
             const putDataUseCaseByU = new AddUserUseCase({
                 userRepository: mockUserRepository,
+                cacheServices: mockcacheService
+
             });
 
             const putDataByU = await putDataUseCaseByU.Uvipuser(useCasePayload, params);
 
             expect(putDataByU).toStrictEqual('data berhasil di updated !');
-
             expect(mockUserRepository.Uvipuser).toBeCalledWith(useCasePayload, params);
+            expect(mockcacheService.delete).toBeCalledWith(`datauser:${params.xyusernamexxy}`);
 
         });
     });

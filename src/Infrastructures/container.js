@@ -173,6 +173,10 @@ container.register([
                     name: 'passwordHash',
                     internal: PasswordHash.name,
                 },
+                {
+                    name: 'cacheServices',
+                    internal: CacheServices.name,
+                },
             ],
         },
     },
@@ -246,6 +250,10 @@ container.register([
                     name: 'userRepository',
                     internal: UserRepository.name,
                 },
+                {
+                    name: 'cacheServices',
+                    internal: CacheServices.name,
+                },
             ],
         },
     },
@@ -259,7 +267,6 @@ container.register([
                     name: 'apkRepository',
                     internal: ApkRepository.name,
                 },
-
                 {
                     name: 'cacheServices',
                     internal: CacheServices.name,

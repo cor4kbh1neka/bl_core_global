@@ -4,9 +4,11 @@ const ChangePassw = require('../../Domains/users/entities/ChangePassw');
 
 
 class AddUserUseCase {
-    constructor({ userRepository, passwordHash }) {
+    constructor({ userRepository, passwordHash, cacheServices }) {
         this._userRepository = userRepository;
         this._passwordHash = passwordHash;
+        this._cacheService = cacheServices;
+
     }
 
     async execute(useCasePayload) {
@@ -31,11 +33,14 @@ class AddUserUseCase {
     async UDataUser(useCasePayload, params) {
         const updatedData = new UpdateDataUser(useCasePayload);
         await this._userRepository.UDataUser(updatedData, params);
+        await this._cacheService.delete(`datauser:${params.xyusernamexxy}`);
+
         return 'data berhasil di updated !';
     }
 
     async Uvipuser(useCasePayload, params) {
         await this._userRepository.Uvipuser(useCasePayload, params);
+        await this._cacheService.delete(`datauser:${params.xyusernamexxy}`);
         return 'data berhasil di updated !';
     }
 
