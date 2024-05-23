@@ -128,7 +128,7 @@ const routes = (handler) => ([
       cors: {
         origin: ['*'],
       },
-      auth: 'dashbljwt',
+      // auth: 'dashbljwt',
     },
     handler: {
       proxy: {
