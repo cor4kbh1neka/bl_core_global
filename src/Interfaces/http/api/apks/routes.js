@@ -111,8 +111,8 @@ const routes = (handler) => ([
     options: {
       cors: {
         origin: ['*'],
-      },
-      auth: 'dashbljwt',
+      }
+      // auth: 'dashbljwt',
     },
     handler: {
       proxy: {
@@ -149,6 +149,38 @@ const routes = (handler) => ([
     handler: {
       proxy: {
         uri: 'https://bostoni.pro/api/cekuserreferral', // URL target proxy
+        passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
+      }
+    }
+  },
+  {
+    method: 'POST',
+    path: '/prx/gtdapiref', // Route untuk proxy
+    options: {
+      cors: {
+        origin: ['*'],
+      },
+      auth: 'dashbljwt',
+    },
+    handler: {
+      proxy: {
+        uri: 'https://bostoni.pro/api/getDataReferral', // URL target proxy
+        passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
+      }
+    }
+  },
+  {
+    method: 'POST',
+    path: '/prx/gthstry', // Route untuk proxy
+    options: {
+      cors: {
+        origin: ['*'],
+      },
+      auth: 'dashbljwt',
+    },
+    handler: {
+      proxy: {
+        uri: 'https://bostoni.pro/api/gethistory', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       }
     }
