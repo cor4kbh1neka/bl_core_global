@@ -1,6 +1,7 @@
 const EditContent = require('../../../Domains/contnt/entities/EditContent');
 const AddSitemap = require('../../../Domains/contnt/entities/AddSitemap');
 const EditGeneral = require('../../../Domains/contnt/entities/EditGeneral');
+const EditSlider = require('../../../Domains/contnt/entities/EditSlider');
 const ContentRepository = require('../../../Domains/contnt/ContentRepository');
 const CacheService = require('../../caching/CacheService');
 const ContentUseCase = require('../ContentUseCase');
@@ -342,3 +343,105 @@ describe('CONTENT GENERAL', () => {
     });
 });
 
+describe('CONTENT SLIDER', () => {
+    describe('it should edit content SLIDER correctltly', () => {
+        it('it should edit SLIDER correctltly', async () => {
+            // Arrange
+            const useCasePayload = new EditSlider({
+                ctsldrur: 'https://example.com/2',
+                ttlectsldr: 'example title 2',
+                trgturctsldr: 'https://example.com/2',
+                statusctsldr: '2',
+            });
+
+            const params = {
+                idctsldr: 4
+            };
+
+            const mockcacheService = new CacheService();
+            const mockContentRepository = new ContentRepository();
+
+            mockContentRepository.editslider = jest.fn()
+                .mockImplementation(() => Promise.resolve());
+            mockcacheService.delete = jest.fn().mockResolvedValue();
+
+            const editcontentusecase = new ContentUseCase({
+                contentRepository: mockContentRepository,
+                cacheServices: mockcacheService
+            });
+
+            const datasliderUseCase = await editcontentusecase.editslider(useCasePayload, params);
+
+            expect(datasliderUseCase).toStrictEqual('slider data updated');
+            expect(mockContentRepository.editslider).toBeCalledWith(useCasePayload, params.idctsldr);
+            expect(mockcacheService.delete).toBeCalledWith(`ctslider:ctslider`);
+        });
+    });
+    describe('should success calling get data content SLIDER', () => {
+
+        it('should success calling get data SLIDER', async () => {
+
+            // Arrange
+            const resultmockctSlider = {
+                ctsldrur: 'https://example.com/2',
+                ttlectsldr: 'example title 2',
+                trgturctsldr: 'https://example.com/2',
+                statusctsldr: '2',
+            };
+
+            // Action
+            const mockcacheService = new CacheService();
+            const mockContentRepository = new ContentRepository();
+
+
+            mockContentRepository.getslider = jest.fn()
+                .mockImplementation(() => Promise.resolve(resultmockctSlider));
+            mockcacheService.delete = jest.fn().mockResolvedValue();
+            mockcacheService.set = jest.fn().mockResolvedValue();
+
+            const getdataCtsliderUsecase = new ContentUseCase({
+                contentRepository: mockContentRepository,
+                cacheServices: mockcacheService
+            });
+
+            const payload = await getdataCtsliderUsecase.getslider();
+
+            // Assert
+            expect(mockContentRepository.getslider).toBeCalledWith();
+            expect(mockcacheService.delete).toBeCalledWith(`ctslider:ctslider`);
+            expect(mockcacheService.set).toBeCalledWith(`ctslider:ctslider`, JSON.stringify(resultmockctSlider));
+            expect(payload).toEqual(resultmockctSlider);
+        });
+
+        it('should success calling get data metatag with redis', async () => {
+
+            // Arrange
+            const resultmockctSlider = {
+                ctsldrur: 'https://example.com/2',
+                ttlectsldr: 'example title 2',
+                trgturctsldr: 'https://example.com/2',
+                statusctsldr: '2',
+                headers: {
+                    'X-Data-Source': 'cache',
+                }
+            };
+
+            // Action
+            const mockcacheService = new CacheService();
+            mockcacheService.get = jest.fn().mockResolvedValue(JSON.stringify(resultmockctSlider));
+
+
+            const getdataCtsliderUsecase = new ContentUseCase({
+                cacheServices: mockcacheService
+            });
+
+            const payload = await getdataCtsliderUsecase.getslider();
+
+            // Assert
+            expect(mockcacheService.get).toBeCalledWith(`ctslider:ctslider`);
+            expect(payload).toEqual(
+                resultmockctSlider
+            );
+        });
+    });
+});

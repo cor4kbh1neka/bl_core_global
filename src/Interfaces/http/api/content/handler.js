@@ -11,6 +11,8 @@ class ContentHandler {
     this.delcontentSiteMapTagHandler = this.delcontentSiteMapTagHandler.bind(this);
     this.putctGeneralTagHandler = this.putctGeneralTagHandler.bind(this);
     this.getctGeneralTagHandler = this.getctGeneralTagHandler.bind(this);
+    this.putctSliderTagHandler = this.putctSliderTagHandler.bind(this);
+    this.getctSliderTagHandler = this.getctSliderTagHandler.bind(this);
   }
 
   async putcontentMtTagHandler(request, h) {
@@ -94,6 +96,27 @@ class ContentHandler {
     const response = h.response({
       status: 'success',
       data: datactGeneral
+    });
+    response.code(200);
+    return response;
+  }
+
+  async putctSliderTagHandler(request, h) {
+    const putctSliderTagHandler = this._container.getInstance(ContentUseCase.name);
+    const dataslider = await putctSliderTagHandler.editslider(request.payload, request.params);
+    const response = h.response({
+      status: 'success',
+      data: dataslider
+    });
+    response.code(200);
+    return response;
+  }
+  async getctSliderTagHandler(request, h) {
+    const getctSliderTagHandler = this._container.getInstance(ContentUseCase.name);
+    const getslider = await getctSliderTagHandler.getslider();
+    const response = h.response({
+      status: 'success',
+      data: getslider
     });
     response.code(200);
     return response;

@@ -1,11 +1,13 @@
 const ContentMetatagTableHelper = require('../../../../tests/ContentMetatagTableHelper');
 const ContentSiteMapTableHelper = require('../../../../tests/ContentSiteMapTableHelper');
 const ContentgeneralContentTableHelper = require('../../../../tests/ContentgeneralContentTableHelper');
+const ContentSliderTableHelper = require('../../../../tests/ContentSliderTableHelper');
 const InvariantError = require('../../../Commons/exceptions/InvariantError');
 const NotFoundError = require('../../../Commons/exceptions/NotFoundError');
 const EditGeneral = require('../../../Domains/contnt/entities/EditGeneral');
 const EditContent = require('../../../Domains/contnt/entities/EditContent');
 const AddSitemap = require('../../../Domains/contnt/entities/AddSitemap');
+const EditSlider = require('../../../Domains/contnt/entities/EditSlider');
 const pool = require('../../database/postgres/pool');
 const ContentRepositoryPostgres = require('../ContentRepositoryPostgres');
 
@@ -14,6 +16,7 @@ describe('ContentRepositoryPostgres', () => {
     await ContentMetatagTableHelper.cleanTable();
     await ContentSiteMapTableHelper.cleanTable();
     await ContentgeneralContentTableHelper.cleanTable();
+    await ContentSliderTableHelper.cleanTable();
   });
 
   afterAll(async () => {
@@ -268,6 +271,70 @@ describe('ContentRepositoryPostgres', () => {
     });
 
 
+  });
+
+  describe('SLIDER CONTENT REPOSITORY', () => {
+    describe('SLIDER CONTENT REPOSITORY EDIT FEATURES', () => {
+
+      it('should edit content fail', async () => {
+        //arrange
+        const useCasePayload = new EditSlider({
+          ctsldrur: 'https://example.com/2',
+          ttlectsldr: 'example title 2',
+          trgturctsldr: 'https://example.com/2',
+          statusctsldr: '2',
+        });
+        const params = {
+          idctsldr: 5
+        }
+
+        // Action
+        const contentRepositoryPostgres = new ContentRepositoryPostgres(pool);
+
+        //assertion
+        await expect(contentRepositoryPostgres.editslider(useCasePayload, params.idctsldr))
+          .rejects.toThrowError(InvariantError);
+      });
+      it('should edit content success', async () => {
+        //arrange
+        const useCasePayload = new EditSlider({
+          ctsldrur: 'https://example.com/2',
+          ttlectsldr: 'example title 2',
+          trgturctsldr: 'https://example.com/2',
+          statusctsldr: '2',
+        });
+        const params = {
+          idctsldr: 6
+        }
+
+        // Action
+        await ContentSliderTableHelper.addslider({ idctsldr: 6 });
+        const contentRepositoryPostgres = new ContentRepositoryPostgres(pool);
+
+        //assertion
+        await contentRepositoryPostgres.editslider(useCasePayload, params.idctsldr);
+        const dataslider = await ContentSliderTableHelper.findslider(params.idctsldr);
+        expect(dataslider).toHaveLength(1);
+
+      });
+
+    })
+
+    describe('ContentRepositoryPostgres.getslider', () => {
+
+      it('should get slider success', async () => {
+        const contentRepositoryPostgres = new ContentRepositoryPostgres(pool);
+        await ContentSliderTableHelper.addslider({ idctsldr: 5, ctsldrur: 'https=//example.com/2' });
+        const ctgeneral = await contentRepositoryPostgres.getslider();
+        expect(ctgeneral).toEqual({
+          idctsldr: 5,
+          ctsldrur: 'https=//example.com/2',
+          ttlectsldr: 'example title 2',
+          trgturctsldr: 'https=//example.com/2',
+          statusctsldr: '2',
+        });
+      });
+    });
   });
 });
 

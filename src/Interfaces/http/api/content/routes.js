@@ -79,6 +79,26 @@ const routes = (handler) => ([
       },
     },
   },
+  {
+    method: 'PUT',
+    path: '/content/ctslider/{idctsldr}',
+    handler: handler.putctSliderTagHandler,
+    options: {
+      cors: {
+        origin: ['https://bostoni.pro'],
+      },
+    },
+  },
+  {
+    method: 'GET',
+    path: '/content/ctslider',
+    handler: handler.getctSliderTagHandler,
+    options: {
+      cors: {
+        origin: ['https://bostoni.pro'],
+      },
+    },
+  },
 ]);
 
 module.exports = routes;

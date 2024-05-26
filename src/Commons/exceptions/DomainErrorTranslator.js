@@ -81,6 +81,10 @@ DomainErrorTranslator._directories = {
   'ADD_SITEMAP.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('wrong type data input, check again !'),
   'ADD_SITEMAP.CONTAIN_RESTRICTED_CHARACTER': new InvariantError('restricted input , watch your input !'),
 
+  'EDIT_GENERAL.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('fill cannot empty'),
+  'EDIT_GENERAL.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('wrong type data input, check again !'),
+  'EDIT_GENERAL.CONTAIN_RESTRICTED_CHARACTER': new InvariantError('restricted input , watch your input !'),
+
 };
 
 module.exports = DomainErrorTranslator;

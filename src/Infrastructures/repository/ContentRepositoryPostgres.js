@@ -124,6 +124,27 @@ class ContentRepositoryPostgres extends ContentRepository {
         return result.rows[0];
     }
 
+    async editslider(payload, params) {
+        const query = {
+            text: 'UPDATE ctsldr SET ctsldrur = $1,ttlectsldr= $2, trgturctsldr = $3, statusctsldr = $4 WHERE idctsldr = $5',
+            values: [payload.ctsldrur, payload.ttlectsldr, payload.trgturctsldr, payload.statusctsldr, params],
+        };
+        const result = await this._pool.query(query);
+        if (!result.rowCount) {
+            throw new InvariantError('fail edit data !');
+        }
+        return "slider data updated";
+    }
+
+    async getslider() {
+        const query = {
+            text: 'SELECT idctsldr, ctsldrur, ttlectsldr, trgturctsldr, statusctsldr FROM ctsldr ',
+            values: [],
+        };
+        const result = await this._pool.query(query);
+        return result.rows[0];
+    }
+
 }
 
 module.exports = ContentRepositoryPostgres;

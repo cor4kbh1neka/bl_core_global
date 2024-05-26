@@ -1,6 +1,7 @@
 const EditContent = require('../../Domains/contnt/entities/EditContent');
 const AddSiteMap = require('../../Domains/contnt/entities/AddSitemap');
 const EditGeneral = require('../../Domains/contnt/entities/EditGeneral');
+const EditSlider = require('../../Domains/contnt/entities/EditSlider');
 
 
 class ContentUseCase {
@@ -95,6 +96,29 @@ class ContentUseCase {
             await this._cacheService.delete(`ctgeneral:ctgeneral`);
             await this._cacheService.set(`ctgeneral:ctgeneral`, JSON.stringify(dtgeneral));
             return dtgeneral;
+        }
+    }
+
+    async editslider(useCasePayload, params) {
+        const payload = new EditSlider(useCasePayload);
+        await this._contentRepository.editslider(payload, params.idctsldr);
+        await this._cacheService.delete(`ctslider:ctslider`);
+        return 'slider data updated';
+    }
+
+    async getslider() {
+        try {
+            const result = await this._cacheService.get(`ctslider:ctslider`);
+            const dataresult = JSON.parse(result);
+            dataresult.headers = {
+                'X-Data-Source': 'cache',
+            };
+            return dataresult;
+        } catch (error) {
+            const dtslider = await this._contentRepository.getslider();
+            await this._cacheService.delete(`ctslider:ctslider`);
+            await this._cacheService.set(`ctslider:ctslider`, JSON.stringify(dtslider));
+            return dtslider;
         }
     }
 }

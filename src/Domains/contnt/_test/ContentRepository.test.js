@@ -35,4 +35,15 @@ describe('contentRepository interface', () => {
             await expect(contentRepository.getgeneral({})).rejects.toThrowError('CONTENT_REPOSITORY.METHOD_NOT_IMPLEMENTED');
         });
     });
+    describe('SLIDER  interface', () => {
+
+        it('should throw an error whe invoke abstract behavior', async () => {
+            //arrange
+            const contentRepository = new ContentRepository()
+            //action and Assertion
+            await expect(contentRepository.editslider({})).rejects.toThrowError('CONTENT_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+            await expect(contentRepository.getslider({})).rejects.toThrowError('CONTENT_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+        });
+    });
+
 });

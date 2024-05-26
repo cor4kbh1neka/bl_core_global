@@ -2,6 +2,7 @@ const pool = require('../../database/postgres/pool');
 const ContentMetatagTableHelper = require('../../../../tests/ContentMetatagTableHelper');
 const ContentSiteMapTableHelper = require('../../../../tests/ContentSiteMapTableHelper');
 const ContentgeneralContentTableHelper = require('../../../../tests/ContentgeneralContentTableHelper');
+const ContentSliderTableHelper = require('../../../../tests/ContentSliderTableHelper');
 const container = require('../../container');
 const createServer = require('../createServer');
 
@@ -15,6 +16,7 @@ describe('ContentEndPoints', () => {
         await ContentMetatagTableHelper.cleanTable();
         await ContentSiteMapTableHelper.cleanTable();
         await ContentgeneralContentTableHelper.cleanTable();
+        await ContentSliderTableHelper.cleanTable();
 
     });
 
@@ -295,6 +297,78 @@ describe('ContentEndPoints', () => {
                 const response = await server.inject({
                     method: 'GET',
                     url: `/content/ctgeneral`,
+                });
+
+
+                //assert
+                const responseJson = JSON.parse(response.payload);
+                expect(response.statusCode).toEqual(200);
+                expect(responseJson.status).toEqual('success');
+                expect(responseJson.data).toBeDefined();
+            });
+        });
+    });
+
+
+    describe('CONTENT SLIDER ENDPOINTS', () => {
+        describe('Contentrepository. Edit Content SLIDER', () => {
+            it('should edit content SLIDER success', async () => {
+                const requestPayload = {
+                    ctsldrur: 'https://example.com/2',
+                    ttlectsldr: 'example title 2',
+                    trgturctsldr: 'https://example.com/2',
+                    statusctsldr: '2',
+                };
+                const idctsldr = 77;
+
+                const server = await createServer(container);
+                await ContentSliderTableHelper.addslider({ idctsldr: 77 });
+
+                const response = await server.inject({
+                    method: 'PUT',
+                    url: `/content/ctslider/${idctsldr}`,
+                    payload: requestPayload,
+                });
+                // Assert
+
+                const responseJson = JSON.parse(response.payload);
+                expect(response.statusCode).toEqual(200);
+                expect(responseJson.status).toEqual('success');
+
+
+            });
+            it('should edit content SLIDER fail', async () => {
+                const requestPayload = {
+                    ctsldrur: 'https://example.com/2',
+                    ttlectsldr: 'example title 2',
+                    trgturctsldr: 'https://example.com/2',
+                    statusctsldr: '2',
+                };
+                const idctsldr = 99;
+
+                const server = await createServer(container);
+
+                const response = await server.inject({
+                    method: 'PUT',
+                    url: `/content/ctslider/${idctsldr}`,
+                    payload: requestPayload,
+                });
+                // Assert
+                const responseJson = JSON.parse(response.payload);
+                expect(response.statusCode).toEqual(400);
+                expect(responseJson.status).toEqual('fail');
+                expect(responseJson.message).toEqual('fail edit data !');
+
+            });
+        });
+
+        describe('ContentRepositoryPostgres.get data SLIDER', () => {
+            it('should get content SLIDER success', async () => {
+                const server = await createServer(container);
+                await ContentSliderTableHelper.addslider({ idnmwebst: 78 });
+                const response = await server.inject({
+                    method: 'GET',
+                    url: `/content/ctslider`,
                 });
 
 
