@@ -1,5 +1,6 @@
 const EditContent = require('../../../Domains/contnt/entities/EditContent');
 const AddSitemap = require('../../../Domains/contnt/entities/AddSitemap');
+const EditGeneral = require('../../../Domains/contnt/entities/EditGeneral');
 const ContentRepository = require('../../../Domains/contnt/ContentRepository');
 const CacheService = require('../../caching/CacheService');
 const ContentUseCase = require('../ContentUseCase');
@@ -233,5 +234,111 @@ describe('SITEMAP', () => {
         });
     });
 
+});
+
+describe('CONTENT GENERAL', () => {
+    describe('it should edit content general correctltly', () => {
+        it('it should edit meta tag correctltly', async () => {
+            // Arrange
+            const useCasePayload = new EditGeneral({
+                nmwebsite: 'nama website',
+                logrl: 'global-bola-logo.webp',
+                icrl: 'global-bola-logo.webp',
+                pkrl: 'https://apkdownload.com/',
+                rnntxt: 'GLOBALBOLA SITUS RESMI | Situs Betting Parlay Terlengkap & Terpercaya | proses transaksi kurang dari 1 menit',
+            });
+
+            const params = {
+                idnmwebst: 2
+            };
+
+            const mockcacheService = new CacheService();
+            const mockContentRepository = new ContentRepository();
+
+            mockContentRepository.editgeneral = jest.fn()
+                .mockImplementation(() => Promise.resolve());
+            mockcacheService.delete = jest.fn().mockResolvedValue();
+
+            const editcontentusecase = new ContentUseCase({
+                contentRepository: mockContentRepository,
+                cacheServices: mockcacheService
+            });
+
+            const datagroupusecase = await editcontentusecase.editgeneral(useCasePayload, params);
+
+            expect(datagroupusecase).toStrictEqual('general data updated');
+            expect(mockContentRepository.editgeneral).toBeCalledWith(useCasePayload, params.idnmwebst);
+            expect(mockcacheService.delete).toBeCalledWith(`ctgeneral:ctgeneral`);
+        });
+    });
+    describe('should success calling get data content GENERAL', () => {
+
+        it('should success calling get data metatag', async () => {
+
+            // Arrange
+            const resultmockctgeneral = {
+                nmwebsite: 'nama website',
+                logrl: 'global-bola-logo.webp',
+                icrl: 'global-bola-logo.webp',
+                pkrl: 'https://apkdownload.com/',
+                rnntxt: 'GLOBALBOLA SITUS RESMI | Situs Betting Parlay Terlengkap & Terpercaya | proses transaksi kurang dari 1 menit',
+            };
+
+            // Action
+            const mockcacheService = new CacheService();
+            const mockContentRepository = new ContentRepository();
+
+
+            mockContentRepository.getgeneral = jest.fn()
+                .mockImplementation(() => Promise.resolve(resultmockctgeneral));
+            mockcacheService.delete = jest.fn().mockResolvedValue();
+            mockcacheService.set = jest.fn().mockResolvedValue();
+
+            const getdataCtgeneralUsecase = new ContentUseCase({
+                contentRepository: mockContentRepository,
+                cacheServices: mockcacheService
+            });
+
+            const payload = await getdataCtgeneralUsecase.getgeneral();
+
+            // Assert
+            expect(mockContentRepository.getgeneral).toBeCalledWith();
+            expect(mockcacheService.delete).toBeCalledWith(`ctgeneral:ctgeneral`);
+            expect(mockcacheService.set).toBeCalledWith(`ctgeneral:ctgeneral`, JSON.stringify(resultmockctgeneral));
+            expect(payload).toEqual(resultmockctgeneral);
+        });
+
+        it('should success calling get data metatag with redis', async () => {
+
+            // Arrange
+            const resultmockctgeneral = {
+                nmwebsite: 'nama website',
+                logrl: 'global-bola-logo.webp',
+                icrl: 'global-bola-logo.webp',
+                pkrl: 'https://apkdownload.com/',
+                rnntxt: 'GLOBALBOLA SITUS RESMI | Situs Betting Parlay Terlengkap & Terpercaya | proses transaksi kurang dari 1 menit',
+                headers: {
+                    'X-Data-Source': 'cache',
+                }
+            };
+
+            // Action
+            const mockcacheService = new CacheService();
+            mockcacheService.get = jest.fn().mockResolvedValue(JSON.stringify(resultmockctgeneral));
+
+
+            const getdataCtgeneralUsecase = new ContentUseCase({
+                cacheServices: mockcacheService
+            });
+
+            const payload = await getdataCtgeneralUsecase.getgeneral();
+
+            // Assert
+            expect(mockcacheService.get).toBeCalledWith(`ctgeneral:ctgeneral`);
+            expect(payload).toEqual(
+                resultmockctgeneral
+            );
+        });
+    });
 });
 

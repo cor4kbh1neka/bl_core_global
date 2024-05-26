@@ -1,5 +1,6 @@
 const EditContent = require('../../Domains/contnt/entities/EditContent');
 const AddSiteMap = require('../../Domains/contnt/entities/AddSitemap');
+const EditGeneral = require('../../Domains/contnt/entities/EditGeneral');
 
 
 class ContentUseCase {
@@ -9,12 +10,7 @@ class ContentUseCase {
         this._contentRepository = contentRepository;
         this._cacheService = cacheServices;
     }
-    /**
-     ********************************************** 
-     * @post  
-     * @param {metagag}  
-     * @returns 
-     */
+
 
     async editmttag(useCasePayload, params) {
         const payload = new EditContent(useCasePayload);
@@ -23,14 +19,6 @@ class ContentUseCase {
 
         return 'metatag updated';
     }
-
-
-    /**
-     ********************************************** 
-    * @post  
-    * @param {metagag}  
-    * @returns 
-    */
 
     async getmttag() {
         try {
@@ -86,6 +74,28 @@ class ContentUseCase {
         await this._contentRepository.delstmp(payload.urpage);
         await this._cacheService.delete(`sitemap:sitemap`);
         return "Sitemap deleted successfully !";
+    }
+
+    async editgeneral(useCasePayload, params) {
+        const payload = new EditGeneral(useCasePayload);
+        await this._contentRepository.editgeneral(payload, params.idnmwebst);
+        await this._cacheService.delete(`ctgeneral:ctgeneral`);
+        return 'general data updated';
+    }
+    async getgeneral() {
+        try {
+            const result = await this._cacheService.get(`ctgeneral:ctgeneral`);
+            const dataresult = JSON.parse(result);
+            dataresult.headers = {
+                'X-Data-Source': 'cache',
+            };
+            return dataresult;
+        } catch (error) {
+            const dtgeneral = await this._contentRepository.getgeneral();
+            await this._cacheService.delete(`ctgeneral:ctgeneral`);
+            await this._cacheService.set(`ctgeneral:ctgeneral`, JSON.stringify(dtgeneral));
+            return dtgeneral;
+        }
     }
 }
 

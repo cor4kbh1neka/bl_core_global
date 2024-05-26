@@ -1,6 +1,7 @@
 const pool = require('../../database/postgres/pool');
 const ContentMetatagTableHelper = require('../../../../tests/ContentMetatagTableHelper');
 const ContentSiteMapTableHelper = require('../../../../tests/ContentSiteMapTableHelper');
+const ContentgeneralContentTableHelper = require('../../../../tests/ContentgeneralContentTableHelper');
 const container = require('../../container');
 const createServer = require('../createServer');
 
@@ -13,6 +14,7 @@ describe('ContentEndPoints', () => {
     afterEach(async () => {
         await ContentMetatagTableHelper.cleanTable();
         await ContentSiteMapTableHelper.cleanTable();
+        await ContentgeneralContentTableHelper.cleanTable();
 
     });
 
@@ -66,7 +68,6 @@ describe('ContentEndPoints', () => {
 
             });
         });
-
         describe('ContentRepositoryPostgres.getmtdt', () => {
             it('should get metatag success', async () => {
                 const server = await createServer(container);
@@ -106,27 +107,27 @@ describe('ContentEndPoints', () => {
                 expect(responseJson.status).toEqual('success');
                 expect(responseJson.data).toBeDefined();
             });
-        });
-        it('should add sitemaps fail', async () => {
+            it('should add sitemaps fail', async () => {
 
-            //arrange
-            const requestPayload = {
-                urpage: 'sience',
-            };
+                //arrange
+                const requestPayload = {
+                    urpage: 'sience',
+                };
 
-            await ContentSiteMapTableHelper.addsitemap({ idstmp: 12, urpage: 'sience' });
+                await ContentSiteMapTableHelper.addsitemap({ idstmp: 12, urpage: 'sience' });
 
-            const server = await createServer(container);
-            const response = await server.inject({
-                method: 'POST',
-                url: `/content/stmp`,
-                payload: requestPayload,
+                const server = await createServer(container);
+                const response = await server.inject({
+                    method: 'POST',
+                    url: `/content/stmp`,
+                    payload: requestPayload,
+                });
+                //assert
+                const responseJson = JSON.parse(response.payload);
+                expect(response.statusCode).toEqual(400);
+                expect(responseJson.status).toEqual('fail');
+                expect(responseJson.message).toEqual('path already exiested !');
             });
-            //assert
-            const responseJson = JSON.parse(response.payload);
-            expect(response.statusCode).toEqual(400);
-            expect(responseJson.status).toEqual('fail');
-            expect(responseJson.message).toEqual('path already exiested !');
         });
         describe('Contentrepository Edit sitemap', () => {
             it('should edit sitemap success', async () => {
@@ -168,7 +169,6 @@ describe('ContentEndPoints', () => {
             });
 
         });
-
         describe('Contentrepository.edit sitemap', () => {
             it('should get metatag success', async () => {
                 const server = await createServer(container);
@@ -187,7 +187,6 @@ describe('ContentEndPoints', () => {
                 expect(responseJson.data).toBeDefined();
             });
         });
-
         describe('Contentrepository. delete sitemap', () => {
             it('should delete metatag success', async () => {
                 const requestPayload = {
@@ -233,6 +232,78 @@ describe('ContentEndPoints', () => {
 
 
         });
+    });
 
+    describe('CONTENT GENERAL ENDPOINTS', () => {
+        describe('Contentrepository. Edit Content General', () => {
+            it('should edit content general success', async () => {
+                const requestPayload = {
+                    nmwebsite: 'nama website',
+                    logrl: 'global-bola-logo.webp',
+                    icrl: 'global-bola-logo.webp',
+                    pkrl: 'https://apkdownload.com/',
+                    rnntxt: 'GLOBALBOLA SITUS RESMI | Situs Betting Parlay Terlengkap & Terpercaya | proses transaksi kurang dari 1 menit',
+                };
+                const idnmwebst = 77;
+
+                const server = await createServer(container);
+                await ContentgeneralContentTableHelper.addgeneralct({ idnmwebst: 77 });
+
+                const response = await server.inject({
+                    method: 'PUT',
+                    url: `/content/ctgeneral/${idnmwebst}`,
+                    payload: requestPayload,
+                });
+                // Assert
+
+                const responseJson = JSON.parse(response.payload);
+                expect(response.statusCode).toEqual(200);
+                expect(responseJson.status).toEqual('success');
+
+
+            });
+            it('should edit content general fail', async () => {
+                const requestPayload = {
+                    nmwebsite: 'nama website',
+                    logrl: 'global-bola-logo.webp',
+                    icrl: 'global-bola-logo.webp',
+                    pkrl: 'https://apkdownload.com/',
+                    rnntxt: 'GLOBALBOLA SITUS RESMI | Situs Betting Parlay Terlengkap & Terpercaya | proses transaksi kurang dari 1 menit',
+                };
+                const idnmwebst = 99;
+
+                const server = await createServer(container);
+
+                const response = await server.inject({
+                    method: 'PUT',
+                    url: `/content/ctgeneral/${idnmwebst}`,
+                    payload: requestPayload,
+                });
+                // Assert
+                const responseJson = JSON.parse(response.payload);
+                expect(response.statusCode).toEqual(400);
+                expect(responseJson.status).toEqual('fail');
+                expect(responseJson.message).toEqual('fail edit data !');
+
+            });
+        });
+
+        describe('ContentRepositoryPostgres.get data general', () => {
+            it('should get content general success', async () => {
+                const server = await createServer(container);
+                await ContentgeneralContentTableHelper.addgeneralct({ idnmwebst: 77 });
+                const response = await server.inject({
+                    method: 'GET',
+                    url: `/content/ctgeneral`,
+                });
+
+
+                //assert
+                const responseJson = JSON.parse(response.payload);
+                expect(response.statusCode).toEqual(200);
+                expect(responseJson.status).toEqual('success');
+                expect(responseJson.data).toBeDefined();
+            });
+        });
     });
 });

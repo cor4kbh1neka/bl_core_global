@@ -102,6 +102,27 @@ class ContentRepositoryPostgres extends ContentRepository {
         }
         return "Sitemap deleted successfully !";
     }
+    async editgeneral(payload, params) {
+        const query = {
+            text: 'UPDATE ctgeneral SET nmwebsite = $1, logrl = $2, icrl = $3, pkrl = $4, rnntxt = $5 WHERE idnmwebst = $6',
+            values: [payload.nmwebsite, payload.logrl, payload.icrl, payload.pkrl, payload.rnntxt, params],
+        };
+        const result = await this._pool.query(query);
+        if (!result.rowCount) {
+            throw new InvariantError('fail edit data !');
+        }
+        return "general data updated";
+
+    }
+
+    async getgeneral() {
+        const query = {
+            text: 'SELECT idnmwebst, nmwebsite, logrl, icrl, pkrl, rnntxt FROM ctgeneral ',
+            values: [],
+        };
+        const result = await this._pool.query(query);
+        return result.rows[0];
+    }
 
 }
 

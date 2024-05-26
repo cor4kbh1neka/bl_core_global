@@ -59,6 +59,26 @@ const routes = (handler) => ([
       },
     },
   },
+  {
+    method: 'PUT',
+    path: '/content/ctgeneral/{idnmwebst}',
+    handler: handler.putctGeneralTagHandler,
+    options: {
+      cors: {
+        origin: ['https://bostoni.pro'],
+      },
+    },
+  },
+  {
+    method: 'GET',
+    path: '/content/ctgeneral',
+    handler: handler.getctGeneralTagHandler,
+    options: {
+      cors: {
+        origin: ['https://bostoni.pro'],
+      },
+    },
+  },
 ]);
 
 module.exports = routes;

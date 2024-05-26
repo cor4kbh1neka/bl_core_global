@@ -9,6 +9,8 @@ class ContentHandler {
     this.putcontentSiteMapTagHandler = this.putcontentSiteMapTagHandler.bind(this);
     this.getcontentSiteMapTagHandler = this.getcontentSiteMapTagHandler.bind(this);
     this.delcontentSiteMapTagHandler = this.delcontentSiteMapTagHandler.bind(this);
+    this.putctGeneralTagHandler = this.putctGeneralTagHandler.bind(this);
+    this.getctGeneralTagHandler = this.getctGeneralTagHandler.bind(this);
   }
 
   async putcontentMtTagHandler(request, h) {
@@ -71,6 +73,27 @@ class ContentHandler {
     const response = h.response({
       status: 'success',
       data: datameta
+    });
+    response.code(200);
+    return response;
+  }
+
+  async putctGeneralTagHandler(request, h) {
+    const putctGeneralTagHandler = this._container.getInstance(ContentUseCase.name);
+    const datactGeneral = await putctGeneralTagHandler.editgeneral(request.payload, request.params);
+    const response = h.response({
+      status: 'success',
+      data: datactGeneral
+    });
+    response.code(200);
+    return response;
+  }
+  async getctGeneralTagHandler(request, h) {
+    const getctGeneralTagHandler = this._container.getInstance(ContentUseCase.name);
+    const datactGeneral = await getctGeneralTagHandler.getgeneral();
+    const response = h.response({
+      status: 'success',
+      data: datactGeneral
     });
     response.code(200);
     return response;

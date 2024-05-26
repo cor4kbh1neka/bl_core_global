@@ -13,10 +13,8 @@ describe('contentRepository interface', () => {
     describe('sitemap interface', () => {
 
         it('should throw an error whe invoke abstract behavior', async () => {
-
             //arrange
             const contentRepository = new ContentRepository()
-
             //action and Assertion
             await expect(contentRepository.addstmp({})).rejects.toThrowError('CONTENT_REPOSITORY.METHOD_NOT_IMPLEMENTED');
             await expect(contentRepository.checkstmp({})).rejects.toThrowError('CONTENT_REPOSITORY.METHOD_NOT_IMPLEMENTED');
@@ -24,6 +22,17 @@ describe('contentRepository interface', () => {
             await expect(contentRepository.getstmp({})).rejects.toThrowError('CONTENT_REPOSITORY.METHOD_NOT_IMPLEMENTED');
             await expect(contentRepository.delstmp({})).rejects.toThrowError('CONTENT_REPOSITORY.METHOD_NOT_IMPLEMENTED');
 
+        });
+    });
+
+    describe('GENERAL  interface', () => {
+
+        it('should throw an error whe invoke abstract behavior', async () => {
+            //arrange
+            const contentRepository = new ContentRepository()
+            //action and Assertion
+            await expect(contentRepository.editgeneral({})).rejects.toThrowError('CONTENT_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+            await expect(contentRepository.getgeneral({})).rejects.toThrowError('CONTENT_REPOSITORY.METHOD_NOT_IMPLEMENTED');
         });
     });
 });
