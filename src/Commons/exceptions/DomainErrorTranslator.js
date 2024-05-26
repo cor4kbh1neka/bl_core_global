@@ -73,6 +73,9 @@ DomainErrorTranslator._directories = {
   'ADD_MASRTER_BANK.NOT_CONTAIN_NEEDED_PROPERTY': new NotFoundError('isi semua fill yang sesuai !'),
 
 
+  'EDIT_CONTENT.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('data meta tag tidak boleh kosong'),
+  'EDIT_CONTENT.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('type data input salah, cek lagi !'),
+
 };
 
 module.exports = DomainErrorTranslator;

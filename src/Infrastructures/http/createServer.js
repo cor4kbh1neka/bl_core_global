@@ -10,6 +10,8 @@ const authentications = require('../../Interfaces/http/api/authentications');
 const apks = require('../../Interfaces/http/api/apks');
 const banks = require('../../Interfaces/http/api/bnks');
 const memo = require('../../Interfaces/http/api/memo');
+const proxy = require('../../Interfaces/http/api/proxy');
+const content = require('../../Interfaces/http/api/content');
 
 
 const createServer = async (container) => {
@@ -62,6 +64,14 @@ const createServer = async (container) => {
     },
     {
       plugin: memo,
+      options: { container },
+    },
+    {
+      plugin: proxy,
+      options: { container },
+    },
+    {
+      plugin: content,
       options: { container },
     }
 

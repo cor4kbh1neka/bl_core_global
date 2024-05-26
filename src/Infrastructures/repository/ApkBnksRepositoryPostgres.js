@@ -87,7 +87,6 @@ class ApkBnksRepositoryPostgres extends BnksRepository {
         }
     }
     async addmstr(usecasepayload) {
-
         const { bnkmstrxyxyx, urllogoxxyx, statusxyxyy, wdstatusxyxyy } = usecasepayload
         const created_at = new Date().toISOString();
 

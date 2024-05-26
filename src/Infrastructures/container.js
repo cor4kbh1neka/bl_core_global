@@ -21,6 +21,8 @@ const ApkDataRepositoryPostgres = require('./repository/ApkDataRepositoryPostgre
 const ApkBnksRepositoryPostgres = require('./repository/ApkBnksRepositoryPostgres');
 const MemoRepository = require('../Domains/memo/MemoRepository');
 const MemoRepositoryPostgres = require('./repository/MemoRepositoryPostgres');
+const ContentRepository = require('../Domains/contnt/ContentRepository');
+const ContentRepositoryPostgres = require('./repository/ContentRepositoryPostgres');
 
 
 
@@ -39,6 +41,7 @@ const AdddataApkUseCase = require('../Applications/use_case/AdddataApkUseCase');
 const GetDataApkUseCase = require('../Applications/use_case/GetDataApkUseCase');
 const AddbnksUseCase = require('../Applications/use_case/AddbnksUseCase');
 const MemoUseCase = require('../Applications/use_case/MemoUseCase');
+const ContentUseCase = require('../Applications/use_case/ContentUseCase');
 const CacheServices = require('./caching/redis/CacheServices');
 
 
@@ -137,6 +140,20 @@ container.register([
                 },
                 {
                     concrete: nanoid,
+                },
+                {
+                    concrete: redis,
+                }
+            ],
+        },
+    },
+    {
+        key: ContentRepository.name,
+        Class: ContentRepositoryPostgres,
+        parameter: {
+            dependencies: [
+                {
+                    concrete: pool,
                 },
                 {
                     concrete: redis,
@@ -308,8 +325,24 @@ container.register([
             ],
         },
     }
-    ,
-    {
+    , {
+        key: ContentUseCase.name,
+        Class: ContentUseCase,
+        parameter: {
+            injectType: 'destructuring',
+            dependencies: [
+                {
+                    name: 'contentRepository',
+                    internal: ContentRepository.name,
+                },
+                {
+                    name: 'cacheServices',
+                    internal: CacheServices.name,
+                },
+            ],
+        },
+    }
+    , {
         key: MemoUseCase.name,
         Class: MemoUseCase,
         parameter: {
