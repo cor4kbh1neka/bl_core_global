@@ -100,6 +100,7 @@ class ContentUseCase {
     }
 
     async editslider(useCasePayload, params) {
+        console.log(useCasePayload);
         const payload = new EditSlider(useCasePayload);
         await this._contentRepository.editslider(payload, params.idctsldr);
         await this._cacheService.delete(`ctslider:ctslider`);
