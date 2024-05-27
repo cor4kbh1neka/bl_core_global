@@ -2,6 +2,7 @@ const EditContent = require('../../Domains/contnt/entities/EditContent');
 const AddSiteMap = require('../../Domains/contnt/entities/AddSitemap');
 const EditGeneral = require('../../Domains/contnt/entities/EditGeneral');
 const EditSlider = require('../../Domains/contnt/entities/EditSlider');
+const EditLink = require('../../Domains/contnt/entities/EditLink');
 
 
 class ContentUseCase {
@@ -100,7 +101,6 @@ class ContentUseCase {
     }
 
     async editslider(useCasePayload, params) {
-        console.log(useCasePayload);
         const payload = new EditSlider(useCasePayload);
         await this._contentRepository.editslider(payload, params.idctsldr);
         await this._cacheService.delete(`ctslider:ctslider`);
@@ -120,6 +120,29 @@ class ContentUseCase {
             await this._cacheService.delete(`ctslider:ctslider`);
             await this._cacheService.set(`ctslider:ctslider`, JSON.stringify(dtslider));
             return dtslider;
+        }
+    }
+
+    async editlink(useCasePayload, params) {
+        const payload = new EditLink(useCasePayload);
+        await this._contentRepository.editlink(payload, params.idctlnk);
+        await this._cacheService.delete(`ctlink:ctlink`);
+        return 'link data updated';
+    }
+
+    async getlink() {
+        try {
+            const result = await this._cacheService.get(`ctlink:ctlink`);
+            const dataresult = JSON.parse(result);
+            dataresult.headers = {
+                'X-Data-Source': 'cache',
+            };
+            return dataresult;
+        } catch (error) {
+            const dtlink = await this._contentRepository.getlink();
+            await this._cacheService.delete(`ctlink:ctlink`);
+            await this._cacheService.set(`ctlink:ctlink`, JSON.stringify(dtlink));
+            return dtlink;
         }
     }
 }

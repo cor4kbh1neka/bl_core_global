@@ -2,12 +2,14 @@ const ContentMetatagTableHelper = require('../../../../tests/ContentMetatagTable
 const ContentSiteMapTableHelper = require('../../../../tests/ContentSiteMapTableHelper');
 const ContentgeneralContentTableHelper = require('../../../../tests/ContentgeneralContentTableHelper');
 const ContentSliderTableHelper = require('../../../../tests/ContentSliderTableHelper');
+const ContentLinkTableHelpertest = require('../../../../tests/ContentLinkTableHelpertest');
 const InvariantError = require('../../../Commons/exceptions/InvariantError');
 const NotFoundError = require('../../../Commons/exceptions/NotFoundError');
 const EditGeneral = require('../../../Domains/contnt/entities/EditGeneral');
 const EditContent = require('../../../Domains/contnt/entities/EditContent');
 const AddSitemap = require('../../../Domains/contnt/entities/AddSitemap');
 const EditSlider = require('../../../Domains/contnt/entities/EditSlider');
+const EditLink = require('../../../Domains/contnt/entities/EditLink');
 const pool = require('../../database/postgres/pool');
 const ContentRepositoryPostgres = require('../ContentRepositoryPostgres');
 
@@ -17,6 +19,7 @@ describe('ContentRepositoryPostgres', () => {
     await ContentSiteMapTableHelper.cleanTable();
     await ContentgeneralContentTableHelper.cleanTable();
     await ContentSliderTableHelper.cleanTable();
+    await ContentLinkTableHelpertest.cleanTable();
   });
 
   afterAll(async () => {
@@ -333,6 +336,68 @@ describe('ContentRepositoryPostgres', () => {
           trgturctsldr: 'https=//example.com/2',
           statusctsldr: '2',
         });
+      });
+    });
+  });
+
+
+  describe('LINK CONTENT REPOSITORY', () => {
+    describe('LINK CONTENT REPOSITORY EDIT FEATURES', () => {
+
+      it('should edit content fail', async () => {
+        //arrange
+        const useCasePayload = new EditLink({
+          ctlnkname: 'link alternatif44',
+          ctlnkdmn: 'https://example.com/44',
+          statusctlnk: '1',
+        });
+        const params = {
+          idctlnk: 5
+        }
+
+        // Action
+        const contentRepositoryPostgres = new ContentRepositoryPostgres(pool);
+
+        //assertion
+        await expect(contentRepositoryPostgres.editlink(useCasePayload, params.idctlnk))
+          .rejects.toThrowError(InvariantError);
+      });
+      it('should edit content success', async () => {
+        //arrange
+        const useCasePayload = new EditLink({
+          ctlnkname: 'link alternatif44',
+          ctlnkdmn: 'https://example.com/44',
+          statusctlnk: '1',
+        });
+        const params = {
+          idctlnk: 6
+        }
+
+        // Action
+        await ContentLinkTableHelpertest.addlink({ idctlnk: 6 });
+        const contentRepositoryPostgres = new ContentRepositoryPostgres(pool);
+
+        //assertion
+        await contentRepositoryPostgres.editlink(useCasePayload, params.idctlnk);
+        const datalink = await ContentLinkTableHelpertest.findlink(params.idctlnk);
+        expect(datalink).toHaveLength(1);
+
+      });
+
+    })
+
+    describe('ContentRepositoryPostgres.get LINK', () => {
+
+      it('should get LINK success', async () => {
+        const contentRepositoryPostgres = new ContentRepositoryPostgres(pool);
+        await ContentLinkTableHelpertest.addlink({ idctlnk: 5, ctlnkdmn: 'https://example.com/44' });
+        const ctlink = await contentRepositoryPostgres.getlink();
+        expect(ctlink).toEqual([{
+          idctlnk: 5,
+          ctlnkname: 'link alternatif33',
+          ctlnkdmn: 'https://example.com/44',
+          statusctlnk: '3',
+        }]);
       });
     });
   });

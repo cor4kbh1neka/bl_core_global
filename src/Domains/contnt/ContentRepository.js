@@ -34,6 +34,13 @@ class ContentRepository {
     async getslider(datact) {
         throw new Error('CONTENT_REPOSITORY.METHOD_NOT_IMPLEMENTED');
     }
+    async editlink(datact) {
+        throw new Error('CONTENT_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+    }
+    async getlink(datact) {
+        throw new Error('CONTENT_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+    }
+
 }
 
 module.exports = ContentRepository;

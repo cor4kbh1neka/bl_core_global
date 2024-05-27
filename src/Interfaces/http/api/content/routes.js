@@ -99,6 +99,26 @@ const routes = (handler) => ([
       },
     },
   },
+  {
+    method: 'PUT',
+    path: '/content/ctlink/{idctlnk}',
+    handler: handler.putctLinkTagHandler,
+    options: {
+      cors: {
+        origin: ['https://bostoni.pro'],
+      },
+    },
+  },
+  {
+    method: 'GET',
+    path: '/content/ctlink',
+    handler: handler.getctLinkTagHandler,
+    options: {
+      cors: {
+        origin: ['https://bostoni.pro'],
+      },
+    },
+  },
 ]);
 
 module.exports = routes;

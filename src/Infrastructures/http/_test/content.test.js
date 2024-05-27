@@ -3,6 +3,7 @@ const ContentMetatagTableHelper = require('../../../../tests/ContentMetatagTable
 const ContentSiteMapTableHelper = require('../../../../tests/ContentSiteMapTableHelper');
 const ContentgeneralContentTableHelper = require('../../../../tests/ContentgeneralContentTableHelper');
 const ContentSliderTableHelper = require('../../../../tests/ContentSliderTableHelper');
+const ContentLinkTableHelpertest = require('../../../../tests/ContentLinkTableHelpertest');
 const container = require('../../container');
 const createServer = require('../createServer');
 
@@ -17,6 +18,7 @@ describe('ContentEndPoints', () => {
         await ContentSiteMapTableHelper.cleanTable();
         await ContentgeneralContentTableHelper.cleanTable();
         await ContentSliderTableHelper.cleanTable();
+        await ContentLinkTableHelpertest.cleanTable();
 
     });
 
@@ -369,6 +371,75 @@ describe('ContentEndPoints', () => {
                 const response = await server.inject({
                     method: 'GET',
                     url: `/content/ctslider`,
+                });
+
+
+                //assert
+                const responseJson = JSON.parse(response.payload);
+                expect(response.statusCode).toEqual(200);
+                expect(responseJson.status).toEqual('success');
+                expect(responseJson.data).toBeDefined();
+            });
+        });
+    });
+
+    describe('CONTENT LINK ENDPOINTS', () => {
+        describe('Contentrepository. Edit Content LINK', () => {
+            it('should edit content LINK success', async () => {
+                const requestPayload = {
+                    ctlnkname: 'link alternatif55',
+                    ctlnkdmn: 'https://example.com/55',
+                    statusctlnk: '2',
+                };
+                const idctlnk = 77;
+
+                const server = await createServer(container);
+                await ContentLinkTableHelpertest.addlink({ idctlnk: 77 });
+
+                const response = await server.inject({
+                    method: 'PUT',
+                    url: `/content/ctlink/${idctlnk}`,
+                    payload: requestPayload,
+                });
+                // Assert
+
+                const responseJson = JSON.parse(response.payload);
+                expect(response.statusCode).toEqual(200);
+                expect(responseJson.status).toEqual('success');
+
+
+            });
+            it('should edit content LINK fail', async () => {
+                const requestPayload = {
+                    ctlnkname: 'link alternatif55',
+                    ctlnkdmn: 'https://example.com/55',
+                    statusctlnk: '2',
+                };
+                const idctlnk = 99;
+
+                const server = await createServer(container);
+
+                const response = await server.inject({
+                    method: 'PUT',
+                    url: `/content/ctlink/${idctlnk}`,
+                    payload: requestPayload,
+                });
+                // Assert
+                const responseJson = JSON.parse(response.payload);
+                expect(response.statusCode).toEqual(400);
+                expect(responseJson.status).toEqual('fail');
+                expect(responseJson.message).toEqual('fail edit data !');
+
+            });
+        });
+
+        describe('ContentRepositoryPostgres.get data LINK', () => {
+            it('should get content SLIDER success', async () => {
+                const server = await createServer(container);
+                await ContentLinkTableHelpertest.addlink({ idctlnk: 78 });
+                const response = await server.inject({
+                    method: 'GET',
+                    url: `/content/ctlink`,
                 });
 
 

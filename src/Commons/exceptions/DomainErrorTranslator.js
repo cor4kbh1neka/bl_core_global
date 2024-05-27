@@ -21,7 +21,6 @@ DomainErrorTranslator._directories = {
   'REGISTER_USER.PHONENUMBER_LESS_LIMIT_CHAR': new InvariantError('register fail , phone number too short !'),
   'REGISTER_USER.REGISTER_CONTAIN_RESTRICTED_CHARACTER': new InvariantError('register fail , input restricted !'),
 
-
   'REGISTERED_USER.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('register fail in the moment processing some data missing !'),
   'REGISTERED_USER.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('register fail in the moment processing some data restricted !'),
 
@@ -72,10 +71,8 @@ DomainErrorTranslator._directories = {
   'ADD_MASRTER_BANK.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('Input tipe data yang sesuai !'),
   'ADD_MASRTER_BANK.NOT_CONTAIN_NEEDED_PROPERTY': new NotFoundError('isi semua fill yang sesuai !'),
 
-
   'EDIT_CONTENT.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('data meta tag cannot empty'),
   'EDIT_CONTENT.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('wrong type data input, check again !'),
-
 
   'ADD_SITEMAP.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('data sitemap cannot empty'),
   'ADD_SITEMAP.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('wrong type data input, check again !'),
@@ -88,6 +85,10 @@ DomainErrorTranslator._directories = {
   'EDIT_SLIDER.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('fill cannot empty'),
   'EDIT_SLIDER.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('wrong type data input, check again !'),
   'EDIT_SLIDER.CONTAIN_RESTRICTED_CHARACTER': new InvariantError('restricted input , watch your input !'),
+
+  'EDIT_LINK.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('fill cannot empty'),
+  'EDIT_LINK.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('wrong type data input, check again !'),
+  'EDIT_LINK.CONTAIN_RESTRICTED_CHARACTER': new InvariantError('restricted input , watch your input !'),
 
 };
 

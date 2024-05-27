@@ -2,12 +2,13 @@ const EditContent = require('../../../Domains/contnt/entities/EditContent');
 const AddSitemap = require('../../../Domains/contnt/entities/AddSitemap');
 const EditGeneral = require('../../../Domains/contnt/entities/EditGeneral');
 const EditSlider = require('../../../Domains/contnt/entities/EditSlider');
+const EditLink = require('../../../Domains/contnt/entities/EditLink');
 const ContentRepository = require('../../../Domains/contnt/ContentRepository');
 const CacheService = require('../../caching/CacheService');
 const ContentUseCase = require('../ContentUseCase');
 
 
-describe('MetaTag', () => {
+describe('CONTENT MetaTag', () => {
     describe('it should edit meta tag correctltly', () => {
         it('it should edit meta tag correctltly', async () => {
             // Arrange
@@ -110,7 +111,7 @@ describe('MetaTag', () => {
         });
     });
 });
-describe('SITEMAP', () => {
+describe('CONTNET SITEMAP', () => {
     describe('should success add data sitemap', () => {
         it('should success add data sitemap', async () => {
             // Arrange
@@ -441,6 +442,107 @@ describe('CONTENT SLIDER', () => {
             expect(mockcacheService.get).toBeCalledWith(`ctslider:ctslider`);
             expect(payload).toEqual(
                 resultmockctSlider
+            );
+        });
+    });
+});
+
+
+describe('CONTENT LINK', () => {
+    describe('it should edit content LINK correctltly', () => {
+        it('it should edit LINK correctltly', async () => {
+            // Arrange
+            const useCasePayload = new EditLink({
+                ctlnkname: 'link alternatif 2',
+                ctlnkdmn: 'https://example.com/2',
+                statusctlnk: '1',
+            });
+
+            const params = {
+                idctlnk: 4
+            };
+
+            const mockcacheService = new CacheService();
+            const mockContentRepository = new ContentRepository();
+
+            mockContentRepository.editlink = jest.fn()
+                .mockImplementation(() => Promise.resolve());
+            mockcacheService.delete = jest.fn().mockResolvedValue();
+
+            const editcontentusecase = new ContentUseCase({
+                contentRepository: mockContentRepository,
+                cacheServices: mockcacheService
+            });
+
+            const datasliderUseCase = await editcontentusecase.editlink(useCasePayload, params);
+
+            expect(datasliderUseCase).toStrictEqual('link data updated');
+            expect(mockContentRepository.editlink).toBeCalledWith(useCasePayload, params.idctlnk);
+            expect(mockcacheService.delete).toBeCalledWith(`ctlink:ctlink`);
+        });
+    });
+    describe('should success calling get data content LINK', () => {
+
+        it('should success calling get data LINK', async () => {
+
+            // Arrange
+            const resultmocklink = {
+                ctlnkname: 'link alternatif 2',
+                ctlnkdmn: 'https://example.com/2',
+                statusctlnk: '1',
+            };
+
+            // Action
+            const mockcacheService = new CacheService();
+            const mockContentRepository = new ContentRepository();
+
+
+            mockContentRepository.getlink = jest.fn()
+                .mockImplementation(() => Promise.resolve(resultmocklink));
+            mockcacheService.delete = jest.fn().mockResolvedValue();
+            mockcacheService.set = jest.fn().mockResolvedValue();
+
+            const getdataCtsliderUsecase = new ContentUseCase({
+                contentRepository: mockContentRepository,
+                cacheServices: mockcacheService
+            });
+
+            const payload = await getdataCtsliderUsecase.getlink();
+
+            // Assert
+            expect(mockContentRepository.getlink).toBeCalledWith();
+            expect(mockcacheService.delete).toBeCalledWith(`ctlink:ctlink`);
+            expect(mockcacheService.set).toBeCalledWith(`ctlink:ctlink`, JSON.stringify(resultmocklink));
+            expect(payload).toEqual(resultmocklink);
+        });
+
+        it('should success calling get data Link with redis', async () => {
+
+            // Arrange
+            const resultmocklink = {
+                ctlnkname: 'link alternatif 2',
+                ctlnkdmn: 'https://example.com/2',
+                statusctlnk: '1',
+                headers: {
+                    'X-Data-Source': 'cache',
+                }
+            };
+
+            // Action
+            const mockcacheService = new CacheService();
+            mockcacheService.get = jest.fn().mockResolvedValue(JSON.stringify(resultmocklink));
+
+
+            const getdataCtsliderUsecase = new ContentUseCase({
+                cacheServices: mockcacheService
+            });
+
+            const payload = await getdataCtsliderUsecase.getlink();
+
+            // Assert
+            expect(mockcacheService.get).toBeCalledWith(`ctlink:ctlink`);
+            expect(payload).toEqual(
+                resultmocklink
             );
         });
     });

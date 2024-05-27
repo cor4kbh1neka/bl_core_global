@@ -46,4 +46,16 @@ describe('contentRepository interface', () => {
         });
     });
 
+    describe('Link  interface', () => {
+
+        it('should throw an error whe invoke abstract behavior', async () => {
+            //arrange
+            const contentRepository = new ContentRepository()
+            //action and Assertion
+            await expect(contentRepository.editlink({})).rejects.toThrowError('CONTENT_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+            await expect(contentRepository.getlink({})).rejects.toThrowError('CONTENT_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+        });
+    });
+
+
 });

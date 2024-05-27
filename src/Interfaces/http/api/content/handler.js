@@ -13,6 +13,8 @@ class ContentHandler {
     this.getctGeneralTagHandler = this.getctGeneralTagHandler.bind(this);
     this.putctSliderTagHandler = this.putctSliderTagHandler.bind(this);
     this.getctSliderTagHandler = this.getctSliderTagHandler.bind(this);
+    this.putctLinkTagHandler = this.putctLinkTagHandler.bind(this);
+    this.getctLinkTagHandler = this.getctLinkTagHandler.bind(this);
   }
 
   async putcontentMtTagHandler(request, h) {
@@ -117,6 +119,27 @@ class ContentHandler {
     const response = h.response({
       status: 'success',
       data: getslider
+    });
+    response.code(200);
+    return response;
+  }
+
+  async putctLinkTagHandler(request, h) {
+    const putctLinkTagHandler = this._container.getInstance(ContentUseCase.name);
+    const datalink = await putctLinkTagHandler.editlink(request.payload, request.params);
+    const response = h.response({
+      status: 'success',
+      data: datalink
+    });
+    response.code(200);
+    return response;
+  }
+  async getctLinkTagHandler(request, h) {
+    const getctLinkTagHandler = this._container.getInstance(ContentUseCase.name);
+    const getlink = await getctLinkTagHandler.getlink();
+    const response = h.response({
+      status: 'success',
+      data: getlink
     });
     response.code(200);
     return response;

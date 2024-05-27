@@ -145,6 +145,27 @@ class ContentRepositoryPostgres extends ContentRepository {
         return result.rows[0];
     }
 
+    async editlink(payload, params) {
+        const query = {
+            text: 'UPDATE ctlnk SET ctlnkname = $1, ctlnkdmn = $2 , statusctlnk = $3 WHERE idctlnk = $4',
+            values: [payload.ctlnkname, payload.ctlnkdmn, payload.statusctlnk, params],
+        };
+        const result = await this._pool.query(query);
+        if (!result.rowCount) {
+            throw new InvariantError('fail edit data !');
+        }
+        return "link data updated";
+    }
+
+    async getlink() {
+        const query = {
+            text: 'SELECT idctlnk, ctlnkname, ctlnkdmn, statusctlnk FROM ctlnk ',
+            values: [],
+        };
+        const result = await this._pool.query(query);
+        return result.rows;
+    }
+
 }
 
 module.exports = ContentRepositoryPostgres;
