@@ -32,10 +32,7 @@ const createServer = async (container) => {
         noSniff: true, // Enable protection against clickjacking attacks
         xframe: true, // Enable protection against cross-site request forgery (CSRF)
       },
-      cors: {
-        origin: ['*'], // Default value, bisa Anda sesuaikan dengan nilainya.
-        additionalHeaders: ['x-customblhdrs', 'Origin'], // Tambahkan 'Origin' ke header tambahan untuk CORS.
-      },
+      cors: false, // Allow cross-site request forgery protection
     },
   });
   // Create a logger
