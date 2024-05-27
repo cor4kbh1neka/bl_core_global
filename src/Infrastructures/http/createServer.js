@@ -35,8 +35,8 @@ const createServer = async (container) => {
     },
   });
   // Create a logger
-  const myFormat = printf(({ level, message, timestamp, host, ip }) => {
-    return `${timestamp} [${level.toUpperCase()}] [Host: ${host}] [IP: ${ip}]: ${message}`;
+  const myFormat = printf(({ level, message, timestamp, host, ip, forwardedIp }) => {
+    return `${timestamp} [${level.toUpperCase()}] [Host: ${host}] [IP: ${ip}] [Forwarded IP: ${forwardedIp}]: ${message}`;
   });
 
   const logger = winston.createLogger({
@@ -127,10 +127,11 @@ const createServer = async (container) => {
     const { method, url, headers, payload, info } = request;
     const clientIp = info && info.remoteAddress ? info.remoteAddress : 'Unknown';
     const host = info && info.host ? info.host : 'Unknown';
-    const ip = info && info.remoteAddress ? info.remoteAddress : 'Unknown';
+    const ip = info && info._remoteAddress ? info.remoteAddress : 'Unknown';
+    const forwardedIp = headers['x-forwarded-for'] || 'Not provided';
 
     // Log request details with host and IP
-    logger.info(`Request: ${method} ${url}`, { headers, payload, clientIp, host, ip });
+    logger.info(`Request: ${method} ${url}`, { headers, payload, clientIp, host, ip, forwardedIp });
 
     // Extending the response object to log response details after response is sent
     const responseToolkit = h.responseToolkit;
@@ -147,8 +148,8 @@ const createServer = async (container) => {
     return h.continue;
   });
 
-  const logAuditEvent = (event, data) => {
-    logger.info(`Audit Event: ${event}`, data);
+  const logAuditEvent = (event, data, remoteAddress, host) => {
+    logger.info(`Audit Event: ${event}`, { ...data, remoteAddress, host });
   };
 
 
@@ -193,8 +194,11 @@ const createServer = async (container) => {
       const { statusCode, statusMessage, headers, source } = response;
       const { host } = request.info;
       const ip = request.info.remoteAddress;
-      logger.info(`Response: ${statusCode} ${statusMessage}`, { headers, payload: source, host, ip });
+      const forwardedIp = request.headers['x-forwarded-for'] || 'Not provided';
+
+      logger.info(`Response: ${statusCode} ${statusMessage}`, { headers, payload: source, host, ip, forwardedIp });
       // Log audit event for successful responses
+
       logAuditEvent('Successful Response', { method: request.method, url: request.url.href, statusCode, statusMessage, clientIp: ip });
     } else {
       // Log audit event for failed responses
