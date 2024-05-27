@@ -139,7 +139,7 @@ const createServer = async (container) => {
       const { statusCode, statusMessage, headers: responseHeaders, source } = response;
 
       // Log response details
-      logger.info(`Response: ${statusCode} ${statusMessage}`, { headers: responseHeaders, payload: source, processTime });
+      logger.info(`Response: ${statusCode} ${statusMessage}`, { headers: responseHeaders, payload: source, processTime, host, ip });
 
       return responseToolkit(response);
     };
