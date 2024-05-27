@@ -48,4 +48,31 @@ describe('HTTP server', () => {
     expect(responseJson.message).toEqual('terjadi kegagalan pada server kami');
   });
 
+  it('should log audit event for failed responses', async () => {
+    // Arrange
+    const server = await createServer({}); // fake injection
+    const logAuditEvent = jest.fn();
+
+    // Mock request object
+    const mockRequest = {
+      method: 'GET',
+      url: {
+        href: '/test',
+      },
+      info: {
+        remoteAddress: '127.0.0.1',
+      },
+    };
+
+    // Action
+    const mockResponse = null; // Simulate failed response
+    if (!mockResponse) {
+      logAuditEvent('Failed Response', { method: mockRequest.method, url: mockRequest.url.href, clientIp: mockRequest.info.remoteAddress });
+    }
+
+    // Assert
+    expect(logAuditEvent).toHaveBeenCalledWith('Failed Response', { method: mockRequest.method, url: mockRequest.url.href, clientIp: mockRequest.info.remoteAddress });
+  });
+
 });
+

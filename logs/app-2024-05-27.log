@@ -1,0 +1,11 @@
+2024-05-27 21:13:29 [INFO] [Host: 127.0.0.1:5000] [IP: 127.0.0.1]: Request: post http://127.0.0.1:5000/content/ctslider/1
+2024-05-27 21:13:29 [ERROR] [Host: undefined] [IP: undefined]: Error occurred during request processing: Not Found
+2024-05-27 21:13:29 [INFO] [Host: 127.0.0.1:5000] [IP: 127.0.0.1]: Response: undefined undefined
+2024-05-27 21:13:29 [INFO] [Host: undefined] [IP: undefined]: Audit Event: Successful Response
+2024-05-27 21:13:33 [INFO] [Host: 127.0.0.1:5000] [IP: 127.0.0.1]: Request: post http://127.0.0.1:5000/content/ctslider/1
+2024-05-27 21:13:33 [ERROR] [Host: undefined] [IP: undefined]: Error occurred during request processing: Not Found
+2024-05-27 21:13:33 [INFO] [Host: 127.0.0.1:5000] [IP: 127.0.0.1]: Response: undefined undefined
+2024-05-27 21:13:33 [INFO] [Host: undefined] [IP: undefined]: Audit Event: Successful Response
+2024-05-27 21:13:44 [INFO] [Host: 127.0.0.1:5000] [IP: 127.0.0.1]: Request: put http://127.0.0.1:5000/content/ctslider/1
+2024-05-27 21:13:44 [INFO] [Host: 127.0.0.1:5000] [IP: 127.0.0.1]: Response: 200 undefined
+2024-05-27 21:13:44 [INFO] [Host: undefined] [IP: undefined]: Audit Event: Successful Response

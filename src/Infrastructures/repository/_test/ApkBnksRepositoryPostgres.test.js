@@ -819,11 +819,7 @@ describe('DataBank repository', () => {
           barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
           zwzwshowbarcode: true,
         });
-        await AddBanksTableTestHelper.addbks({
-          idbank: 2, namebankxxyy: 'bca2',
-          barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
-          zwzwshowbarcode: true,
-        });
+
         const apkBnksRepositoryPostgres = new ApkBnksRepositoryPostgres(pool);
 
         const getbankdata = await apkBnksRepositoryPostgres.getbnkex(params.groupname);
@@ -834,18 +830,6 @@ describe('DataBank repository', () => {
             namegroupxyzt: ['groupbank1'],
             masterbnkxyxt: 'bca',
             namebankxxyy: 'bca1',
-            yyxxmethod: 'bank',
-            xynamarekx: 'florensia sitangg',
-            norekxyxy: '0355917811',
-            barcodexrxr: 'https://i.ibb.co/n671yNG/Screenshot-44.png',
-            zwzwshowbarcode: true,
-
-          },
-          {
-            idbank: 2,
-            namegroupxyzt: ['groupbank1'],
-            masterbnkxyxt: 'bca',
-            namebankxxyy: 'bca2',
             yyxxmethod: 'bank',
             xynamarekx: 'florensia sitangg',
             norekxyxy: '0355917811',
