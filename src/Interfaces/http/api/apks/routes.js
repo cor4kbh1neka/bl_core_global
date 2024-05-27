@@ -35,7 +35,9 @@ const routes = (handler) => ([
     path: '/apks/settings/{apkid}',
     handler: handler.getApkHandler,
     options: {
-{ cors: true },
+      cors: {
+        origin: ['*'],
+      },
     },
   },
 ]);
