@@ -1,3 +1,6 @@
-2024-05-27 23:08:22 [INFO] [Host: 127.0.0.1:5000] [IP: 127.0.0.1] [Forwarded IP: Not provided]: Request: get http://127.0.0.1:5000/content/socmed
-2024-05-27 23:08:22 [INFO] [Host: 127.0.0.1:5000] [IP: 127.0.0.1] [Forwarded IP: Not provided]: Response: 200 undefined
-2024-05-27 23:08:22 [INFO] [Host: undefined] [IP: undefined] [Forwarded IP: undefined]: Audit Event: Successful Response
+2024-05-27 23:22:39 [INFO] [Host: 127.0.0.1:5000] [IP: 127.0.0.1] [Forwarded IP: Not provided]: Request: get http://127.0.0.1:5000/content/socmed
+2024-05-27 23:22:39 [INFO] [Host: 127.0.0.1:5000] [IP: 127.0.0.1] [Forwarded IP: Not provided]: Response: 200 undefined
+2024-05-27 23:22:39 [INFO] [Host: undefined] [IP: undefined] [Forwarded IP: undefined]: Audit Event: Successful Response
+2024-05-27 23:22:53 [INFO] [Host: 127.0.0.1:5000] [IP: 127.0.0.1] [Forwarded IP: Not provided]: Request: get http://127.0.0.1:5000/content/socmed
+2024-05-27 23:22:53 [INFO] [Host: 127.0.0.1:5000] [IP: 127.0.0.1] [Forwarded IP: Not provided]: Response: 200 undefined
+2024-05-27 23:22:53 [INFO] [Host: undefined] [IP: undefined] [Forwarded IP: undefined]: Audit Event: Successful Response
