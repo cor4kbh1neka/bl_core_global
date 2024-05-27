@@ -189,6 +189,16 @@ const createServer = async (container) => {
   server.ext('onPreResponse', (request, h) => {
     const { response } = request;
     const customHeader = request.headers['x-customblhdrs']; // Replace 'x-custom-header' with your actual header name
+
+    const originHeader = request.headers.origin; // Get the 'Origin' header from request
+    const allowedOrigins = ['https://bostoni.pro']; // List of allowed origins
+
+    // Check if the request Origin header is included in the allowed origins
+    if (originHeader && allowedOrigins.includes(originHeader)) {
+      request.headers['origin'] = originHeader; // Set the 'Origin' header to the request headers
+    }
+
+
     if (!customHeader || customHeader !== '09c90c1d6e1b82015737f88d5f5b827060a57c874babe97f965aaa68072585191ce0eab75404312f4f349ee70029404c2d8f66698b6a4da18990445d1437ff79') {
       return h.response({ message: 'Invalid custom header or missing' }).code(401); // Unauthorized
     }
