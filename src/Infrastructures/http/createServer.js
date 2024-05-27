@@ -122,21 +122,27 @@ const createServer = async (container) => {
     }
 
   ]);
-
   server.ext('onRequest', (request, h) => {
     const startTime = Date.now(); // Start time of request processing
     const { method, url, headers, payload, info } = request;
-    const clientIp = info.remoteAddress;
-
-    // Get host and IP information
-    const host = info.host;
-    const ip = info.remoteAddress;
+    const clientIp = info && info.remoteAddress ? info.remoteAddress : 'Unknown';
+    const host = info && info.host ? info.host : 'Unknown';
+    const ip = info && info.remoteAddress ? info.remoteAddress : 'Unknown';
 
     // Log request details with host and IP
     logger.info(`Request: ${method} ${url}`, { headers, payload, clientIp, host, ip });
 
     // Extending the response object to log response details after response is sent
     const responseToolkit = h.responseToolkit;
+    h.responseToolkit = function (response) {
+      const processTime = Date.now() - startTime; // Time taken to process request
+      const { statusCode, statusMessage, headers: responseHeaders, source } = response;
+
+      // Log response details
+      logger.info(`Response: ${statusCode} ${statusMessage}`, { headers: responseHeaders, payload: source, processTime });
+
+      return responseToolkit(response);
+    };
 
     return h.continue;
   });
@@ -190,6 +196,9 @@ const createServer = async (container) => {
       logger.info(`Response: ${statusCode} ${statusMessage}`, { headers, payload: source, host, ip });
       // Log audit event for successful responses
       logAuditEvent('Successful Response', { method: request.method, url: request.url.href, statusCode, statusMessage, clientIp: ip });
+    } else {
+      // Log audit event for failed responses
+      logAuditEvent('Failed Response', { method: request.method, url: request.url.href, clientIp: request.info.remoteAddress });
     }
     if (response instanceof Error) {
       // Handle errors based on their types
@@ -218,7 +227,6 @@ const createServer = async (container) => {
 
       return newResponse;
     }
-
     // Continue with unmodified response if no error
     return h.continue;
   });
