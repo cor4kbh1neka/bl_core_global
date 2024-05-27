@@ -31,6 +31,7 @@ describe('/addBankEndpoints', () => {
                     method: 'POST',
                     url: '/memo',
                     payload: requestPayload,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
                 });
                 // Assert
                 const responseJson = JSON.parse(response.payload);
@@ -50,10 +51,7 @@ describe('/addBankEndpoints', () => {
                 const response = await server.inject({
                     method: 'GET',
                     url: `/memo`,
-                    // headers: {
-                    //     Authorization: `Bearer ${accessToken}`,
-                    // },
-
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
                 })
                 // Assert
                 const responseJson = JSON.parse(response.payload);
@@ -73,6 +71,8 @@ describe('/addBankEndpoints', () => {
                 const response = await server.inject({
                     method: 'GET',
                     url: `/memo`,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                     // headers: {
                     //     Authorization: `Bearer ${accessToken}`,
                     // },
@@ -99,6 +99,8 @@ describe('/addBankEndpoints', () => {
                 const response = await server.inject({
                     method: 'GET',
                     url: `/memo/${statustype}`,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                     // headers: {
                     //     Authorization: `Bearer ${accessToken}`,
                     // },
@@ -124,6 +126,8 @@ describe('/addBankEndpoints', () => {
                 const response = await server.inject({
                     method: 'GET',
                     url: `/memo/${statustype}`,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                     // headers: {
                     //     Authorization: `Bearer ${accessToken}`,
                     // },
@@ -151,6 +155,8 @@ describe('/addBankEndpoints', () => {
                 const response = await server.inject({
                     method: 'DELETE',
                     url: `/memo/${idmemo}`,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
 
                 });
                 // Assert
@@ -169,6 +175,8 @@ describe('/addBankEndpoints', () => {
                 const response = await server.inject({
                     method: 'DELETE',
                     url: `/memo/${idmemo}`,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
                 // Assert
                 const responseJson = JSON.parse(response.payload);

@@ -52,6 +52,7 @@ describe('/adduserendpoints', () => {
                 method: 'POST',
                 url: '/apks/settings',
                 payload: requestPayload,
+                headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
             });
             // Assert
             const responseJson = JSON.parse(response.payload);
@@ -81,6 +82,8 @@ describe('/adduserendpoints', () => {
                 method: 'POST',
                 url: '/apks/settings/event',
                 payload: requestPayload,
+                headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
             });
             // Assert
             const responseJson = JSON.parse(response.payload);
@@ -106,6 +109,8 @@ describe('/adduserendpoints', () => {
                 method: 'POST',
                 url: '/apks/settings/notice',
                 payload: requestPayload,
+                headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
             });
             // Assert
             const responseJson = JSON.parse(response.payload);
@@ -127,6 +132,8 @@ describe('/adduserendpoints', () => {
             const response = await server.inject({
                 method: 'GET',
                 url: `/apks/settings/${apkid}`,
+                headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
 
             })
             // Assert
@@ -147,6 +154,8 @@ describe('/adduserendpoints', () => {
             const response = await server.inject({
                 method: 'GET',
                 url: `/apks/settings/${apkid}`,
+                headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
 
             })
 

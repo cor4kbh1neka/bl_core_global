@@ -3,6 +3,7 @@ const H2o2 = require('@hapi/h2o2');
 const Jwt = require('@hapi/jwt');
 
 
+
 const ClientError = require('../../Commons/exceptions/ClientError');
 const DomainErrorTranslator = require('../../Commons/exceptions/DomainErrorTranslator');
 const users = require('../../Interfaces/http/api/users');
@@ -19,6 +20,15 @@ const createServer = async (container) => {
   const server = Hapi.server({
     host: process.env.HOST,
     port: process.env.PORT,
+    routes: {
+      security: {
+        hsts: true, // Enable HTTP Strict Transport Security (HSTS)
+        xss: true, // Enable protection against cross-site scripting (XSS)
+        noOpen: true, // Enable protection against MIME sniffing attacks
+        noSniff: true, // Enable protection against clickjacking attacks
+        xframe: true, // Enable protection against cross-site request forgery (CSRF)
+      },
+    },
   });
 
   await server.register(H2o2);
@@ -77,31 +87,33 @@ const createServer = async (container) => {
 
   ]);
 
-  // const allowedOrigins = ['https://bosraka.com', 'https://bostoni.pro'];
 
 
-  // server.ext('onRequest', (request, h) => {
-  //   // Memeriksa origin permintaan
+
+  // server.ext('onPreAuth', (request, h) => {
+  //   const customHeader = request.headers['x-customblhdrs']; // Replace 'x-custom-header' with your actual header name
   //   const origin = request.headers.origin;
-  //   if (!origin || !allowedOrigins.includes(origin)) {
-  //     return h.response({ message: 'Origin not allowed' }).code(403);
+  //   if (!customHeader || customHeader !== '09c90c1d6e1b82015737f88d5f5b827060a57c874babe97f965aaa68072585191ce0eab75404312f4f349ee70029404c2d8f66698b6a4da18990445d1437ff79') {
+  //     return h.response({ message: 'Invalid custom header or missing' }).code(401); // Unauthorized
   //   }
+  // if (origin !== 'https://bostoni.pro') {
+  //   return h.response({ message: 'Origin not allowed' }).code(403); // Forbidden
+  // }
 
-  //   // Lanjutkan dengan proxy jika origin diperbolehkan
   //   return h.continue;
   // });
 
-
-
+  // Error handling (onPreResponse)
   server.ext('onPreResponse', (request, h) => {
-    // mendapatkan konteks response dari request
     const { response } = request;
+    const customHeader = request.headers['x-customblhdrs']; // Replace 'x-custom-header' with your actual header name
+    if (!customHeader || customHeader !== '09c90c1d6e1b82015737f88d5f5b827060a57c874babe97f965aaa68072585191ce0eab75404312f4f349ee70029404c2d8f66698b6a4da18990445d1437ff79') {
+      return h.response({ message: 'Invalid custom header or missing' }).code(401); // Unauthorized
+    }
 
     if (response instanceof Error) {
-      // bila response tersebut error, tangani sesuai kebutuhan
+      // Handle errors based on their types
       const translatedError = DomainErrorTranslator.translate(response);
-
-      // penanganan client error secara internal.
       if (translatedError instanceof ClientError) {
         const newResponse = h.response({
           status: 'fail',
@@ -111,12 +123,10 @@ const createServer = async (container) => {
         return newResponse;
       }
 
-      // mempertahankan penanganan client error oleh hapi secara native, seperti 404, etc.
       if (!translatedError.isServer) {
-        return h.continue;
+        return h.continue; // Let Hapi handle native client errors
       }
 
-      // penanganan server error sesuai kebutuhan
       const newResponse = h.response({
         status: 'error',
         message: 'terjadi kegagalan pada server kami',
@@ -125,7 +135,7 @@ const createServer = async (container) => {
       return newResponse;
     }
 
-    // jika bukan error, lanjutkan dengan response sebelumnya (tanpa terintervensi)
+    // Continue with unmodified response if no error
     return h.continue;
   });
 

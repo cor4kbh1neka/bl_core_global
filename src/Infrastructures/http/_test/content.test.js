@@ -46,6 +46,8 @@ describe('ContentEndPoints', () => {
                     method: 'POST',
                     url: `/content/dtmttag/${iddtmeta}`,
                     payload: requestPayload,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
                 // Assert
 
@@ -69,6 +71,8 @@ describe('ContentEndPoints', () => {
                     method: 'POST',
                     url: `/content/dtmttag/${iddtmeta}`,
                     payload: requestPayload,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
                 // Assert
                 const responseJson = JSON.parse(response.payload);
@@ -85,6 +89,8 @@ describe('ContentEndPoints', () => {
                 const response = await server.inject({
                     method: 'GET',
                     url: `/content/dtmttag/gtdt`,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
 
 
@@ -110,6 +116,8 @@ describe('ContentEndPoints', () => {
                     method: 'POST',
                     url: `/content/stmp`,
                     payload: requestPayload,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
                 //assert
                 const responseJson = JSON.parse(response.payload);
@@ -131,6 +139,8 @@ describe('ContentEndPoints', () => {
                     method: 'POST',
                     url: `/content/stmp`,
                     payload: requestPayload,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
                 //assert
                 const responseJson = JSON.parse(response.payload);
@@ -152,6 +162,8 @@ describe('ContentEndPoints', () => {
                     method: 'POST',
                     url: `/content/stmp/${urpage}`,
                     payload: requestPayload,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
                 // Assert
                 const responseJson = JSON.parse(response.payload);
@@ -169,6 +181,8 @@ describe('ContentEndPoints', () => {
                     method: 'POST',
                     url: `/content/stmp/${paramurpage}`,
                     payload: requestPayload,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
                 // Assert
                 const responseJson = JSON.parse(response.payload);
@@ -188,6 +202,8 @@ describe('ContentEndPoints', () => {
                 const response = await server.inject({
                     method: 'GET',
                     url: `/content/stmp`,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
 
                 //assert
@@ -209,8 +225,7 @@ describe('ContentEndPoints', () => {
                     method: 'DELETE',
                     url: `/content/stmp`,
                     payload: requestPayload,
-
-
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
                 });
 
                 //assert
@@ -229,7 +244,7 @@ describe('ContentEndPoints', () => {
                     method: 'DELETE',
                     url: `/content/stmp`,
                     payload: requestPayload,
-
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
                 });
 
                 //assert
@@ -263,6 +278,8 @@ describe('ContentEndPoints', () => {
                     method: 'PUT',
                     url: `/content/ctgeneral/${idnmwebst}`,
                     payload: requestPayload,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
                 // Assert
 
@@ -288,6 +305,8 @@ describe('ContentEndPoints', () => {
                     method: 'PUT',
                     url: `/content/ctgeneral/${idnmwebst}`,
                     payload: requestPayload,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
                 // Assert
                 const responseJson = JSON.parse(response.payload);
@@ -305,6 +324,8 @@ describe('ContentEndPoints', () => {
                 const response = await server.inject({
                     method: 'GET',
                     url: `/content/ctgeneral`,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
 
 
@@ -336,6 +357,8 @@ describe('ContentEndPoints', () => {
                     method: 'PUT',
                     url: `/content/ctslider/${idctsldr}`,
                     payload: requestPayload,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
                 // Assert
 
@@ -360,6 +383,8 @@ describe('ContentEndPoints', () => {
                     method: 'PUT',
                     url: `/content/ctslider/${idctsldr}`,
                     payload: requestPayload,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
                 // Assert
                 const responseJson = JSON.parse(response.payload);
@@ -377,6 +402,8 @@ describe('ContentEndPoints', () => {
                 const response = await server.inject({
                     method: 'GET',
                     url: `/content/ctslider`,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
 
 
@@ -406,6 +433,8 @@ describe('ContentEndPoints', () => {
                     method: 'PUT',
                     url: `/content/ctlink/${idctlnk}`,
                     payload: requestPayload,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
                 // Assert
 
@@ -429,6 +458,8 @@ describe('ContentEndPoints', () => {
                     method: 'PUT',
                     url: `/content/ctlink/${idctlnk}`,
                     payload: requestPayload,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
                 // Assert
                 const responseJson = JSON.parse(response.payload);
@@ -446,6 +477,8 @@ describe('ContentEndPoints', () => {
                 const response = await server.inject({
                     method: 'GET',
                     url: `/content/ctlink`,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
 
 
@@ -477,6 +510,8 @@ describe('ContentEndPoints', () => {
                     method: 'PUT',
                     url: `/content/socmed/${idctscmed}`,
                     payload: requestPayload,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
                 // Assert
 
@@ -501,6 +536,8 @@ describe('ContentEndPoints', () => {
                     method: 'PUT',
                     url: `/content/socmed/${idctscmed}`,
                     payload: requestPayload,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
                 // Assert
                 const responseJson = JSON.parse(response.payload);
@@ -518,6 +555,8 @@ describe('ContentEndPoints', () => {
                 const response = await server.inject({
                     method: 'GET',
                     url: `/content/socmed`,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
 
 
@@ -548,6 +587,8 @@ describe('ContentEndPoints', () => {
                     method: 'POST',
                     url: `/content/prm`,
                     payload: requestPayload,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
                 //assert
                 const responseJson = JSON.parse(response.payload);
@@ -573,6 +614,8 @@ describe('ContentEndPoints', () => {
                     method: 'PUT',
                     url: `/content/prm/${idctprm}`,
                     payload: requestPayload,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
                 // Assert
                 const responseJson = JSON.parse(response.payload);
@@ -594,6 +637,8 @@ describe('ContentEndPoints', () => {
                     method: 'PUT',
                     url: `/content/prm/${idctprm}`,
                     payload: requestPayload,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
                 // Assert
                 const responseJson = JSON.parse(response.payload);
@@ -613,6 +658,8 @@ describe('ContentEndPoints', () => {
                 const response = await server.inject({
                     method: 'GET',
                     url: `/content/prm`,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
 
                 //assert
@@ -632,6 +679,8 @@ describe('ContentEndPoints', () => {
                 const response = await server.inject({
                     method: 'DELETE',
                     url: `/content/prm/${idctprm}`,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
 
                 //assert
@@ -648,6 +697,8 @@ describe('ContentEndPoints', () => {
                 const response = await server.inject({
                     method: 'DELETE',
                     url: `/content/prm/${idctprm}`,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
 
                 //assert
@@ -678,6 +729,8 @@ describe('ContentEndPoints', () => {
                     method: 'PUT',
                     url: `/content/sts/${idctmtncnc}`,
                     payload: requestPayload,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
                 // Assert
 
@@ -700,6 +753,8 @@ describe('ContentEndPoints', () => {
                     method: 'PUT',
                     url: `/content/sts/${idctmtncnc}`,
                     payload: requestPayload,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
                 // Assert
                 const responseJson = JSON.parse(response.payload);
@@ -717,6 +772,8 @@ describe('ContentEndPoints', () => {
                 const response = await server.inject({
                     method: 'GET',
                     url: `/content/sts`,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
 
 

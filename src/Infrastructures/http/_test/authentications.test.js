@@ -47,6 +47,8 @@ describe('/authentications endpoint', () => {
         method: 'POST',
         url: '/authentications',
         payload: requestPayload,
+        headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
       });
 
       // Assert
@@ -86,6 +88,8 @@ describe('/authentications endpoint', () => {
           username: 'fakeuser',
           password: 'secret',
         },
+        headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
       });
       const { data: { refreshToken } } = JSON.parse(loginResponse.payload);
       const accessToken = await container.getInstance(AuthenticationTokenManager.name).createAccessToken({ username: 'fakeuser' });
@@ -99,6 +103,7 @@ describe('/authentications endpoint', () => {
         },
         headers: {
           Authorization: `Bearer ${accessToken}`,
+          'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE
         },
       });
 
@@ -122,6 +127,7 @@ describe('/authentications endpoint', () => {
         payload: {},
         headers: {
           Authorization: `Bearer ${accessToken}`,
+          'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE
         },
       });
 
@@ -147,6 +153,7 @@ describe('/authentications endpoint', () => {
         },
         headers: {
           Authorization: `Bearer ${accessToken}`,
+          'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE
         },
       });
 
@@ -170,6 +177,7 @@ describe('/authentications endpoint', () => {
         },
         headers: {
           Authorization: `Bearer ${accessToken}`,
+          'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE
         },
       });
 
@@ -197,6 +205,7 @@ describe('/authentications endpoint', () => {
         },
         headers: {
           Authorization: `Bearer ${accessToken}`,
+          'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE
         },
       });
 
@@ -226,6 +235,7 @@ describe('/authentications endpoint', () => {
         },
         headers: {
           Authorization: `Bearer ${accessToken}`,
+          'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE
         },
       });
 
@@ -250,6 +260,7 @@ describe('/authentications endpoint', () => {
         },
         headers: {
           Authorization: `Bearer ${accessToken}`,
+          'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE
         },
       });
 
@@ -272,6 +283,7 @@ describe('/authentications endpoint', () => {
         payload: {},
         headers: {
           Authorization: `Bearer ${accessToken}`,
+          'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE
         },
       });
 
@@ -295,6 +307,7 @@ describe('/authentications endpoint', () => {
         },
         headers: {
           Authorization: `Bearer ${accessToken}`,
+          'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE
         },
       });
 
@@ -334,6 +347,8 @@ describe('/authentications endpoint', () => {
           username: 'fakeuser2',
           password: 'secret',
         },
+        headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
       });
       const { data: { refreshToken } } = JSON.parse(loginResponse.payload);
       // Action
@@ -343,6 +358,7 @@ describe('/authentications endpoint', () => {
         payload: { refreshToken },
         headers: {
           Authorization: `Bearer ${accessToken}`,
+          'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE
         },
       });
       const responseJson = JSON.parse(response.payload);

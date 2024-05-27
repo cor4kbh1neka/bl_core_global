@@ -37,6 +37,8 @@ describe('/adduserendpoints', () => {
                 method: 'POST',
                 url: '/users',
                 payload: requestPayload,
+                headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
             });
             // Assert
             const responseJson = JSON.parse(response.payload);
@@ -65,6 +67,8 @@ describe('/adduserendpoints', () => {
                 method: 'POST',
                 url: '/users',
                 payload: requestPayload,
+                headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
             });
             // Assert
             const responseJson = JSON.parse(response.payload);
@@ -88,6 +92,8 @@ describe('/adduserendpoints', () => {
             const response = await server.inject({
                 method: 'GET',
                 url: `/users/${xxuserxx}`,
+                headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
 
             })
 
@@ -108,6 +114,8 @@ describe('/adduserendpoints', () => {
             const response = await server.inject({
                 method: 'GET',
                 url: `/users/${xxuserxx}`,
+                headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
 
             })
             // Assert
@@ -141,6 +149,8 @@ describe('/adduserendpoints', () => {
                 method: 'PUT',
                 url: `/users/${xyusernamexxy}`,
                 payload: requestPayload,
+                headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
 
             })
 
@@ -168,6 +178,8 @@ describe('/adduserendpoints', () => {
                 method: 'PUT',
                 url: `/users/${xyusernamexxy}`,
                 payload: requestPayload,
+                headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
             })
             // Assert
             const responseJson = JSON.parse(response.payload);
@@ -196,6 +208,8 @@ describe('/adduserendpoints', () => {
                 method: 'PUT',
                 url: `/users/vip/${xyusernamexxy}`,
                 payload: requestPayload,
+                headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
 
             })
 
@@ -220,6 +234,8 @@ describe('/adduserendpoints', () => {
                 method: 'PUT',
                 url: `/users/vip/${xyusernamexxy}`,
                 payload: requestPayload,
+                headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
             })
             // Assert
             const responseJson = JSON.parse(response.payload);
@@ -246,6 +262,8 @@ describe('/adduserendpoints', () => {
                 method: 'PUT',
                 url: `/users/pswdy/${xyusernamexxy}`,
                 payload: requestPayload,
+                headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
 
             })
 
@@ -269,6 +287,8 @@ describe('/adduserendpoints', () => {
                 method: 'PUT',
                 url: `/users/pswdy/${xyusernamexxy}`,
                 payload: requestPayload,
+                headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
 
             })
             // Assert

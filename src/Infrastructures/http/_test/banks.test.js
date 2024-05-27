@@ -38,6 +38,8 @@ describe('/addBankEndpoints', () => {
                     method: 'POST',
                     url: '/banks/group',
                     payload: requestPayload,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
                 // Assert
                 const responseJson = JSON.parse(response.payload);
@@ -67,6 +69,8 @@ describe('/addBankEndpoints', () => {
                     method: 'PUT',
                     url: `/banks/group/${namegroup}`,
                     payload: requestPayload,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
                 // Assert
                 const responseJson = JSON.parse(response.payload);
@@ -89,6 +93,8 @@ describe('/addBankEndpoints', () => {
                 const response = await server.inject({
                     method: 'GET',
                     url: '/banks/group',
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
                 // Assert
                 const responseJson = JSON.parse(response.payload);
@@ -111,6 +117,7 @@ describe('/addBankEndpoints', () => {
                 const response = await server.inject({
                     method: 'DELETE',
                     url: `/banks/group/${groupid}`,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
 
                 });
                 // Assert
@@ -130,6 +137,7 @@ describe('/addBankEndpoints', () => {
                 const response = await server.inject({
                     method: 'DELETE',
                     url: `/banks/group/${groupid}`,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
 
                 });
                 // Assert
@@ -161,6 +169,8 @@ describe('/addBankEndpoints', () => {
                     method: 'POST',
                     url: '/banks/master',
                     payload: requestPayload,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
                 // Assert
                 const responseJson = JSON.parse(response.payload);
@@ -186,6 +196,8 @@ describe('/addBankEndpoints', () => {
                     method: 'POST',
                     url: '/banks/master',
                     payload: requestPayload,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
 
                 // Assert
@@ -215,6 +227,8 @@ describe('/addBankEndpoints', () => {
                     method: 'PUT',
                     url: `/banks/master/${mstrbnks}`,
                     payload: requestPayload,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
                 // Assert
                 const responseJson = JSON.parse(response.payload);
@@ -236,6 +250,8 @@ describe('/addBankEndpoints', () => {
                 const response = await server.inject({
                     method: 'GET',
                     url: '/banks/master',
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
                 // Assert
                 const responseJson = JSON.parse(response.payload);
@@ -257,6 +273,8 @@ describe('/addBankEndpoints', () => {
                     const response = await server.inject({
                         method: 'DELETE',
                         url: `/banks/master/${idbnkmaster}`,
+                        headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
 
                     });
                     // Assert
@@ -275,6 +293,8 @@ describe('/addBankEndpoints', () => {
                     const response = await server.inject({
                         method: 'DELETE',
                         url: `/banks/master/${idbnkmaster}`,
+                        headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
 
                     });
                     // Assert
@@ -311,6 +331,8 @@ describe('/addBankEndpoints', () => {
                     method: 'POST',
                     url: '/banks/v2/add',
                     payload: requestPayload,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
                 // Assert
                 const responseJson = JSON.parse(response.payload);
@@ -333,6 +355,8 @@ describe('/addBankEndpoints', () => {
                 const response = await server.inject({
                     method: 'DELETE',
                     url: `/banks/${idbank}/${namabank}`,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
 
                 });
                 // Assert
@@ -355,6 +379,8 @@ describe('/addBankEndpoints', () => {
                 const response = await server.inject({
                     method: 'DELETE',
                     url: `/banks/${idbank}/${namabank}`,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
                 // Assert
                 const responseJson = JSON.parse(response.payload);
@@ -378,6 +404,7 @@ describe('/addBankEndpoints', () => {
                 const response = await server.inject({
                     method: 'DELETE',
                     url: `/banks/arr/${idbank}/${groupbank}`,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
 
                 });
                 // Assert
@@ -398,6 +425,7 @@ describe('/addBankEndpoints', () => {
                 const response = await server.inject({
                     method: 'DELETE',
                     url: `/banks/arr/${idbank}/${groupbank}`,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
 
                 });
                 // Assert
@@ -419,6 +447,7 @@ describe('/addBankEndpoints', () => {
                 const response = await server.inject({
                     method: 'DELETE',
                     url: `/banks/arr/${idbank}/${groupbank}`,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
 
                 });
                 // Assert
@@ -457,6 +486,8 @@ describe('/addBankEndpoints', () => {
                     method: 'PUT',
                     url: `/banks/v2/${idbank}/${nmbank}`,
                     payload: requestPayload,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
                 // Assert
                 const responseJson = JSON.parse(response.payload);
@@ -485,6 +516,8 @@ describe('/addBankEndpoints', () => {
                     method: 'PUT',
                     url: `/banks/v3/${idbank}`,
                     payload: requestPayload,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
                 // Assert
                 const responseJson = JSON.parse(response.payload);
@@ -507,6 +540,8 @@ describe('/addBankEndpoints', () => {
                     method: 'PUT',
                     url: `/banks/v3/${idbank}`,
                     payload: requestPayload,
+                    headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
+
                 });
                 // Assert
                 const responseJson = JSON.parse(response.payload);
@@ -534,6 +569,7 @@ describe('/addBankEndpoints', () => {
             const response = await server.inject({
                 method: 'GET',
                 url: `/banks/v2/${groupname}`,
+                headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
 
             })
 
@@ -552,6 +588,7 @@ describe('/addBankEndpoints', () => {
             const response = await server.inject({
                 method: 'GET',
                 url: `/banks/v2/${groupname}`,
+                headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
 
             })
             // Assert
@@ -580,6 +617,7 @@ describe('/addBankEndpoints', () => {
             const response = await server.inject({
                 method: 'GET',
                 url: `/banks/exc/${groupname}`,
+                headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
 
             })
 
@@ -598,6 +636,7 @@ describe('/addBankEndpoints', () => {
             const response = await server.inject({
                 method: 'GET',
                 url: `/banks/exc/${groupname}`,
+                headers: { 'x-customblhdrs': process.env.CUSTOM_HEADER_VALUE }
 
             })
             // Assert
