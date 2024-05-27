@@ -15,9 +15,7 @@ const routes = (handler) => ([
     path: '/memo',
     handler: handler.getMemo,
     options: {
-      cors: {
-        origin: ['*'],
-      },
+      cors: true,
     },
   },
   {
