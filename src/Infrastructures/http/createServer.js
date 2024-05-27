@@ -36,7 +36,7 @@ const createServer = async (container) => {
   });
   // Create a logger
   const myFormat = printf(({ level, message, timestamp, host, ip, forwardedIp }) => {
-    return `${timestamp} [${level.toUpperCase()}] [Host: ${host}] [IP: ${ip}] [Forwarded IP: ${forwardedIp}]: ${message}`;
+    return `${timestamp} [${level.toUpperCase()}] [Host: ${host}] [IP: ${forwardedIp}] : ${message}`;
   });
 
   const logger = winston.createLogger({
