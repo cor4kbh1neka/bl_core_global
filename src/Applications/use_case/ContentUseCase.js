@@ -111,9 +111,9 @@ class ContentUseCase {
 
     async getslider() {
         try {
-            await this._cacheService.delete(`ctslider:ctslider`);
+            // await this._cacheService.delete(`ctslider:ctslider`);
 
-            // const result = await this._cacheService.get(`ctslider:ctslider`);
+            const result = await this._cacheService.get(`ctslider:ctslider`);
             const dataresult = JSON.parse(result);
             dataresult.headers = {
                 'X-Data-Source': 'cache',
