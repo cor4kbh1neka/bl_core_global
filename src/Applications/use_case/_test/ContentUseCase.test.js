@@ -3,6 +3,9 @@ const AddSitemap = require('../../../Domains/contnt/entities/AddSitemap');
 const EditGeneral = require('../../../Domains/contnt/entities/EditGeneral');
 const EditSlider = require('../../../Domains/contnt/entities/EditSlider');
 const EditLink = require('../../../Domains/contnt/entities/EditLink');
+const EditSocmed = require('../../../Domains/contnt/entities/EditSocmed');
+const EditPromo = require('../../../Domains/contnt/entities/EditPromo');
+const EditMT = require('../../../Domains/contnt/entities/EditMT');
 const ContentRepository = require('../../../Domains/contnt/ContentRepository');
 const CacheService = require('../../caching/CacheService');
 const ContentUseCase = require('../ContentUseCase');
@@ -447,7 +450,6 @@ describe('CONTENT SLIDER', () => {
     });
 });
 
-
 describe('CONTENT LINK', () => {
     describe('it should edit content LINK correctltly', () => {
         it('it should edit LINK correctltly', async () => {
@@ -543,6 +545,340 @@ describe('CONTENT LINK', () => {
             expect(mockcacheService.get).toBeCalledWith(`ctlink:ctlink`);
             expect(payload).toEqual(
                 resultmocklink
+            );
+        });
+    });
+});
+
+describe('CONTENT SOCMED', () => {
+    describe('it should edit content SOCMED correctltly', () => {
+        it('it should edit SOCMED correctltly', async () => {
+            // Arrange
+            const useCasePayload = new EditSocmed({
+                ctscmedur: 'https://example.com/3',
+                nmectscmed: 'example title 2',
+                trgturctscmed: 'https://example.com',
+                statusctscmed: '1',
+            });
+
+            const params = {
+                idctscmed: 4
+            };
+
+            const mockcacheService = new CacheService();
+            const mockContentRepository = new ContentRepository();
+
+            mockContentRepository.editsocmed = jest.fn()
+                .mockImplementation(() => Promise.resolve());
+            mockcacheService.delete = jest.fn().mockResolvedValue();
+
+            const editcontentusecase = new ContentUseCase({
+                contentRepository: mockContentRepository,
+                cacheServices: mockcacheService
+            });
+
+            const datasliderUseCase = await editcontentusecase.editsocmed(useCasePayload, params);
+
+            expect(datasliderUseCase).toStrictEqual('social media data updated');
+            expect(mockContentRepository.editsocmed).toBeCalledWith(useCasePayload, params.idctscmed);
+            expect(mockcacheService.delete).toBeCalledWith(`ctsocmed:ctsocmed`);
+        });
+    });
+    describe('should success calling get data content SOCMED', () => {
+
+        it('should success calling get data SOCMED', async () => {
+
+            // Arrange
+            const resultsocmedmock = {
+                ctscmedur: 'https://example.com/3',
+                nmectscmed: 'example title 2',
+                trgturctscmed: 'https://example.com',
+                statusctscmed: '1',
+            };
+
+            // Action
+            const mockcacheService = new CacheService();
+            const mockContentRepository = new ContentRepository();
+
+
+            mockContentRepository.getsocmed = jest.fn()
+                .mockImplementation(() => Promise.resolve(resultsocmedmock));
+            mockcacheService.delete = jest.fn().mockResolvedValue();
+            mockcacheService.set = jest.fn().mockResolvedValue();
+
+            const getdataSocmedUsecase = new ContentUseCase({
+                contentRepository: mockContentRepository,
+                cacheServices: mockcacheService
+            });
+
+            const payload = await getdataSocmedUsecase.getsocmed();
+
+            // Assert
+            expect(mockContentRepository.getsocmed).toBeCalledWith();
+            expect(mockcacheService.delete).toBeCalledWith(`ctsocmed:ctsocmed`);
+            expect(mockcacheService.set).toBeCalledWith(`ctsocmed:ctsocmed`, JSON.stringify(resultsocmedmock));
+            expect(payload).toEqual(resultsocmedmock);
+        });
+
+        it('should success calling get data SOCMED with redis', async () => {
+
+            // Arrange
+            const resultsocmedmock = {
+                ctsldrur: 'https://example.com/2',
+                ttlectsldr: 'example title 2',
+                trgturctsldr: 'https://example.com/2',
+                statusctsldr: '2',
+                headers: {
+                    'X-Data-Source': 'cache',
+                }
+            };
+
+            // Action
+            const mockcacheService = new CacheService();
+            mockcacheService.get = jest.fn().mockResolvedValue(JSON.stringify(resultsocmedmock));
+
+
+            const getdataSocmedUsecase = new ContentUseCase({
+                cacheServices: mockcacheService
+            });
+
+            const payload = await getdataSocmedUsecase.getsocmed();
+
+            // Assert
+            expect(mockcacheService.get).toBeCalledWith(`ctsocmed:ctsocmed`);
+            expect(payload).toEqual(
+                resultsocmedmock
+            );
+        });
+    });
+});
+
+describe('CONTNET PROMO', () => {
+    describe('should success add data PROMO', () => {
+        it('should success add data PROMO', async () => {
+            // Arrange
+            const useCasePayload = new EditPromo({
+                ctprmur: 'https://example.com/3',
+                ttlectprm: 'example title 2',
+                trgturctprm: 'https://example.com',
+                statusctprm: '1',
+            });
+            // Action
+            const mockcacheService = new CacheService();
+            const mockContentRepository = new ContentRepository();
+
+            mockContentRepository.addpromo = jest.fn()
+                .mockImplementation(() => Promise.resolve());
+            mockcacheService.delete = jest.fn().mockResolvedValue();
+            const addPromoUsecase = new ContentUseCase({
+                contentRepository: mockContentRepository,
+                cacheServices: mockcacheService
+            });
+            const addPromo = await addPromoUsecase.addpromo(useCasePayload);
+            //assert
+            expect(addPromo).toStrictEqual('promo added succesfully !');
+            expect(mockContentRepository.addpromo).toBeCalledWith(useCasePayload);
+            expect(mockcacheService.delete).toBeCalledWith(`ctpromo:ctpromo`);
+        });
+    });
+    describe('should success edit data PROMO', () => {
+        it('should edit PROMO successfully', async () => {
+            const useCasePayload = new EditPromo({
+                ctprmur: 'https://example.com/3',
+                ttlectprm: 'example title 2',
+                trgturctprm: 'https://example.com',
+                statusctprm: '1',
+            });
+
+            const params = {
+                idctprm: 7,
+            };
+            const mockcacheService = new CacheService();
+            const mockContentRepository = new ContentRepository();
+
+            mockContentRepository.editpromo = jest.fn()
+                .mockImplementation(() => Promise.resolve());
+            mockcacheService.delete = jest.fn().mockResolvedValue();
+
+            const editPromoUsecase = new ContentUseCase({
+                contentRepository: mockContentRepository,
+                cacheServices: mockcacheService
+            });
+            const editSiteMaps = await editPromoUsecase.editpromo(useCasePayload, params);
+            expect(editSiteMaps).toStrictEqual('promo Edit Success !');
+            expect(mockContentRepository.editpromo).toBeCalledWith(useCasePayload, params.idctprm);
+            expect(mockcacheService.delete).toBeCalledWith(`ctpromo:ctpromo`);
+        });
+    });
+    describe('should get data PROMO succcessfulldy using redis and database', () => {
+        it('should get data PROMO succcessfulldy using redis', async () => {
+            // Arrange
+            const resultMockPromo = {
+                ctprmur: 'https://example.com/3',
+                ttlectprm: 'example title 2',
+                trgturctprm: 'https://example.com',
+                statusctprm: '1',
+                headers: {
+                    'X-Data-Source': 'cache',
+                }
+            };
+            // Action
+            const mockcacheService = new CacheService();
+            mockcacheService.get = jest.fn().mockResolvedValue(JSON.stringify(resultMockPromo));
+            const getdataPromo = new ContentUseCase({
+                cacheServices: mockcacheService
+            });
+            const payload = await getdataPromo.getpromo();
+            // Assert
+            expect(mockcacheService.get).toBeCalledWith(`ctpromo:ctpromo`);
+            expect(payload).toEqual(
+                resultMockPromo
+            );
+        });
+        it('should get data Promo succcessfulldy using database', async () => {
+            // Arrange
+            const resultMockPromo = {
+                ctprmur: 'https://example.com/3',
+                ttlectprm: 'example title 2',
+                trgturctprm: 'https://example.com',
+                statusctprm: '1',
+            };
+            // Action
+            const mockcacheService = new CacheService();
+            const mockContentRepository = new ContentRepository();
+            mockContentRepository.getpromo = jest.fn()
+                .mockImplementation(() => Promise.resolve(resultMockPromo));
+            mockcacheService.delete = jest.fn().mockResolvedValue();
+            mockcacheService.set = jest.fn().mockResolvedValue();
+            const getdataPromoUsecase = new ContentUseCase({
+                contentRepository: mockContentRepository,
+                cacheServices: mockcacheService
+            });
+            const payload = await getdataPromoUsecase.getpromo();
+            // Assert
+            expect(mockContentRepository.getpromo).toBeCalledWith();
+            expect(mockcacheService.delete).toBeCalledWith(`ctpromo:ctpromo`);
+            expect(mockcacheService.set).toBeCalledWith(`ctpromo:ctpromo`, JSON.stringify(resultMockPromo));
+            expect(payload).toEqual(resultMockPromo);
+        });
+    });
+    describe('PROMO should be deleted', () => {
+        it('should PROMO sitemap successfully', async () => {
+
+
+            const params = {
+                idctprm: 5
+            };
+            const mockcacheService = new CacheService();
+            const mockContentRepository = new ContentRepository();
+
+            mockContentRepository.deletepromo = jest.fn()
+                .mockImplementation(() => Promise.resolve());
+            mockcacheService.delete = jest.fn().mockResolvedValue();
+
+            const deletePromousecase = new ContentUseCase({
+                contentRepository: mockContentRepository,
+                cacheServices: mockcacheService
+            });
+            const deletePromo = await deletePromousecase.deletepromo(params.idctprm)
+            expect(deletePromo).toStrictEqual('Promo deleted successfully !');
+
+            expect(mockContentRepository.deletepromo).toBeCalledWith(params.idctprm);
+            expect(mockcacheService.delete).toBeCalledWith(`ctpromo:ctpromo`);
+        });
+    });
+
+});
+
+describe('CONTENT MT', () => {
+    describe('it should edit content MT correctltly', () => {
+        it('it should edit LINK correctltly', async () => {
+            // Arrange
+            const useCasePayload = new EditMT({
+                stsmtncnc: '1',
+            });
+
+            const params = {
+                idctmtncnc: 1
+            };
+
+            const mockcacheService = new CacheService();
+            const mockContentRepository = new ContentRepository();
+
+            mockContentRepository.editmt = jest.fn()
+                .mockImplementation(() => Promise.resolve());
+            mockcacheService.delete = jest.fn().mockResolvedValue();
+
+            const editMTusecase = new ContentUseCase({
+                contentRepository: mockContentRepository,
+                cacheServices: mockcacheService
+            });
+
+            const dataMtUsecase = await editMTusecase.editmt(useCasePayload, params);
+
+            expect(dataMtUsecase).toStrictEqual('Status updated');
+            expect(mockContentRepository.editmt).toBeCalledWith(useCasePayload, params.idctmtncnc);
+            expect(mockcacheService.delete).toBeCalledWith(`ctmaintenance:ctmaintenance`);
+        });
+    });
+    describe('should success calling get data content MT', () => {
+
+        it('should success calling get data MT', async () => {
+
+            // Arrange
+            const resultmockMt = {
+                stsmtncnc: '1',
+            };
+
+            // Action
+            const mockcacheService = new CacheService();
+            const mockContentRepository = new ContentRepository();
+
+
+            mockContentRepository.getmt = jest.fn()
+                .mockImplementation(() => Promise.resolve(resultmockMt));
+            mockcacheService.delete = jest.fn().mockResolvedValue();
+            mockcacheService.set = jest.fn().mockResolvedValue();
+
+            const getMtStatusUsecase = new ContentUseCase({
+                contentRepository: mockContentRepository,
+                cacheServices: mockcacheService
+            });
+
+            const payload = await getMtStatusUsecase.getmt();
+
+            // Assert
+            expect(mockContentRepository.getmt).toBeCalledWith();
+            expect(mockcacheService.delete).toBeCalledWith(`ctmaintenance:ctmaintenance`);
+            expect(mockcacheService.set).toBeCalledWith(`ctmaintenance:ctmaintenance`, JSON.stringify(resultmockMt));
+            expect(payload).toEqual(resultmockMt);
+        });
+
+        it('should success calling get data Link with redis', async () => {
+
+            // Arrange
+            const resultmockMt = {
+                stsmtncnc: '1',
+                headers: {
+                    'X-Data-Source': 'cache',
+                }
+            };
+
+            // Action
+            const mockcacheService = new CacheService();
+            mockcacheService.get = jest.fn().mockResolvedValue(JSON.stringify(resultmockMt));
+
+
+            const getDataMTstatusUsecase = new ContentUseCase({
+                cacheServices: mockcacheService
+            });
+
+            const payload = await getDataMTstatusUsecase.getmt();
+
+            // Assert
+            expect(mockcacheService.get).toBeCalledWith(`ctmaintenance:ctmaintenance`);
+            expect(payload).toEqual(
+                resultmockMt
             );
         });
     });

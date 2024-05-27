@@ -142,7 +142,7 @@ class ContentRepositoryPostgres extends ContentRepository {
             values: [],
         };
         const result = await this._pool.query(query);
-        return result.rows[0];
+        return result.rows;
     }
 
     async editlink(payload, params) {
@@ -164,6 +164,90 @@ class ContentRepositoryPostgres extends ContentRepository {
         };
         const result = await this._pool.query(query);
         return result.rows;
+    }
+
+    async editsocmed(payload, params) {
+        const query = {
+            text: 'UPDATE ctscmed SET ctscmedur = $1, nmectscmed = $2, trgturctscmed = $3, statusctscmed = $4 WHERE idctscmed = $5',
+            values: [payload.ctscmedur, payload.nmectscmed, payload.trgturctscmed, payload.statusctscmed, params],
+        };
+        const result = await this._pool.query(query);
+        if (!result.rowCount) {
+            throw new InvariantError('fail edit data !');
+        }
+        return "social media data updated";
+    }
+    async getsocmed() {
+        const query = {
+            text: 'SELECT idctscmed, ctscmedur, nmectscmed, trgturctscmed, statusctscmed FROM ctscmed ',
+            values: [],
+        };
+        const result = await this._pool.query(query);
+        return result.rows;
+    }
+
+    async addpromo(payload) {
+        const query = {
+            text: 'INSERT INTO ctprm (ctprmur,ttlectprm,trgturctprm,statusctprm) VALUES($1, $2, $3,$4)',
+            values: [payload.ctprmur, payload.ttlectprm, payload.trgturctprm, payload.statusctprm],
+        };
+        await this._pool.query(query);
+        return;
+    }
+
+    async editpromo(payload, params) {
+        const query = {
+            text: 'UPDATE ctprm SET ctprmur = $1,ttlectprm= $2, trgturctprm = $3, statusctprm = $4 WHERE idctprm = $5',
+            values: [payload.ctprmur, payload.ttlectprm, payload.trgturctprm, payload.statusctprm, params],
+        };
+        const result = await this._pool.query(query);
+        if (!result.rowCount) {
+            throw new InvariantError('fail edit data !');
+        }
+        return "promo data updated";
+    }
+
+    async getpromo() {
+        const query = {
+            text: 'SELECT idctprm, ctprmur, ttlectprm, trgturctprm, statusctprm FROM ctprm ',
+            values: [],
+        };
+        const result = await this._pool.query(query);
+        return result.rows;
+    }
+
+    async deletepromo(params) {
+        const { idctprm } = params;
+        const query = {
+            text: 'DELETE FROM ctprm WHERE idctprm = $1',
+            values: [idctprm],
+        };
+        const result = await this._pool.query(query);
+        if (!result.rowCount) {
+            throw new InvariantError('fail delete data !');
+        }
+        return "Promo deleted successfully !";
+    }
+
+    async editmt(payload, params) {
+        const query = {
+            text: 'UPDATE mtncnc SET stsmtncnc = $1 WHERE idctmtncnc = $2',
+            values: [payload.stsmtncnc, params],
+        };
+        const result = await this._pool.query(query);
+        if (!result.rowCount) {
+            throw new InvariantError('fail edit data !');
+        }
+        return "status updated";
+    }
+
+    async getmt() {
+        const query = {
+            text: 'SELECT stsmtncnc FROM mtncnc ',
+            values: [],
+        };
+        const result = await this._pool.query(query);
+        return result.rows[0];
     }
 
 }

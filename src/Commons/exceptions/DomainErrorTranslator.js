@@ -90,6 +90,17 @@ DomainErrorTranslator._directories = {
   'EDIT_LINK.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('wrong type data input, check again !'),
   'EDIT_LINK.CONTAIN_RESTRICTED_CHARACTER': new InvariantError('restricted input , watch your input !'),
 
+  'EDIT_SOCMED.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('fill cannot empty'),
+  'EDIT_SOCMED.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('wrong type data input, check again !'),
+  'EDIT_SOCMED.CONTAIN_RESTRICTED_CHARACTER': new InvariantError('restricted input , watch your input !'),
+
+  'EDIT_PROMO.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('fill cannot empty'),
+  'EDIT_PROMO.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('wrong type data input, check again !'),
+  'EDIT_PROMO.CONTAIN_RESTRICTED_CHARACTER': new InvariantError('restricted input , watch your input !'),
+
+  'EDIT_MT.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('fill cannot empty'),
+  'EDIT_MT.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('wrong type data input, check again !'),
+  'EDIT_MT.CONTAIN_RESTRICTED_CHARACTER': new InvariantError('restricted input , watch your input !'),
 };
 
 module.exports = DomainErrorTranslator;

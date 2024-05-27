@@ -57,5 +57,42 @@ describe('contentRepository interface', () => {
         });
     });
 
+    describe('Socmed  interface', () => {
+
+        it('should throw an error whe invoke abstract behavior', async () => {
+            //arrange
+            const contentRepository = new ContentRepository()
+            //action and Assertion
+            await expect(contentRepository.editsocmed({})).rejects.toThrowError('CONTENT_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+            await expect(contentRepository.getsocmed({})).rejects.toThrowError('CONTENT_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+        });
+    });
+
+    describe('Promo  interface', () => {
+
+        it('should throw an error whe invoke abstract behavior', async () => {
+            //arrange
+            const contentRepository = new ContentRepository()
+            //action and Assertion
+            await expect(contentRepository.addpromo({})).rejects.toThrowError('CONTENT_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+            await expect(contentRepository.editpromo({})).rejects.toThrowError('CONTENT_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+            await expect(contentRepository.getpromo({})).rejects.toThrowError('CONTENT_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+            await expect(contentRepository.deletepromo({})).rejects.toThrowError('CONTENT_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+
+        });
+    });
+
+    describe('MT interface', () => {
+
+        it('should throw an error whe invoke abstract behavior', async () => {
+            //arrange
+            const contentRepository = new ContentRepository()
+            //action and Assertion
+            await expect(contentRepository.editmt({})).rejects.toThrowError('CONTENT_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+            await expect(contentRepository.getmt({})).rejects.toThrowError('CONTENT_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+
+        });
+
+    });
 
 });

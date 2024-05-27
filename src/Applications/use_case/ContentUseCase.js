@@ -3,12 +3,14 @@ const AddSiteMap = require('../../Domains/contnt/entities/AddSitemap');
 const EditGeneral = require('../../Domains/contnt/entities/EditGeneral');
 const EditSlider = require('../../Domains/contnt/entities/EditSlider');
 const EditLink = require('../../Domains/contnt/entities/EditLink');
+const EditSocmed = require('../../Domains/contnt/entities/EditSocmed');
+const EditPromo = require('../../Domains/contnt/entities/EditPromo');
+const EditMT = require('../../Domains/contnt/entities/EditMT');
 
 
 class ContentUseCase {
 
     constructor({ contentRepository, cacheServices }) {
-
         this._contentRepository = contentRepository;
         this._cacheService = cacheServices;
     }
@@ -109,7 +111,9 @@ class ContentUseCase {
 
     async getslider() {
         try {
-            const result = await this._cacheService.get(`ctslider:ctslider`);
+            await this._cacheService.delete(`ctslider:ctslider`);
+
+            // const result = await this._cacheService.get(`ctslider:ctslider`);
             const dataresult = JSON.parse(result);
             dataresult.headers = {
                 'X-Data-Source': 'cache',
@@ -145,6 +149,89 @@ class ContentUseCase {
             return dtlink;
         }
     }
+
+    async editsocmed(useCasePayload, params) {
+        const payload = new EditSocmed(useCasePayload);
+        await this._contentRepository.editsocmed(payload, params.idctscmed);
+        await this._cacheService.delete(`ctsocmed:ctsocmed`);
+        return 'social media data updated';
+    }
+
+    async getsocmed() {
+        try {
+            const result = await this._cacheService.get(`ctsocmed:ctsocmed`);
+            const dataresult = JSON.parse(result);
+            dataresult.headers = {
+                'X-Data-Source': 'cache',
+            };
+            return dataresult;
+        } catch (error) {
+            const dtsocmed = await this._contentRepository.getsocmed();
+            await this._cacheService.delete(`ctsocmed:ctsocmed`);
+            await this._cacheService.set(`ctsocmed:ctsocmed`, JSON.stringify(dtsocmed));
+            return dtsocmed;
+        }
+    }
+
+    async addpromo(useCasePayload) {
+        const payload = new EditPromo(useCasePayload);
+        await this._contentRepository.addpromo(payload);
+        await this._cacheService.delete(`ctpromo:ctpromo`);
+        return 'promo added succesfully !';
+    }
+
+    async editpromo(useCasePayload, params) {
+        const payload = new EditPromo(useCasePayload);
+        await this._contentRepository.editpromo(payload, params.idctprm);
+        await this._cacheService.delete(`ctpromo:ctpromo`);
+        return 'promo Edit Success !';
+    }
+
+    async getpromo() {
+        try {
+            const result = await this._cacheService.get(`ctpromo:ctpromo`);
+            const dataresult = JSON.parse(result);
+            dataresult.headers = {
+                'X-Data-Source': 'cache',
+            };
+            return dataresult;
+        } catch (error) {
+            const dtpromo = await this._contentRepository.getpromo();
+            await this._cacheService.delete(`ctpromo:ctpromo`);
+            await this._cacheService.set(`ctpromo:ctpromo`, JSON.stringify(dtpromo));
+            return dtpromo;
+        }
+    }
+
+    async deletepromo(params) {
+        await this._contentRepository.deletepromo(params);
+        await this._cacheService.delete(`ctpromo:ctpromo`);
+        return 'Promo deleted successfully !';
+    }
+
+    async editmt(useCasePayload, params) {
+        const payload = new EditMT(useCasePayload);
+        await this._contentRepository.editmt(payload, params.idctmtncnc);
+        await this._cacheService.delete(`ctmaintenance:ctmaintenance`);
+        return 'Status updated';
+    }
+
+    async getmt() {
+        try {
+            const result = await this._cacheService.get(`ctmaintenance:ctmaintenance`);
+            const dataresult = JSON.parse(result);
+            dataresult.headers = {
+                'X-Data-Source': 'cache',
+            };
+            return dataresult;
+        } catch (error) {
+            const dtmt = await this._contentRepository.getmt();
+            await this._cacheService.delete(`ctmaintenance:ctmaintenance`);
+            await this._cacheService.set(`ctmaintenance:ctmaintenance`, JSON.stringify(dtmt));
+            return dtmt;
+        }
+    }
+
 }
 
 module.exports = ContentUseCase;

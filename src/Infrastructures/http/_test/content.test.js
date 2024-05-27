@@ -4,6 +4,9 @@ const ContentSiteMapTableHelper = require('../../../../tests/ContentSiteMapTable
 const ContentgeneralContentTableHelper = require('../../../../tests/ContentgeneralContentTableHelper');
 const ContentSliderTableHelper = require('../../../../tests/ContentSliderTableHelper');
 const ContentLinkTableHelpertest = require('../../../../tests/ContentLinkTableHelpertest');
+const ContentSocmedTableHelper = require('../../../../tests/ContentSocmedTableHelper');
+const ContentPromoTableHelper = require('../../../../tests/ContentPromoTableHelper');
+const ContentMTTableHelpertest = require('../../../../tests/ContentMTTableHelpertest');
 const container = require('../../container');
 const createServer = require('../createServer');
 
@@ -19,6 +22,9 @@ describe('ContentEndPoints', () => {
         await ContentgeneralContentTableHelper.cleanTable();
         await ContentSliderTableHelper.cleanTable();
         await ContentLinkTableHelpertest.cleanTable();
+        await ContentSocmedTableHelper.cleanTable();
+        await ContentPromoTableHelper.cleanTable();
+        await ContentMTTableHelpertest.cleanTable();
 
     });
 
@@ -176,7 +182,7 @@ describe('ContentEndPoints', () => {
         describe('Contentrepository.edit sitemap', () => {
             it('should get metatag success', async () => {
                 const server = await createServer(container);
-                await ContentSiteMapTableHelper.addsitemap({ idstmp: 33, urpage: 'standard2' });
+                await ContentSiteMapTableHelper.addsitemap({ idstmp: 33 });
                 await ContentSiteMapTableHelper.addsitemap({ idstmp: 3, urpage: 'standard3' });
 
                 const response = await server.inject({
@@ -440,6 +446,277 @@ describe('ContentEndPoints', () => {
                 const response = await server.inject({
                     method: 'GET',
                     url: `/content/ctlink`,
+                });
+
+
+                //assert
+                const responseJson = JSON.parse(response.payload);
+                expect(response.statusCode).toEqual(200);
+                expect(responseJson.status).toEqual('success');
+                expect(responseJson.data).toBeDefined();
+            });
+        });
+    });
+
+
+    describe('CONTENT SOCMED ENDPOINTS', () => {
+        describe('Contentrepository. Edit Content SOCMED', () => {
+            it('should edit content SOCMED success', async () => {
+                const requestPayload = {
+                    ctscmedur: 'https://example.com/3',
+                    nmectscmed: 'example title 2',
+                    trgturctscmed: 'https://example.com',
+                    statusctscmed: '1',
+                };
+                const idctscmed = 77;
+
+                const server = await createServer(container);
+                await ContentSocmedTableHelper.addsocmed({ idctscmed: 77 });
+
+                const response = await server.inject({
+                    method: 'PUT',
+                    url: `/content/socmed/${idctscmed}`,
+                    payload: requestPayload,
+                });
+                // Assert
+
+                const responseJson = JSON.parse(response.payload);
+                expect(response.statusCode).toEqual(200);
+                expect(responseJson.status).toEqual('success');
+
+
+            });
+            it('should edit content SLIDER fail', async () => {
+                const requestPayload = {
+                    ctscmedur: 'https://example.com/3',
+                    nmectscmed: 'example title 2',
+                    trgturctscmed: 'https://example.com',
+                    statusctscmed: '1',
+                };
+                const idctscmed = 99;
+
+                const server = await createServer(container);
+
+                const response = await server.inject({
+                    method: 'PUT',
+                    url: `/content/socmed/${idctscmed}`,
+                    payload: requestPayload,
+                });
+                // Assert
+                const responseJson = JSON.parse(response.payload);
+                expect(response.statusCode).toEqual(400);
+                expect(responseJson.status).toEqual('fail');
+                expect(responseJson.message).toEqual('fail edit data !');
+
+            });
+        });
+
+        describe('ContentRepositoryPostgres.get data SLIDER', () => {
+            it('should get content SLIDER success', async () => {
+                const server = await createServer(container);
+                await ContentSocmedTableHelper.addsocmed({ idctscmed: 78 });
+                const response = await server.inject({
+                    method: 'GET',
+                    url: `/content/socmed`,
+                });
+
+
+                //assert
+                const responseJson = JSON.parse(response.payload);
+                expect(response.statusCode).toEqual(200);
+                expect(responseJson.status).toEqual('success');
+                expect(responseJson.data).toBeDefined();
+            });
+        });
+    });
+
+
+    describe('CONTENT PROMO ENDPOINTS', () => {
+        describe('ContentRepositoryPostgres.ADD ORINI', () => {
+            it('should add PROMO success', async () => {
+
+                //arrange
+                const requestPayload = {
+                    ctprmur: 'https://example.com/3',
+                    ttlectprm: 'example title 2',
+                    trgturctprm: 'https://example.com',
+                    statusctprm: '1',
+                };
+
+                const server = await createServer(container);
+                const response = await server.inject({
+                    method: 'POST',
+                    url: `/content/prm`,
+                    payload: requestPayload,
+                });
+                //assert
+                const responseJson = JSON.parse(response.payload);
+                expect(response.statusCode).toEqual(200);
+                expect(responseJson.status).toEqual('success');
+                expect(responseJson.data).toBeDefined();
+            });
+        });
+        describe('Contentrepository Edit PROMO', () => {
+            it('should edit PROMO success', async () => {
+                const requestPayload = {
+                    ctprmur: 'https://example.com/3',
+                    ttlectprm: 'example title 2',
+                    trgturctprm: 'https://example.com',
+                    statusctprm: '1',
+                };
+
+                const idctprm = 32;
+                const server = await createServer(container);
+                await ContentPromoTableHelper.addprm({ idctprm: 32 });
+
+                const response = await server.inject({
+                    method: 'PUT',
+                    url: `/content/prm/${idctprm}`,
+                    payload: requestPayload,
+                });
+                // Assert
+                const responseJson = JSON.parse(response.payload);
+                expect(response.statusCode).toEqual(200);
+                expect(responseJson.status).toEqual('success');
+
+            });
+            it('should edit metatag fail', async () => {
+                const requestPayload = {
+                    ctprmur: 'https://example.com/3',
+                    ttlectprm: 'example title 2',
+                    trgturctprm: 'https://example.com',
+                    statusctprm: '1',
+                };
+
+                const idctprm = 33;
+                const server = await createServer(container);
+                const response = await server.inject({
+                    method: 'PUT',
+                    url: `/content/prm/${idctprm}`,
+                    payload: requestPayload,
+                });
+                // Assert
+                const responseJson = JSON.parse(response.payload);
+                expect(response.statusCode).toEqual(400);
+                expect(responseJson.status).toEqual('fail');
+                expect(responseJson.message).toEqual('fail edit data !');
+
+            });
+
+        });
+        describe('Contentrepository.GET PROMO', () => {
+            it('should get PROMO success', async () => {
+                const server = await createServer(container);
+                await ContentPromoTableHelper.addprm({ idctprm: 66 });
+                await ContentPromoTableHelper.addprm({ idctprm: 77 });
+
+                const response = await server.inject({
+                    method: 'GET',
+                    url: `/content/prm`,
+                });
+
+                //assert
+                const responseJson = JSON.parse(response.payload);
+                expect(response.statusCode).toEqual(200);
+                expect(responseJson.status).toEqual('success');
+                expect(responseJson.data).toBeDefined();
+            });
+        });
+        describe('Contentrepository. delete PROMO', () => {
+            it('should delete PROMO success', async () => {
+                const idctprm = 30;
+
+                const server = await createServer(container);
+                await ContentPromoTableHelper.addprm({ idctprm: 30 });
+
+                const response = await server.inject({
+                    method: 'DELETE',
+                    url: `/content/prm/${idctprm}`,
+                });
+
+                //assert
+                const responseJson = JSON.parse(response.payload);
+                expect(response.statusCode).toEqual(200);
+                expect(responseJson.status).toEqual('success');
+                expect(responseJson.data).toBeDefined();
+            });
+            it('should delete PROMO fail', async () => {
+                const server = await createServer(container);
+                const idctprm = 29;
+
+
+                const response = await server.inject({
+                    method: 'DELETE',
+                    url: `/content/prm/${idctprm}`,
+                });
+
+                //assert
+                const responseJson = JSON.parse(response.payload);
+                expect(response.statusCode).toEqual(400);
+                expect(responseJson.status).toEqual('fail');
+                expect(responseJson.message).toEqual('fail delete data !');
+
+            });
+
+
+        });
+    });
+
+    describe('STATUS MT ENDPOINTS', () => {
+        describe('Contentrepository. Edit status mt', () => {
+            it('should edit content status mt', async () => {
+                const requestPayload = {
+                    stsmtncnc: '1',
+
+                };
+                const idctmtncnc = 3;
+
+                const server = await createServer(container);
+                await ContentMTTableHelpertest.admt({ idctmtncnc: 3 });
+
+                const response = await server.inject({
+                    method: 'PUT',
+                    url: `/content/sts/${idctmtncnc}`,
+                    payload: requestPayload,
+                });
+                // Assert
+
+                const responseJson = JSON.parse(response.payload);
+                expect(response.statusCode).toEqual(200);
+                expect(responseJson.status).toEqual('success');
+
+
+            });
+            it('should edit content MT fail', async () => {
+                const requestPayload = {
+                    stsmtncnc: '1',
+
+                };
+                const idctmtncnc = 99;
+
+                const server = await createServer(container);
+
+                const response = await server.inject({
+                    method: 'PUT',
+                    url: `/content/sts/${idctmtncnc}`,
+                    payload: requestPayload,
+                });
+                // Assert
+                const responseJson = JSON.parse(response.payload);
+                expect(response.statusCode).toEqual(400);
+                expect(responseJson.status).toEqual('fail');
+                expect(responseJson.message).toEqual('fail edit data !');
+
+            });
+        });
+
+        describe('ContentRepositoryPostgres.get data LINK', () => {
+            it('should get content SLIDER success', async () => {
+                const server = await createServer(container);
+                await ContentMTTableHelpertest.admt({ idctmtncnc: 78 });
+                const response = await server.inject({
+                    method: 'GET',
+                    url: `/content/sts`,
                 });
 
 

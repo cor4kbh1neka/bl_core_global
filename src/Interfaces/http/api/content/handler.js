@@ -15,6 +15,14 @@ class ContentHandler {
     this.getctSliderTagHandler = this.getctSliderTagHandler.bind(this);
     this.putctLinkTagHandler = this.putctLinkTagHandler.bind(this);
     this.getctLinkTagHandler = this.getctLinkTagHandler.bind(this);
+    this.putctSocmedTagHandler = this.putctSocmedTagHandler.bind(this);
+    this.socmedctSocmedTagHandler = this.socmedctSocmedTagHandler.bind(this);
+    this.postcontentPromoTagHandler = this.postcontentPromoTagHandler.bind(this);
+    this.putcontentPromoTagHandler = this.putcontentPromoTagHandler.bind(this);
+    this.getcontentPromoTagHandler = this.getcontentPromoTagHandler.bind(this);
+    this.delcontentPromoTagHandler = this.delcontentPromoTagHandler.bind(this);
+    this.putctMTTagHandler = this.putctMTTagHandler.bind(this);
+    this.getctMTTagHandler = this.getctMTTagHandler.bind(this);
   }
 
   async putcontentMtTagHandler(request, h) {
@@ -144,6 +152,94 @@ class ContentHandler {
     response.code(200);
     return response;
   }
+  async putctSocmedTagHandler(request, h) {
+    const putctSocmedTagHandler = this._container.getInstance(ContentUseCase.name);
+    const datasocmed = await putctSocmedTagHandler.editsocmed(request.payload, request.params);
+    const response = h.response({
+      status: 'success',
+      data: datasocmed
+    });
+    response.code(200);
+    return response;
+  }
+  async socmedctSocmedTagHandler(request, h) {
+    const socmedctSocmedTagHandler = this._container.getInstance(ContentUseCase.name);
+    const getsocmed = await socmedctSocmedTagHandler.getsocmed();
+    const response = h.response({
+      status: 'success',
+      data: getsocmed
+    });
+    response.code(200);
+    return response;
+  }
+
+
+  async postcontentPromoTagHandler(request, h) {
+    const postcontentPromoTagHandler = this._container.getInstance(ContentUseCase.name);
+    const datasitemap = await postcontentPromoTagHandler.addpromo(request.payload);
+
+    const response = h.response({
+      status: 'success',
+      data: datasitemap
+    });
+    response.code(200);
+    return response;
+  }
+  async putcontentPromoTagHandler(request, h) {
+    const putcontentPromoTagHandler = this._container.getInstance(ContentUseCase.name);
+    const datasitemap = await putcontentPromoTagHandler.editpromo(request.payload, request.params);
+
+    const response = h.response({
+      status: 'success',
+      data: datasitemap
+    });
+    response.code(200);
+    return response;
+  }
+
+  async getcontentPromoTagHandler(request, h) {
+    const getcontentPromoTagHandler = this._container.getInstance(ContentUseCase.name);
+    const datameta = await getcontentPromoTagHandler.getpromo();
+    const response = h.response({
+      status: 'success',
+      data: datameta
+    });
+    response.code(200);
+    return response;
+  }
+  async delcontentPromoTagHandler(request, h) {
+    const delcontentPromoTagHandler = this._container.getInstance(ContentUseCase.name);
+    const datameta = await delcontentPromoTagHandler.deletepromo(request.params);
+    const response = h.response({
+      status: 'success',
+      data: datameta
+    });
+    response.code(200);
+    return response;
+  }
+
+  async putctMTTagHandler(request, h) {
+    const putctMTTagHandler = this._container.getInstance(ContentUseCase.name);
+    const dataMT = await putctMTTagHandler.editmt(request.payload, request.params);
+    const response = h.response({
+      status: 'success',
+      data: dataMT
+    });
+    response.code(200);
+    return response;
+  }
+  async getctMTTagHandler(request, h) {
+    const getctMTTagHandler = this._container.getInstance(ContentUseCase.name);
+    const getMT = await getctMTTagHandler.getmt();
+    const response = h.response({
+      status: 'success',
+      data: getMT
+    });
+    response.code(200);
+    return response;
+  }
+
+
 }
 
 module.exports = ContentHandler;

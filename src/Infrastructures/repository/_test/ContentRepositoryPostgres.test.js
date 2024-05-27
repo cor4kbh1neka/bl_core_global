@@ -3,6 +3,9 @@ const ContentSiteMapTableHelper = require('../../../../tests/ContentSiteMapTable
 const ContentgeneralContentTableHelper = require('../../../../tests/ContentgeneralContentTableHelper');
 const ContentSliderTableHelper = require('../../../../tests/ContentSliderTableHelper');
 const ContentLinkTableHelpertest = require('../../../../tests/ContentLinkTableHelpertest');
+const ContentSocmedTableHelper = require('../../../../tests/ContentSocmedTableHelper');
+const ContentPromoTableHelper = require('../../../../tests/ContentPromoTableHelper');
+const ContentMTTableHelpertest = require('../../../../tests/ContentMTTableHelpertest');
 const InvariantError = require('../../../Commons/exceptions/InvariantError');
 const NotFoundError = require('../../../Commons/exceptions/NotFoundError');
 const EditGeneral = require('../../../Domains/contnt/entities/EditGeneral');
@@ -10,6 +13,9 @@ const EditContent = require('../../../Domains/contnt/entities/EditContent');
 const AddSitemap = require('../../../Domains/contnt/entities/AddSitemap');
 const EditSlider = require('../../../Domains/contnt/entities/EditSlider');
 const EditLink = require('../../../Domains/contnt/entities/EditLink');
+const EditSocmed = require('../../../Domains/contnt/entities/EditSocmed');
+const EditPromo = require('../../../Domains/contnt/entities/EditPromo');
+const EditMT = require('../../../Domains/contnt/entities/EditMT');
 const pool = require('../../database/postgres/pool');
 const ContentRepositoryPostgres = require('../ContentRepositoryPostgres');
 
@@ -20,6 +26,9 @@ describe('ContentRepositoryPostgres', () => {
     await ContentgeneralContentTableHelper.cleanTable();
     await ContentSliderTableHelper.cleanTable();
     await ContentLinkTableHelpertest.cleanTable();
+    await ContentSocmedTableHelper.cleanTable();
+    await ContentPromoTableHelper.cleanTable();
+    await ContentMTTableHelpertest.cleanTable();
   });
 
   afterAll(async () => {
@@ -329,13 +338,13 @@ describe('ContentRepositoryPostgres', () => {
         const contentRepositoryPostgres = new ContentRepositoryPostgres(pool);
         await ContentSliderTableHelper.addslider({ idctsldr: 5, ctsldrur: 'https=//example.com/2' });
         const ctgeneral = await contentRepositoryPostgres.getslider();
-        expect(ctgeneral).toEqual({
+        expect(ctgeneral).toEqual([{
           idctsldr: 5,
           ctsldrur: 'https=//example.com/2',
           ttlectsldr: 'example title 2',
           trgturctsldr: 'https=//example.com/2',
           statusctsldr: '2',
-        });
+        }]);
       });
     });
   });
@@ -398,6 +407,233 @@ describe('ContentRepositoryPostgres', () => {
           ctlnkdmn: 'https://example.com/44',
           statusctlnk: '3',
         }]);
+      });
+    });
+  });
+
+  describe('SOCMED CONTENT REPOSITORY', () => {
+    describe('SOCMED CONTENT REPOSITORY EDIT FEATURES', () => {
+
+      it('should edit content fail', async () => {
+        //arrange
+        const useCasePayload = new EditSocmed({
+          ctscmedur: 'https://example.com/3',
+          nmectscmed: 'example title 2',
+          trgturctscmed: 'https://example.com',
+          statusctscmed: '1',
+        });
+        const params = {
+          idctscmed: 5
+        }
+
+        // Action
+        const contentRepositoryPostgres = new ContentRepositoryPostgres(pool);
+
+        //assertion
+        await expect(contentRepositoryPostgres.editsocmed(useCasePayload, params.idctscmed))
+          .rejects.toThrowError(InvariantError);
+      });
+      it('should edit content success', async () => {
+        //arrange
+        const useCasePayload = new EditSocmed({
+          ctscmedur: 'https://example.com/3',
+          nmectscmed: 'example title 2',
+          trgturctscmed: 'https://example.com',
+          statusctscmed: '1',
+        });
+        const params = {
+          idctscmed: 6
+        }
+
+        // Action
+        await ContentSocmedTableHelper.addsocmed({ idctscmed: 6 });
+        const contentRepositoryPostgres = new ContentRepositoryPostgres(pool);
+
+        //assertion
+        await contentRepositoryPostgres.editsocmed(useCasePayload, params.idctscmed);
+        const datasocmed = await ContentSocmedTableHelper.findsocmed(params.idctscmed);
+        expect(datasocmed).toHaveLength(1);
+
+      });
+
+    })
+
+    describe('ContentRepositoryPostgres.Get Socmed', () => {
+
+      it('should get Socmed success', async () => {
+        const contentRepositoryPostgres = new ContentRepositoryPostgres(pool);
+        await ContentSocmedTableHelper.addsocmed({ idctscmed: 5, ctscmedur: 'https://example.com/3' });
+        const ctsocmed = await contentRepositoryPostgres.getsocmed();
+        expect(ctsocmed).toEqual([{
+          idctscmed: 5,
+          ctscmedur: 'https://example.com/3',
+          nmectscmed: 'example title 2',
+          trgturctscmed: 'https://example.com',
+          statusctscmed: '1',
+        }]);
+      });
+    });
+  });
+
+  describe('PROMO REPOSITORY', () => {
+    describe('PROMO ADD FEATURES', () => {
+
+      it('should add Promo success', async () => {
+        //arrange
+        const useCasePayload = new EditPromo({
+          ctprmur: 'https://example.com/3',
+          ttlectprm: 'example title 2',
+          trgturctprm: 'https://example.com',
+          statusctprm: '1',
+        });
+
+        const contentRepositoryPostgres = new ContentRepositoryPostgres(pool);
+
+        await contentRepositoryPostgres.addpromo(useCasePayload);
+        const datapromo = await ContentPromoTableHelper.findpromo(useCasePayload.ctprmur);
+        expect(datapromo).toHaveLength(1);
+      })
+    });
+    describe('PROMO EDIT FEATURES', () => {
+      it('should edit PROMO fail', async () => {
+        //arrange
+        const useCasePayload = new EditPromo({
+          ctprmur: 'https://example.com/3',
+          ttlectprm: 'example title 2',
+          trgturctprm: 'https://example.com',
+          statusctprm: '1',
+        });
+        const params = {
+          idctprm: 2
+        }
+
+        // Action
+        const contentRepositoryPostgres = new ContentRepositoryPostgres(pool);
+
+        //assertion
+        await expect(contentRepositoryPostgres.editpromo(useCasePayload, params.idctprm))
+          .rejects.toThrowError(InvariantError);
+      });
+      it('should edit PROMO success', async () => {
+        //arrange
+        const useCasePayload = new EditPromo({
+          ctprmur: 'https://example.com/3',
+          ttlectprm: 'example title 2',
+          trgturctprm: 'https://example.com',
+          statusctprm: '1',
+        });
+        const params = {
+          idctprm: 4
+        }
+
+        // Action
+        await ContentPromoTableHelper.addprm({ idctprm: 4 });
+        const contentRepositoryPostgres = new ContentRepositoryPostgres(pool);
+
+        //assertion
+        await contentRepositoryPostgres.editpromo(useCasePayload, params.idctprm);
+        const datapromo = await ContentPromoTableHelper.findpromo(useCasePayload.ctprmur);
+        expect(datapromo).toHaveLength(1);
+
+      });
+    });
+    describe('PROMO GET FEATURES', () => {
+      it('should get PROMO success', async () => {
+        const contentRepositoryPostgres = new ContentRepositoryPostgres(pool);
+        await ContentPromoTableHelper.addprm({ idctprm: 8 });
+        const datapromo = await contentRepositoryPostgres.getpromo();
+        expect(datapromo).toEqual([{
+          idctprm: 8,
+          ctprmur: 'https://example.com/3',
+          ttlectprm: 'example title 2',
+          trgturctprm: 'https://example.com',
+          statusctprm: '1',
+        }]);
+      });
+    });
+    describe('PROMO DELETE FEATURES', () => {
+
+      it('should delete fail in promo feature', async () => {
+        //arrange
+        const params = {
+          idctprm: 88
+        }
+
+        const contentRepositoryPostgres = new ContentRepositoryPostgres(pool);
+
+
+        // Assert
+        await expect(contentRepositoryPostgres.deletepromo(params.idctprm))
+          .rejects.toThrow(InvariantError);
+      });
+      it('should delete promo successfully', async () => {
+        const params = {
+          idctprm: 8
+        }
+
+        const contentRepositoryPostgres = new ContentRepositoryPostgres(pool);
+
+        // Action
+        await ContentPromoTableHelper.addprm({ idctprm: 8 });
+        // Assert
+        const datadelete = await contentRepositoryPostgres.deletepromo(params);
+
+        expect(datadelete).toStrictEqual("Promo deleted successfully !");
+      });
+    });
+  })
+
+  describe('MT CONTENT REPOSITORY', () => {
+    describe('MT CONTENT REPOSITORY EDIT FEATURES', () => {
+
+      it('should edit content fail', async () => {
+        //arrange
+        const useCasePayload = new EditMT({
+          stsmtncnc: '1',
+        });
+        const params = {
+          idctmtncnc: 5
+        }
+
+        // Action
+        const contentRepositoryPostgres = new ContentRepositoryPostgres(pool);
+
+        //assertion
+        await expect(contentRepositoryPostgres.editmt(useCasePayload, params.idctmtncnc))
+          .rejects.toThrowError(InvariantError);
+      });
+      it('should edit content success', async () => {
+        //arrange
+
+        const useCasePayload = new EditMT({
+          stsmtncnc: '1',
+        });
+        const params = {
+          idctmtncnc: 5
+        }
+
+        // Action
+        await ContentMTTableHelpertest.admt({ idctmtncnc: 5 });
+        const contentRepositoryPostgres = new ContentRepositoryPostgres(pool);
+
+        //assertion
+        await contentRepositoryPostgres.editmt(useCasePayload, params.idctmtncnc);
+        const statusmt = await ContentMTTableHelpertest.findmt(params.idctmtncnc);
+        expect(statusmt).toHaveLength(1);
+
+      });
+
+    })
+
+    describe('ContentRepositoryPostgres.get MT status', () => {
+
+      it('should get LINK success', async () => {
+        const contentRepositoryPostgres = new ContentRepositoryPostgres(pool);
+        await ContentMTTableHelpertest.admt({ idctmtncnc: 6 });
+        const statusmt = await contentRepositoryPostgres.getmt();
+        expect(statusmt).toEqual({
+          stsmtncnc: '3',
+        });
       });
     });
   });
