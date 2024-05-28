@@ -33,6 +33,8 @@ const createServer = async (container) => {
         xframe: true, // Enable protection against cross-site request forgery (CSRF)
       },
       cors: true, // Enable
+      additionalHeaders: ['Origin'], // Tambahkan 'Origin' ke header tambahan untuk CORS.
+
     },
   });
   // Create a logger
