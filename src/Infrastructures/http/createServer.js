@@ -32,10 +32,6 @@ const createServer = async (container) => {
         noSniff: true, // Enable protection against clickjacking attacks
         xframe: true, // Enable protection against cross-site request forgery (CSRF)
       },
-      cors: {
-        origin: ['*'], // Default value, bisa Anda sesuaikan dengan nilainya.
-        additionalHeaders: ['Origin'], // Tambahkan 'Origin' ke header tambahan untuk CORS.
-      }
     },
   });
   // Create a logger
@@ -222,6 +218,7 @@ const createServer = async (container) => {
 
         return newResponse;
       }
+
 
       if (!translatedError.isServer) {
         return h.continue; // Let Hapi handle native client errors

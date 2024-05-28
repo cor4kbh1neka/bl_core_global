@@ -37,7 +37,6 @@ class MemoHandler {
     return response;
   }
   async getMemostts(request, h) {
-    console.log(request.headers);
     const getMemobystatusUsecase = this._container.getInstance(MemoUseCase.name);
     const getmemo = await getMemobystatusUsecase.getmemodtall(request.params);
     const response = h.response({
