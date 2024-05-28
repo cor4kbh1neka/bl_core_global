@@ -15,7 +15,9 @@ const routes = (handler) => ([
     path: '/memo',
     handler: handler.getMemo,
     options: {
-      cors: true,
+      cors: {
+        origin: ['*'],
+      },
     },
   },
   {
@@ -25,6 +27,8 @@ const routes = (handler) => ([
     options: {
       cors: {
         origin: ['*'],
+        additionalHeaders: ['cache-control', 'x-requested-with']
+
       },
     },
   },

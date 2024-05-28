@@ -32,9 +32,6 @@ const createServer = async (container) => {
         noSniff: true, // Enable protection against clickjacking attacks
         xframe: true, // Enable protection against cross-site request forgery (CSRF)
       },
-      cors: {
-        origin: ['https://bostoni.pro'], // Default value, bisa Anda sesuaikan dengan nilainya.
-      },
     },
   });
   // Create a logger
