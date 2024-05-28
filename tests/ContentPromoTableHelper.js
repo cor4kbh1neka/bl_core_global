@@ -6,13 +6,15 @@ const ContentPromoTableHelper = {
     idctprm = 1,
     ctprmur = 'https://example.com/3',
     ttlectprm = 'example title 2',
+    dskprm = 'example title 2',
     trgturctprm = 'https://example.com',
+    pssprm = '1',
     statusctprm = '1',
 
   }) {
     const query = {
-      text: 'INSERT INTO ctprm  (idctprm,ctprmur, ttlectprm, trgturctprm, statusctprm) VALUES($1, $2, $3, $4, $5)',
-      values: [idctprm, ctprmur, ttlectprm, trgturctprm, statusctprm],
+      text: 'INSERT INTO ctprm  (idctprm, ctprmur, ttlectprm,dskprm, trgturctprm, pssprm, statusctprm) VALUES($1, $2, $3, $4, $5, $6, $7)',
+      values: [idctprm, ctprmur, ttlectprm, dskprm, trgturctprm, pssprm, statusctprm],
     };
 
     await pool.query(query);

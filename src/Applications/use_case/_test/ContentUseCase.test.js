@@ -558,6 +558,8 @@ describe('CONTENT SOCMED', () => {
                 ctscmedur: 'https://example.com/3',
                 nmectscmed: 'example title 2',
                 trgturctscmed: 'https://example.com',
+                lvchturctscmed: 'https://example.com',
+                fdbckurctscmed: 'https://example.com',
                 statusctscmed: '1',
             });
 
@@ -593,6 +595,8 @@ describe('CONTENT SOCMED', () => {
                 ctscmedur: 'https://example.com/3',
                 nmectscmed: 'example title 2',
                 trgturctscmed: 'https://example.com',
+                lvchturctscmed: 'https://example.com',
+                fdbckurctscmed: 'https://example.com',
                 statusctscmed: '1',
             };
 
@@ -627,6 +631,8 @@ describe('CONTENT SOCMED', () => {
                 ctsldrur: 'https://example.com/2',
                 ttlectsldr: 'example title 2',
                 trgturctsldr: 'https://example.com/2',
+                lvchturctscmed: 'https://example.com',
+                fdbckurctscmed: 'https://example.com',
                 statusctsldr: '2',
                 headers: {
                     'X-Data-Source': 'cache',
@@ -660,7 +666,9 @@ describe('CONTNET PROMO', () => {
             const useCasePayload = new EditPromo({
                 ctprmur: 'https://example.com/3',
                 ttlectprm: 'example title 2',
+                dskprm: 'example title 2',
                 trgturctprm: 'https://example.com',
+                pssprm: '1',
                 statusctprm: '1',
             });
             // Action
@@ -686,7 +694,9 @@ describe('CONTNET PROMO', () => {
             const useCasePayload = new EditPromo({
                 ctprmur: 'https://example.com/3',
                 ttlectprm: 'example title 2',
+                dskprm: 'example title 2',
                 trgturctprm: 'https://example.com',
+                pssprm: '1',
                 statusctprm: '1',
             });
 
@@ -716,7 +726,9 @@ describe('CONTNET PROMO', () => {
             const resultMockPromo = {
                 ctprmur: 'https://example.com/3',
                 ttlectprm: 'example title 2',
+                dskprm: 'example title 2',
                 trgturctprm: 'https://example.com',
+                pssprm: '1',
                 statusctprm: '1',
                 headers: {
                     'X-Data-Source': 'cache',
@@ -740,7 +752,9 @@ describe('CONTNET PROMO', () => {
             const resultMockPromo = {
                 ctprmur: 'https://example.com/3',
                 ttlectprm: 'example title 2',
+                dskprm: 'example title 2',
                 trgturctprm: 'https://example.com',
+                pssprm: '1',
                 statusctprm: '1',
             };
             // Action

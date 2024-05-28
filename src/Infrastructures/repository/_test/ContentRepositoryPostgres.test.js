@@ -420,6 +420,8 @@ describe('ContentRepositoryPostgres', () => {
           ctscmedur: 'https://example.com/3',
           nmectscmed: 'example title 2',
           trgturctscmed: 'https://example.com',
+          lvchturctscmed: 'https://example.com',
+          fdbckurctscmed: 'https://example.com',
           statusctscmed: '1',
         });
         const params = {
@@ -439,6 +441,8 @@ describe('ContentRepositoryPostgres', () => {
           ctscmedur: 'https://example.com/3',
           nmectscmed: 'example title 2',
           trgturctscmed: 'https://example.com',
+          lvchturctscmed: 'https://example.com',
+          fdbckurctscmed: 'https://example.com',
           statusctscmed: '1',
         });
         const params = {
@@ -469,6 +473,8 @@ describe('ContentRepositoryPostgres', () => {
           ctscmedur: 'https://example.com/3',
           nmectscmed: 'example title 2',
           trgturctscmed: 'https://example.com',
+          lvchturctscmed: 'https://example.com',
+          fdbckurctscmed: 'https://example.com',
           statusctscmed: '1',
         }]);
       });
@@ -483,7 +489,9 @@ describe('ContentRepositoryPostgres', () => {
         const useCasePayload = new EditPromo({
           ctprmur: 'https://example.com/3',
           ttlectprm: 'example title 2',
+          dskprm: 'example title 2',
           trgturctprm: 'https://example.com',
+          pssprm: '1',
           statusctprm: '1',
         });
 
@@ -500,7 +508,9 @@ describe('ContentRepositoryPostgres', () => {
         const useCasePayload = new EditPromo({
           ctprmur: 'https://example.com/3',
           ttlectprm: 'example title 2',
+          dskprm: 'example title 2',
           trgturctprm: 'https://example.com',
+          pssprm: '1',
           statusctprm: '1',
         });
         const params = {
@@ -519,7 +529,9 @@ describe('ContentRepositoryPostgres', () => {
         const useCasePayload = new EditPromo({
           ctprmur: 'https://example.com/3',
           ttlectprm: 'example title 2',
+          dskprm: 'example title 2',
           trgturctprm: 'https://example.com',
+          pssprm: '1',
           statusctprm: '1',
         });
         const params = {
@@ -546,7 +558,9 @@ describe('ContentRepositoryPostgres', () => {
           idctprm: 8,
           ctprmur: 'https://example.com/3',
           ttlectprm: 'example title 2',
+          dskprm: 'example title 2',
           trgturctprm: 'https://example.com',
+          pssprm: '1',
           statusctprm: '1',
         }]);
       });

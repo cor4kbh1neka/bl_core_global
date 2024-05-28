@@ -7,12 +7,14 @@ const ContentSocmedTableHelper = {
     ctscmedur = 'https://example.com/3',
     nmectscmed = 'example title 2',
     trgturctscmed = 'https://example.com',
+    lvchturctscmed = 'https://example.com',
+    fdbckurctscmed = 'https://example.com',
     statusctscmed = '1',
 
   }) {
     const query = {
-      text: 'INSERT INTO ctscmed  (idctscmed,ctscmedur, nmectscmed, trgturctscmed, statusctscmed) VALUES($1, $2, $3, $4, $5)',
-      values: [idctscmed, ctscmedur, nmectscmed, trgturctscmed, statusctscmed],
+      text: 'INSERT INTO ctscmed  (idctscmed,ctscmedur, nmectscmed, trgturctscmed, statusctscmed ,lvchturctscmed,fdbckurctscmed) VALUES($1, $2, $3, $4, $5,$6,$7)',
+      values: [idctscmed, ctscmedur, nmectscmed, trgturctscmed, statusctscmed, lvchturctscmed, fdbckurctscmed],
     };
 
     await pool.query(query);

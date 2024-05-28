@@ -1,22 +1,24 @@
 class EditSocmed {
     constructor(payload) {
         this._verifyPayload(payload);
-        const { ctscmedur, nmectscmed, trgturctscmed, statusctscmed } = payload;
+        const { ctscmedur, nmectscmed, trgturctscmed, statusctscmed, lvchturctscmed, fdbckurctscmed } = payload;
         this.ctscmedur = ctscmedur;
         this.nmectscmed = nmectscmed;
         this.trgturctscmed = trgturctscmed;
         this.statusctscmed = statusctscmed;
+        this.lvchturctscmed = lvchturctscmed;
+        this.fdbckurctscmed = fdbckurctscmed;
 
 
 
     }
 
-    _verifyPayload({ ctscmedur, nmectscmed, trgturctscmed, statusctscmed }) {
-        if (!ctscmedur || !nmectscmed || !trgturctscmed || !statusctscmed) {
+    _verifyPayload({ ctscmedur, nmectscmed, trgturctscmed, statusctscmed, lvchturctscmed, fdbckurctscmed }) {
+        if (!ctscmedur || !nmectscmed || !trgturctscmed || !statusctscmed || !lvchturctscmed || !fdbckurctscmed) {
             throw new Error('EDIT_SOCMED.NOT_CONTAIN_NEEDED_PROPERTY');
         }
 
-        if (typeof ctscmedur !== 'string' || typeof nmectscmed !== 'string' || typeof trgturctscmed !== 'string' || typeof statusctscmed !== 'string') {
+        if (typeof ctscmedur !== 'string' || typeof nmectscmed !== 'string' || typeof trgturctscmed !== 'string' || typeof statusctscmed !== 'string' || typeof lvchturctscmed !== 'string' || typeof fdbckurctscmed !== 'string') {
             throw new Error('EDIT_SOCMED.NOT_MEET_DATA_TYPE_SPECIFICATION');
         }
 

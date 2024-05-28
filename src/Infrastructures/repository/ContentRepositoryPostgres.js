@@ -168,8 +168,8 @@ class ContentRepositoryPostgres extends ContentRepository {
 
     async editsocmed(payload, params) {
         const query = {
-            text: 'UPDATE ctscmed SET ctscmedur = $1, nmectscmed = $2, trgturctscmed = $3, statusctscmed = $4 WHERE idctscmed = $5',
-            values: [payload.ctscmedur, payload.nmectscmed, payload.trgturctscmed, payload.statusctscmed, params],
+            text: 'UPDATE ctscmed SET ctscmedur = $1, nmectscmed = $2, trgturctscmed = $3, statusctscmed = $4 , lvchturctscmed = $5, fdbckurctscmed = $6 WHERE idctscmed = $7',
+            values: [payload.ctscmedur, payload.nmectscmed, payload.trgturctscmed, payload.statusctscmed, payload.lvchturctscmed, payload.fdbckurctscmed, params],
         };
         const result = await this._pool.query(query);
         if (!result.rowCount) {
@@ -179,7 +179,7 @@ class ContentRepositoryPostgres extends ContentRepository {
     }
     async getsocmed() {
         const query = {
-            text: 'SELECT idctscmed, ctscmedur, nmectscmed, trgturctscmed, statusctscmed FROM ctscmed ',
+            text: 'SELECT idctscmed, ctscmedur, nmectscmed, trgturctscmed,lvchturctscmed, fdbckurctscmed, statusctscmed FROM ctscmed ',
             values: [],
         };
         const result = await this._pool.query(query);
@@ -188,8 +188,8 @@ class ContentRepositoryPostgres extends ContentRepository {
 
     async addpromo(payload) {
         const query = {
-            text: 'INSERT INTO ctprm (ctprmur,ttlectprm,trgturctprm,statusctprm) VALUES($1, $2, $3,$4)',
-            values: [payload.ctprmur, payload.ttlectprm, payload.trgturctprm, payload.statusctprm],
+            text: 'INSERT INTO ctprm (ctprmur,ttlectprm,trgturctprm,statusctprm , dskprm, pssprm) VALUES($1, $2, $3,$4, $5, $6)',
+            values: [payload.ctprmur, payload.ttlectprm, payload.trgturctprm, payload.statusctprm, payload.dskprm, payload.pssprm],
         };
         await this._pool.query(query);
         return;
@@ -197,8 +197,8 @@ class ContentRepositoryPostgres extends ContentRepository {
 
     async editpromo(payload, params) {
         const query = {
-            text: 'UPDATE ctprm SET ctprmur = $1,ttlectprm= $2, trgturctprm = $3, statusctprm = $4 WHERE idctprm = $5',
-            values: [payload.ctprmur, payload.ttlectprm, payload.trgturctprm, payload.statusctprm, params],
+            text: 'UPDATE ctprm SET ctprmur = $1,ttlectprm= $2, trgturctprm = $3, statusctprm = $4 , dskprm = $5, pssprm = $6 WHERE idctprm = $7',
+            values: [payload.ctprmur, payload.ttlectprm, payload.trgturctprm, payload.statusctprm, payload.dskprm, payload.pssprm, params],
         };
         const result = await this._pool.query(query);
         if (!result.rowCount) {
@@ -209,7 +209,7 @@ class ContentRepositoryPostgres extends ContentRepository {
 
     async getpromo() {
         const query = {
-            text: 'SELECT idctprm, ctprmur, ttlectprm, trgturctprm, statusctprm FROM ctprm ',
+            text: 'SELECT idctprm, ctprmur, ttlectprm, trgturctprm, statusctprm, dskprm, pssprm FROM ctprm ',
             values: [],
         };
         const result = await this._pool.query(query);

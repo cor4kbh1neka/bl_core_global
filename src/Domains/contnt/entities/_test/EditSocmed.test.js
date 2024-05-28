@@ -8,6 +8,8 @@ describe('entities for content SOCMED', () => {
         const payload = {
             nmectscmed: 'example title 2',
             trgturctscmed: 'https://example.com',
+            lvchturctscmed: 'https://example.com',
+            fdbckurctscmed: 'https://example.com',
             statusctscmed: '1',
         };
 
@@ -20,6 +22,8 @@ describe('entities for content SOCMED', () => {
             ctscmedur: 'https://example.com/3',
             nmectscmed: 'example title 2',
             trgturctscmed: 'https://example.com',
+            lvchturctscmed: 'https://example.com',
+            fdbckurctscmed: 'https://example.com',
             statusctscmed: 1,
         };
 
@@ -33,6 +37,8 @@ describe('entities for content SOCMED', () => {
             ctscmedur: 'https://example.com/3',
             nmectscmed: 'example title 2 %#',
             trgturctscmed: 'https://example.com',
+            lvchturctscmed: 'https://example.com',
+            fdbckurctscmed: 'https://example.com',
             statusctscmed: '1',
         };
 
@@ -47,6 +53,8 @@ describe('entities for content SOCMED', () => {
             ctscmedur: 'https://example.com/3',
             nmectscmed: 'example title 2',
             trgturctscmed: 'https://example.com',
+            lvchturctscmed: 'https://example.com',
+            fdbckurctscmed: 'https://example.com',
             statusctscmed: '1',
         };
 
@@ -58,6 +66,8 @@ describe('entities for content SOCMED', () => {
         expect(editSocmed.ctscmedur).toEqual(payload.ctscmedur);
         expect(editSocmed.nmectscmed).toEqual(payload.nmectscmed);
         expect(editSocmed.trgturctscmed).toEqual(payload.trgturctscmed);
+        expect(editSocmed.lvchturctscmed).toEqual(payload.lvchturctscmed);
+        expect(editSocmed.fdbckurctscmed).toEqual(payload.fdbckurctscmed);
         expect(editSocmed.statusctscmed).toEqual(payload.statusctscmed);
 
 

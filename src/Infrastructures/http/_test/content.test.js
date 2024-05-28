@@ -499,6 +499,8 @@ describe('ContentEndPoints', () => {
                     ctscmedur: 'https://example.com/3',
                     nmectscmed: 'example title 2',
                     trgturctscmed: 'https://example.com',
+                    lvchturctscmed: 'https://example.com',
+                    fdbckurctscmed: 'https://example.com',
                     statusctscmed: '1',
                 };
                 const idctscmed = 77;
@@ -526,6 +528,8 @@ describe('ContentEndPoints', () => {
                     ctscmedur: 'https://example.com/3',
                     nmectscmed: 'example title 2',
                     trgturctscmed: 'https://example.com',
+                    lvchturctscmed: 'https://example.com',
+                    fdbckurctscmed: 'https://example.com',
                     statusctscmed: '1',
                 };
                 const idctscmed = 99;
@@ -578,7 +582,9 @@ describe('ContentEndPoints', () => {
                 const requestPayload = {
                     ctprmur: 'https://example.com/3',
                     ttlectprm: 'example title 2',
+                    dskprm: 'example title 2',
                     trgturctprm: 'https://example.com',
+                    pssprm: '1',
                     statusctprm: '1',
                 };
 
@@ -602,7 +608,9 @@ describe('ContentEndPoints', () => {
                 const requestPayload = {
                     ctprmur: 'https://example.com/3',
                     ttlectprm: 'example title 2',
+                    dskprm: 'example title 2',
                     trgturctprm: 'https://example.com',
+                    pssprm: '1',
                     statusctprm: '1',
                 };
 
@@ -627,7 +635,9 @@ describe('ContentEndPoints', () => {
                 const requestPayload = {
                     ctprmur: 'https://example.com/3',
                     ttlectprm: 'example title 2',
+                    dskprm: 'example title 2',
                     trgturctprm: 'https://example.com',
+                    pssprm: '1',
                     statusctprm: '1',
                 };
 
