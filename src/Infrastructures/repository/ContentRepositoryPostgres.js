@@ -165,7 +165,6 @@ class ContentRepositoryPostgres extends ContentRepository {
         const result = await this._pool.query(query);
         return result.rows;
     }
-
     async editsocmed(payload, params) {
         const query = {
             text: 'UPDATE ctscmed SET ctscmedur = $1, nmectscmed = $2, trgturctscmed = $3, statusctscmed = $4 , lvchturctscmed = $5, fdbckurctscmed = $6 WHERE idctscmed = $7',

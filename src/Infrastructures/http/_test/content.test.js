@@ -551,7 +551,6 @@ describe('ContentEndPoints', () => {
 
             });
         });
-
         describe('ContentRepositoryPostgres.get data SLIDER', () => {
             it('should get content SLIDER success', async () => {
                 const server = await createServer(container);
@@ -572,7 +571,6 @@ describe('ContentEndPoints', () => {
             });
         });
     });
-
 
     describe('CONTENT PROMO ENDPOINTS', () => {
         describe('ContentRepositoryPostgres.ADD ORINI', () => {
