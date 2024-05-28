@@ -32,6 +32,7 @@ const createServer = async (container) => {
         noSniff: true, // Enable protection against clickjacking attacks
         xframe: true, // Enable protection against cross-site request forgery (CSRF)
       },
+      cors: true, // Enable
     },
   });
   // Create a logger
