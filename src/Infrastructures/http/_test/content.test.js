@@ -571,7 +571,6 @@ describe('ContentEndPoints', () => {
             });
         });
     });
-
     describe('CONTENT PROMO ENDPOINTS', () => {
         describe('ContentRepositoryPostgres.ADD ORINI', () => {
             it('should add PROMO success', async () => {
@@ -720,7 +719,6 @@ describe('ContentEndPoints', () => {
 
         });
     });
-
     describe('STATUS MT ENDPOINTS', () => {
         describe('Contentrepository. Edit status mt', () => {
             it('should edit content status mt', async () => {
