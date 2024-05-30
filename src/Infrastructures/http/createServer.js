@@ -186,7 +186,8 @@ const createServer = async (container) => {
     const { response } = request;
     const customHeader = request.headers['x-customblhdrs']; // Replace 'x-custom-header' with your actual header name
     const customHeaderValue = process.env.CUSTOM_HEADER_VALUE;
-
+    console.log(customHeader);
+    console.log(customHeaderValue);
     if (!customHeader || customHeader !== customHeaderValue) {
       return h.response({ message: 'Invalid custom header or missing' }).code(401); // Unauthorized
     }
