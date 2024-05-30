@@ -34,7 +34,7 @@ exports.up = (pgm) => {
     });
     pgm.sql(`
     INSERT INTO memodata (statustype, statuspriority,subject,memo) VALUES
-    ('1', '1' ,'Selamat Datang' , 'hai terimakasih sudah bergabung. silahkan cek promosi kami dan lakukan deposit untuk mulai bermain yah .' ),
+    ('1', '1' ,'Selamat Datang' , 'hai terimakasih sudah bergabung. silahkan cek promosi kami dan lakukan deposit untuk mulai bermain yah .' )
 `);
 };
 
