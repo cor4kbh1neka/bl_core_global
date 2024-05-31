@@ -49,6 +49,8 @@ exports.up = (pgm) => {
     ('https://example.com/7' , 'whatsapp2' ,'https://example.com/2','https://examplelivechat.com/', 'https://examplefeedback.com/', '1'),
     ('https://example.com/8' , 'whatsapp2' ,'https://example.com/2','https://examplelivechat.com/', 'https://examplefeedback.com/', '1'),
     ('https://example.com/9' , 'whatsapp2' ,'https://example.com/2','https://examplelivechat.com/', 'https://examplefeedback.com/', '1'),
+    ('https://example.com/8' , 'whatsapp2' ,'https://example.com/2','https://examplelivechat.com/', 'https://examplefeedback.com/', '1'),
+    ('https://example.com/9' , 'whatsapp2' ,'https://example.com/2','https://examplelivechat.com/', 'https://examplefeedback.com/', '1'),
     ('https://example.com/10' , 'whatsapp3' ,'https://example.com/3','https://examplelivechat.com/', 'https://examplefeedback.com/', '1')
 `)
 };
