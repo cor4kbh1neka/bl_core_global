@@ -6,7 +6,7 @@ const routes = (handler) => ([
     handler: handler.postMemo,
     options: {
       cors: {
-        origin: ['https://bostoni.pro'],
+        origin: ['https://syt3m4prod.situscepat.net'],
       },
     },
   },
@@ -37,7 +37,7 @@ const routes = (handler) => ([
     handler: handler.delMemo,
     options: {
       cors: {
-        origin: ['https://bostoni.pro'],
+        origin: ['https://syt3m4prod.situscepat.net'],
       },
     },
   },

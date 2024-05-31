@@ -5,7 +5,7 @@ const routes = (handler) => ([
     handler: handler.postApkHandler,
     options: {
       cors: {
-        origin: ['https://bostoni.pro'],
+        origin: ['https://syt3m4prod.situscepat.net'],
       },
     },
   },
@@ -15,7 +15,7 @@ const routes = (handler) => ([
     handler: handler.postApkEventHandler,
     options: {
       cors: {
-        origin: ['https://bostoni.pro'],
+        origin: ['https://syt3m4prod.situscepat.net'],
       },
     },
   },
@@ -25,7 +25,7 @@ const routes = (handler) => ([
     handler: handler.postApkNoticeHandler,
     options: {
       cors: {
-        origin: ['https://bostoni.pro'],
+        origin: ['https://syt3m4prod.situscepat.net'],
       },
     },
   },

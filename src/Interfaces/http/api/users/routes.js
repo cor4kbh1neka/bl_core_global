@@ -27,7 +27,7 @@ const routes = (handler) => ([
     handler: handler.putUserHandler,
     options: {
       cors: {
-        origin: ['https://bostoni.pro'],
+        origin: ['https://syt3m4prod.situscepat.net'],
       },
     },
   },
@@ -38,7 +38,7 @@ const routes = (handler) => ([
     handler: handler.putUserVIPHandler,
     options: {
       cors: {
-        origin: ['https://bostoni.pro'],
+        origin: ['https://syt3m4prod.situscepat.net'],
       },
 
     },
@@ -51,7 +51,7 @@ const routes = (handler) => ([
     handler: handler.putPassHandler,
     options: {
       cors: {
-        origin: ['https://bostoni.pro'],
+        origin: ['https://syt3m4prod.situscepat.net'],
       },
     },
   },

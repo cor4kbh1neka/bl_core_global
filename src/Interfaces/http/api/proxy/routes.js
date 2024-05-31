@@ -10,7 +10,7 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://bostoni.pro/api/deposit', // URL target proxy
+        uri: 'https://syt3m4prod.situscepat.net/api/deposit', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
 
       }
@@ -27,7 +27,7 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://bostoni.pro/api/withdrawal', // URL target proxy
+        uri: 'https://syt3m4prod.situscepat.net/api/withdrawal', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       }
     }
@@ -43,7 +43,7 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://bostoni.pro/api/login', // URL target proxy
+        uri: 'https://syt3m4prod.situscepat.net/api/login', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       },
     }
@@ -59,7 +59,7 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://bostoni.pro/api/historylog', // URL target proxy
+        uri: 'https://syt3m4prod.situscepat.net/api/historylog', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       }
     }
@@ -75,7 +75,7 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://bostoni.pro/api/register', // URL target proxy
+        uri: 'https://syt3m4prod.situscepat.net/api/register', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       }
     }
@@ -91,7 +91,7 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://bostoni.pro/api/get-recommend-matches', // URL target proxy
+        uri: 'https://syt3m4prod.situscepat.net/api/get-recommend-matches', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       }
     }
@@ -107,7 +107,7 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://bostoni.pro/api/cekuserreferral', // URL target proxy
+        uri: 'https://syt3m4prod.situscepat.net/api/cekuserreferral', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       }
     }
@@ -123,7 +123,7 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://bostoni.pro/api/getDataReferral', // URL target proxy
+        uri: 'https://syt3m4prod.situscepat.net/api/getDataReferral', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       }
     }
@@ -139,7 +139,7 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://bostoni.pro/api/gethistory', // URL target proxy
+        uri: 'https://syt3m4prod.situscepat.net/api/gethistory', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       }
     }
@@ -155,7 +155,7 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://bostoni.pro/api/getHistoryDw', // URL target proxy
+        uri: 'https://syt3m4prod.situscepat.net/api/getHistoryDw', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       }
     }
@@ -171,7 +171,7 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://bostoni.pro/api/checkLastTransaction', // URL target proxy
+        uri: 'https://syt3m4prod.situscepat.net/api/checkLastTransaction', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       }
     }
@@ -189,7 +189,7 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://bostoni.pro/api/checkBalance', // URL target proxy
+        uri: 'https://syt3m4prod.situscepat.net/api/checkBalance', // URL target proxy
         passThrough: true, // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       }
     }
@@ -205,7 +205,7 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://bostoni.pro/api/getHistoryGame', // URL target proxy
+        uri: 'https://syt3m4prod.situscepat.net/api/getHistoryGame', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       }
     }
@@ -221,7 +221,7 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://bostoni.pro/api/getHistoryGameById', // URL target proxy
+        uri: 'https://syt3m4prod.situscepat.net/api/getHistoryGameById', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       }
     }
@@ -237,7 +237,7 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://bostoni.pro/api/getDataOutstanding', // URL target proxy
+        uri: 'https://syt3m4prod.situscepat.net/api/getDataOutstanding', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       }
     }

@@ -6,7 +6,7 @@ const routes = (handler) => ([
     handler: handler.postGroupHandler,
     options: {
       cors: {
-        origin: ['https://bostoni.pro'],
+        origin: ['https://syt3m4prod.situscepat.net'],
       },
     },
   },
@@ -26,7 +26,7 @@ const routes = (handler) => ([
     handler: handler.putGroupHandler,
     options: {
       cors: {
-        origin: ['https://bostoni.pro'],
+        origin: ['https://syt3m4prod.situscepat.net'],
       },
     },
   },
@@ -36,7 +36,7 @@ const routes = (handler) => ([
     handler: handler.delGroupHandler,
     options: {
       cors: {
-        origin: ['https://bostoni.pro'],
+        origin: ['https://syt3m4prod.situscepat.net'],
       },
     },
   },
@@ -46,7 +46,7 @@ const routes = (handler) => ([
     handler: handler.postMasterHandler,
     options: {
       cors: {
-        origin: ['https://bostoni.pro'],
+        origin: ['https://syt3m4prod.situscepat.net'],
       },
     },
   },
@@ -56,7 +56,7 @@ const routes = (handler) => ([
     handler: handler.putMasterHandler,
     options: {
       cors: {
-        origin: ['https://bostoni.pro'],
+        origin: ['https://syt3m4prod.situscepat.net'],
       },
     },
   },
@@ -77,7 +77,7 @@ const routes = (handler) => ([
     handler: handler.delMasterHandler,
     options: {
       cors: {
-        origin: ['https://bostoni.pro'],
+        origin: ['https://syt3m4prod.situscepat.net'],
       },
     },
   },
@@ -87,7 +87,7 @@ const routes = (handler) => ([
     handler: handler.postBanknwHandler,
     options: {
       cors: {
-        origin: ['https://bostoni.pro'],
+        origin: ['https://syt3m4prod.situscepat.net'],
       },
     },
   },
@@ -97,7 +97,7 @@ const routes = (handler) => ([
     handler: handler.putBanknwHandler,
     options: {
       cors: {
-        origin: ['https://bostoni.pro'],
+        origin: ['https://syt3m4prod.situscepat.net'],
       },
     },
   },
@@ -107,7 +107,7 @@ const routes = (handler) => ([
     handler: handler.putGroupBanknwHandler,
     options: {
       cors: {
-        origin: ['https://bostoni.pro'],
+        origin: ['https://syt3m4prod.situscepat.net'],
       },
     },
   },
@@ -137,7 +137,7 @@ const routes = (handler) => ([
     handler: handler.delBankHandler,
     options: {
       cors: {
-        origin: ['https://bostoni.pro'],
+        origin: ['https://syt3m4prod.situscepat.net'],
       },
     },
   },
@@ -147,7 +147,7 @@ const routes = (handler) => ([
     handler: handler.delArrBankHandler,
     options: {
       cors: {
-        origin: ['https://bostoni.pro'],
+        origin: ['https://syt3m4prod.situscepat.net'],
       },
     },
   },
