@@ -160,21 +160,22 @@ const createServer = async (container) => {
 
   server.events.on('request', (request, event, tags) => {
     if (tags.error) {
-      const { error, data } = event;
-      const errorInfo = {
-        message: error.message,
-        stackTrace: error.stack,
-        requestData: {
-          method: request.method,
-          url: request.url.href,
-          headers: request.headers,
-          payload: request.payload,
-        },
-      };
-      logger.error('Error occurred during request processing:', errorInfo);
+      const { error } = event;
+      if (error) {
+        const errorInfo = {
+          message: error.message,
+          stackTrace: error.stack,
+          requestData: {
+            method: request.method,
+            url: request.url.href,
+            headers: request.headers,
+            payload: request.payload,
+          },
+        };
+        logger.error('Error occurred during request processing:', errorInfo);
+      }
     }
   });
-
 
 
 
