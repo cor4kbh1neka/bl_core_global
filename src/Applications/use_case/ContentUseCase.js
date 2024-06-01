@@ -64,14 +64,11 @@ class ContentUseCase {
             dataresult.headers = {
                 'X-Data-Source': 'cache',
             };
-            console.log(dataresult);
             return dataresult;
         } catch (error) {
             const dtstmp = await this._contentRepository.getstmp();
             await this._cacheService.delete(`sitemap:sitemap`);
             await this._cacheService.set(`sitemap:sitemap`, JSON.stringify(dtstmp));
-            console.log(dtstmp);
-
             return dtstmp;
 
         }
