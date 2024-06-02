@@ -52,7 +52,7 @@ describe('RefreshAuthenticationUseCase', () => {
     // Mocking
 
     const getdatausecase = await getuserdataUseCase.execute(useCasePayload);
-    expect(mockcacheService.get).toBeCalledWith(`datauser:${datauid.username}`);
+    expect(mockcacheService.get).toBeCalledWith(`daundatauser:${datauid.username}`);
     expect(getdatausecase).toEqual(
       resultuid
     );
@@ -106,8 +106,8 @@ describe('RefreshAuthenticationUseCase', () => {
       .toBeCalledWith(useCasePayload);
     expect(mockUserRepository.getDataBankByUsername)
       .toBeCalledWith(datauid.username);
-    expect(mockcacheService.delete).toBeCalledWith(`datauser:${datauid.username}`);
-    expect(mockcacheService.set).toBeCalledWith(`datauser:${datauid.username}`, JSON.stringify(resultuid));
+    expect(mockcacheService.delete).toBeCalledWith(`daundatauser:${datauid.username}`);
+    expect(mockcacheService.set).toBeCalledWith(`daundatauser:${datauid.username}`, JSON.stringify(resultuid));
 
     expect(payload).toEqual(resultuid);
   });

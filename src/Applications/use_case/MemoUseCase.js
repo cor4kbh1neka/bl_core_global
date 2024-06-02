@@ -10,32 +10,32 @@ class MemoUseCase {
     async addmemomem(useCasePayload) {
         const addmemo = new AddMemo(useCasePayload);
         const data = await this._memoRepository.addmemo(addmemo);
-        await this._cacheService.delete(`memo:memo`);
+        await this._cacheService.delete(`daunmemo:memo`);
         return data;
     }
 
     async getmemodt() {
         try {
-            const result = await this._cacheService.get(`memo:memo`);
+            const result = await this._cacheService.get(`daunmemo:memo`);
             const datamemo = JSON.parse(result);
             return datamemo;
         } catch (error) {
             const dtmemo = await this._memoRepository.getmemo();
-            await this._cacheService.delete(`memo:memo`);
-            await this._cacheService.set(`memo:memo`, JSON.stringify(dtmemo));
+            await this._cacheService.delete(`daunmemo:memo`);
+            await this._cacheService.set(`daunmemo:memo`, JSON.stringify(dtmemo));
             return dtmemo;
 
         }
     }
     async getmemodtall(params) {
         try {
-            const result = await this._cacheService.get(`memoll:${params.statustype}`);
+            const result = await this._cacheService.get(`daunmemoll:${params.statustype}`);
             const datamemo = JSON.parse(result);
             return datamemo;
         } catch (error) {
             const dtmemo = await this._memoRepository.getmemomem(params.statustype);
-            await this._cacheService.delete(`memoll:${params.statustype}`);
-            await this._cacheService.set(`memoll:${params.statustype}`, JSON.stringify(dtmemo));
+            await this._cacheService.delete(`daunmemoll:${params.statustype}`);
+            await this._cacheService.set(`daunmemoll:${params.statustype}`, JSON.stringify(dtmemo));
             return dtmemo;
 
         }
@@ -44,7 +44,7 @@ class MemoUseCase {
     async delmemodata(params) {
         await this._memoRepository.findmemo(params.idmemo);
         const data = await this._memoRepository.deletememo(params.idmemo)
-        await this._cacheService.delete(`memo:memo`);
+        await this._cacheService.delete(`daunmemo:memo`);
         return data;
     }
 }

@@ -62,7 +62,7 @@ describe('APK DATA RESERVER API POST GET DATA', () => {
 
         const dataapkusecase = await getDataApkUseCase.execute(params);
 
-        expect(mockcacheService.get).toBeCalledWith(`apkid:${params.apkid}`);
+        expect(mockcacheService.get).toBeCalledWith(`daunapkid:${params.apkid}`);
         expect(dataapkusecase).toEqual({
             data: resultmocksettings,
             headers: {
@@ -189,12 +189,12 @@ describe('APK DATA RESERVER API POST GET DATA', () => {
 
         const dataapkusecase = await getDataApkUseCase.execute(params);
 
-        expect(mockcacheService.get).toBeCalledWith(`apkid:${params.apkid}`);
+        expect(mockcacheService.get).toBeCalledWith(`daunapkid:${params.apkid}`);
         expect(apkRepository.getapkdata).toBeCalledWith(params.apkid);
         expect(apkRepository.getapkevent).toBeCalledWith(params.apkid);
         expect(apkRepository.getapknotice).toBeCalledWith(params.apkid);
-        expect(mockcacheService.delete).toBeCalledWith(`apkid:${params.apkid}`);
-        expect(mockcacheService.set).toBeCalledWith(`apkid:${params.apkid}`, JSON.stringify(resultmocksettings));
+        expect(mockcacheService.delete).toBeCalledWith(`daunapkid:${params.apkid}`);
+        expect(mockcacheService.set).toBeCalledWith(`daunapkid:${params.apkid}`, JSON.stringify(resultmocksettings));
         expect(dataapkusecase).toEqual({
             data: resultmocksettings
         });

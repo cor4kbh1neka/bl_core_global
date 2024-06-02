@@ -33,14 +33,14 @@ class AddUserUseCase {
     async UDataUser(useCasePayload, params) {
         const updatedData = new UpdateDataUser(useCasePayload);
         await this._userRepository.UDataUser(updatedData, params);
-        await this._cacheService.delete(`datauser:${params.xyusernamexxy}`);
+        await this._cacheService.delete(`daundatauser:${params.xyusernamexxy}`);
 
         return 'data berhasil di updated !';
     }
 
     async Uvipuser(useCasePayload, params) {
         await this._userRepository.Uvipuser(useCasePayload, params);
-        await this._cacheService.delete(`datauser:${params.xyusernamexxy}`);
+        await this._cacheService.delete(`daundatauser:${params.xyusernamexxy}`);
         return 'data berhasil di updated !';
     }
 

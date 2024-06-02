@@ -108,7 +108,7 @@ describe('APK DATA RESERVER API POST GET DATA', () => {
         expect(mockapkRepository.datasettings).toBeCalledWith(mockAddDataSettings);
 
 
-        expect(mockcacheService.delete).toBeCalledWith(`apkid:${apkid}`);
+        expect(mockcacheService.delete).toBeCalledWith(`daunapkid:${apkid}`);
 
 
 
@@ -211,7 +211,7 @@ describe('APK DATA RESERVER API POST GET DATA', () => {
         expect(dataapkusecase).toStrictEqual(apkid);
         // expect(mockapkRepository.datasettings).toBeCalledWith(mockAddDataSettings);
         expect(mockapkRepository.events).toBeCalledWith(mockAddDataevent);
-        expect(mockcacheService.delete).toBeCalledWith(`apkid:${{ apkid }}`);
+        expect(mockcacheService.delete).toBeCalledWith(`daunapkid:${{ apkid }}`);
 
         // expect(mockapkRepository.pemberitahuans).toBeCalledWith(mockAddDatapemberitahuans, apkid);
     });
@@ -312,7 +312,7 @@ describe('APK DATA RESERVER API POST GET DATA', () => {
         // expect(mockapkRepository.events).toBeCalledWith(mockAddDataevent, apkid);
         expect(mockapkRepository.pemberitahuans).toBeCalledWith(mockAddDatapemberitahuans);
 
-        expect(mockcacheService.delete).toBeCalledWith(`apkid:${apkid}`);
+        expect(mockcacheService.delete).toBeCalledWith(`daunapkid:${apkid}`);
 
     });
 

@@ -168,7 +168,7 @@ describe('UserRepository', () => {
             const putDataByU = await putDataUseCaseByU.UDataUser(useCasePayload, params);
 
             expect(putDataByU).toStrictEqual('data berhasil di updated !');
-            expect(mockcacheService.delete).toBeCalledWith(`datauser:${params.xyusernamexxy}`);
+            expect(mockcacheService.delete).toBeCalledWith(`daundatauser:${params.xyusernamexxy}`);
 
             expect(mockUserRepository.UDataUser).toBeCalledWith(useCasePayload, params);
 
@@ -200,7 +200,7 @@ describe('UserRepository', () => {
 
             expect(putDataByU).toStrictEqual('data berhasil di updated !');
             expect(mockUserRepository.Uvipuser).toBeCalledWith(useCasePayload, params);
-            expect(mockcacheService.delete).toBeCalledWith(`datauser:${params.xyusernamexxy}`);
+            expect(mockcacheService.delete).toBeCalledWith(`daundatauser:${params.xyusernamexxy}`);
 
         });
     });

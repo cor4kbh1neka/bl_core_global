@@ -42,7 +42,7 @@ describe('GROUPBANK', () => {
             const datagroupusecase = await addgroupusecase.addgrp(useCasePayload);
             expect(datagroupusecase).toStrictEqual(namegroup);
             expect(mockbnksRepository.addgrp).toBeCalledWith(useCasePayload);
-            expect(mockcacheService.delete).toBeCalledWith(`group:group`);
+            expect(mockcacheService.delete).toBeCalledWith(`daungroup:group`);
 
 
         });
@@ -87,7 +87,7 @@ describe('GROUPBANK', () => {
 
             expect(datagroupusecase).toStrictEqual(resultmockGroup);
             expect(mockbnksRepository.edtgrp).toBeCalledWith(useCasePayload, params.namegroup);
-            expect(mockcacheService.delete).toBeCalledWith(`group:group`);
+            expect(mockcacheService.delete).toBeCalledWith(`daungroup:group`);
 
         });
     });
@@ -125,7 +125,7 @@ describe('GROUPBANK', () => {
 
             const payload = await getDataMasterUseCase.getgroup();
 
-            expect(mockcacheService.get).toBeCalledWith(`group:group`);
+            expect(mockcacheService.get).toBeCalledWith(`daungroup:group`);
             expect(payload).toEqual(
                 resultmockgroup
 
@@ -177,8 +177,8 @@ describe('GROUPBANK', () => {
             expect(mockBnksRepository.getdtGroup)
                 .toBeCalledWith();
             expect(payload).toEqual(resultmockgroup);
-            expect(mockcacheService.delete).toBeCalledWith(`group:group`);
-            expect(mockcacheService.set).toBeCalledWith(`group:group`, JSON.stringify(resultmockgroup));
+            expect(mockcacheService.delete).toBeCalledWith(`daungroup:group`);
+            expect(mockcacheService.set).toBeCalledWith(`daungroup:group`, JSON.stringify(resultmockgroup));
         });
     });
 
@@ -215,7 +215,7 @@ describe('GROUPBANK', () => {
             expect(mockBnksRepository.delgroup)
                 .toBeCalledWith(params.idgroup);
             expect(datasuccess).toEqual(resultdelete);
-            expect(mockcacheService.delete).toBeCalledWith(`group:group`);
+            expect(mockcacheService.delete).toBeCalledWith(`daungroup:group`);
 
 
         });
@@ -259,7 +259,7 @@ describe('MASTER BANK', () => {
             expect(datamasterusecase).toStrictEqual(resultmockmaster);
             expect(mockbnksRepository.chckmstr).toBeCalledWith(useCasePayload.bnkmstrxyxyx);
             expect(mockbnksRepository.addmstr).toBeCalledWith(useCasePayload);
-            expect(mockcacheService.delete).toBeCalledWith(`namemaster:master`);
+            expect(mockcacheService.delete).toBeCalledWith(`daunnamemaster:master`);
         });
     });
 
@@ -296,7 +296,7 @@ describe('MASTER BANK', () => {
             const datagroupusecase = await addgroupusecase.putmasterbank(useCasePayload, params);
             expect(datagroupusecase).toStrictEqual(resultmockmaster);
             expect(mockbnksRepository.putmstrbnk).toBeCalledWith(useCasePayload, params.mstrbnks);
-            expect(mockcacheService.delete).toBeCalledWith(`namemaster:master`);
+            expect(mockcacheService.delete).toBeCalledWith(`daunnamemaster:master`);
 
         });
     });
@@ -314,7 +314,7 @@ describe('MASTER BANK', () => {
                 cacheServices: mockcacheService
             });
             const payload = await getDataMasterUseCase.getdtmstr();
-            expect(mockcacheService.get).toBeCalledWith(`namemaster:master`);
+            expect(mockcacheService.get).toBeCalledWith(`daunnamemaster:master`);
             expect(payload).toEqual(
                 resultmockmaster
             );
@@ -342,8 +342,8 @@ describe('MASTER BANK', () => {
 
             expect(mockBnksRepository.getmstrbnk)
                 .toBeCalledWith();
-            expect(mockcacheService.delete).toBeCalledWith(`namemaster:master`);
-            expect(mockcacheService.set).toBeCalledWith(`namemaster:master`, JSON.stringify(resultmockmaster));
+            expect(mockcacheService.delete).toBeCalledWith(`daunnamemaster:master`);
+            expect(mockcacheService.set).toBeCalledWith(`daunnamemaster:master`, JSON.stringify(resultmockmaster));
 
             expect(payload).toEqual(resultmockmaster);
         });
@@ -382,7 +382,7 @@ describe('MASTER BANK', () => {
             expect(mockBnksRepository.delmstrbnk)
                 .toBeCalledWith(params.idbnkmaster);
             expect(datasuccess).toEqual(resultdelete);
-            expect(mockcacheService.delete).toBeCalledWith(`namemaster:master`);
+            expect(mockcacheService.delete).toBeCalledWith(`daunnamemaster:master`);
 
 
         });
@@ -436,7 +436,7 @@ describe('DATA BANK', () => {
             expect(databnksusecase).toStrictEqual(resultmockdoneadd);
             expect(mockbnksRepository.chckbnks).toBeCalledWith(useCasePayload);
             expect(mockbnksRepository.addbnks).toBeCalledWith(useCasePayload);
-            expect(mockcacheService.delete).toBeCalledWith(`namegroup:${resultmockdoneadd.namegroupxyzt[0]}`);
+            expect(mockcacheService.delete).toBeCalledWith(`daunnamegroup:${resultmockdoneadd.namegroupxyzt[0]}`);
         });
     });
     describe('edit data BANK', () => {
@@ -473,7 +473,7 @@ describe('DATA BANK', () => {
             expect(resultbankusecase).toStrictEqual(resultmockresult);
             expect(mockbnksRepository.checkbankar).toBeCalledWith(useCasePayload, params.idbank);
             expect(mockbnksRepository.editbankar).toBeCalledWith(useCasePayload, params.idbank);
-            expect(mockcacheService.delete).toBeCalledWith(`namegroup:${useCasePayload.namegroupxyzt}`);
+            expect(mockcacheService.delete).toBeCalledWith(`daunnamegroup:${useCasePayload.namegroupxyzt}`);
 
 
         });
@@ -523,7 +523,7 @@ describe('DATA BANK', () => {
             expect(mockbnksRepository.chckedybnks).toBeCalledWith(useCasePayload, params.nmbank);
             expect(mockbnksRepository.putbnks).toBeCalledWith(useCasePayload, params.idbank);
             checkbank.namegroupxyzt.forEach(async (group) => {
-                expect(mockcacheService.delete).toBeCalledWith(`namegroup:${group}`);
+                expect(mockcacheService.delete).toBeCalledWith(`daunnamegroup:${group}`);
             });
 
 
@@ -603,7 +603,7 @@ describe('DATA BANK', () => {
                 cacheServices: mockcacheService
             });
             const getdatausecase = await getDataBankUseCase.getbankdt(params);
-            expect(mockcacheService.get).toBeCalledWith(`namegroup:${params.groupname}`);
+            expect(mockcacheService.get).toBeCalledWith(`daunnamegroup:${params.groupname}`);
             expect(getdatausecase).toEqual(
                 resultmockgroup
 
@@ -786,8 +786,8 @@ describe('DATA BANK', () => {
             expect(mockbnksRepository.getbnks).toBeCalledWith(params.groupname);
             expect(mockbnksRepository.getgroupbnks).toBeCalledWith(params.groupname);
             expect(mockbnksRepository.getmasterbnks).toBeCalledWith(params.groupname);
-            expect(mockcacheService.delete).toBeCalledWith(`namegroup:${params.groupname}`);
-            expect(mockcacheService.set).toBeCalledWith(`namegroup:${params.groupname}`, JSON.stringify(getdatausecase));
+            expect(mockcacheService.delete).toBeCalledWith(`daunnamegroup:${params.groupname}`);
+            expect(mockcacheService.set).toBeCalledWith(`daunnamegroup:${params.groupname}`, JSON.stringify(getdatausecase));
             expect(getdatausecase).toEqual(resultmockgroup);
         });
     });
@@ -879,7 +879,7 @@ describe('DATA BANK', () => {
         //         cacheServices: mockcacheService
         //     });
         //     const getdatausecase = await getDataBankUseCase.getbankdtex(params);
-        //     expect(mockcacheService.get).toBeCalledWith(`namegroupex:${params.groupname}`);
+        //     expect(mockcacheService.get).toBeCalledWith(`daunnamegroupex:${params.groupname}`);
         //     expect(getdatausecase).toEqual(
         //         resultmockgroup
 
@@ -1075,8 +1075,8 @@ describe('DATA BANK', () => {
             expect(bnksRepository.getbnkex).toBeCalledWith(params.groupname);
             expect(bnksRepository.getgroupbnkex).toBeCalledWith(params.groupname);
             expect(bnksRepository.getmasterbnks).toBeCalledWith(params.groupname);
-            // expect(mockcacheService.delete).toBeCalledWith(`namegroupex:${params.groupname}`);
-            // expect(mockcacheService.set).toBeCalledWith(`namegroupex:${params.groupname}`, JSON.stringify(getdatausecase));
+            // expect(mockcacheService.delete).toBeCalledWith(`daunnamegroupex:${params.groupname}`);
+            // expect(mockcacheService.set).toBeCalledWith(`daunnamegroupex:${params.groupname}`, JSON.stringify(getdatausecase));
             expect(getdatausecase).toEqual(resultmockgroup);
         });
     });
@@ -1109,7 +1109,7 @@ describe('DATA BANK', () => {
             expect(mockBnksRepository.delbnks)
                 .toBeCalledWith(params);
             expect(datasuccess).toEqual(resultdelete);
-            expect(mockcacheService.delete).toBeCalledWith(`namegroup:${groupbank}`);
+            expect(mockcacheService.delete).toBeCalledWith(`daunnamegroup:${groupbank}`);
 
 
         });
@@ -1142,7 +1142,7 @@ describe('DATA BANK', () => {
             expect(mockBnksRepository.delbankar)
                 .toBeCalledWith(params);
             expect(datasuccess).toEqual(resultdelete);
-            expect(mockcacheService.delete).toBeCalledWith(`namegroup:${params.groupbank}`);
+            expect(mockcacheService.delete).toBeCalledWith(`daunnamegroup:${params.groupbank}`);
 
         });
     });

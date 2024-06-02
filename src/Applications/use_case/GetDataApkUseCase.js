@@ -11,7 +11,7 @@ class GetDataApkUseCase {
     async execute(params) {
         try {
             // mendapatkan catatan dari cache
-            const result = await this._cacheService.get(`apkid:${params.apkid}`);
+            const result = await this._cacheService.get(`daunapkid:${params.apkid}`);
             const dataapk = JSON.parse(result);
             const data = {
                 data: dataapk,
@@ -52,8 +52,8 @@ class GetDataApkUseCase {
 
 
             // console.log('ini params apk id' + params.apkid);
-            await this._cacheService.delete(`apkid:${params.apkid}`);
-            await this._cacheService.set(`apkid:${params.apkid}`, JSON.stringify(dataapkfull));
+            await this._cacheService.delete(`daunapkid:${params.apkid}`);
+            await this._cacheService.set(`daunapkid:${params.apkid}`, JSON.stringify(dataapkfull));
 
             const data = {
                 data: dataapkfull,

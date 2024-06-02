@@ -21,7 +21,7 @@ class AddbnksUseCase {
 
     //     await this._bnksRepository.checkbnks(databks.norekxyxy, databks.namegroupxyzt, databks.xynamarekx);
     //     const namegroup = await this._bnksRepository.databnksdp(databks);
-    //     await this._cacheService.delete(`namegroup:${namegroup}`);
+    //     await this._cacheService.delete(`daunnamegroup:${namegroup}`);
     //     return namegroup;
     // }
 
@@ -36,14 +36,14 @@ class AddbnksUseCase {
         const payload = new AddMasterBnks(useCasePayload);
         await this._bnksRepository.chckmstr(payload.bnkmstrxyxyx);
         const data = await this._bnksRepository.addmstr(payload);
-        await this._cacheService.delete(`namemaster:master`);
+        await this._cacheService.delete(`daunnamemaster:master`);
         return data;
     }
 
     async putmasterbank(useCasePayload, params) {
         const payload = new AddMasterBnks(useCasePayload);
         const data = await this._bnksRepository.putmstrbnk(payload, params.mstrbnks);
-        await this._cacheService.delete(`namemaster:master`);
+        await this._cacheService.delete(`daunnamemaster:master`);
 
         return data;
     }
@@ -51,15 +51,15 @@ class AddbnksUseCase {
         try {
 
             // mendapatkan catatan dari cache
-            // await this._cacheService.delete(`namegroupex:${params.groupname}`);
+            // await this._cacheService.delete(`daunnamegroupex:${params.groupname}`);
 
-            const result = await this._cacheService.get(`namemaster:master`);
+            const result = await this._cacheService.get(`daunnamemaster:master`);
             const dataresult = JSON.parse(result);
             return dataresult;
         } catch (error) {
             const dtbnksmstr = await this._bnksRepository.getmstrbnk();
-            await this._cacheService.delete(`namemaster:master`);
-            await this._cacheService.set(`namemaster:master`, JSON.stringify(dtbnksmstr));
+            await this._cacheService.delete(`daunnamemaster:master`);
+            await this._cacheService.set(`daunnamemaster:master`, JSON.stringify(dtbnksmstr));
             return dtbnksmstr;
 
         }
@@ -68,7 +68,7 @@ class AddbnksUseCase {
     async delmasterdata(params) {
         await this._bnksRepository.findmstr(params.idbnkmaster);
         const data = await this._bnksRepository.delmstrbnk(params.idbnkmaster);
-        await this._cacheService.delete(`namemaster:master`);
+        await this._cacheService.delete(`daunnamemaster:master`);
         return data;
     }
     /**
@@ -80,7 +80,7 @@ class AddbnksUseCase {
     async addgrp(useCasePayload) {
         const addgroup = new AddGroupBnks(useCasePayload);
         const namegroup = await this._bnksRepository.addgrp(addgroup);
-        await this._cacheService.delete(`group:group`);
+        await this._cacheService.delete(`daungroup:group`);
 
         return namegroup;
     }
@@ -88,13 +88,13 @@ class AddbnksUseCase {
     async editgroupbnks(useCasePayload, params) {
         const payload = new AddGroupBnks(useCasePayload);
         const data = await this._bnksRepository.edtgrp(payload, params.namegroup);
-        await this._cacheService.delete(`group:group`);
+        await this._cacheService.delete(`daungroup:group`);
 
         return data;
     }
     async getgroup() {
         try {
-            const result = await this._cacheService.get(`group:group`);
+            const result = await this._cacheService.get(`daungroup:group`);
 
             const dataresult = JSON.parse(result);
             return dataresult;
@@ -110,15 +110,15 @@ class AddbnksUseCase {
 
 
 
-            await this._cacheService.delete(`group:group`);
-            await this._cacheService.set(`group:group`, JSON.stringify(formattedData));
+            await this._cacheService.delete(`daungroup:group`);
+            await this._cacheService.set(`daungroup:group`, JSON.stringify(formattedData));
             return formattedData;
         }
     }
     async delgroupdata(params) {
         await this._bnksRepository.findgroup(params.idgroup);
         const data = await this._bnksRepository.delgroup(params.idgroup);
-        await this._cacheService.delete(`group:group`);
+        await this._cacheService.delete(`daungroup:group`);
 
         return data;
     }
@@ -133,7 +133,7 @@ class AddbnksUseCase {
         await this._bnksRepository.chckbnks(payload);
         const databanks = await this._bnksRepository.addbnks(payload);
         databanks.namegroupxyzt.forEach(async (group) => {
-            await this._cacheService.delete(`namegroup:${group}`);
+            await this._cacheService.delete(`daunnamegroup:${group}`);
         });
         return databanks;
     }
@@ -144,7 +144,7 @@ class AddbnksUseCase {
         const checkbank = await this._bnksRepository.chckedybnks(payload, params.nmbank);
         await this._bnksRepository.putbnks(payload, params.idbank);
         checkbank.namegroupxyzt.forEach(async (group) => {
-            await this._cacheService.delete(`namegroup:${group}`);
+            await this._cacheService.delete(`daunnamegroup:${group}`);
         });
 
         return "Bank Edit Success !";
@@ -153,7 +153,7 @@ class AddbnksUseCase {
         const payload = new EditGroupBnks(useCasePayload);
         await this._bnksRepository.checkbankar(payload, params.idbank);
         await this._bnksRepository.editbankar(payload, params.idbank);
-        await this._cacheService.delete(`namegroup:${payload.namegroupxyzt}`);
+        await this._cacheService.delete(`daunnamegroup:${payload.namegroupxyzt}`);
 
         return "Bank Edit Success !";
     }
@@ -162,8 +162,8 @@ class AddbnksUseCase {
     async getbankdt(params) {
         try {
             // mendapatkan catatan dari cache
-            const result = await this._cacheService.get(`namegroup:${params.groupname}`);
-            // await this._cacheService.delete(`namegroup:${params.groupname}`);
+            const result = await this._cacheService.get(`daunnamegroup:${params.groupname}`);
+            // await this._cacheService.delete(`daunnamegroup:${params.groupname}`);
             const dataresult = JSON.parse(result);
             dataresult.headers = {
                 'X-Data-Source': 'cache',
@@ -220,8 +220,8 @@ class AddbnksUseCase {
                 }
             }
 
-            await this._cacheService.delete(`namegroup:${params.groupname}`);
-            await this._cacheService.set(`namegroup:${params.groupname}`, JSON.stringify(groupedData));
+            await this._cacheService.delete(`daunnamegroup:${params.groupname}`);
+            await this._cacheService.set(`daunnamegroup:${params.groupname}`, JSON.stringify(groupedData));
             return groupedData;
 
 
@@ -268,10 +268,10 @@ class AddbnksUseCase {
         // try {
 
         //     // mendapatkan catatan dari cache
-        //     // await this._cacheService.delete(`namegroupex:${params.groupname}`);
-        //     // await this._cacheService.delete(`namegroupex:${params.groupname}`);
+        //     // await this._cacheService.delete(`daunnamegroupex:${params.groupname}`);
+        //     // await this._cacheService.delete(`daunnamegroupex:${params.groupname}`);
 
-        //     const result = await this._cacheService.get(`namegroupex:${params.groupname}`);
+        //     const result = await this._cacheService.get(`daunnamegroupex:${params.groupname}`);
         //     const dataresult = JSON.parse(result);
 
         //     dataresult.headers = {
@@ -323,8 +323,8 @@ class AddbnksUseCase {
             }
         });
         // console.log(params.groupname);
-        // await this._cacheService.delete(`namegroupex:${params.groupname}`);
-        // await this._cacheService.set(`namegroupex:${params.groupname}`, JSON.stringify(groupedData));
+        // await this._cacheService.delete(`daunnamegroupex:${params.groupname}`);
+        // await this._cacheService.set(`daunnamegroupex:${params.groupname}`, JSON.stringify(groupedData));
         return groupedData;
         // };
     }
@@ -332,14 +332,14 @@ class AddbnksUseCase {
     async delbankdata(params) {
         const groupbank = await this._bnksRepository.findbank(params.idbank);
         const result = await this._bnksRepository.delbnks(params);
-        await this._cacheService.delete(`namegroup:${groupbank}`);
+        await this._cacheService.delete(`daunnamegroup:${groupbank}`);
         return result;
     }
     async delbankdataarr(params) {
         await this._bnksRepository.findbankarr(params);
 
         const result = await this._bnksRepository.delbankar(params);
-        await this._cacheService.delete(`namegroup:${params.groupbank}`);
+        await this._cacheService.delete(`daunnamegroup:${params.groupbank}`);
         return result;
     }
 
