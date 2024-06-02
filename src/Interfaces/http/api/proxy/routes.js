@@ -101,7 +101,6 @@ const routes = (handler) => ([
     path: '/prx/cekuserreferral', // Route untuk proxy
     options: {
       cors: {
-        origin: ['*'],
       },
       auth: 'dashbljwt',
     },
