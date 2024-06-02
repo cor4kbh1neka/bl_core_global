@@ -10,7 +10,7 @@ class VerifyUserAuthUseCase {
     try {
       this._verifyPayload(refreshToken);
       const datauid = await this._authenticationTokenManager.decodePayload(refreshToken);
-      const result = await this._cacheService.get(`datauser:${datauid.username}`);
+      const result = await this._cacheService.get(`ciadatauser:${datauid.username}`);
       const dataresult = JSON.parse(result);
       dataresult.headers = {
         'X-Data-Source': 'cache',
@@ -26,8 +26,8 @@ class VerifyUserAuthUseCase {
         ...datauid,
         ...datauidit
       };
-      await this._cacheService.delete(`datauser:${datauid.username}`);
-      await this._cacheService.set(`datauser:${datauid.username}`, JSON.stringify(combinedData));
+      await this._cacheService.delete(`ciadatauser:${datauid.username}`);
+      await this._cacheService.set(`ciadatauser:${datauid.username}`, JSON.stringify(combinedData));
       return combinedData;
     }
   }

@@ -32,7 +32,7 @@ describe('MEMO', () => {
 
             expect(datamemousecase).toStrictEqual(resultadd);
             expect(mockmemoRepository.addmemo).toBeCalledWith(useCasePayload);
-            expect(mockcacheService.delete).toBeCalledWith(`memo:memo`);
+            expect(mockcacheService.delete).toBeCalledWith(`ciamemo:memo`);
         });
     });
     describe('getdatamemo VIP that already create', () => {
@@ -69,7 +69,7 @@ describe('MEMO', () => {
 
             const payload = await getMemoUsecase.getmemodt();
 
-            expect(mockcacheService.get).toBeCalledWith(`memo:memo`);
+            expect(mockcacheService.get).toBeCalledWith(`ciamemo:memo`);
             expect(payload).toEqual(
                 resultmemo
             );
@@ -117,8 +117,8 @@ describe('MEMO', () => {
             expect(mockMemoRepository.getmemo)
                 .toBeCalledWith();
             expect(payload).toEqual(resultmemo);
-            expect(mockcacheService.delete).toBeCalledWith(`memo:memo`);
-            expect(mockcacheService.set).toBeCalledWith(`memo:memo`, JSON.stringify(resultmemo));
+            expect(mockcacheService.delete).toBeCalledWith(`ciamemo:memo`);
+            expect(mockcacheService.set).toBeCalledWith(`ciamemo:memo`, JSON.stringify(resultmemo));
         });
     });
 
@@ -160,7 +160,7 @@ describe('MEMO', () => {
 
             const payload = await getMemoUsecase.getmemodtall(params);
 
-            expect(mockcacheService.get).toBeCalledWith(`memoll:${params.statustype}`);
+            expect(mockcacheService.get).toBeCalledWith(`ciamemoll:${params.statustype}`);
             expect(payload).toEqual(
                 resultmemo
             );
@@ -212,8 +212,8 @@ describe('MEMO', () => {
             expect(mockMemoRepository.getmemomem)
                 .toBeCalledWith(params.statustype);
             expect(payload).toEqual(resultmemo);
-            expect(mockcacheService.delete).toBeCalledWith(`memoll:${params.statustype}`);
-            expect(mockcacheService.set).toBeCalledWith(`memoll:${params.statustype}`, JSON.stringify(resultmemo));
+            expect(mockcacheService.delete).toBeCalledWith(`ciamemoll:${params.statustype}`);
+            expect(mockcacheService.set).toBeCalledWith(`ciamemoll:${params.statustype}`, JSON.stringify(resultmemo));
         });
     });
 
@@ -247,7 +247,7 @@ describe('MEMO', () => {
                 .toBeCalledWith(params.idmemo);
             expect(mockMemoRepository.deletememo)
                 .toBeCalledWith(params.idmemo);
-            expect(mockcacheService.delete).toBeCalledWith(`memo:memo`);
+            expect(mockcacheService.delete).toBeCalledWith(`ciamemo:memo`);
             expect(datasuccess).toEqual(resultdelete);
 
 

@@ -15,7 +15,7 @@ class AdddataApkUseCase {
         // const dataevent = new AddeventApk(useCasePayload);
         // const dataPemberitahuans = new AddPemberitahuanApk(useCasePayload);
         const apkid = await this._apkRepository.datasettings(dataapks);
-        await this._cacheService.delete(`apkid:${apkid}`);
+        await this._cacheService.delete(`ciaapkid:${apkid}`);
         // this._apkRepository.events(dataevent, apkid);
         // this._apkRepository.pemberitahuans(dataPemberitahuans, apkid);
         return apkid;
@@ -28,7 +28,7 @@ class AdddataApkUseCase {
         // const apkid = await this._apkRepository.datasettings(dataapks);
         const apkid = this._apkRepository.events(dataevent);
 
-        await this._cacheService.delete(`apkid:${{ apkid }}`);
+        await this._cacheService.delete(`ciaapkid:${{ apkid }}`);
         // this._apkRepository.pemberitahuans(dataPemberitahuans, apkid);
         return apkid;
     }
@@ -41,7 +41,7 @@ class AdddataApkUseCase {
         // this._apkRepository.events(dataevent, apkid);
         const apkid = await this._apkRepository.pemberitahuans(dataPemberitahuans);
 
-        await this._cacheService.delete(`apkid:${apkid}`);
+        await this._cacheService.delete(`ciaapkid:${apkid}`);
         return apkid;
     }
 }

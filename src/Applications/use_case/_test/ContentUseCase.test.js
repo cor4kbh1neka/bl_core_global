@@ -44,7 +44,7 @@ describe('CONTENT MetaTag', () => {
             expect(datagroupusecase).toStrictEqual('metatag updated');
 
             expect(mockContentRepository.editmtdt).toBeCalledWith(useCasePayload, params.iddtmeta);
-            expect(mockcacheService.delete).toBeCalledWith(`metatag:metatag`);
+            expect(mockcacheService.delete).toBeCalledWith(`ciametatag:metatag`);
 
         });
     });
@@ -78,8 +78,8 @@ describe('CONTENT MetaTag', () => {
 
             // Assert
             expect(mockContentRepository.gettmtdt).toBeCalledWith();
-            expect(mockcacheService.delete).toBeCalledWith(`metatag:metatag`);
-            expect(mockcacheService.set).toBeCalledWith(`metatag:metatag`, JSON.stringify(resultMockMetaTag));
+            expect(mockcacheService.delete).toBeCalledWith(`ciametatag:metatag`);
+            expect(mockcacheService.set).toBeCalledWith(`ciametatag:metatag`, JSON.stringify(resultMockMetaTag));
             expect(payload).toEqual(resultMockMetaTag);
         });
 
@@ -107,7 +107,7 @@ describe('CONTENT MetaTag', () => {
             const payload = await getdataContent.getmttag();
 
             // Assert
-            expect(mockcacheService.get).toBeCalledWith(`metatag:metatag`);
+            expect(mockcacheService.get).toBeCalledWith(`ciametatag:metatag`);
             expect(payload).toEqual(
                 resultMockMetaTag
             );
@@ -138,7 +138,7 @@ describe('CONTNET SITEMAP', () => {
             expect(addSiteMaps).toStrictEqual('sitemap added succesfully !');
             expect(mockContentRepository.checkstmp).toBeCalledWith(useCasePayload.urpage);
             expect(mockContentRepository.addstmp).toBeCalledWith(useCasePayload.urpage);
-            expect(mockcacheService.delete).toBeCalledWith(`sitemap:sitemap`);
+            expect(mockcacheService.delete).toBeCalledWith(`ciasitemap:sitemap`);
         });
     });
     describe('should success edit data sitemap', () => {
@@ -164,7 +164,7 @@ describe('CONTNET SITEMAP', () => {
             expect(editSiteMaps).toStrictEqual('Sitemap Edit Success !');
             expect(mockContentRepository.checkstmp).toBeCalledWith(useCasePayload.urpage);
             expect(mockContentRepository.editstmp).toBeCalledWith(useCasePayload.urpage, params.urpage);
-            expect(mockcacheService.delete).toBeCalledWith(`sitemap:sitemap`);
+            expect(mockcacheService.delete).toBeCalledWith(`ciasitemap:sitemap`);
         });
     });
     describe('should get data sitemap succcessfulldy using redis and database', () => {
@@ -185,7 +185,7 @@ describe('CONTNET SITEMAP', () => {
             });
             const payload = await getdataContent.getstmp();
             // Assert
-            expect(mockcacheService.get).toBeCalledWith(`sitemap:sitemap`);
+            expect(mockcacheService.get).toBeCalledWith(`ciasitemap:sitemap`);
             expect(payload).toEqual(
                 resultMockSitemap
             );
@@ -210,8 +210,8 @@ describe('CONTNET SITEMAP', () => {
             const payload = await getdataContent.getstmp();
             // Assert
             expect(mockContentRepository.getstmp).toBeCalledWith();
-            expect(mockcacheService.delete).toBeCalledWith(`sitemap:sitemap`);
-            expect(mockcacheService.set).toBeCalledWith(`sitemap:sitemap`, JSON.stringify(resultMockSitemap));
+            expect(mockcacheService.delete).toBeCalledWith(`ciasitemap:sitemap`);
+            expect(mockcacheService.set).toBeCalledWith(`ciasitemap:sitemap`, JSON.stringify(resultMockSitemap));
             expect(payload).toEqual(resultMockSitemap);
         });
     });
@@ -235,7 +235,7 @@ describe('CONTNET SITEMAP', () => {
             expect(deleteSiteMaps).toStrictEqual('Sitemap deleted successfully !');
 
             expect(mockContentRepository.delstmp).toBeCalledWith(useCasePayload.urpage);
-            expect(mockcacheService.delete).toBeCalledWith(`sitemap:sitemap`);
+            expect(mockcacheService.delete).toBeCalledWith(`ciasitemap:sitemap`);
         });
     });
 
@@ -273,7 +273,7 @@ describe('CONTENT GENERAL', () => {
 
             expect(datagroupusecase).toStrictEqual('general data updated');
             expect(mockContentRepository.editgeneral).toBeCalledWith(useCasePayload, params.idnmwebst);
-            expect(mockcacheService.delete).toBeCalledWith(`ctgeneral:ctgeneral`);
+            expect(mockcacheService.delete).toBeCalledWith(`ciactgeneral:ctgeneral`);
         });
     });
     describe('should success calling get data content GENERAL', () => {
@@ -308,8 +308,8 @@ describe('CONTENT GENERAL', () => {
 
             // Assert
             expect(mockContentRepository.getgeneral).toBeCalledWith();
-            expect(mockcacheService.delete).toBeCalledWith(`ctgeneral:ctgeneral`);
-            expect(mockcacheService.set).toBeCalledWith(`ctgeneral:ctgeneral`, JSON.stringify(resultmockctgeneral));
+            expect(mockcacheService.delete).toBeCalledWith(`ciactgeneral:ctgeneral`);
+            expect(mockcacheService.set).toBeCalledWith(`ciactgeneral:ctgeneral`, JSON.stringify(resultmockctgeneral));
             expect(payload).toEqual(resultmockctgeneral);
         });
 
@@ -339,7 +339,7 @@ describe('CONTENT GENERAL', () => {
             const payload = await getdataCtgeneralUsecase.getgeneral();
 
             // Assert
-            expect(mockcacheService.get).toBeCalledWith(`ctgeneral:ctgeneral`);
+            expect(mockcacheService.get).toBeCalledWith(`ciactgeneral:ctgeneral`);
             expect(payload).toEqual(
                 resultmockctgeneral
             );
@@ -378,7 +378,7 @@ describe('CONTENT SLIDER', () => {
 
             expect(datasliderUseCase).toStrictEqual('slider data updated');
             expect(mockContentRepository.editslider).toBeCalledWith(useCasePayload, params.idctsldr);
-            expect(mockcacheService.delete).toBeCalledWith(`ctslider:ctslider`);
+            expect(mockcacheService.delete).toBeCalledWith(`ciactslider:ctslider`);
         });
     });
     describe('should success calling get data content SLIDER', () => {
@@ -412,8 +412,8 @@ describe('CONTENT SLIDER', () => {
 
             // Assert
             expect(mockContentRepository.getslider).toBeCalledWith();
-            expect(mockcacheService.delete).toBeCalledWith(`ctslider:ctslider`);
-            expect(mockcacheService.set).toBeCalledWith(`ctslider:ctslider`, JSON.stringify(resultmockctSlider));
+            expect(mockcacheService.delete).toBeCalledWith(`ciactslider:ctslider`);
+            expect(mockcacheService.set).toBeCalledWith(`ciactslider:ctslider`, JSON.stringify(resultmockctSlider));
             expect(payload).toEqual(resultmockctSlider);
         });
 
@@ -442,7 +442,7 @@ describe('CONTENT SLIDER', () => {
             const payload = await getdataCtsliderUsecase.getslider();
 
             // Assert
-            expect(mockcacheService.get).toBeCalledWith(`ctslider:ctslider`);
+            expect(mockcacheService.get).toBeCalledWith(`ciactslider:ctslider`);
             expect(payload).toEqual(
                 resultmockctSlider
             );
@@ -480,7 +480,7 @@ describe('CONTENT LINK', () => {
 
             expect(datasliderUseCase).toStrictEqual('link data updated');
             expect(mockContentRepository.editlink).toBeCalledWith(useCasePayload, params.idctlnk);
-            expect(mockcacheService.delete).toBeCalledWith(`ctlink:ctlink`);
+            expect(mockcacheService.delete).toBeCalledWith(`ciactlink:ctlink`);
         });
     });
     describe('should success calling get data content LINK', () => {
@@ -513,8 +513,8 @@ describe('CONTENT LINK', () => {
 
             // Assert
             expect(mockContentRepository.getlink).toBeCalledWith();
-            expect(mockcacheService.delete).toBeCalledWith(`ctlink:ctlink`);
-            expect(mockcacheService.set).toBeCalledWith(`ctlink:ctlink`, JSON.stringify(resultmocklink));
+            expect(mockcacheService.delete).toBeCalledWith(`ciactlink:ctlink`);
+            expect(mockcacheService.set).toBeCalledWith(`ciactlink:ctlink`, JSON.stringify(resultmocklink));
             expect(payload).toEqual(resultmocklink);
         });
 
@@ -542,7 +542,7 @@ describe('CONTENT LINK', () => {
             const payload = await getdataCtsliderUsecase.getlink();
 
             // Assert
-            expect(mockcacheService.get).toBeCalledWith(`ctlink:ctlink`);
+            expect(mockcacheService.get).toBeCalledWith(`ciactlink:ctlink`);
             expect(payload).toEqual(
                 resultmocklink
             );
@@ -583,7 +583,7 @@ describe('CONTENT SOCMED', () => {
 
             expect(datasliderUseCase).toStrictEqual('social media data updated');
             expect(mockContentRepository.editsocmed).toBeCalledWith(useCasePayload, params.idctscmed);
-            expect(mockcacheService.delete).toBeCalledWith(`ctsocmed:ctsocmed`);
+            expect(mockcacheService.delete).toBeCalledWith(`ciactsocmed:ctsocmed`);
         });
     });
     describe('should success calling get data content SOCMED', () => {
@@ -619,8 +619,8 @@ describe('CONTENT SOCMED', () => {
 
             // Assert
             expect(mockContentRepository.getsocmed).toBeCalledWith();
-            expect(mockcacheService.delete).toBeCalledWith(`ctsocmed:ctsocmed`);
-            expect(mockcacheService.set).toBeCalledWith(`ctsocmed:ctsocmed`, JSON.stringify(resultsocmedmock));
+            expect(mockcacheService.delete).toBeCalledWith(`ciactsocmed:ctsocmed`);
+            expect(mockcacheService.set).toBeCalledWith(`ciactsocmed:ctsocmed`, JSON.stringify(resultsocmedmock));
             expect(payload).toEqual(resultsocmedmock);
         });
 
@@ -651,7 +651,7 @@ describe('CONTENT SOCMED', () => {
             const payload = await getdataSocmedUsecase.getsocmed();
 
             // Assert
-            expect(mockcacheService.get).toBeCalledWith(`ctsocmed:ctsocmed`);
+            expect(mockcacheService.get).toBeCalledWith(`ciactsocmed:ctsocmed`);
             expect(payload).toEqual(
                 resultsocmedmock
             );
@@ -686,7 +686,7 @@ describe('CONTNET PROMO', () => {
             //assert
             expect(addPromo).toStrictEqual('promo added succesfully !');
             expect(mockContentRepository.addpromo).toBeCalledWith(useCasePayload);
-            expect(mockcacheService.delete).toBeCalledWith(`ctpromo:ctpromo`);
+            expect(mockcacheService.delete).toBeCalledWith(`ciactpromo:ctpromo`);
         });
     });
     describe('should success edit data PROMO', () => {
@@ -717,7 +717,7 @@ describe('CONTNET PROMO', () => {
             const editSiteMaps = await editPromoUsecase.editpromo(useCasePayload, params);
             expect(editSiteMaps).toStrictEqual('promo Edit Success !');
             expect(mockContentRepository.editpromo).toBeCalledWith(useCasePayload, params.idctprm);
-            expect(mockcacheService.delete).toBeCalledWith(`ctpromo:ctpromo`);
+            expect(mockcacheService.delete).toBeCalledWith(`ciactpromo:ctpromo`);
         });
     });
     describe('should get data PROMO succcessfulldy using redis and database', () => {
@@ -742,7 +742,7 @@ describe('CONTNET PROMO', () => {
             });
             const payload = await getdataPromo.getpromo();
             // Assert
-            expect(mockcacheService.get).toBeCalledWith(`ctpromo:ctpromo`);
+            expect(mockcacheService.get).toBeCalledWith(`ciactpromo:ctpromo`);
             expect(payload).toEqual(
                 resultMockPromo
             );
@@ -771,8 +771,8 @@ describe('CONTNET PROMO', () => {
             const payload = await getdataPromoUsecase.getpromo();
             // Assert
             expect(mockContentRepository.getpromo).toBeCalledWith();
-            expect(mockcacheService.delete).toBeCalledWith(`ctpromo:ctpromo`);
-            expect(mockcacheService.set).toBeCalledWith(`ctpromo:ctpromo`, JSON.stringify(resultMockPromo));
+            expect(mockcacheService.delete).toBeCalledWith(`ciactpromo:ctpromo`);
+            expect(mockcacheService.set).toBeCalledWith(`ciactpromo:ctpromo`, JSON.stringify(resultMockPromo));
             expect(payload).toEqual(resultMockPromo);
         });
     });
@@ -798,7 +798,7 @@ describe('CONTNET PROMO', () => {
             expect(deletePromo).toStrictEqual('Promo deleted successfully !');
 
             expect(mockContentRepository.deletepromo).toBeCalledWith(params.idctprm);
-            expect(mockcacheService.delete).toBeCalledWith(`ctpromo:ctpromo`);
+            expect(mockcacheService.delete).toBeCalledWith(`ciactpromo:ctpromo`);
         });
     });
 
@@ -832,7 +832,7 @@ describe('CONTENT MT', () => {
 
             expect(dataMtUsecase).toStrictEqual('Status updated');
             expect(mockContentRepository.editmt).toBeCalledWith(useCasePayload, params.idctmtncnc);
-            expect(mockcacheService.delete).toBeCalledWith(`ctmaintenance:ctmaintenance`);
+            expect(mockcacheService.delete).toBeCalledWith(`ciactmaintenance:ctmaintenance`);
         });
     });
     describe('should success calling get data content MT', () => {
@@ -863,8 +863,8 @@ describe('CONTENT MT', () => {
 
             // Assert
             expect(mockContentRepository.getmt).toBeCalledWith();
-            expect(mockcacheService.delete).toBeCalledWith(`ctmaintenance:ctmaintenance`);
-            expect(mockcacheService.set).toBeCalledWith(`ctmaintenance:ctmaintenance`, JSON.stringify(resultmockMt));
+            expect(mockcacheService.delete).toBeCalledWith(`ciactmaintenance:ctmaintenance`);
+            expect(mockcacheService.set).toBeCalledWith(`ciactmaintenance:ctmaintenance`, JSON.stringify(resultmockMt));
             expect(payload).toEqual(resultmockMt);
         });
 
@@ -890,7 +890,7 @@ describe('CONTENT MT', () => {
             const payload = await getDataMTstatusUsecase.getmt();
 
             // Assert
-            expect(mockcacheService.get).toBeCalledWith(`ctmaintenance:ctmaintenance`);
+            expect(mockcacheService.get).toBeCalledWith(`ciactmaintenance:ctmaintenance`);
             expect(payload).toEqual(
                 resultmockMt
             );
