@@ -103,7 +103,6 @@ const routes = (handler) => ([
       cors: {
         origin: ['*'],
       },
-      auth: 'dashbljwt',
     },
     handler: {
       proxy: {
