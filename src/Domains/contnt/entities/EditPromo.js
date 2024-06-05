@@ -23,7 +23,7 @@ class EditPromo {
             throw new Error('EDIT_PROMO.NOT_MEET_DATA_TYPE_SPECIFICATION');
         }
 
-        if (!ttlectprm.match(/^[a-zA-Z0-9\s%]+$/) || !statusctprm.match(/^[0-9]+$/) || !pssprm.match(/^[0-9]+$/)) {
+        if (!ttlectprm.match(/^[a-zA-Z0-9\s%,.]+$/) || !statusctprm.match(/^[0-9]+$/) || !pssprm.match(/^[0-9]+$/)) {
             throw new Error('EDIT_PROMO.CONTAIN_RESTRICTED_CHARACTER');
         }
     }
