@@ -60,7 +60,7 @@ class RegisterUser {
         //memperbolehkan hanya karakter huruf a-z (baik huruf kecil maupun huruf besar) dan angka 0-9, Anda dapat menggunakan ekspresi reguler berikut: ^[a-zA-Z0-9]+$
 
         //memperbolehkan karakter huruf a-z (baik huruf kecil maupun huruf besar) serta spasi, Anda dapat menggunakan ekspresi reguler berikut: ^[a-zA-Z ]+$
-        if (!xyusernamexxy.match(/^[\w]+$/) || !password.match(/^[a-zA-Z0-9]+$/) || !xybanknamexyy.match(/^[a-zA-Z ]+$/) || !xybankuserxy.match(/^[a-zA-Z ]+$/) || !xxybanknumberxy.match(/^[0-9]+$/) || !xynumbphonexyyy.match(/^[0-9]+$/)) {
+        if (!xyusernamexxy.match(/^[\w]+$/) || !xybanknamexyy.match(/^[a-zA-Z ]+$/) || !xybankuserxy.match(/^[a-zA-Z ]+$/) || !xxybanknumberxy.match(/^[0-9]+$/) || !xynumbphonexyyy.match(/^[0-9]+$/)) {
             throw new Error('REGISTER_USER.REGISTER_CONTAIN_RESTRICTED_CHARACTER');
         }
 
