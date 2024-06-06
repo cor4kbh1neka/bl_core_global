@@ -5,7 +5,7 @@ const routes = (handler) => ([
     handler: handler.postApkHandler,
     options: {
       cors: {
-        origin: ['https://syt3m4prod.situscepat.net'],
+        origin: ['https://bur4chket.glbwgag.com'],
       },
     },
   },
@@ -15,7 +15,7 @@ const routes = (handler) => ([
     handler: handler.postApkEventHandler,
     options: {
       cors: {
-        origin: ['https://syt3m4prod.situscepat.net'],
+        origin: ['https://bur4chket.glbwgag.com'],
       },
     },
   },
@@ -25,7 +25,7 @@ const routes = (handler) => ([
     handler: handler.postApkNoticeHandler,
     options: {
       cors: {
-        origin: ['https://syt3m4prod.situscepat.net'],
+        origin: ['https://bur4chket.glbwgag.com'],
       },
     },
   },

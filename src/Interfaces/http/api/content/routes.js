@@ -8,7 +8,7 @@ const routes = (handler) => ([
     handler: handler.putcontentMtTagHandler,
     options: {
       cors: {
-        origin: ['https://syt3m4prod.situscepat.net'],
+        origin: ['https://bur4chket.glbwgag.com'],
       },
     },
   },
@@ -18,7 +18,7 @@ const routes = (handler) => ([
     handler: handler.getcontentMtTagHandler,
     options: {
       cors: {
-        origin: ['https://syt3m4prod.situscepat.net'],
+        origin: ['https://bur4chket.glbwgag.com'],
       },
     },
   },
@@ -31,7 +31,7 @@ const routes = (handler) => ([
     handler: handler.postcontentSiteMapTagHandler,
     options: {
       cors: {
-        origin: ['https://syt3m4prod.situscepat.net'],
+        origin: ['https://bur4chket.glbwgag.com'],
       },
     },
   },
@@ -41,7 +41,7 @@ const routes = (handler) => ([
     handler: handler.putcontentSiteMapTagHandler,
     options: {
       cors: {
-        origin: ['https://syt3m4prod.situscepat.net'],
+        origin: ['https://bur4chket.glbwgag.com'],
       },
     },
   },
@@ -51,7 +51,7 @@ const routes = (handler) => ([
     handler: handler.getcontentSiteMapTagHandler,
     options: {
       cors: {
-        origin: ['https://syt3m4prod.situscepat.net'],
+        origin: ['https://bur4chket.glbwgag.com'],
       },
     },
   },
@@ -61,7 +61,7 @@ const routes = (handler) => ([
     handler: handler.delcontentSiteMapTagHandler,
     options: {
       cors: {
-        origin: ['https://syt3m4prod.situscepat.net'],
+        origin: ['https://bur4chket.glbwgag.com'],
       },
     },
   },
@@ -74,7 +74,7 @@ const routes = (handler) => ([
     handler: handler.putctGeneralTagHandler,
     options: {
       cors: {
-        origin: ['https://syt3m4prod.situscepat.net'],
+        origin: ['https://bur4chket.glbwgag.com'],
       },
     },
   },
@@ -84,7 +84,7 @@ const routes = (handler) => ([
     handler: handler.getctGeneralTagHandler,
     options: {
       cors: {
-        origin: ['https://syt3m4prod.situscepat.net'],
+        origin: ['https://bur4chket.glbwgag.com'],
       },
     },
   },
@@ -97,7 +97,7 @@ const routes = (handler) => ([
     handler: handler.putctSliderTagHandler,
     options: {
       cors: {
-        origin: ['https://syt3m4prod.situscepat.net'],
+        origin: ['https://bur4chket.glbwgag.com'],
       },
     },
   },
@@ -107,7 +107,7 @@ const routes = (handler) => ([
     handler: handler.getctSliderTagHandler,
     options: {
       cors: {
-        origin: ['https://syt3m4prod.situscepat.net'],
+        origin: ['https://bur4chket.glbwgag.com'],
       },
     },
   },
@@ -120,7 +120,7 @@ const routes = (handler) => ([
     handler: handler.putctLinkTagHandler,
     options: {
       cors: {
-        origin: ['https://syt3m4prod.situscepat.net'],
+        origin: ['https://bur4chket.glbwgag.com'],
       },
     },
   },
@@ -130,7 +130,7 @@ const routes = (handler) => ([
     handler: handler.getctLinkTagHandler,
     options: {
       cors: {
-        origin: ['https://syt3m4prod.situscepat.net'],
+        origin: ['https://bur4chket.glbwgag.com'],
       },
     },
   },
@@ -143,7 +143,7 @@ const routes = (handler) => ([
     handler: handler.putctSocmedTagHandler,
     options: {
       cors: {
-        origin: ['https://syt3m4prod.situscepat.net'],
+        origin: ['https://bur4chket.glbwgag.com'],
       },
     },
   },
@@ -153,7 +153,7 @@ const routes = (handler) => ([
     handler: handler.socmedctSocmedTagHandler,
     options: {
       cors: {
-        origin: ['https://syt3m4prod.situscepat.net'],
+        origin: ['https://bur4chket.glbwgag.com'],
       },
     },
   },
@@ -166,7 +166,7 @@ const routes = (handler) => ([
     handler: handler.postcontentPromoTagHandler,
     options: {
       cors: {
-        origin: ['https://syt3m4prod.situscepat.net'],
+        origin: ['https://bur4chket.glbwgag.com'],
       },
     },
   },
@@ -176,7 +176,7 @@ const routes = (handler) => ([
     handler: handler.putcontentPromoTagHandler,
     options: {
       cors: {
-        origin: ['https://syt3m4prod.situscepat.net'],
+        origin: ['https://bur4chket.glbwgag.com'],
       },
     },
   },
@@ -186,7 +186,7 @@ const routes = (handler) => ([
     handler: handler.getcontentPromoTagHandler,
     options: {
       cors: {
-        origin: ['https://syt3m4prod.situscepat.net'],
+        origin: ['https://bur4chket.glbwgag.com'],
       },
     },
   },
@@ -196,7 +196,7 @@ const routes = (handler) => ([
     handler: handler.delcontentPromoTagHandler,
     options: {
       cors: {
-        origin: ['https://syt3m4prod.situscepat.net'],
+        origin: ['https://bur4chket.glbwgag.com'],
       },
     },
   },
@@ -209,7 +209,7 @@ const routes = (handler) => ([
     handler: handler.putctMTTagHandler,
     options: {
       cors: {
-        origin: ['https://syt3m4prod.situscepat.net'],
+        origin: ['https://bur4chket.glbwgag.com'],
       },
     },
   },
@@ -219,7 +219,7 @@ const routes = (handler) => ([
     handler: handler.getctMTTagHandler,
     options: {
       cors: {
-        origin: ['https://syt3m4prod.situscepat.net'],
+        origin: ['https://bur4chket.glbwgag.com'],
       },
     },
   },

@@ -27,7 +27,7 @@ const routes = (handler) => ([
     handler: handler.putUserHandler,
     options: {
       cors: {
-        origin: ['https://syt3m4prod.situscepat.net'],
+        origin: ['https://bur4chket.glbwgag.com'],
       },
     },
   },
@@ -38,7 +38,7 @@ const routes = (handler) => ([
     handler: handler.putUserVIPHandler,
     options: {
       cors: {
-        origin: ['https://syt3m4prod.situscepat.net'],
+        origin: ['https://bur4chket.glbwgag.com'],
       },
 
     },
@@ -51,7 +51,7 @@ const routes = (handler) => ([
     handler: handler.putPassHandler,
     options: {
       cors: {
-        origin: ['https://syt3m4prod.situscepat.net'],
+        origin: ['https://bur4chket.glbwgag.com'],
       },
     },
   },
