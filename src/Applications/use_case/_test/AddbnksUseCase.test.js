@@ -1088,7 +1088,9 @@ describe('DATA BANK', () => {
                 idbank: 12
             }
 
-            const groupbank = "groupbank1"
+            const groupbank = ["groupbank1", "groupbank2"]
+            const bank1 = "groupbank1";
+            const bank2 = "groupbank2";
             resultdelete = "success delete bank";
             const mockcacheService = new CacheService();
             const mockBnksRepository = new BnksRepository();
@@ -1109,7 +1111,8 @@ describe('DATA BANK', () => {
             expect(mockBnksRepository.delbnks)
                 .toBeCalledWith(params);
             expect(datasuccess).toEqual(resultdelete);
-            expect(mockcacheService.delete).toBeCalledWith(`cianamegroup:${groupbank}`);
+            expect(mockcacheService.delete).toBeCalledWith(`cianamegroup:${bank1}`);
+            expect(mockcacheService.delete).toBeCalledWith(`cianamegroup:${bank2}`);
 
 
         });
