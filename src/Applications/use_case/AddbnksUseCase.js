@@ -332,7 +332,10 @@ class AddbnksUseCase {
     async delbankdata(params) {
         const groupbank = await this._bnksRepository.findbank(params.idbank);
         const result = await this._bnksRepository.delbnks(params);
-        await this._cacheService.delete(`daunnamegroup:${groupbank}`);
+        // await this._cacheService.delete(`daunnamegroup:${groupbank}`);
+        await Promise.all(groupbank.map(async (bank) => {
+            await this._cacheService.delete(`daunnamegroup:${bank}`);
+        }));
         return result;
     }
     async delbankdataarr(params) {

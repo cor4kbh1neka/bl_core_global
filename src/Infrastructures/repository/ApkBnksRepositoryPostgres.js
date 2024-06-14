@@ -257,7 +257,7 @@ class ApkBnksRepositoryPostgres extends BnksRepository {
         if (!databank.rowCount) {
             throw new NotFoundError('data not found !');
         }
-        return databank.rows[0].namegroupxyzt[0];
+        return databank.rows[0].namegroupxyzt;
     }
 
     async delbnks(params) {
