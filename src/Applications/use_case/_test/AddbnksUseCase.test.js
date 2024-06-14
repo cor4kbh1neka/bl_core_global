@@ -1081,14 +1081,16 @@ describe('DATA BANK', () => {
         });
     });
 
-    describe("delete  group bank for master data", () => {
-        it("should delete data group succesfully", async () => {
+    describe("delete bank data", () => {
+        it("should delete data  succesfully", async () => {
             params = {
                 namabank: "bca1",
                 idbank: 12
             }
 
-            const groupbank = "groupbank1"
+            const groupbank = ["groupbank1", "groupbank2"]
+            const bank1 = "groupbank1";
+            const bank2 = "groupbank2";
             resultdelete = "success delete bank";
             const mockcacheService = new CacheService();
             const mockBnksRepository = new BnksRepository();
@@ -1109,7 +1111,8 @@ describe('DATA BANK', () => {
             expect(mockBnksRepository.delbnks)
                 .toBeCalledWith(params);
             expect(datasuccess).toEqual(resultdelete);
-            expect(mockcacheService.delete).toBeCalledWith(`namegroup:${groupbank}`);
+            expect(mockcacheService.delete).toBeCalledWith(`namegroup:${bank1}`);
+            expect(mockcacheService.delete).toBeCalledWith(`namegroup:${bank2}`);
 
 
         });

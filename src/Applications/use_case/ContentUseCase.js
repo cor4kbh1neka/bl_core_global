@@ -60,7 +60,6 @@ class ContentUseCase {
         try {
             const result = await this._cacheService.get(`sitemap:sitemap`);
             const dataresult = JSON.parse(result);
-            console.log(dataresult);
             dataresult.headers = {
                 'X-Data-Source': 'cache',
             };

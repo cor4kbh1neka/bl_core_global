@@ -505,13 +505,13 @@ describe('DataBank repository', () => {
         await expect(apkBnksRepositoryPostgres.findbank(params.idbank))
           .rejects.toThrow(NotFoundError);
       });
+
       it('should return data group', async () => {
         //arrange
         params = {
           namabank: "bca333",
           idbank: 52
         }
-
 
         // Action
         await AddBanksTableTestHelper.addbks({
