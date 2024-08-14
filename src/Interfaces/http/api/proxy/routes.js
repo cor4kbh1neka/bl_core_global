@@ -32,6 +32,22 @@ const routes = (handler) => ([
       }
     }
   },
+  // {
+  //   method: 'POST',
+  //   path: '/prx/authlog/', // Route dengan parameter dinamis
+  //   options: {
+  //     cors: {
+  //       origin: ['*'],
+  //     },
+  //     auth: 'dashbljwt',
+  //   },
+  //   handler: {
+  //     proxy: {
+  //       uri: 'https://heracwglizt.leafwgag.com/api/login', // URL target proxy
+  //       passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
+  //     },
+  //   }
+  // },
   {
     method: 'POST',
     path: '/prx/authlog', // Route dengan parameter dinamis
@@ -44,6 +60,102 @@ const routes = (handler) => ([
     handler: {
       proxy: {
         uri: 'https://heracwglizt.leafwgag.com/api/login', // URL target proxy
+        passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
+      },
+    }
+  },
+  {
+    method: 'POST',
+    path: '/prx/authlog/winsprt', // Route dengan parameter dinamis
+    options: {
+      cors: {
+        origin: ['*'],
+      },
+      auth: 'dashbljwt',
+    },
+    handler: {
+      proxy: {
+        uri: 'https://heracwglizt.leafwgag.com/api/login/568WinSportsbook', // URL target proxy
+        passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
+      },
+    }
+  },
+  {
+    method: 'POST',
+    path: '/prx/authlog/csn', // Route dengan parameter dinamis
+    options: {
+      cors: {
+        origin: ['*'],
+      },
+      auth: 'dashbljwt',
+    },
+    handler: {
+      proxy: {
+        uri: 'https://heracwglizt.leafwgag.com/api/login/Casino', // URL target proxy
+        passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
+      },
+    }
+  },
+  {
+    method: 'POST',
+    path: '/prx/authlog/gms', // Route dengan parameter dinamis
+    options: {
+      cors: {
+        origin: ['*'],
+      },
+      auth: 'dashbljwt',
+    },
+    handler: {
+      proxy: {
+        uri: 'https://heracwglizt.leafwgag.com/api/login/Games', // URL target proxy
+        passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
+      },
+    }
+  },
+  {
+    method: 'POST',
+    path: '/prx/authlog/vrsprt', // Route dengan parameter dinamis
+    options: {
+      cors: {
+        origin: ['*'],
+      },
+      auth: 'dashbljwt',
+    },
+    handler: {
+      proxy: {
+        uri: 'https://heracwglizt.leafwgag.com/api/login/VirtualSports', // URL target proxy
+        passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
+      },
+    }
+  },
+  {
+    method: 'POST',
+    path: '/prx/authlog/slsgms', // Route dengan parameter dinamis
+    options: {
+      cors: {
+        origin: ['*'],
+      },
+      auth: 'dashbljwt',
+    },
+    handler: {
+      proxy: {
+        uri: 'https://heracwglizt.leafwgag.com/api/login/SeamlessGame', // URL target proxy
+        passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
+      },
+    }
+  },
+  {
+    method: 'POST',
+    path: '/prx/authlog/Trdprty', // Route dengan parameter dinamis
+    options: {
+      cors: {
+        origin: ['*'],
+      },
+      auth: 'dashbljwt',
+    },
+    handler: {
+      proxy: {
+        uri: 'https://heracwglizt.leafwgag.com/api/login/ThirdPartySportsBook', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       },
     }
