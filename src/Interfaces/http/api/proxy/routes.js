@@ -139,7 +139,7 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://heracwglizt.leafwgag.com/api/login/SeamlessGame', // URL target proxy
+        uri: 'https://heracwglizt.leafwgag.com/api/login/Seamles', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       },
     }
@@ -382,6 +382,22 @@ const routes = (handler) => ([
     handler: {
       proxy: {
         uri: 'https://d4r-k-agwg.leafwgag.com/api/getdatalogmember', // URL target proxy
+        passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
+      }
+    }
+  },
+  {
+    method: 'POST',
+    path: '/prx/gtmcncn', // Route untuk proxy
+    options: {
+      cors: {
+        origin: ['*'],
+      },
+      auth: 'dashbljwt',
+    },
+    handler: {
+      proxy: {
+        uri: 'https://d4r-k-agwg.leafwgag.com/api/getmaintenance', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       }
     }
