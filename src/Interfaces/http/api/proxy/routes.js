@@ -101,11 +101,13 @@ const routes = (handler) => ([
     path: '/prx/cekuserreferral', // Route untuk proxy
     options: {
       cors: {
+        origin: ['*'],
       },
+      // auth: 'dashbljwt',
     },
     handler: {
       proxy: {
-        uri: 'https://volkzwg.ciawgag.com/api/cekuserreferral', // URL target proxy
+        uri: 'https://wg-ag-bcl-4sg.ciawgag.com/api/cekuserreferral', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       }
     }
@@ -153,7 +155,7 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://volkzwg.ciawgag.com/api/getHistoryDw', // URL target proxy
+        uri: 'https://wg-ag-bcl-4sg.ciawgag.com/api/getHistoryDw', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       }
     }
@@ -169,7 +171,7 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://volkzwg.ciawgag.com/api/checkLastTransaction', // URL target proxy
+        uri: 'https://wg-ag-bcl-4sg.ciawgag.com/api/checkLastTransaction', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       }
     }
@@ -187,7 +189,7 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://volkzwg.ciawgag.com/api/checkBalance', // URL target proxy
+        uri: 'https://wg-ag-bcl-4sg.ciawgag.com/api/checkBalance', // URL target proxy
         passThrough: true, // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       }
     }
@@ -203,7 +205,7 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://volkzwg.ciawgag.com/api/getHistoryGame', // URL target proxy
+        uri: 'https://wg-ag-bcl-4sg.ciawgag.com/api/getHistoryGame', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       }
     }
@@ -219,7 +221,7 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://volkzwg.ciawgag.com/api/getHistoryGameById', // URL target proxy
+        uri: 'https://wg-ag-bcl-4sg.ciawgag.com/api/getHistoryGameById', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       }
     }
@@ -235,7 +237,39 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://volkzwg.ciawgag.com/api/getDataOutstanding', // URL target proxy
+        uri: 'https://wg-ag-bcl-4sg.ciawgag.com/api/getDataOutstanding', // URL target proxy
+        passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
+      }
+    }
+  },
+  {
+    method: 'POST',
+    path: '/prx/chngpswd', // Route untuk proxy
+    options: {
+      cors: {
+        origin: ['*'],
+      },
+      auth: 'dashbljwt',
+    },
+    handler: {
+      proxy: {
+        uri: 'https://volkzwg.ciawgag.com/api/changePassword', // URL target proxy
+        passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
+      }
+    }
+  },
+  {
+    method: 'POST',
+    path: '/prx/gethstchngpswd', // Route untuk proxy
+    options: {
+      cors: {
+        origin: ['*'],
+      },
+      auth: 'dashbljwt',
+    },
+    handler: {
+      proxy: {
+        uri: 'https://wg-ag-bcl-4sg.ciawgag.com/api/getdatalogmember', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       }
     }
