@@ -59,7 +59,7 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://bur4chket.glbwgag.com/api/login/568WinSportsbook', // URL target proxy
+        uri: 'https://volkzwg.ciawgag.com/api/login/568WinSportsbook', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       },
     }
@@ -75,7 +75,7 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://bur4chket.glbwgag.com/api/login/Casino', // URL target proxy
+        uri: 'https://volkzwg.ciawgag.com/api/login/Casino', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       },
     }
@@ -91,7 +91,7 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://bur4chket.glbwgag.com/api/login/Games', // URL target proxy
+        uri: 'https://volkzwg.ciawgag.com/api/login/Games', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       },
     }
@@ -107,7 +107,7 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://bur4chket.glbwgag.com/api/login/VirtualSports', // URL target proxy
+        uri: 'https://volkzwg.ciawgag.com/api/login/VirtualSports', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       },
     }
@@ -123,7 +123,7 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://bur4chket.glbwgag.com/api/login/SeamlessGame', // URL target proxy
+        uri: 'https://volkzwg.ciawgag.com/api/login/SeamlessGame', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       },
     }
@@ -139,7 +139,7 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://bur4chket.glbwgag.com/api/login/ThirdPartySportsBook', // URL target proxy
+        uri: 'https://volkzwg.ciawgag.com/api/login/ThirdPartySportsBook', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       },
     }
