@@ -50,6 +50,102 @@ const routes = (handler) => ([
   },
   {
     method: 'POST',
+    path: '/prx/authlog/winsprt', // Route dengan parameter dinamis
+    options: {
+      cors: {
+        origin: ['*'],
+      },
+      auth: 'dashbljwt',
+    },
+    handler: {
+      proxy: {
+        uri: 'https://bur4chket.glbwgag.com/api/login/568WinSportsbook', // URL target proxy
+        passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
+      },
+    }
+  },
+  {
+    method: 'POST',
+    path: '/prx/authlog/csn', // Route dengan parameter dinamis
+    options: {
+      cors: {
+        origin: ['*'],
+      },
+      auth: 'dashbljwt',
+    },
+    handler: {
+      proxy: {
+        uri: 'https://bur4chket.glbwgag.com/api/login/Casino', // URL target proxy
+        passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
+      },
+    }
+  },
+  {
+    method: 'POST',
+    path: '/prx/authlog/gms', // Route dengan parameter dinamis
+    options: {
+      cors: {
+        origin: ['*'],
+      },
+      auth: 'dashbljwt',
+    },
+    handler: {
+      proxy: {
+        uri: 'https://bur4chket.glbwgag.com/api/login/Games', // URL target proxy
+        passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
+      },
+    }
+  },
+  {
+    method: 'POST',
+    path: '/prx/authlog/vrsprt', // Route dengan parameter dinamis
+    options: {
+      cors: {
+        origin: ['*'],
+      },
+      auth: 'dashbljwt',
+    },
+    handler: {
+      proxy: {
+        uri: 'https://bur4chket.glbwgag.com/api/login/VirtualSports', // URL target proxy
+        passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
+      },
+    }
+  },
+  {
+    method: 'POST',
+    path: '/prx/authlog/slsgms', // Route dengan parameter dinamis
+    options: {
+      cors: {
+        origin: ['*'],
+      },
+      auth: 'dashbljwt',
+    },
+    handler: {
+      proxy: {
+        uri: 'https://bur4chket.glbwgag.com/api/login/SeamlessGame', // URL target proxy
+        passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
+      },
+    }
+  },
+  {
+    method: 'POST',
+    path: '/prx/authlog/Trdprty', // Route dengan parameter dinamis
+    options: {
+      cors: {
+        origin: ['*'],
+      },
+      auth: 'dashbljwt',
+    },
+    handler: {
+      proxy: {
+        uri: 'https://bur4chket.glbwgag.com/api/login/ThirdPartySportsBook', // URL target proxy
+        passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
+      },
+    }
+  },
+  {
+    method: 'POST',
     path: '/prx/history/log', // Route untuk proxy
     options: {
       cors: {
@@ -103,10 +199,11 @@ const routes = (handler) => ([
       cors: {
         origin: ['*'],
       },
+      // auth: 'dashbljwt',
     },
     handler: {
       proxy: {
-        uri: 'https://bur4chket.glbwgag.com/api/cekuserreferral', // URL target proxy
+        uri: 'https://tv-ng9-al.glbwgag.com/api/cekuserreferral', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       }
     }
@@ -122,7 +219,7 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://bur4chket.glbwgag.com/api/getDataReferral', // URL target proxy
+        uri: 'https://bostoni.pro/api/getDataReferral', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       }
     }
@@ -138,7 +235,7 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://bur4chket.glbwgag.com/api/gethistory', // URL target proxy
+        uri: 'https://bostoni.pro/api/gethistory', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       }
     }
@@ -154,7 +251,7 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://bur4chket.glbwgag.com/api/getHistoryDw', // URL target proxy
+        uri: 'https://tv-ng9-al.glbwgag.com/api/getHistoryDw', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       }
     }
@@ -170,7 +267,7 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://bur4chket.glbwgag.com/api/checkLastTransaction', // URL target proxy
+        uri: 'https://tv-ng9-al.glbwgag.com/api/checkLastTransaction', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       }
     }
@@ -188,7 +285,7 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://bur4chket.glbwgag.com/api/checkBalance', // URL target proxy
+        uri: 'https://tv-ng9-al.glbwgag.com/api/checkBalance', // URL target proxy
         passThrough: true, // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       }
     }
@@ -204,7 +301,7 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://bur4chket.glbwgag.com/api/getHistoryGame', // URL target proxy
+        uri: 'https://tv-ng9-al.glbwgag.com/api/getHistoryGame', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       }
     }
@@ -220,7 +317,7 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://bur4chket.glbwgag.com/api/getHistoryGameById', // URL target proxy
+        uri: 'https://tv-ng9-al.glbwgag.com/api/getHistoryGameById', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       }
     }
@@ -236,7 +333,39 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://bur4chket.glbwgag.com/api/getDataOutstanding', // URL target proxy
+        uri: 'https://tv-ng9-al.glbwgag.com/api/getDataOutstanding', // URL target proxy
+        passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
+      }
+    }
+  },
+  {
+    method: 'POST',
+    path: '/prx/chngpswd', // Route untuk proxy
+    options: {
+      cors: {
+        origin: ['*'],
+      },
+      auth: 'dashbljwt',
+    },
+    handler: {
+      proxy: {
+        uri: 'https://bostoni.pro/api/changePassword', // URL target proxy
+        passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
+      }
+    }
+  },
+  {
+    method: 'POST',
+    path: '/prx/gethstchngpswd', // Route untuk proxy
+    options: {
+      cors: {
+        origin: ['*'],
+      },
+      auth: 'dashbljwt',
+    },
+    handler: {
+      proxy: {
+        uri: 'https://tv-ng9-al.glbwgag.com/api/getdatalogmember', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       }
     }
