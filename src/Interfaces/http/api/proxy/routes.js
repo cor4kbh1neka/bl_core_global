@@ -219,7 +219,7 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://bostoni.pro/api/getDataReferral', // URL target proxy
+        uri: 'https://bur4chket.glbwgag.com/api/getDataReferral', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       }
     }
@@ -235,7 +235,7 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://bostoni.pro/api/gethistory', // URL target proxy
+        uri: 'https://bur4chket.glbwgag.com/api/gethistory', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       }
     }
@@ -349,7 +349,7 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://bostoni.pro/api/changePassword', // URL target proxy
+        uri: 'https://bur4chket.glbwgag.com/api/changePassword', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       }
     }
