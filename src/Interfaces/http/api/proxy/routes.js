@@ -139,7 +139,7 @@ const routes = (handler) => ([
     },
     handler: {
       proxy: {
-        uri: 'https://heracwglizt.leafwgag.com/api/login/Seamles', // URL target proxy
+        uri: 'https://heracwglizt.leafwgag.com/api/login/SeamlessGame', // URL target proxy
         passThrough: true // Mengizinkan respons dari endpoint ditransfer langsung ke klien
       },
     }
